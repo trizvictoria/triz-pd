@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecionando</title>
+    <script>
+      sessionStorage.setItem('spa-path', location.pathname + location.search + location.hash)
+      var totvs = location.pathname.indexOf('/totvs') !== -1
+      location.replace(totvs ? '/prototipouniverso/totvs/' : '/prototipouniverso/')
+    </script>
+  </head>
+  <body></body>
+</html>

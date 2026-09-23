@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Negociação · RD Station CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,700;9..40,800;9..40,900&family=Inter:wght@400;500;600&family=Nunito+Sans:wght@400;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,1,0&display=swap" rel="stylesheet" />
+  <style>
+    :root{--color-nav-bg:#001927;--font:'DM Sans',sans-serif;--font-crm:'Nunito Sans','DM Sans',sans-serif;--primary-border:#00dbff;--primary-icon:#0077b2;--primary-icon-hover:#005580;--primary-icon-on-color:#00dbff;--primary-icon-on-color-hover:#66e9ff;--primary-surface-high-emphasis:#00dbff;--primary-surface-low-emphasis:#b2f4ff;--primary-surface-hover:#66ebff;--primary-text:#0077b2;--primary-text-hover:#005580;--primary-text-on-color:#00dbff;--primary-text-on-color-hover:#66e9ff;--neutral-border:#d6dbde;--neutral-border-interactive:#b2bcc1;--neutral-icon-high-emphasis:#002233;--neutral-icon-low-emphasis:#596b7a;--neutral-icon-disabled:#8c98a3;--neutral-icon-inverse:#fff;--neutral-surface:#fff;--neutral-surface-high-emphasis:#e5e8ea;--neutral-surface-low-emphasis:#eceeef;--neutral-surface-hover:#dadee0;--neutral-surface-disabled:#edeff1;--neutral-surface-inverse:#002233;--neutral-surface-inverse-interactive:#002233;--neutral-surface-inverse-interactive-hover:#003347;--neutral-text-high-emphasis:#002233;--neutral-text-low-emphasis:#405466;--neutral-text-disabled:#7f8d99;--neutral-text-inverse:#fff;--neutral-focus-outline:#00dbff;--danger-text:#c20046;--success-icon:#087a3a;--success-text:#087a3a;--success-border:#0ed869;--success-surface-low-emphasis:#d6fae8;--highlight-text:#6e00c5;--highlight-surface-low-emphasis:#edd6ff;--support-mint:#00f2c9;--size-spacing-01:4px;--size-spacing-02:8px;--size-spacing-03:12px;--size-spacing-04:16px;--size-spacing-05:24px;--size-spacing-06:32px;--border-radius-xs:4px;--border-radius-sm:8px;--border-radius-md:12px;--border-radius-lg:16px;--border-radius-pill:999px;--shadow-xs:0 2px 6px rgba(0,34,51,.1);--shadow-md:0 8px 18px rgba(0,34,51,.16);--shadow-lg:0 12px 24px rgba(0,34,51,.2);--zindex-3:1020;--zindex-4:1030;--zindex-6:1050;--motion-duration-extra-fast:100ms;--motion-duration-normal:300ms;--motion-timing-function-ease-out:cubic-bezier(.215,.61,.355,1);--motion-timing-function-ease-in-out:cubic-bezier(.645,.045,.355,1);--text-xl:800 28px/36px var(--font);--text-lg:500 20px/30px var(--font);--text-lg-bold:700 20px/30px var(--font);--text-md:500 16px/24px var(--font);--text-md-bold:700 16px/24px var(--font);--text-sm:500 14px/20px var(--font);--text-sm-bold:700 14px/20px var(--font);--text-xs:500 12px/16px var(--font)}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    [hidden]{display:none!important}
+    html,body{height:100%}
+    body{font-family:var(--font);color:var(--neutral-text-high-emphasis);background:var(--color-nav-bg);-webkit-font-smoothing:antialiased}
+    button,input,select{font-family:inherit}button{cursor:pointer;border:none;background:none}
+    .layout{display:grid;grid-template-rows:64px 1fr;grid-template-columns:64px 1fr;grid-template-areas:"navbar navbar" "sidebar content";height:100vh;overflow:hidden}
+    .navbar{grid-area:navbar;background:var(--color-nav-bg);display:flex;align-items:center;justify-content:space-between;padding:var(--size-spacing-03);height:64px;z-index:9600}
+    .navbar img{max-width:none;display:block}
+    .navbar-product{display:flex;align-items:center;height:40px;padding-left:8px}
+    .navbar-logo{display:flex;align-items:center;gap:12px}
+    .navbar-rds{position:relative;width:107px;height:32px;flex-shrink:0}
+    .navbar-rds-symbol{position:absolute;left:0;top:0}
+    .navbar-rds-lettering{position:absolute;inset:9.38% 0 9.38% 41.12%}
+    .navbar-rds-line{position:absolute;inset:0 96.83% 0 0;background:rgba(0,219,255,.25)}
+    .navbar-crm-word{position:absolute;left:23.81%;top:21.12%}
+    .navbar-product-item{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;flex-shrink:0}
+    .navbar-secondary{display:flex;align-items:center;gap:8px}
+    .navbar-icons{display:flex;align-items:center}
+    .navbar-icon-btn{width:40px;height:40px;padding:8px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#fff;position:relative;flex-shrink:0}
+    .navbar-icon-btn:hover,.navbar-product-item:hover,.account-menu:hover,.sidebar-item-inner:hover{background:rgba(255,255,255,.08)}
+    .badge-dot{position:absolute;top:4px;left:28px;width:8px;height:8px;background:#e60f57;border-radius:8px}
+    .navbar-divider{width:1px;height:32px;background:#2e556b;border-radius:999px;flex-shrink:0}
+    .account-menu{display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;max-width:240px}
+    .account-avatar{width:24px;height:24px;border-radius:8px;background:var(--support-mint);overflow:hidden;position:relative;flex-shrink:0}
+    .account-avatar img{position:absolute;left:14.06%;top:4px;width:112.5%;aspect-ratio:40/41;height:auto}
+    .account-name{color:#fff;font-family:var(--font);font-size:14px;font-weight:700;line-height:1.4;letter-spacing:-.14px;white-space:nowrap}
+    .account-caret{flex-shrink:0}
+    .sidebar-item-inner{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#fff;position:relative}
+    .sidebar{grid-area:sidebar;background:var(--color-nav-bg);display:flex;flex-direction:column;gap:8px;padding-top:12px}
+    .sidebar-item{display:flex;justify-content:center;padding:12px}
+    .sidebar-item.is-active .sidebar-item-inner{background:rgba(255,255,255,.1)}
+    .content{grid-area:content;background:#fff;padding:0 32px 24px;border-top-left-radius:20px;overflow-x:hidden;overflow-y:auto;min-height:0}
+    .icon{font-family:'Material Symbols Rounded';font-weight:600;display:inline-flex;align-items:center;justify-content:center;font-variation-settings:'FILL' 1,'wght' 600,'GRAD' 0,'opsz' 24;user-select:none;flex-shrink:0}
+    .tg-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;height:40px;padding:0 16px;border-radius:12px;font:var(--text-md-bold);letter-spacing:-.01em;transition:background-color 100ms}
+    .tg-button .icon{width:24px;height:24px;font-size:24px}
+    .tg-button--icon{width:40px;padding:8px}
+    .tg-button--primary{color:#00dbff;background:#002233}
+    .tg-button--primary:hover:not(:disabled){color:#66e9ff;background:#003347}
+    .tg-button--primary:disabled{color:#7f8d99;background:#edeff1;cursor:not-allowed}
+    .tg-button--secondary{color:#0077b2;background:#b2f4ff}
+    .tg-button--secondary:hover{color:#005580;background:#66ebff}
+    .tg-button--tertiary{color:#0077b2;background:transparent}
+    .tg-button--neutral{color:#405466;background:transparent}
+    .tg-button--neutral:hover{color:#002233;background:#eceeef}
+    .tg-field{display:flex;flex-direction:column;gap:8px;width:100%}
+    .tg-field__label{display:flex;gap:4px;font:var(--text-md-bold)}
+    .tg-field__req{color:#c20046}
+    .tg-input{display:flex;align-items:center;gap:8px;height:40px;padding:8px 12px;border:1px solid #b2bcc1;border-radius:12px;background:#fff}
+    .tg-input input,.tg-input select{flex:1;min-width:0;border:0;background:transparent;font:var(--text-md);outline:none}
+    .tg-input.is-disabled{background:#edeff1;color:#7f8d99}
+    .tg-switch{display:inline-flex;align-items:center;gap:12px;font:var(--text-md)}
+    .tg-switch__track{width:48px;height:24px;border-radius:999px;background:#b2bcc1;position:relative}
+    .tg-switch__track::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:var(--shadow-xs)}
+    .tg-switch.is-on .tg-switch__track{background:#00dbff}
+    .tg-switch.is-on .tg-switch__track::after{transform:translateX(24px)}
+    .tg-message{display:flex;border-radius:8px;border-left:8px solid #00dbff;overflow:hidden}
+    .tg-message__body{display:flex;gap:16px;flex:1;padding:12px 16px;border:1px solid #d6dbde;border-left:0;border-radius:0 8px 8px 0}
+    .tg-group{display:flex;gap:8px;justify-content:flex-end;flex-wrap:nowrap}
+    .deal{position:relative;display:flex;flex-direction:column;min-height:100%}
+    .deal-header{display:flex;flex-direction:column;gap:12px;padding:40px 0 0;margin-bottom:40px}
+    .deal-header__main{display:flex;align-items:flex-start;gap:16px;flex-wrap:nowrap}
+    .deal-header__title{flex:1;min-width:0;padding-top:2px;font:700 28px/1.3 var(--font);letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .deal-tags{display:flex;flex-wrap:wrap;gap:8px;padding-left:56px}
+    .deal-tag{display:inline-flex;align-items:center;height:24px;padding:4px 8px;border-radius:4px;background:#eceeef;font:900 12px/1.3 var(--font);letter-spacing:-.01em;text-transform:uppercase}
+    .deal-tag--cyan{background:#00dbff}
+    .funnel{display:flex;list-style:none;padding:0 0 24px;flex-wrap:nowrap;min-width:0}
+    .funnel-step{flex:1 1 0;display:flex;align-items:stretch;height:32px;min-width:0;position:relative}
+    .funnel-step:not(.is-first){margin-left:-6px}
+    .funnel-step__info{flex:1;display:flex;align-items:center;justify-content:center;gap:4px;min-width:0;padding:6px 8px;font:var(--text-sm)}
+    .funnel-step__info strong{font:var(--text-sm-bold);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .funnel-step__info span{white-space:nowrap}
+    .funnel-step__nose,.funnel-step__tale{width:6px;height:32px;flex-shrink:0}
+    .funnel-step__nose{clip-path:polygon(0 0,100% 50%,0 100%)}
+    .funnel-step__tale{clip-path:polygon(100% 0,100% 100%,0 50%)}
+    .funnel-step.is-first .funnel-step__info{border-radius:8px 0 0 8px}
+    .funnel-step.is-last .funnel-step__info{border-radius:0 8px 8px 0}
+    .funnel-step--past{z-index:2}
+    .funnel-step--current{z-index:3}
+    .funnel-step--next{z-index:1}
+    .funnel-step--past .funnel-step__info,.funnel-step--past .funnel-step__nose,.funnel-step--past .funnel-step__tale{background:#b2f4ff}
+    .funnel-step--current .funnel-step__info,.funnel-step--current .funnel-step__nose,.funnel-step--current .funnel-step__tale{background:#00dbff}
+    .funnel-step--next .funnel-step__info,.funnel-step--next .funnel-step__nose,.funnel-step--next .funnel-step__tale{background:#eceeef}
+    .deal-grid{display:grid;grid-template-columns:460px minmax(0,1fr);gap:24px;align-items:start}
+    .deal-aside{display:flex;flex-direction:column;gap:16px}
+    .deal-panel{background:#eceeef;border:1px solid #d6dbde;border-radius:8px;overflow:hidden}
+    .deal-acc{border-bottom:1px solid #d6dbde}
+    .deal-acc:last-child{border-bottom:0}
+    .deal-acc__head{width:100%;display:flex;align-items:center;justify-content:space-between;padding:24px 16px;text-align:left;background:#eceeef}
+    .deal-acc__title{font-family:var(--font-crm);font-size:20px;font-weight:700;line-height:30px}
+    .deal-tabs{display:flex;border-bottom:1px solid #d6dbde;overflow:auto}
+    .deal-tab{padding:8px 16px 16px;font:var(--text-md-bold);color:#405466;white-space:nowrap;box-shadow:inset 0 -1px 0 #d6dbde}
+    .deal-tab:first-child{padding-left:0}
+    .deal-tab.is-active{color:#0077b2;box-shadow:inset 0 -4px 0 #00dbff}
+    .deal-toolbar{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;margin-top:32px;margin-bottom:24px}
+    .deal-filters{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+    .deal-filter{display:flex;align-items:center;gap:12px;font-family:var(--font-crm);font-weight:700}
+    .deal-filter .tg-input{min-width:168px}
+    .timeline-item{display:grid;grid-template-columns:40px 1fr;gap:12px}
+    .timeline-rail{display:flex;flex-direction:column;align-items:center;padding-top:4px}
+    .timeline-dot{width:16px;height:16px;border-radius:50%;border:4px solid #6e00c5;background:#fff;flex-shrink:0}
+    .timeline-flag{width:40px;height:40px;border-radius:50%;background:#e60f57;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .timeline-line{width:4px;flex:1;min-height:24px;background:#d6dbde;border-radius:999px}
+    .timeline-content{padding-bottom:32px}
+    .timeline-meta{display:flex;flex-direction:column;align-items:flex-start;gap:8px;margin-top:8px}
+    .pay-block{background:#eceeef;border-radius:8px;padding:24px 16px;display:flex;flex-direction:column;gap:16px}
+    .pay-block .deal-acc__head{padding:0 8px;justify-content:flex-start;gap:8px}
+    .pay-block .deal-acc__title{flex:1}
+    .pay-block .tg-button{align-self:flex-start}
+    .pay-badge{display:inline-flex;align-items:center;justify-content:center;height:16px;min-width:21px;padding:0 8px;border-radius:999px;background:#e5e8ea;font:900 12px/1.3 var(--font)}
+    .pay-empty{padding:0 10px;font-family:var(--font-crm)}
+    .pay-list{display:flex;flex-direction:column;gap:16px}
+    .pay-row{display:flex;align-items:center;gap:16px;width:100%;text-align:left;padding:0 8px;flex-wrap:nowrap}
+    .pay-row__open{min-width:0;text-align:left;flex-shrink:0}
+    .pay-row__prefix{width:186px;flex-shrink:0;display:flex;flex-direction:column;font-family:var(--font-crm);font-size:16px;line-height:24px;white-space:nowrap}
+    .pay-pill{display:inline-flex;align-items:center;gap:4px;height:24px;padding:4px 8px;border-radius:999px;background:#b2f4ff;color:#002233;font:var(--text-xs);white-space:nowrap;flex-shrink:0}
+    .pay-pill .icon{font-size:16px;width:16px;height:16px}
+    .pay-pill--inativo{background:#e5e8ea}
+    .pay-pill--concluido{background:#d6fae8}
+    .drawer-scrim{position:fixed;inset:0;background:rgba(0,34,51,.4);z-index:9700}
+    .drawer{position:fixed;top:0;right:0;height:100vh;width:min(600px,100%);background:#fff;box-shadow:var(--shadow-md);z-index:9800;display:flex;flex-direction:column}
+    .drawer-header{display:flex;gap:24px;padding:24px;border-bottom:1px solid #d6dbde}
+    .drawer-header h2{flex:1;padding-top:4px;font:var(--text-lg-bold)}
+    .drawer-body{flex:1;min-height:0;overflow:hidden;padding:8px 12px;display:flex;flex-direction:column}
+    .drawer-form{display:flex;flex-direction:column;gap:24px;padding:24px 12px;flex:1 1 0;min-height:0;overflow:auto}
+    .drawer-actions{display:flex;justify-content:flex-end;padding:24px;border-top:1px solid #d6dbde}
+    .total-card{flex:0 0 auto;width:100%;display:flex;flex-direction:column;margin-top:8px;padding:12px 24px;border:1px solid #b2bcc1;border-radius:16px;background:#fff;text-align:left;position:relative;z-index:0}
+    .total-card.is-open{max-height:180px;overflow:auto}
+    .total-card__head{display:flex;align-items:center;gap:8px;padding:8px 0}
+    .total-card__head strong{flex:1;min-width:0;font:var(--text-lg-bold)}
+    .total-card__amount{flex:0 0 auto;margin-left:auto;font:var(--text-lg);text-align:right}
+    .chevron{display:block;width:24px;height:24px;flex-shrink:0;position:relative;color:#002233}
+    .chevron::before{content:'';position:absolute;top:50%;left:50%;width:8px;height:8px;margin:-6px 0 0 -6px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg)}
+    .chevron.is-up::before{margin-top:-2px;transform:rotate(-135deg)}
+    .total-card__body{display:flex;flex-direction:column;gap:8px}
+    .total-card__divider{display:block;height:1px;margin:4px 0;background:#d6dbde}
+    .total-card__items{display:flex;flex-direction:column;gap:8px;list-style:none}
+    .total-card__items li{display:flex;gap:22px;font-family:var(--font-crm);font-size:16px;line-height:24px;color:#212429}
+    .total-card__items li span:first-child{flex:1}
+    .total-card__items li span:last-child{flex:1;text-align:right}
+    .items-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid #d6dbde}
+    .item-card{display:flex;gap:8px;padding:24px 16px 24px 32px;border:1px solid #d6dbde;border-radius:16px;margin-top:12px}
+    .item-card__fields{flex:1;display:flex;flex-direction:column;gap:22px}
+    .item-card__row{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+    .ready-stack{display:flex;flex-direction:column;gap:16px;padding:24px 12px}
+    .ready-card{display:flex;flex-direction:column;gap:8px;padding:24px;border:1px solid #d6dbde;border-radius:16px}
+    .ready-title{display:flex;align-items:center;gap:8px;font:var(--text-lg-bold)}
+    .ready-title .icon{color:#087a3a}
+    .ready-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .ready-link{display:flex;gap:16px;align-items:flex-end}
+    .ready-items{display:flex;flex-direction:column;gap:12px;padding-top:12px;border-top:1px solid #d6dbde}
+    .ready-item{display:flex;justify-content:space-between;gap:16px}
+    .toast{position:absolute;top:16px;right:16px;z-index:50;width:min(320px,calc(100% - 32px));display:flex;align-items:flex-start;gap:8px;padding:8px;background:#fff;border-radius:8px;border-left:8px solid #0ed869;box-shadow:var(--shadow-md);overflow:visible}
+    .toast__icon{display:flex;padding-top:4px;color:#087a3a}
+    .toast__content{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;padding:4px 0}
+    .toast__title{font:var(--text-md-bold)}
+    .toast__description{font:var(--text-sm);white-space:normal;overflow-wrap:anywhere}
+    .checkout{min-height:100vh;background:linear-gradient(180deg,#fff 0,#f5faf8 140px,#f7f9f8 100%);color:#171717;font-family:Inter,'DM Sans',sans-serif}
+    .checkout-header{display:flex;align-items:center;gap:12px;height:64px;padding:0 24px;background:#fff;border-bottom:1px solid #ebebeb}
+    .checkout-back{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#171717}
+    .checkout-back:hover{background:#f3f3f3}
+    .checkout-logo{display:flex;color:#111}
+    .checkout-main{max-width:1180px;margin:0 auto;padding:40px 48px 80px;display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:72px;align-items:start}
+    .checkout-title{font-size:24px;font-weight:600;line-height:32px;margin-bottom:28px}
+    .checkout-section+.checkout-section{margin-top:28px}
+    .checkout-section h3{font-size:16px;font-weight:600;margin-bottom:16px}
+    .checkout-fields{display:flex;flex-direction:column;gap:16px}
+    .checkout-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .checkout-field{display:flex;flex-direction:column;gap:6px;min-width:0}
+    .checkout-field span{font-size:14px;font-weight:500}
+    .checkout-field input,.checkout-field select{height:36px;width:100%;padding:4px 12px;border:1px solid #e5e5e5;border-radius:8px;background:#fcfcfc;font-size:16px;line-height:24px;color:#171717;outline:none}
+    .checkout-field input::placeholder{color:#a3a3a3}
+    .checkout-phone{display:flex;align-items:center;gap:8px;height:36px;padding:4px 12px;border:1px solid #e5e5e5;border-radius:8px;background:#fcfcfc}
+    .checkout-phone input{border:0;height:28px;padding:0;background:transparent}
+    .checkout-flag{width:18px;height:18px;border-radius:50%;background:#009b3a;box-shadow:inset 0 0 0 2px #fedf00;flex-shrink:0}
+    .checkout-submit{margin-top:28px;width:100%;height:36px;border-radius:8px;background:#257c70;color:#f7f7f7;font-size:14px;font-weight:500}
+    .checkout-submit:disabled{opacity:.5;cursor:not-allowed}
+    .ck-id-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+    .ck-id-head .checkout-title{margin-bottom:16px}
+    .ck-edit{display:inline-flex;align-items:center;gap:6px;color:#257c70;font-size:14px;font-weight:500}
+    .ck-id-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px 48px;margin-bottom:28px;font-size:14px;line-height:22px;color:#525252}
+    .ck-pay h2,.ck-method-title{font-size:18px;font-weight:600;margin:0 0 16px}
+    .ck-pay-group{border:1px solid #ebebeb;border-radius:12px;overflow:hidden;background:#fff}
+    .ck-pay-opt{width:100%;min-height:52px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid #ebebeb;color:#171717;font-size:14px;font-weight:500;text-align:left}
+    .ck-pay-group .ck-pay-opt{border:0;border-bottom:1px solid #ebebeb}
+    .ck-pay-group .ck-pay-opt:last-child{border-bottom:0}
+    .ck-pay-opt--solo{margin-top:12px;border-radius:12px}
+    .ck-pay-opt--pix{min-height:64px}
+    .ck-pay-opt__main{display:inline-flex;align-items:center;gap:10px;min-width:0}
+    .ck-pay-opt--pix .ck-pay-opt__main{align-items:flex-start}
+    .ck-pay-opt--pix .ck-pay-opt__main svg{margin-top:2px;flex-shrink:0}
+    .ck-pay-opt__copy{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+    .ck-pay-opt__label{font-size:14px;font-weight:500;line-height:20px;color:#171717}
+    .ck-pay-opt__copy small{font-size:12px;font-weight:400;line-height:16px;color:#737373}
+    .ck-powered{margin-top:28px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:#737373}
+    .ck-other{display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 12px;border:1px solid #ebebeb;border-radius:999px;background:#fff;color:#171717;font-size:14px;margin-bottom:24px}
+    .ck-info-box{border:1px solid #ebebeb;border-radius:12px;background:#fff;padding:16px 18px;font-size:14px;line-height:22px;color:#525252}
+    .ck-card-box{border:1px solid #ebebeb;border-radius:12px;background:#fff;padding:20px;display:flex;flex-direction:column;gap:16px}
+    .checkout-success{max-width:760px;margin:0 auto;padding:48px 24px 80px}
+    .ck-success-card{background:#fff;border:1px solid #ebebeb;border-radius:16px;padding:28px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+    .ck-success-card h1{font-size:22px;font-weight:600;margin-bottom:8px}
+    .ck-success-lead{font-size:14px;color:#525252;margin-bottom:20px}
+    .ck-summary{border:1px solid #ebebeb;border-radius:12px;padding:16px;margin-bottom:20px;font-size:14px;line-height:22px}
+    .ck-summary strong{display:block;margin-bottom:8px}
+    .ck-pix-box{display:grid;grid-template-columns:148px 1fr;gap:20px;align-items:start;border:1px solid #ebebeb;border-radius:12px;padding:16px}
+    .ck-qr{width:148px;height:148px;background:#fff}
+    .ck-pix-copy p{font-size:14px;margin-bottom:8px}
+    .ck-pix-copy textarea,.ck-success-card textarea{width:100%;border:1px solid #e5e5e5;border-radius:8px;padding:10px 12px;font-size:12px;line-height:18px;resize:none;background:#fcfcfc;color:#171717}
+    .ck-copy-btn{margin-top:12px;height:36px;padding:0 16px;border-radius:8px;background:#257c70;color:#fff;font-size:14px;font-weight:500}
+    .ck-instructions{margin-top:20px;font-size:13px;line-height:20px;color:#525252}
+    .ck-instructions ol{margin:8px 0 0 18px}
+    .ck-boleto-code{display:flex;align-items:stretch;height:64px;gap:2px;margin-bottom:16px}
+    .ck-boleto-code span{background:#111;height:100%;display:block}
+    .checkout-order{background:#fff;border:1px solid #ebebeb;border-radius:16px;padding:28px 24px 24px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+    .checkout-order__head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px}
+    .checkout-order__head h2{font-size:16px;font-weight:500;margin:0}
+    .checkout-order__amount{display:inline-flex;align-items:center;gap:8px;font-size:20px;font-weight:700;color:#171717}
+    .checkout-order__amount svg{color:#737373}
+    .checkout-item{display:flex;flex-direction:column;gap:4px;padding:8px 0}
+    .checkout-item__row{display:flex;justify-content:space-between;gap:16px;font-size:14px;font-weight:500}
+    .checkout-item__qty{font-size:14px;color:#737373}
+    .checkout-order__total{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:16px;border-top:1px solid #ebebeb;font-size:16px;font-weight:600}
+    .login{min-height:calc(100vh - 64px);display:flex;align-items:center;justify-content:center;padding:40px 24px}
+    .layout.is-login{grid-template-columns:1fr;grid-template-areas:"navbar" "content"}
+    .layout.is-login .sidebar{display:none}
+    .layout.is-login .content{border-radius:0}
+    .totvs-brand{display:flex;align-items:center;gap:8px;height:40px;padding-left:8px}
+    .totvs-brand--checkout,.totvs-brand--powered{padding-left:0;height:auto}
+    .totvs-brand--powered{gap:4px}
+    .totvs-brand__logo{display:block;height:32px;width:auto}
+    .totvs-brand--checkout .totvs-brand__logo{height:28px}
+    .totvs-brand--powered .totvs-brand__logo{height:14px}
+    .totvs-brand__pay{font-family:var(--font);font-weight:700;letter-spacing:-.02em;line-height:1}
+    .totvs-brand__pay--navy{color:#00dbff;font-size:22px}
+    .totvs-brand__pay--dark{color:#111;font-size:20px}
+    .totvs-brand--powered .totvs-brand__pay--dark{font-size:12px}
+    .login-card{width:100%;max-width:412px;display:flex;flex-direction:column;gap:24px;padding:24px;background:#fff;border:1px solid #d6dbde;border-radius:16px}
+    .login-card__header{display:flex;flex-direction:column;gap:12px}
+    .login-steps{display:flex;gap:4px;padding-bottom:8px}
+    .login-step{width:16px;height:4px;border-radius:4px;background:#8c98a3}
+    .login-step.is-current{background:#002233}
+    .login-card h1{font:700 36px/46px var(--font);letter-spacing:-.02em;color:#002233}
+    .login-card__fields{display:flex;flex-direction:column;gap:16px}
+    .login-error{font:var(--text-sm);color:#c20046}
+    .login-card .tg-button{width:100%}
+    @media(max-width:1100px){.checkout-main{grid-template-columns:1fr;padding:32px 20px 64px;gap:32px}.checkout-order{margin-top:0}.ck-pix-box{grid-template-columns:1fr}}
+    @media(max-width:720px){.checkout-row,.ck-id-grid{grid-template-columns:1fr}}
+    @media(max-width:1280px){
+      .content{padding:0 16px 16px}
+      .deal-header__title{font-size:22px}
+    }
+    @media(max-width:1024px){.deal-grid,.item-card__row,.ready-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div id="crm-root" class="layout is-login">
+  <nav class="navbar" id="login-nav">
+    <span class="totvs-brand" aria-label="TOTVS Pay">
+      <img class="totvs-brand__logo" src="totvs/assets/totvs-logo-_JTenmhF.svg" alt="" />
+      <span class="totvs-brand__pay totvs-brand__pay--navy">Pay</span>
+    </span>
+    <div class="navbar-secondary">
+      <div class="navbar-icons">
+        <span class="navbar-icon-btn"><img src="navbar/search.svg" alt="" /></span>
+        <span class="navbar-icon-btn"><img src="navbar/bell.svg" alt="" /><span class="badge-dot"></span></span>
+        <span class="navbar-icon-btn"><img src="navbar/settings.svg" alt="" /></span>
+      </div>
+      <div class="navbar-divider"></div>
+      <div class="account-menu"><span class="account-avatar"><img src="navbar/avatar-totvs.png" alt="" /></span><span class="account-name">Agência RD</span><img class="account-caret" src="navbar/chevron-down.svg" alt="" /></div>
+    </div>
+  </nav>
+  <nav class="navbar" id="crm-nav" hidden>
+    <div class="navbar-product">
+      <div class="navbar-logo">
+        <span class="navbar-rds" aria-label="RD Station CRM">
+          <img class="navbar-rds-symbol" src="navbar/rds-symbol.svg" alt="" />
+          <span class="navbar-rds-lettering">
+            <span class="navbar-rds-line"></span>
+            <img class="navbar-crm-word" src="navbar/crm-lettering.svg" alt="" />
+          </span>
+        </span>
+        <span class="navbar-product-item" aria-hidden="true"><img src="navbar/chevron-down.svg" alt="" /></span>
+      </div>
+    </div>
+    <div class="navbar-secondary">
+      <div class="navbar-icons">
+        <span class="navbar-icon-btn"><img src="navbar/search.svg" alt="" /></span>
+        <span class="navbar-icon-btn"><img src="navbar/diamond.svg" alt="" /></span>
+        <span class="navbar-icon-btn"><img src="navbar/apps.svg" alt="" /></span>
+        <span class="navbar-icon-btn"><img src="navbar/bell.svg" alt="" /><span class="badge-dot"></span></span>
+        <span class="navbar-icon-btn"><img src="navbar/settings.svg" alt="" /></span>
+      </div>
+      <div class="navbar-divider"></div>
+      <div class="account-menu"><span class="account-avatar"><img src="navbar/avatar-totvs.png" alt="" /></span><span class="account-name">Agência RD</span><img class="account-caret" src="navbar/chevron-down.svg" alt="" /></div>
+    </div>
+  </nav>
+  <aside class="sidebar">
+    <div class="sidebar-item"><div class="sidebar-item-inner"><span class="icon">home</span></div></div>
+    <div class="sidebar-item"><div class="sidebar-item-inner"><span class="icon">contacts</span></div></div>
+    <div class="sidebar-item"><div class="sidebar-item-inner"><span class="icon">campaign</span></div></div>
+    <div class="sidebar-item"><div class="sidebar-item-inner"><span class="icon">ads_click</span></div></div>
+    <div class="sidebar-item is-active"><div class="sidebar-item-inner"><span class="icon">groups</span></div></div>
+    <div class="sidebar-item"><div class="sidebar-item-inner"><span class="icon">monitoring</span></div></div>
+  </aside>
+  <main class="content" id="app"></main>
+</div>
+<div id="checkout-root" hidden></div>
+<div id="overlay-root"></div>
+<script>
+const DEAL={name:'Processo Seletivo - Vestibular 2027',value:'R$ 15.000,00',stage:'Negociação',company:'MRV Engenharia',contact:'Mário Andrade',owner:'Flávia',actor:'Luiza Jung'};
+const STATUS={
+  ativo:{label:'Copiar link de pagamento',icon:'content_copy'},
+  inativo:{label:'Pagamento inativo',icon:'info'},
+  concluido:{label:'Pagamento concluído',icon:'check_circle'}
+};
+const PREV=['concluido','inativo'];
+const fmt=c=>(c/100).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const fmtTotal=c=>c?fmt(c):'R$ 00,00';
+const parse=v=>Number.parseInt((v||'').replace(/\D/g,''),10)||0;
+const fmtIn=c=>c?(c/100).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}):'';
+const fmtDt=d=>d.toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+const uid=()=>crypto.randomUUID();
+const state={links:[],drawer:'closed',active:null,toast:null,pendingSuccess:false,totalOpen:false,draft:emptyDraft(),tab:'Histórico',view:'deal',checkout:null,checkoutStep:'identify',ident:emptyIdent(),authed:false,loginError:'',loginUser:'',loginPass:''};
+const USERS=new Set(['nic','nat','poli','gui','bruno','lu','triz','ze','piloto','ana']);
+function normUser(v){return (v||'').trim().toLowerCase().normalize('NFD').replace(/\p{M}/gu,'')}
+function isValidLogin(u,p){return USERS.has(normUser(u))&&p==='123'}
+let toastTimer;
+function emptyDraft(){return{name:DEAL.name,description:'',total:0,specify:false,items:[{id:uid(),name:'',unit:0,qty:1}]}}
+function emptyIdent(){return{name:'',email:'',phone:'',doc:'',street:'',number:'',complement:'',district:'',city:'',uf:'',cep:''}}
+function dash(v){return (v||'').trim()||'—'}
+function total(){return state.draft.specify?state.draft.items.reduce((s,i)=>s+i.unit*i.qty,0):state.draft.total}
+function canCreate(){const d=state.draft;if(!d.name.trim()||!d.description.trim())return false;if(!d.specify)return d.total>0;return d.items.every(i=>i.name.trim()&&i.unit>0&&i.qty>0)}
+function icon(name,size=24){return `<span class="icon" style="width:${size}px;height:${size}px;font-size:${size}px">${name}</span>`}
+function chevron(up){return `<span class="chevron${up?' is-up':''}" aria-hidden="true"></span>`}
+function btn(kind,label,opts={}){const dis=opts.disabled?'disabled':'';const ic=opts.icon?icon(opts.icon):'';return `<button class="tg-button tg-button--${kind}${opts.iconOnly?' tg-button--icon':''}" data-act="${opts.act||''}" ${opts.id?`data-id="${opts.id}"`:''} ${dis} ${opts.aria?`aria-label="${opts.aria}"`:''}>${ic}${opts.iconOnly?'':label}</button>`}
+function field(label,id,val,opts={}){return `<label class="tg-field"><span class="tg-field__label">${label}${opts.req?'<span class="tg-field__req">*</span>':''}</span><span class="tg-input${opts.disabled?' is-disabled':''}">${opts.prefix?`<span>${opts.prefix}</span>`:''}<input id="${id}" value="${val||''}" placeholder="${opts.ph||''}" ${opts.disabled?'disabled':''}></span></label>`}
+function pill(status,id,toCheckout){const meta=STATUS[status];const cls=`pay-pill pay-pill--${status}`;const body=`${icon(meta.icon,16)}${meta.label}`;if(status==='ativo'&&id) return `<button type="button" class="${cls}" data-act="${toCheckout?'open-checkout':'copy-link'}" data-id="${id}">${body}</button>`;return `<span class="${cls}">${body}</span>`}
+function showToast(toast){clearTimeout(toastTimer);state.toast=toast;toastTimer=setTimeout(()=>{state.toast=null;render()},6000)}
+function visibleLinks(){return state.links.filter(l=>!l.paid)}
+function firstActive(){return visibleLinks().find(l=>l.status==='ativo')}
+function totvsMark(size){
+  return `<span class="totvs-brand totvs-brand--${size}" aria-label="TOTVS Pay"><img class="totvs-brand__logo" src="totvs-logo-dark.svg" alt=""><span class="totvs-brand__pay totvs-brand__pay--dark">Pay</span></span>`;
+}
+function backIco(){return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18 9 12l6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`}
+function orderHTML(link,withAmount){
+  const items=link.items.map(i=>`<div class="checkout-item"><div class="checkout-item__row"><p>${i.name}</p><p>${fmt(i.unit*i.qty)}</p></div><p class="checkout-item__qty">Quantidade: ${i.qty}</p></div>`).join('');
+  const amount=withAmount?`<span class="checkout-order__amount">${fmt(link.total)}<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m18 15-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`:'';
+  return `<aside class="checkout-order"><div class="checkout-order__head"><h2>Pedido</h2>${amount}</div>${items}<div class="checkout-order__total"><span>Total</span><span>${fmt(link.total)}</span></div></aside>`;
+}
+function qrHTML(){
+  let cells='';
+  for(let y=0;y<25;y++) for(let x=0;x<25;x++){
+    const finder=(ox,oy)=>{const dx=x-ox,dy=y-oy; if(dx<0||dy<0||dx>6||dy>6) return null; if(dx===0||dy===0||dx===6||dy===6) return true; if(dx>=2&&dx<=4&&dy>=2&&dy<=4) return true; return false};
+    const on=finder(0,0)??finder(18,0)??finder(0,18)??((x*7+y*13+x*y)%5===0);
+    if(on) cells+=`<rect x="${x}" y="${y}" width="1" height="1" fill="#111"/>`;
+  }
+  return `<svg class="ck-qr" viewBox="0 0 25 25" aria-hidden="true">${cells}</svg>`;
+}
+function captureIdent(){
+  const v=id=>(document.getElementById(id)||{}).value||'';
+  state.ident={name:v('ck-name'),email:v('ck-email'),phone:v('ck-phone'),doc:v('ck-doc'),street:v('ck-street'),number:v('ck-number'),complement:v('ck-comp'),district:v('ck-district'),city:v('ck-city'),uf:v('ck-uf'),cep:v('ck-cep')};
+}
+function checkoutHTML(link){
+  const step=state.checkoutStep||'identify';
+  const ident=state.ident||emptyIdent();
+  const amount=fmt(link.total);
+  const header=`<header class="checkout-header"><button type="button" class="checkout-back" data-act="back-pay" aria-label="Voltar ao CRM">${backIco()}</button>${totvsMark('checkout')}</header>`;
+  const powered=`<p class="ck-powered">Powered by ${totvsMark('powered')}</p>`;
+  const pixCode=`00020101021226580014BR.GOV.BCB.PIX0136${String(link.id).replace(/-/g,'').slice(0,32)}520400005303986540${(link.total/100).toFixed(2)}5802BR5925TOTVS PAY6009Sao Paulo62070503***6304ABCD`;
+  const boletoCode='23793.38128 60007.827136 95000.063305 1 844700000'+String(link.total).padStart(8,'0');
+  if(step==='pix-success'||step==='boleto-success'||step==='card-success'){
+    let body='';
+    if(step==='pix-success') body=`<section class="ck-success-card"><h1>Finalize seu pagamento via pix</h1><p class="ck-success-lead">Escaneie o QR Code ou copie o código abaixo.</p><div class="ck-summary"><strong>Resumo do pedido</strong><p>Pedido: #${link.id}</p><p>Valor total: ${amount}</p></div><div class="ck-pix-box">${qrHTML()}<div class="ck-pix-copy"><p>Esse código expira em: <strong>23:59:56</strong></p><textarea readonly rows="3">${pixCode}</textarea><button type="button" class="ck-copy-btn" data-act="copy-pix">Copiar Código</button></div></div><div class="ck-instructions"><strong>Instruções para pagamento</strong><ol><li>Abra o aplicativo do seu banco e selecione o ambiente do PIX.</li><li>Escolha a opção pagar com QR Code e escaneie o código acima ou copie e cole a chave PIX para efetuar o pagamento.</li><li>Confirme as informações e finalize a compra antes que o código expire.</li></ol></div></section>`;
+    if(step==='boleto-success') body=`<section class="ck-success-card"><h1>Finalize seu pagamento via boleto</h1><p class="ck-success-lead">Copie a linha digitável ou use o código de barras abaixo.</p><div class="ck-summary"><strong>Resumo do pedido</strong><p>Pedido: #${link.id}</p><p>Valor total: ${amount}</p></div><div class="ck-boleto-code">${Array.from({length:48},(_,i)=>`<span style="width:${i%7===0?3:i%3===0?2:1}px"></span>`).join('')}</div><textarea readonly rows="2">${boletoCode}</textarea><button type="button" class="ck-copy-btn" data-act="copy-boleto">Copiar Código</button></section>`;
+    if(step==='card-success') body=`<section class="ck-success-card"><h1>Pagamento aprovado</h1><p class="ck-success-lead">Recebemos o pagamento de ${amount}. O pedido já consta como pago.</p><div class="ck-summary"><strong>Resumo do pedido</strong><p>Pedido: #${link.id}</p><p>Valor total: ${amount}</p></div><button type="button" class="checkout-submit" data-act="back-pay">Voltar ao CRM</button></section>`;
+    return `<div class="checkout">${header}<main class="checkout-success">${body}${powered}</main></div>`;
+  }
+  const states=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'].map(s=>`<option ${ident.uf===s?'selected':''}>${s}</option>`).join('');
+  let section='';
+  if(step==='identify'){
+    section=`<h1 class="checkout-title">Identificação</h1>
+      <div class="checkout-section"><h3>Dados pessoais</h3><div class="checkout-fields"><label class="checkout-field"><span>Nome completo</span><input id="ck-name" placeholder="Digite seu nome completo" value="${ident.name||''}"></label><div class="checkout-row"><label class="checkout-field"><span>E-mail</span><input id="ck-email" placeholder="Digite seu e-mail" value="${ident.email||''}"></label><label class="checkout-field"><span>Telefone</span><span class="checkout-phone"><span class="checkout-flag" aria-hidden="true"></span><input id="ck-phone" placeholder="(00) 00000-0000" value="${ident.phone||''}"></span></label></div></div></div>
+      <div class="checkout-section"><h3>Documento</h3><div class="checkout-fields"><div class="checkout-row"><label class="checkout-field"><span>País do documento</span><select><option>Brasil</option></select></label><label class="checkout-field"><span>Tipo de documento</span><select><option>CPF</option><option>CNPJ</option></select></label></div><label class="checkout-field"><span>Número do documento</span><input id="ck-doc" placeholder="000.000.000-00" value="${ident.doc||''}"></label></div></div>
+      <div class="checkout-section"><h3>Endereço</h3><div class="checkout-fields"><div class="checkout-row"><label class="checkout-field"><span>País do endereço</span><select><option>Brasil</option></select></label><label class="checkout-field"><span>Código postal (CEP)</span><input id="ck-cep" placeholder="00000-000" value="${ident.cep||''}"></label></div><label class="checkout-field"><span>Rua</span><input id="ck-street" placeholder="Nome da rua" value="${ident.street||''}"></label><div class="checkout-row"><label class="checkout-field"><span>Número</span><input id="ck-number" placeholder="Ex: 123" value="${ident.number||''}"></label><label class="checkout-field"><span>Complemento (opcional)</span><input id="ck-comp" placeholder="Apto, casa, fundos, etc." value="${ident.complement||''}"></label></div><label class="checkout-field"><span>Bairro</span><input id="ck-district" placeholder="Nome do bairro" value="${ident.district||''}"></label><div class="checkout-row"><label class="checkout-field"><span>Cidade</span><input id="ck-city" placeholder="Nome da cidade" value="${ident.city||''}"></label><label class="checkout-field"><span>Estado</span><select id="ck-uf"><option value="">Selecione o estado</option>${states}</select></label></div></div></div>
+      <button type="button" class="checkout-submit" data-act="continue-ident">Continuar</button>`;
+  }else if(step==='method'){
+    section=`<div class="ck-id-head"><h1 class="checkout-title">Identificação</h1><button type="button" class="ck-edit" data-act="edit-ident">Editar</button></div>
+      <div class="ck-id-grid"><div><p>${dash(ident.name)}</p><p>${dash(ident.email)}</p><p>${dash(ident.phone)}</p><p>${dash(ident.doc)}</p></div><div><p>${dash([ident.street,ident.number].filter(Boolean).join(', '))}</p><p>${dash(ident.district)}</p><p>${dash([ident.city,ident.uf].filter(Boolean).join(', '))}</p><p>${dash(ident.cep)}</p></div></div>
+      <div class="ck-pay"><h2>Pagamento</h2><div class="ck-pay-group"><button type="button" class="ck-pay-opt" data-act="pay-card"><span class="ck-pay-opt__main">Cartão de crédito</span></button><button type="button" class="ck-pay-opt ck-pay-opt--pix" data-act="pay-pix"><span class="ck-pay-opt__main"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.72 1.4a1.02 1.02 0 0 0-1.44 0L1.4 7.28a1.02 1.02 0 0 0 0 1.44l5.88 5.88a1.02 1.02 0 0 0 1.44 0l5.88-5.88a1.02 1.02 0 0 0 0-1.44L8.72 1.4Z"/></svg><span class="ck-pay-opt__copy"><span class="ck-pay-opt__label">Pix</span><small>Aprovação em instantes</small></span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><button type="button" class="ck-pay-opt ck-pay-opt--solo" data-act="pay-boleto"><span class="ck-pay-opt__main">Boleto</span></button></div>${powered}`;
+  }else{
+    const back=`<button type="button" class="ck-other" data-act="other-method">${backIco()} Pagar com outro método</button>`;
+    if(step==='pix') section=`${back}<h2 class="ck-method-title">Pix</h2><div class="ck-info-box">Para concluir com Pix, finalize o pedido. O QR Code para pagamento será exibido na próxima tela.</div><button type="button" class="checkout-submit" data-act="pix-success">Pagar ${amount}</button>${powered}`;
+    if(step==='boleto') section=`${back}<h2 class="ck-method-title">Boleto</h2><div class="ck-info-box">Para gerar o boleto, finalize o pedido. Ele será exibido na próxima tela.</div><button type="button" class="checkout-submit" data-act="boleto-success">Pagar ${amount}</button>${powered}`;
+    if(step==='card') section=`${back}<h2 class="ck-method-title">Cartão de crédito</h2><div class="ck-card-box"><label class="checkout-field"><span>Número do cartão</span><input placeholder="0000 0000 0000 0000"></label><div class="checkout-row"><label class="checkout-field"><span>Data de expiração</span><input placeholder="MM/AA"></label><label class="checkout-field"><span>CVV</span><input placeholder="3 dígitos"></label></div><div class="checkout-row"><label class="checkout-field"><span>Nome do titular do cartão</span><input placeholder="Nome no cartão"></label><label class="checkout-field"><span>Parcelamento</span><select><option>1x de ${amount}</option></select></label></div></div><button type="button" class="checkout-submit" data-act="card-success">Pagar ${amount}</button>${powered}`;
+  }
+  return `<div class="checkout">${header}<main class="checkout-main"><section>${section}</section>${orderHTML(link,step==='identify')}</main></div>`;
+}
+function setChrome(mode){
+  const root=document.getElementById('crm-root');
+  const loginNav=document.getElementById('login-nav');
+  const crmNav=document.getElementById('crm-nav');
+  if(!root||!loginNav||!crmNav) return;
+  if(mode==='login'){root.classList.add('is-login');loginNav.hidden=false;crmNav.hidden=true}
+  else{root.classList.remove('is-login');loginNav.hidden=true;crmNav.hidden=false}
+}
+function render(){
+  const crm=document.getElementById('crm-root');
+  const ck=document.getElementById('checkout-root');
+  if(!state.authed){
+    setChrome('login');
+    crm.hidden=false; ck.hidden=true; document.body.style.background='';
+    document.getElementById('overlay-root').innerHTML='';
+    document.getElementById('app').innerHTML=`
+      <div class="login">
+        <form class="login-card" id="login-form" novalidate>
+          <header class="login-card__header">
+            <div class="login-steps" aria-hidden="true"><span class="login-step"></span><span class="login-step is-current"></span></div>
+            <h1>Entrar</h1>
+          </header>
+          <div class="login-card__fields">
+            <label class="tg-field"><span class="tg-field__label">Usuário</span><span class="tg-input"><input id="login-user" placeholder="Insira o usuário" autocomplete="username"></span></label>
+            <label class="tg-field"><span class="tg-field__label">Senha</span><span class="tg-input"><input id="login-password" type="password" placeholder="Insira a senha" autocomplete="current-password"></span></label>
+          </div>
+          ${state.loginError?`<p class="login-error" role="alert">${state.loginError}</p>`:''}
+          ${btn('primary','Entrar',{act:'login',disabled:true})}
+        </form>
+      </div>`;
+    const user=document.getElementById('login-user');
+    const pass=document.getElementById('login-password');
+    const submit=document.querySelector('[data-act="login"]');
+    const sync=()=>{submit.disabled=!(user.value.trim()&&pass.value)};
+    user.value=state.loginUser||'';
+    pass.value=state.loginPass||'';
+    sync();
+    user.oninput=()=>{state.loginUser=user.value;state.loginError='';sync()};
+    pass.oninput=()=>{state.loginPass=pass.value;state.loginError='';sync()};
+    document.getElementById('login-form').onsubmit=ev=>{ev.preventDefault();act('login')};
+    return;
+  }
+  setChrome('crm');
+  if(state.view==='checkout'&&state.checkout){
+    crm.hidden=true; ck.hidden=false; document.body.style.background='#f6f7f6';
+    document.getElementById('overlay-root').innerHTML='';
+    ck.innerHTML=checkoutHTML(state.checkout);
+    ck.querySelectorAll('[data-act]').forEach(el=>el.onclick=()=>act(el.dataset.act));
+    return;
+  }
+  crm.hidden=false; ck.hidden=true; document.body.style.background='';
+  const d=state.draft,t=total(),links=visibleLinks();
+  const histEvents=[{kind:'dot',html:`<strong>Flávia</strong> alterou o responsável para Flávia`,at:'23/07/2026 17:18'},{kind:'flag',html:`<strong>Negociação criada</strong>`,at:'23/07/2026 17:15'}];
+  const hist=state.links.flatMap(l=>{
+    const created={kind:'dot',html:`<strong>${DEAL.actor}</strong> criou um link de pagamento no valor de ${fmt(l.total)}`,at:fmtDt(l.created),status:l.status,id:l.id};
+    if(!l.paid) return [created];
+    return [{kind:'dot',html:`<strong>${DEAL.actor}</strong> registrou o pagamento de ${fmt(l.total)} via link`,at:fmtDt(l.paidAt),status:'concluido'},created];
+  }).concat(histEvents);
+  const first=firstActive();
+  const payBody=links.length?`<ul class="pay-list">${links.map(l=>`<li class="pay-row"><button class="pay-row__open" data-act="${first&&l.id===first.id?'open-checkout':'open'}" data-id="${l.id}"><span class="pay-row__prefix"><time>${fmtDt(l.created)}</time><span>${fmt(l.total)}</span></span></button>${pill(l.status,l.id,first&&l.id===first.id)}</li>`).join('')}</ul>`:`<p class="pay-empty">Não há links de pagamentos na negociação, clique no botão abaixo para criar um link</p>`;
+  const funnel=[{label:'Entrada',tone:'past'},{label:'Qualificação',tone:'past'},{label:'Propostas',tone:'past'},{label:'Ajustes',tone:'past'},{label:'Negociação',tone:'current'},{label:'Documentação',tone:'next'}].map((step,i)=>`<li class="funnel-step funnel-step--${step.tone}${i===0?' is-first':''}${i===5?' is-last':''}">${i>0?'<span class="funnel-step__tale"></span>':''}<span class="funnel-step__info"><strong>${step.label}</strong> <span>(0 dias)</span></span>${i<5?'<span class="funnel-step__nose"></span>':''}</li>`).join('');
+  const tabs=['Histórico','Email','Tarefas','Questionário','Produtos e serviços','Proposta','Arquivos'];
+  const items=d.specify?`<section><div class="items-head"><h3>Produtos e serviços do link</h3>${btn('tertiary','Adicionar novo item',{icon:'add',act:'add-item'})}</div>${d.items.map(i=>`<article class="item-card"><div class="item-card__fields">${field('Nome','n-'+i.id,i.name,{req:true,ph:'Insira o nome do item'})}<div class="item-card__row">${field('Preço unitário','p-'+i.id,fmtIn(i.unit),{req:true,prefix:'R$',ph:'00,00'})}<label class="tg-field"><span class="tg-field__label">Quantidade<span class="tg-field__req">*</span></span><span class="tg-input"><select id="q-${i.id}">${Array.from({length:20},(_,k)=>`<option ${i.qty===k+1?'selected':''}>${k+1}</option>`).join('')}</select></span></label></div></div>${btn('neutral','',{icon:'delete',iconOnly:true,act:'del-item',id:i.id,disabled:d.items.length===1,aria:'Excluir item'})}</article>`).join('')}</section>`:'';
+  const breakdown=d.specify?d.items.filter(i=>i.name.trim()||i.unit>0): (t>0||d.description.trim()?[{id:'simple',name:d.description.trim()||'Valor do link',qty:1,unit:t}]:[]);
+  const totalBody=state.totalOpen?`<div class="total-card__body"><span class="total-card__divider"></span>${breakdown.length?`<ul class="total-card__items">${breakdown.map(i=>`<li><span>${i.name||'Item sem nome'}</span><span>${i.qty}x ${fmt(i.unit)}</span></li>`).join('')}</ul>`:''}</div>`:'';
+  const create=`<div class="drawer-body"><div class="drawer-form">${field('Nome','name',d.name,{req:true})}${field('Descrição','desc',d.description,{req:true,ph:'Insira a descrição do pagamento'})}<div>${field('Valor total','val',d.specify?fmtIn(t):fmtIn(d.total),{req:true,prefix:d.specify?'':'R$',ph:d.specify?'Cadastre os itens para obter a soma total':'00,00',disabled:d.specify})}<div style="margin-top:24px"><button class="tg-switch${d.specify?' is-on':''}" data-act="toggle" role="switch"><span class="tg-switch__track"></span>Especificar itens</button></div></div>${items}</div><button type="button" class="total-card${state.totalOpen?' is-open':''}" data-act="toggle-total" aria-expanded="${state.totalOpen}"><div class="total-card__head"><strong>Total</strong><span class="total-card__amount">${fmtTotal(t)}</span>${chevron(!state.totalOpen)}</div>${totalBody}</button></div><footer class="drawer-actions"><div class="tg-group">${btn('secondary','Cancelar',{act:'close'})}${btn('primary','Criar link',{act:'create',disabled:!canCreate()})}</div></footer>`;
+  const a=state.active;
+  const ready=a?`<div class="drawer-body"><div class="ready-stack"><aside class="tg-message"><div class="tg-message__body">${icon('info')}<div><p class="tg-message__title">Configurações de pagamento</p><p>Métodos de pagamento aceitos, validade do link e número de parcelas são determinados por Administradores na TOTVSPay.</p></div></div></aside><section class="ready-card"><h3 class="ready-title">${icon('check_circle')} Link de pagamento pronto!</h3><div><strong>Nome</strong><p>${a.name}</p></div><div><strong>Descrição</strong><p style="color:#405466">${a.description}</p></div><div class="ready-grid"><div><strong>Valor total</strong><p>${fmt(a.total)}</p></div><div><strong>Data de criação</strong><p>${a.created.toLocaleDateString('pt-BR')}</p></div><div><strong>Data de expiração</strong><p>${a.expires.toLocaleDateString('pt-BR')}</p></div></div><div class="ready-link">${field('Link','url',a.url,{disabled:true})}${btn('secondary','',{icon:'content_copy',iconOnly:true,act:'copy',aria:'Copiar link'})}</div><div class="ready-items"><strong>Itens no link</strong>${a.items.map(i=>`<div class="ready-item"><span>${i.name}</span><span>${i.qty}x ${fmt(i.unit)}</span></div>`).join('')}</div></section></div></div><footer class="drawer-actions"><div class="tg-group">${btn('secondary','Fechar',{act:'close'})}${btn('primary','Copiar link',{act:'copy'})}</div></footer>`:'';
+  const drawer=state.drawer==='closed'?'':`<button class="drawer-scrim" data-act="close" aria-label="Fechar"></button><aside class="drawer" role="dialog">${`<header class="drawer-header"><h2>Link de pagamento</h2>${btn('neutral','',{icon:'close',iconOnly:true,act:'close',aria:'Fechar'})}</header>`}${state.drawer==='create'?create:ready}</aside>`;
+  const toast=state.toast&&state.drawer==='closed'?`<div class="toast" role="status"><span class="toast__icon">${icon('check_circle')}</span><div class="toast__content"><p class="toast__title">${state.toast.title}</p>${state.toast.description?`<p class="toast__description">${state.toast.description}</p>`:''}</div>${btn('neutral','',{icon:'close',iconOnly:true,act:'dismiss-toast',aria:'Fechar aviso'})}</div>`:'';
+  document.getElementById('app').innerHTML=`
+    <div class="deal">
+      <header class="deal-header">
+        <div class="deal-header__main">${btn('neutral','',{icon:'arrow_back',iconOnly:true,aria:'Voltar'})}<h1 class="deal-header__title">${DEAL.name}</h1><div class="tg-group">${btn('neutral','',{icon:'more_vert',iconOnly:true,aria:'Mais ações'})}${btn('secondary','Marcar perda',{icon:'thumb_down'})}${btn('primary','Marcar venda',{icon:'thumb_up'})}</div></div>
+        <div class="deal-tags"><span class="deal-tag deal-tag--cyan">EM ANDAMENTO</span><span class="deal-tag">FECHAMENTO E FEEDBACK</span><span class="deal-tag deal-tag--cyan">VENDA CERTA!</span></div>
+      </header>
+      <ol class="funnel">${funnel}</ol>
+      <div class="deal-grid">
+        <div class="deal-aside">
+          <aside class="deal-panel">
+            ${['Negociação','Contatos','Empresa','Responsável'].map(n=>`<section class="deal-acc"><div class="deal-acc__head"><span class="deal-acc__title">${n}</span>${icon('expand_more')}</div></section>`).join('')}
+          </aside>
+          <section class="pay-block"><div class="deal-acc__head"><h2 class="deal-acc__title">Pagamentos</h2>${links.length?`<span class="pay-badge">${links.length}</span>`:''}${icon('expand_less')}</div>${payBody}${btn('secondary','Criar link de pagamento',{icon:'add',act:'open-create'})}${links.length?btn('tertiary','Ver histórico de pagamentos',{act:'history'}):''}</section>
+        </div>
+        <section>
+          <div class="deal-tabs">${tabs.map(n=>`<button class="deal-tab${state.tab===n?' is-active':''}" data-tab="${n}">${n}</button>`).join('')}</div>
+          <div class="deal-toolbar"><div class="deal-filters"><label class="deal-filter">Do<span class="tg-input"><select><option>RD Station CRM</option></select></span></label><label class="deal-filter">Exibir<span class="tg-input"><select><option>Todos os eventos</option></select></span></label></div>${btn('secondary','Criar anotação',{icon:'add'})}</div>
+          <div>${hist.map((e,i)=>`<article class="timeline-item"><div class="timeline-rail">${e.kind==='flag'?`<span class="timeline-flag">${icon('flag',24)}</span>`:'<span class="timeline-dot"></span>'}${i<hist.length-1?'<span class="timeline-line"></span>':''}</div><div class="timeline-content"><p>${e.html}</p><div class="timeline-meta"><time>${e.at}</time>${e.status?pill(e.status,e.id):''}</div></div></article>`).join('')}</div>
+        </section>
+      </div>
+      ${toast}
+    </div>`;
+  document.getElementById('overlay-root').innerHTML=drawer;
+  bind();
+}
+function bind(){
+  document.querySelectorAll('[data-act]').forEach(el=>el.onclick=ev=>{ev.stopPropagation();act(el.dataset.act,el.dataset.id)});
+  document.querySelectorAll('[data-tab]').forEach(el=>el.onclick=()=>{state.tab=el.dataset.tab;render()});
+  const name=document.getElementById('name'); if(name) name.oninput=e=>{state.draft.name=e.target.value;refreshCreate()};
+  const desc=document.getElementById('desc'); if(desc) desc.oninput=e=>{state.draft.description=e.target.value;refreshCreate()};
+  const val=document.getElementById('val'); if(val&&!state.draft.specify) val.oninput=e=>{const digits=(e.target.value||'').replace(/\D/g,'');state.draft.total=digits?Number.parseInt(digits,10):0;e.target.value=fmtIn(state.draft.total);refreshCreate()};
+  state.draft.items.forEach(i=>{
+    const n=document.getElementById('n-'+i.id); if(n) n.oninput=e=>{i.name=e.target.value;refreshCreate()};
+    const p=document.getElementById('p-'+i.id); if(p) p.oninput=e=>{const digits=(e.target.value||'').replace(/\D/g,'');i.unit=digits?Number.parseInt(digits,10):0;e.target.value=fmtIn(i.unit);refreshCreate()};
+    const q=document.getElementById('q-'+i.id); if(q) q.onchange=e=>{i.qty=Number(e.target.value);render()};
+  });
+}
+function refreshCreate(){
+  const b=document.querySelector('[data-act="create"]'); if(b) b.disabled=!canCreate();
+  const totalEl=document.querySelector('.total-card__amount'); if(totalEl) totalEl.textContent=fmtTotal(total());
+}
+function copyLink(url){
+  if(!url) return;
+  navigator.clipboard.writeText(url).catch(()=>{});
+  showToast({title:'Link copiado',description:'O link de pagamento está na área de transferência'});
+  render();
+}
+function act(a,id){
+  if(a==='login'){
+    const u=state.loginUser||'';
+    const p=state.loginPass||'';
+    if(!u.trim()||!p) return;
+    if(!isValidLogin(u,p)){state.loginError='Usuário ou senha inválidos';render();return}
+    state.authed=true;state.loginError='';render();return;
+  }
+  if(a==='open-create'){state.draft=emptyDraft();state.totalOpen=false;state.drawer='create';state.active=null;render()}
+  if(a==='close'){
+    state.drawer='closed';
+    if(state.pendingSuccess){
+      state.pendingSuccess=false;
+      showToast({title:'Link criado com sucesso',description:'A partir de agora você já consegue receber pagamentos através desse link'});
+    }
+    render();
+  }
+  if(a==='toggle'){state.draft.specify=!state.draft.specify;render()}
+  if(a==='toggle-total'){state.totalOpen=!state.totalOpen;render()}
+  if(a==='add-item'){state.draft.items.push({id:uid(),name:'',unit:0,qty:1});render()}
+  if(a==='del-item'&&state.draft.items.length>1){state.draft.items=state.draft.items.filter(i=>i.id!==id);render()}
+  if(a==='history'){state.tab='Histórico';render()}
+  if(a==='dismiss-toast'){clearTimeout(toastTimer);state.toast=null;render()}
+  if(a==='create'&&canCreate()){
+    const now=new Date(); const t=total();
+    const items=state.draft.specify?state.draft.items.map(i=>({...i})):[{id:uid(),name:state.draft.description,unit:t,qty:1}];
+    const link={id:uid(),name:state.draft.name,description:state.draft.description,total:t,items,url:'https://link.malga.io/'+uid(),created:now,expires:new Date(now.getTime()+31*86400000),status:'ativo'};
+    state.links=state.links.map((l,i)=>({...l,status:PREV[i%PREV.length]}));
+    state.links.unshift(link);
+    state.active=link;
+    state.drawer='ready';
+    state.pendingSuccess=true;
+    render();
+  }
+  if(a==='open'){state.active=state.links.find(l=>l.id===id);state.drawer='ready';render()}
+  if(a==='open-checkout'){const l=state.links.find(x=>x.id===id); if(!l) return; state.checkout=l; state.view='checkout'; state.checkoutStep='identify'; state.ident=emptyIdent(); state.drawer='closed'; state.pendingSuccess=false; render()}
+  if(a==='continue-ident'){captureIdent(); state.checkoutStep='method'; render()}
+  if(a==='edit-ident'){state.checkoutStep='identify'; render()}
+  if(a==='other-method'){state.checkoutStep='method'; render()}
+  if(a==='pay-card'){state.checkoutStep='card'; render()}
+  if(a==='pay-pix'){state.checkoutStep='pix'; render()}
+  if(a==='pay-boleto'){state.checkoutStep='boleto'; render()}
+  if(a==='pix-success'){state.checkoutStep='pix-success'; render()}
+  if(a==='boleto-success'){state.checkoutStep='boleto-success'; render()}
+  if(a==='card-success'){state.checkoutStep='card-success'; render()}
+  if(a==='copy-pix'||a==='copy-boleto'){const ta=document.querySelector('#checkout-root textarea'); if(ta) navigator.clipboard.writeText(ta.value).catch(()=>{});}
+  if(a==='back-pay'&&state.checkout){
+    const id=state.checkout.id;
+    state.links=state.links.map(l=>l.id===id?{...l,paid:true,status:'concluido',paidAt:new Date()}:l);
+    state.checkout=null; state.view='deal'; state.tab='Histórico';
+    showToast({title:'Pagamento confirmado',description:'O link saiu da lista lateral e o pagamento consta no histórico'});
+    render();
+  }
+  if(a==='copy'&&state.active){copyLink(state.active.url)}
+  if(a==='copy-link'){const l=state.links.find(x=>x.id===id); if(l) copyLink(l.url)}
+}
+render();
+</script>
+</body>
+</html>

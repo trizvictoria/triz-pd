@@ -1,0 +1,132 @@
+.login {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--size-spacing-07) var(--size-spacing-05);
+}
+
+.layout-totvs {
+  display: grid;
+  grid-template-rows: 64px 1fr;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'navbar'
+    'content';
+  height: 100vh;
+  overflow: hidden;
+}
+
+.totvs-login-content {
+  border-top-left-radius: 0;
+}
+
+.totvs-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding-left: 8px;
+}
+
+.totvs-brand--checkout {
+  padding-left: 0;
+  height: auto;
+}
+
+.totvs-brand--powered {
+  padding-left: 0;
+  height: auto;
+  gap: 4px;
+}
+
+.totvs-brand__logo {
+  display: block;
+  height: 32px;
+  width: auto;
+}
+
+.totvs-brand--checkout .totvs-brand__logo {
+  height: 28px;
+}
+
+.totvs-brand--powered .totvs-brand__logo {
+  height: 14px;
+}
+
+.totvs-brand__pay {
+  font-family: var(--font);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.totvs-brand__pay--navy {
+  color: #00dbff;
+  font-size: 22px;
+}
+
+.totvs-brand__pay--dark {
+  color: #111111;
+  font-size: 20px;
+}
+
+.totvs-brand--powered .totvs-brand__pay--dark {
+  font-size: 12px;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 412px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-05);
+  padding: var(--size-spacing-05);
+  background: var(--neutral-surface);
+  border: 1px solid var(--neutral-border);
+  border-radius: var(--border-radius-lg);
+}
+
+.login-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-03);
+}
+
+.login-steps {
+  display: flex;
+  gap: 4px;
+  padding-bottom: var(--size-spacing-02);
+}
+
+.login-step {
+  width: 16px;
+  height: 4px;
+  border-radius: 4px;
+  background: var(--neutral-icon-disabled);
+}
+
+.login-step.is-current {
+  background: var(--neutral-icon-high-emphasis);
+}
+
+.login-card h1 {
+  font: 700 36px/46px var(--font);
+  letter-spacing: -0.02em;
+  color: var(--neutral-text-high-emphasis);
+}
+
+.login-card__fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-spacing-04);
+}
+
+.login-error {
+  font: var(--text-sm);
+  color: var(--danger-text);
+}
+
+.login-card .tg-button {
+  width: 100%;
+}

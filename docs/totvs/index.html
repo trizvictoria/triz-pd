@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/prototipouniverso/totvs/assets/totvs-logo-_JTenmhF.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TOTVS Pay — Payments Universo TOTVS</title>
+    <script>
+      (function () {
+        var KEY = 'pd-ai-auth'
+        var PASS = 'e9e69fcd703e857da732ae1e8c0d839920a24cb3407cc98440c04a4c7b62545d'
+        try {
+          if (sessionStorage.getItem(KEY) !== PASS) {
+            location.replace('/prototipouniverso/')
+            return
+          }
+        } catch (e) {
+          location.replace('/prototipouniverso/')
+          return
+        }
+        var path = sessionStorage.getItem('spa-path')
+        if (path && path.indexOf('/totvs') !== -1) {
+          sessionStorage.removeItem('spa-path')
+          history.replaceState(null, '', path)
+        }
+      })()
+    </script>
+    <script type="module" crossorigin src="/prototipouniverso/totvs/assets/index-BUwXgYQZ.js"></script>
+    <link rel="stylesheet" crossorigin href="/prototipouniverso/totvs/assets/index-1ZQ5zooo.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
