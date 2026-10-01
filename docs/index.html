@@ -1,14 +1,396 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/triz-pd/assets/totvs-logo-_JTenmhF.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TOTVS Pay — Payments Universo TOTVS</title>
-    <script type="module" crossorigin src="/triz-pd/assets/index-CYgujuAI.js"></script>
-    <link rel="stylesheet" crossorigin href="/triz-pd/assets/index-YsiCmiWD.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Negociação · RD Station CRM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,700;9..40,800;9..40,900&family=Inter:wght@400;500;600&family=Nunito+Sans:wght@400;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,1,0&display=swap" rel="stylesheet" />
+  <style>
+    :root{--color-nav-bg:#001927;--font:'DM Sans',sans-serif;--font-crm:'Nunito Sans','DM Sans',sans-serif;--primary-border:#00dbff;--primary-icon:#0077b2;--primary-icon-hover:#005580;--primary-icon-on-color:#00dbff;--primary-icon-on-color-hover:#66e9ff;--primary-surface-high-emphasis:#00dbff;--primary-surface-low-emphasis:#b2f4ff;--primary-surface-hover:#66ebff;--primary-text:#0077b2;--primary-text-hover:#005580;--primary-text-on-color:#00dbff;--primary-text-on-color-hover:#66e9ff;--neutral-border:#d6dbde;--neutral-border-interactive:#b2bcc1;--neutral-icon-high-emphasis:#002233;--neutral-icon-low-emphasis:#596b7a;--neutral-icon-disabled:#8c98a3;--neutral-icon-inverse:#fff;--neutral-surface:#fff;--neutral-surface-high-emphasis:#e5e8ea;--neutral-surface-low-emphasis:#eceeef;--neutral-surface-hover:#dadee0;--neutral-surface-disabled:#edeff1;--neutral-surface-inverse:#002233;--neutral-surface-inverse-interactive:#002233;--neutral-surface-inverse-interactive-hover:#003347;--neutral-text-high-emphasis:#002233;--neutral-text-low-emphasis:#405466;--neutral-text-disabled:#7f8d99;--neutral-text-inverse:#fff;--neutral-focus-outline:#00dbff;--danger-text:#c20046;--success-icon:#087a3a;--success-text:#087a3a;--success-border:#0ed869;--success-surface-low-emphasis:#d6fae8;--highlight-text:#6e00c5;--highlight-surface-low-emphasis:#edd6ff;--support-mint:#00f2c9;--size-spacing-01:4px;--size-spacing-02:8px;--size-spacing-03:12px;--size-spacing-04:16px;--size-spacing-05:24px;--size-spacing-06:32px;--border-radius-xs:4px;--border-radius-sm:8px;--border-radius-md:12px;--border-radius-lg:16px;--border-radius-pill:999px;--shadow-xs:0 2px 6px rgba(0,34,51,.1);--shadow-md:0 8px 18px rgba(0,34,51,.16);--shadow-lg:0 12px 24px rgba(0,34,51,.2);--zindex-3:1020;--zindex-4:1030;--zindex-6:1050;--motion-duration-extra-fast:100ms;--motion-duration-normal:300ms;--motion-timing-function-ease-out:cubic-bezier(.215,.61,.355,1);--motion-timing-function-ease-in-out:cubic-bezier(.645,.045,.355,1);--text-xl:800 28px/36px var(--font);--text-lg:500 20px/30px var(--font);--text-lg-bold:700 20px/30px var(--font);--text-md:500 16px/24px var(--font);--text-md-bold:700 16px/24px var(--font);--text-sm:500 14px/20px var(--font);--text-sm-bold:700 14px/20px var(--font);--text-xs:500 12px/16px var(--font)}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    [hidden]{display:none!important}
+    html,body{height:100%}
+    body{display:flex;flex-direction:column;font-family:var(--font);color:var(--neutral-text-high-emphasis);background:var(--color-nav-bg);-webkit-font-smoothing:antialiased}
+    button,input,select{font-family:inherit}button{cursor:pointer;border:none;background:none}
+    .demo-banner{position:relative;z-index:12000;width:100%;height:28px;display:flex;align-items:center;justify-content:center;background:#00dbff;color:#002233;font:700 12px/16px var(--font);letter-spacing:.01em;flex-shrink:0}
+    .layout{display:grid;grid-template-rows:64px 1fr;grid-template-columns:64px 1fr;grid-template-areas:"navbar navbar" "sidebar content";flex:1;min-height:0;height:auto;overflow:hidden}
+    .navbar{grid-area:navbar;background:var(--color-nav-bg);display:flex;align-items:center;justify-content:space-between;padding:var(--size-spacing-03);height:64px;z-index:9600}
+    .navbar img{max-width:none;display:block}
+    .navbar-product{display:flex;align-items:center;height:40px;padding-left:8px}
+    .navbar-logo{display:flex;align-items:center;gap:12px}
+    .navbar-rds{position:relative;width:107px;height:32px;flex-shrink:0}
+    .navbar-rds-symbol{position:absolute;left:0;top:0}
+    .navbar-rds-lettering{position:absolute;inset:9.38% 0 9.38% 41.12%}
+    .navbar-rds-line{position:absolute;inset:0 96.83% 0 0;background:rgba(0,219,255,.25)}
+    .navbar-crm-word{position:absolute;left:23.81%;top:21.12%}
+    .navbar-product-item{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;flex-shrink:0}
+    .product-switch{position:relative;display:flex;align-items:center}
+    .product-switch__toggle{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#fff;flex-shrink:0}
+    .product-switch--light .product-switch__toggle{color:#111}
+    .product-switch__toggle:hover,.product-switch__toggle[aria-expanded='true']{background:rgba(255,255,255,.08)}
+    .product-switch--light .product-switch__toggle:hover,.product-switch--light .product-switch__toggle[aria-expanded='true']{background:#f3f3f3}
+    .product-switch__menu{position:absolute;top:calc(100% + 8px);left:0;min-width:228px;padding:12px 0;background:#001927;border-radius:8px;box-shadow:0 12px 24px rgba(0,34,51,.28);z-index:9700}
+    .product-switch__label{padding:4px 16px 8px;color:rgba(255,255,255,.55);font:700 11px/14px var(--font);letter-spacing:.08em;text-transform:uppercase}
+    .product-switch__item{display:block;width:100%;padding:8px 16px;color:#fff;font:500 14px/20px var(--font);text-align:left}
+    .product-switch__item:hover:not(:disabled){background:rgba(255,255,255,.08)}
+    .product-switch__item.is-disabled,.product-switch__item:disabled{color:rgba(255,255,255,.42);cursor:default}
+    .product-switch__sep{display:block;height:1px;margin:8px 12px;background:rgba(255,255,255,.12)}
+    .navbar-secondary{display:flex;align-items:center;gap:8px}
+    .navbar-icons{display:flex;align-items:center}
+    .navbar-icon-btn{width:40px;height:40px;padding:8px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#fff;position:relative;flex-shrink:0}
+    .navbar-icon-btn:hover,.navbar-product-item:hover,.account-menu:hover,.sidebar-item-inner:hover{background:rgba(255,255,255,.08)}
+    .badge-dot{position:absolute;top:4px;left:28px;width:8px;height:8px;background:#e60f57;border-radius:8px}
+    .navbar-divider{width:1px;height:32px;background:#2e556b;border-radius:999px;flex-shrink:0}
+    .account-menu{display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;max-width:240px}
+    .account-avatar{width:24px;height:24px;border-radius:8px;background:var(--support-mint);overflow:hidden;position:relative;flex-shrink:0}
+    .account-avatar img{position:absolute;left:14.06%;top:4px;width:112.5%;aspect-ratio:40/41;height:auto}
+    .account-name{color:#fff;font-family:var(--font);font-size:14px;font-weight:700;line-height:1.4;letter-spacing:-.14px;white-space:nowrap}
+    .account-caret{flex-shrink:0}
+    .sidebar-item-inner{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#fff;position:relative}
+    .sidebar{grid-area:sidebar;background:var(--color-nav-bg);display:flex;flex-direction:column;gap:8px;padding-top:12px}
+    .sidebar-item{display:flex;justify-content:center;padding:12px}
+    .sidebar-item.is-active .sidebar-item-inner{background:rgba(255,255,255,.1)}
+    .content{grid-area:content;background:#fff;padding:0 32px 24px;border-top-left-radius:20px;overflow-x:hidden;overflow-y:auto;min-height:0}
+    .icon{font-family:'Material Symbols Rounded';font-weight:600;display:inline-flex;align-items:center;justify-content:center;font-variation-settings:'FILL' 1,'wght' 600,'GRAD' 0,'opsz' 24;user-select:none;flex-shrink:0}
+    .tg-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;height:40px;padding:0 16px;border-radius:12px;font:var(--text-md-bold);letter-spacing:-.01em;transition:background-color 100ms}
+    .tg-button .icon{width:24px;height:24px;font-size:24px}
+    .tg-button--icon{width:40px;padding:8px}
+    .tg-button--primary{color:#00dbff;background:#002233}
+    .tg-button--primary:hover:not(:disabled){color:#66e9ff;background:#003347}
+    .tg-button--primary:disabled{color:#7f8d99;background:#edeff1;cursor:not-allowed}
+    .tg-button--secondary{color:#0077b2;background:#b2f4ff}
+    .tg-button--secondary:hover{color:#005580;background:#66ebff}
+    .tg-button--tertiary{color:#0077b2;background:transparent}
+    .tg-button--neutral{color:#405466;background:transparent}
+    .tg-button--neutral:hover{color:#002233;background:#eceeef}
+    .tg-field{display:flex;flex-direction:column;gap:8px;width:100%}
+    .tg-field__label{display:flex;gap:4px;font:var(--text-md-bold)}
+    .tg-field__req{color:#c20046}
+    .tg-input{display:flex;align-items:center;gap:8px;height:40px;padding:8px 12px;border:1px solid #b2bcc1;border-radius:12px;background:#fff}
+    .tg-input input,.tg-input select{flex:1;min-width:0;border:0;background:transparent;font:var(--text-md);outline:none}
+    .tg-input.is-disabled{background:#edeff1;color:#7f8d99}
+    .tg-switch{display:inline-flex;align-items:center;gap:12px;font:var(--text-md)}
+    .tg-switch__track{width:48px;height:24px;border-radius:999px;background:#b2bcc1;position:relative}
+    .tg-switch__track::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:var(--shadow-xs)}
+    .tg-switch.is-on .tg-switch__track{background:#00dbff}
+    .tg-switch.is-on .tg-switch__track::after{transform:translateX(24px)}
+    .tg-message{display:flex;border-radius:8px;border-left:8px solid #00dbff;overflow:hidden}
+    .tg-message__body{display:flex;gap:16px;flex:1;padding:12px 16px;border:1px solid #d6dbde;border-left:0;border-radius:0 8px 8px 0}
+    .tg-group{display:flex;gap:8px;justify-content:flex-end;flex-wrap:nowrap}
+    .login{min-height:100%;display:flex;align-items:center;justify-content:center;padding:40px 24px}
+    .layout.is-login{grid-template-columns:1fr;grid-template-areas:"navbar" "content"}
+    .layout.is-login .sidebar{display:none}
+    .layout.is-login .content{border-radius:0}
+    .layout.is-suri .content{background:#002233;padding:0;border-radius:0}
+    .suri{min-height:100%;background:#002233;color:#fff}
+    .suri-inner{width:calc(100% - 48px);max-width:1120px;margin:0 auto}
+    .suri-hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(32px,6vw,80px);align-items:center;padding:clamp(48px,8vw,96px) 0}
+    .suri-copy h1{margin:0 0 16px;font-size:clamp(32px,4vw,48px);line-height:1.12;letter-spacing:-.02em;max-width:12ch}
+    .suri-copy p{margin:0;max-width:46ch;font-size:clamp(14px,1.2vw,18px);line-height:1.55;color:rgba(255,255,255,.86)}
+    .suri-qr__frame{width:280px;height:280px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:#fff;color:#002233;border-radius:16px;box-shadow:8px 8px 80px rgba(0,0,0,.12)}
+    .suri-qr__mark{width:168px;height:168px;border:2px dashed #b2bcc1;border-radius:8px;background:linear-gradient(#d6dbde,#d6dbde) 12px 12px/28px 28px no-repeat,linear-gradient(#d6dbde,#d6dbde) calc(100% - 12px) 12px/28px 28px no-repeat,linear-gradient(#d6dbde,#d6dbde) 12px calc(100% - 12px)/28px 28px no-repeat}
+    .suri-qr__frame p{margin:0;font:700 16px/24px var(--font)}
+    .suri-qr__frame small{color:#405466;font:500 12px/16px var(--font)}
+    @media(max-width:800px){.suri-hero{grid-template-columns:1fr;justify-items:start}}
+    .totvs-brand{display:flex;align-items:center;gap:8px;height:40px;padding-left:8px}
+    .totvs-brand--checkout,.totvs-brand--powered{padding-left:0;height:auto}
+    .totvs-brand--powered{gap:4px}
+    .totvs-brand__logo{display:block;height:32px;width:auto}
+    .totvs-brand--checkout .totvs-brand__logo{height:28px}
+    .totvs-brand--powered .totvs-brand__logo{height:14px}
+    .totvs-brand__pay{font-family:var(--font);font-weight:700;letter-spacing:-.02em;line-height:1}
+    .totvs-brand__pay--navy{color:#00dbff;font-size:22px}
+    .totvs-brand__pay--dark{color:#111;font-size:20px}
+    .totvs-brand--powered .totvs-brand__pay--dark{font-size:12px}
+    .login-card{width:100%;max-width:412px;display:flex;flex-direction:column;gap:24px;padding:24px;background:#fff;border:1px solid #d6dbde;border-radius:16px}
+    .login-card__header{display:flex;flex-direction:column;gap:12px}
+    .login-steps{display:flex;gap:4px;padding-bottom:8px}
+    .login-step{width:16px;height:4px;border-radius:4px;background:#8c98a3}
+    .login-step.is-current{background:#002233}
+    .login-card h1{font:700 36px/46px var(--font);letter-spacing:-.02em;color:#002233}
+    .login-card__fields{display:flex;flex-direction:column;gap:16px}
+    .login-error{font:var(--text-sm);color:#c20046}
+    .login-card .tg-button{width:100%}
+  </style>
+</head>
+<body>
+<div class="demo-banner" role="status">Conta demo - Experiência TOTVS Pay</div>
+<div id="crm-root" class="layout is-login">
+  <nav class="navbar" id="login-nav">
+    <div class="navbar-logo">
+      <span class="totvs-brand" aria-label="TOTVS Pay">
+        <img class="totvs-brand__logo" src="totvs/assets/totvs-logo-_JTenmhF.svg" alt="" />
+        <span class="totvs-brand__pay totvs-brand__pay--navy">Pay</span>
+      </span>
+      <div class="product-switch">
+        <button type="button" class="product-switch__toggle" data-act="toggle-products" aria-haspopup="true" aria-expanded="false" aria-label="Trocar produto">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M9.611 13.408 5.161 8.957a.5.5 0 0 1 0-.777l.519-.519a.5.5 0 0 1 .776 0L10 11.187l3.544-3.527a.5.5 0 0 1 .776 0l.519.519a.5.5 0 0 1 0 .777l-4.45 4.45a.5.5 0 0 1-.778 0Z" fill="currentColor"/></svg>
+        </button>
+        <div class="product-switch__menu" hidden>
+          <p class="product-switch__label">Produtos</p>
+          <button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>
+          <button type="button" class="product-switch__item" data-product="totvs">TOTVS Pay</button>
+          <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
+          <span class="product-switch__sep"></span>
+          <button type="button" class="product-switch__item is-disabled" data-product="construcao" disabled>Construção</button>
+          <span class="product-switch__sep"></span>
+          <button type="button" class="product-switch__item" data-product="checkout">Checkout</button>
+          <span class="product-switch__sep"></span>
+          <button type="button" class="product-switch__item is-disabled" data-product="early" disabled>Early adopters</button>
+        </div>
+      </div>
+    </div>
+    <div class="navbar-secondary">
+      <div class="navbar-icons">
+        <span class="navbar-icon-btn"><img src="navbar/search.svg" alt="" /></span>
+        <span class="navbar-icon-btn"><img src="navbar/bell.svg" alt="" /><span class="badge-dot"></span></span>
+        <span class="navbar-icon-btn"><img src="navbar/settings.svg" alt="" /></span>
+      </div>
+      <div class="navbar-divider"></div>
+      <div class="account-menu"><span class="account-avatar"><img src="navbar/avatar-totvs.png" alt="" /></span><span class="account-name">Agência RD</span><img class="account-caret" src="navbar/chevron-down.svg" alt="" /></div>
+    </div>
+  </nav>
+  <nav class="navbar" id="crm-nav" hidden>
+    <div class="navbar-product">
+      <div class="navbar-logo">
+        <span class="navbar-rds" aria-label="RD Station CRM">
+          <img class="navbar-rds-symbol" src="navbar/rds-symbol.svg" alt="" />
+          <span class="navbar-rds-lettering">
+            <span class="navbar-rds-line"></span>
+            <img class="navbar-crm-word" src="navbar/crm-lettering.svg" alt="" />
+          </span>
+        </span>
+        <div class="product-switch">
+          <button type="button" class="product-switch__toggle" data-act="toggle-products" aria-haspopup="true" aria-expanded="false" aria-label="Trocar produto">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M9.611 13.408 5.161 8.957a.5.5 0 0 1 0-.777l.519-.519a.5.5 0 0 1 .776 0L10 11.187l3.544-3.527a.5.5 0 0 1 .776 0l.519.519a.5.5 0 0 1 0 .777l-4.45 4.45a.5.5 0 0 1-.778 0Z" fill="currentColor"/></svg>
+          </button>
+          <div class="product-switch__menu" hidden>
+            <p class="product-switch__label">Produtos</p>
+            <button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>
+            <button type="button" class="product-switch__item" data-product="totvs">TOTVS Pay</button>
+            <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
+            <span class="product-switch__sep"></span>
+            <button type="button" class="product-switch__item is-disabled" data-product="construcao" disabled>Construção</button>
+            <span class="product-switch__sep"></span>
+            <button type="button" class="product-switch__item" data-product="checkout">Checkout</button>
+            <span class="product-switch__sep"></span>
+            <button type="button" class="product-switch__item is-disabled" data-product="early" disabled>Early adopters</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navbar-secondary">
+      <div class="navbar-icons">
+        <span class="navbar-icon-btn"><img src="navbar/search.svg" alt="" /></span>
+        <span class="navbar-icon-btn"><img src="navbar/diamond.svg" alt="" /></span>
+        <span class="navbar-icon-btn"><img src="navbar/apps.svg" alt="" /></span>
+        <span class="navbar-icon-btn"><img src="navbar/bell.svg" alt="" /><span class="badge-dot"></span></span>
+        <span class="navbar-icon-btn"><img src="navbar/settings.svg" alt="" /></span>
+      </div>
+      <div class="navbar-divider"></div>
+      <div class="account-menu"><span class="account-avatar"><img src="navbar/avatar-totvs.png" alt="" /></span><span class="account-name">Agência RD</span><img class="account-caret" src="navbar/chevron-down.svg" alt="" /></div>
+    </div>
+  </nav>
+  <aside class="sidebar">
+    <div class="sidebar-item"><div class="sidebar-item-inner"><span class="icon">home</span></div></div>
+    <div class="sidebar-item"><div class="sidebar-item-inner"><span class="icon">contacts</span></div></div>
+    <div class="sidebar-item"><div class="sidebar-item-inner"><span class="icon">campaign</span></div></div>
+    <div class="sidebar-item"><div class="sidebar-item-inner"><span class="icon">ads_click</span></div></div>
+    <div class="sidebar-item is-active"><div class="sidebar-item-inner"><span class="icon">groups</span></div></div>
+    <div class="sidebar-item"><div class="sidebar-item-inner"><span class="icon">monitoring</span></div></div>
+  </aside>
+  <main class="content" id="app"></main>
+</div>
+<div id="checkout-root" hidden></div>
+<div id="overlay-root"></div>
+<script>
+const USERS=new Set(['0e1733efb669979a709f05ba0a8d2725095193cf81fd05b75b7cefe5c48e03f9','d919a100ce6b45524d415d52d088d5817587c6dd8c3691b03b8063c44d043523','a3418631ddce958c2fe2206cb362d390c2cc59c86b6ef2083b3d7cbe38e9140d','047007876c105127d9e0299df5dcea30b9fa5fae71be6f9d10ddb6357981cb9c','ccc68482d9e0eee0789e64c7674421076738f8836857ea89bcd0afb832bf3fc3','80c0fcbbfa9d03d861b22230e67c380afb545c12de43094f3985128625858361','3db6c5da02e8275b4cd5d64d91d628b51e0028c3c8a915570492c34ab9e1fdd1','33129567e0bd787efb15a26307e5311e06ba66e3b8dbc2206ad59f99780a4d78','24d4b96f58da6d4a8512313bbd02a28ebf0ca95dec6e4c86ef78ce7f01e788ac']);
+const PASS='e9e69fcd703e857da732ae1e8c0d839920a24cb3407cc98440c04a4c7b62545d';
+const PILOTO='ef9d5711a95ddcc209cf8d01664f22d88289cacef4deb6921618b067e0a79c2c';
+const PILOTO_PASS='6064eb690ce09822d7b456c5f7d862fabbc5e29b12387e45361e053cb6ff25f1';
+function normUser(v){return (v||'').trim().toLowerCase().normalize('NFD').replace(/\p{M}/gu,'')}
+async function sha256(s){
+  const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
+async function decryptSlice(bytes,password){
+  const salt=bytes.slice(0,16);
+  const iv=bytes.slice(16,28);
+  const data=bytes.slice(28);
+  const material=await crypto.subtle.importKey('raw',new TextEncoder().encode(password),'PBKDF2',false,['deriveKey']);
+  const key=await crypto.subtle.deriveKey({name:'PBKDF2',salt,iterations:120000,hash:'SHA-256'},material,{name:'AES-GCM',length:256},false,['decrypt']);
+  return new TextDecoder().decode(await crypto.subtle.decrypt({name:'AES-GCM',iv},key,data));
+}
+async function decrypt(buf,password){
+  const bytes=new Uint8Array(buf);
+  if(bytes[0]===80&&bytes[1]===68&&bytes[2]===50){
+    const view=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength);
+    let off=4;
+    let last;
+    while(off+4<=bytes.length){
+      const len=view.getUint32(off); off+=4;
+      const slice=bytes.slice(off,off+len); off+=len;
+      try{return await decryptSlice(slice,password)}catch(err){last=err}
+    }
+    throw last||new Error('decrypt');
+  }
+  return decryptSlice(bytes,password);
+}
+const state={user:'',pass:'',product:'',error:'',busy:false};
+function loginView(){
+  const can=state.user.trim()&&state.pass&&state.product&&!state.busy;
+  return `<div class="login"><form class="login-card" id="login-form" novalidate>
+    <header class="login-card__header">
+      <div class="login-steps" aria-hidden="true"><span class="login-step"></span><span class="login-step is-current"></span></div>
+      <h1>Entrar</h1>
+    </header>
+    <div class="login-card__fields">
+      <label class="tg-field"><span class="tg-field__label">Usuário</span><span class="tg-input"><input id="login-user" placeholder="Insira o usuário" autocomplete="username"></span></label>
+      <label class="tg-field"><span class="tg-field__label">Senha</span><span class="tg-input"><input id="login-password" type="password" placeholder="Insira a senha" autocomplete="current-password"></span></label>
+      <label class="tg-field"><span class="tg-field__label">Produto</span><span class="tg-input"><select id="login-product"><option value="" disabled ${!state.product?'selected':''}>Selecione</option><option value="totvs" ${state.product==='totvs'?'selected':''}>TOTVS Pay</option><option value="rd" ${state.product==='rd'?'selected':''}>RD Vendas</option></select></span></label>
+    </div>
+    ${state.error?`<p class="login-error" role="alert">${state.error}</p>`:''}
+    <button class="tg-button tg-button--primary" data-act="login" ${can?'':'disabled'}>${state.busy?'Entrando…':'Entrar'}</button>
+  </form></div>`;
+}
+function bindLogin(){
+  const user=document.getElementById('login-user');
+  const pass=document.getElementById('login-password');
+  const product=document.getElementById('login-product');
+  const submit=document.querySelector('[data-act="login"]');
+  const sync=()=>{submit.disabled=!(user.value.trim()&&pass.value&&product.value)||state.busy};
+  user.value=state.user;
+  pass.value=state.pass;
+  product.value=state.product;
+  sync();
+  user.oninput=()=>{state.user=user.value;if(state.error){state.error='';const err=document.querySelector('.login-error');if(err)err.remove()}sync()};
+  pass.oninput=()=>{state.pass=pass.value;if(state.error){state.error='';const err=document.querySelector('.login-error');if(err)err.remove()}sync()};
+  product.onchange=()=>{state.product=product.value;if(state.error){state.error='';const err=document.querySelector('.login-error');if(err)err.remove()}sync()};
+  document.getElementById('login-form').onsubmit=ev=>{ev.preventDefault();unlock()};
+}
+function renderLogin(){
+  if(location.hash==='#suri' && !state.busy){showPublicSuri();return}
+  const root=document.getElementById('crm-root');
+  if(root){root.classList.add('is-login');root.classList.remove('is-suri')}
+  document.getElementById('app').innerHTML=loginView();
+  bindLogin();
+}
+function experienceRoot(){
+  const p=location.pathname;
+  const i=p.indexOf('/totvs');
+  if(i>=0) return p.slice(0,i)+'/';
+  return p.endsWith('/')?p:p.replace(/[^/]+$/,'');
+}
+function suriHTML(){
+  return '<div class="suri"><div class="suri-inner"><section class="suri-hero"><div class="suri-copy"><h1>Suri Shop</h1><p>Experimente a experiência de compra TOTVS Pay através da Suri Shop. Aponte a câmera para o QR Code e finalize um pedido de demonstração com os mesmos passos de pagamento usados no checkout.</p></div><div class="suri-qr" aria-label="Espaço reservado para o QR Code"><div class="suri-qr__frame"><span class="suri-qr__mark" aria-hidden="true"></span><p>QR Code</p><small>versão final em breve</small></div></div></section></div></div>';
+}
+function showPublicSuri(){
+  const app=document.getElementById('app');
+  const root=document.getElementById('crm-root');
+  const ck=document.getElementById('checkout-root');
+  const loginNav=document.getElementById('login-nav');
+  const crmNav=document.getElementById('crm-nav');
+  if(!app||!root) return;
+  root.hidden=false;
+  root.classList.add('is-login','is-suri');
+  if(ck) ck.hidden=true;
+  if(loginNav) loginNav.hidden=false;
+  if(crmNav) crmNav.hidden=true;
+  app.innerHTML=suriHTML();
+}
+function goProduct(id){
+  if(window.__pdNavigate && (id==='rd'||id==='suri'||id==='checkout')){window.__pdNavigate(id);return}
+  const root=experienceRoot();
+  if(id==='totvs'){location.assign(root+'totvs/');return}
+  if(id==='suri'){location.hash='suri';if(sessionPass()){loadFlow(sessionPass());return}showPublicSuri();return}
+  if(id==='rd'){location.hash='deal';if(sessionPass()){loadFlow(sessionPass());return}renderLogin();return}
+  if(id==='checkout'){location.hash='checkout';if(sessionPass()){loadFlow(sessionPass());return}renderLogin()}
+}
+document.addEventListener('click',ev=>{
+  const toggle=ev.target.closest('[data-act="toggle-products"]');
+  if(toggle){
+    ev.preventDefault();
+    const wrap=toggle.closest('.product-switch');
+    const menu=wrap&&wrap.querySelector('.product-switch__menu');
+    const willOpen=menu&&menu.hidden;
+    document.querySelectorAll('.product-switch__menu').forEach(m=>m.hidden=true);
+    document.querySelectorAll('[data-act="toggle-products"]').forEach(b=>b.setAttribute('aria-expanded','false'));
+    if(willOpen){menu.hidden=false;toggle.setAttribute('aria-expanded','true')}
+    return;
+  }
+  const item=ev.target.closest('[data-product]');
+  if(item && !item.disabled){
+    document.querySelectorAll('.product-switch__menu').forEach(m=>m.hidden=true);
+    goProduct(item.dataset.product);
+    return;
+  }
+  if(!ev.target.closest('.product-switch')){
+    document.querySelectorAll('.product-switch__menu').forEach(m=>m.hidden=true);
+    document.querySelectorAll('[data-act="toggle-products"]').forEach(b=>b.setAttribute('aria-expanded','false'));
+  }
+});
+async function unlock(){
+  if(!(state.user.trim()&&state.pass&&state.product)||state.busy) return;
+  const uh=await sha256(normUser(state.user));
+  const ph=await sha256('pd-ai|'+state.pass);
+  const ok=uh===PILOTO?ph===PILOTO_PASS:(USERS.has(uh)&&ph===PASS);
+  if(!ok){state.error='Usuário ou senha inválidos';renderLogin();return}
+  rememberSession(state.pass);
+  if(state.product==='totvs'){
+    location.href='totvs/';
+    return;
+  }
+  state.busy=true;state.error='';renderLogin();
+  const loaded=await loadFlow(state.pass);
+  if(!loaded){state.busy=false;state.error='Não foi possível carregar o fluxo';renderLogin()}
+}
+function isReload(){
+  try{const nav=performance.getEntriesByType('navigation')[0];if(nav) return nav.type==='reload'}catch(e){}
+  return performance.navigation&&performance.navigation.type===1;
+}
+function sessionPass(){
+  try{return sessionStorage.getItem('pd-ai-pass')||''}catch(e){return ''}
+}
+function rememberSession(pass){
+  try{sessionStorage.setItem('pd-ai-auth',PASS);if(pass) sessionStorage.setItem('pd-ai-pass',pass)}catch(e){}
+}
+function clearSession(){
+  try{sessionStorage.removeItem('pd-ai-auth');sessionStorage.removeItem('pd-ai-pass')}catch(e){}
+}
+async function loadFlow(password){
+  if(window.__pdNavigate) return true;
+  try{
+    rememberSession(password);
+    const res=await fetch('flow.enc',{cache:'no-store'});
+    if(!res.ok) throw new Error('missing');
+    const payload=JSON.parse(await decrypt(await res.arrayBuffer(),password));
+    const style=document.createElement('style');
+    style.textContent=payload.css;
+    document.head.appendChild(style);
+    const root=document.getElementById('crm-root');
+    const loginNav=document.getElementById('login-nav');
+    const crmNav=document.getElementById('crm-nav');
+    if(root) root.classList.remove('is-login');
+    if(loginNav) loginNav.hidden=true;
+    if(crmNav) crmNav.hidden=false;
+    new Function(payload.js)();
+    return true;
+  }catch(err){
+    return false;
+  }
+}
+if(isReload()) clearSession();
+(async function boot(){
+  const pass=sessionPass();
+  if(pass){
+    const loaded=await loadFlow(pass);
+    if(loaded) return;
+    clearSession();
+  }
+  if(location.hash==='#suri'){showPublicSuri();return}
+  renderLogin();
+})();
+</script>
+</body>
 </html>

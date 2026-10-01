@@ -1,14 +1,13 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/triz-pd/assets/totvs-logo-_JTenmhF.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>TOTVS Pay — Payments Universo TOTVS</title>
-    <script type="module" crossorigin src="/triz-pd/assets/index-CYgujuAI.js"></script>
-    <link rel="stylesheet" crossorigin href="/triz-pd/assets/index-YsiCmiWD.css">
+    <title>Redirecionando</title>
+    <script>
+      sessionStorage.setItem('spa-path', location.pathname + location.search + location.hash)
+      var totvs = location.pathname.indexOf('/totvs') !== -1
+      location.replace(totvs ? '/prototipouniverso/totvs/' : '/prototipouniverso/')
+    </script>
   </head>
-  <body>
-    <div id="root"></div>
-  </body>
+  <body></body>
 </html>
