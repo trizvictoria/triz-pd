@@ -37,7 +37,12 @@ if (cssStart < 0 || loginCssStart < 0 || mediaStart < 0 || styleEnd < 0 || scrip
   throw new Error('Could not locate flow CSS/JS markers in docs/index.source.html')
 }
 
-const flowCss = (source.slice(cssStart, loginCssStart) + source.slice(mediaStart, styleEnd)).trim()
+const suriCssStart = source.indexOf('    .suri{')
+const flowCss = (
+  source.slice(cssStart, loginCssStart) +
+  (suriCssStart >= 0 ? source.slice(suriCssStart, mediaStart) : '') +
+  source.slice(mediaStart, styleEnd)
+).trim()
 let flowJs = source.slice(scriptStart + '<script>'.length, scriptEnd).trim()
 
 flowJs = flowJs.replace(
@@ -200,7 +205,7 @@ function goProduct(id){
   if(id==='totvs'||id==='totvs-credenciamento'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/');return}
   if(id==='totvs-dashboard'){try{sessionStorage.setItem('totvs-onboarded','1')}catch(e){}location.assign(root+'totvs/dashboard');return}
   if(id==='construcao'){location.assign(root+'construcao/');return}
-  if(id==='suri'){location.hash='suri';if(sessionPass()){loadFlow(sessionPass());return}showPublicSuri();return}
+  if(id==='suri'){location.hash='suri';showPublicSuri();return}
   if(id==='rd'){location.hash='deal';if(sessionPass()){loadFlow(sessionPass());return}renderLogin();return}
   if(id==='checkout'){location.hash='checkout';if(sessionPass()){loadFlow(sessionPass());return}renderLogin()}
 }
@@ -282,13 +287,13 @@ async function loadFlow(password){
 }
 if(isReload()) clearSession();
 (async function boot(){
+  if(location.hash==='#suri'){showPublicSuri();return}
   const pass=sessionPass();
   if(pass){
     const loaded=await loadFlow(pass);
     if(loaded) return;
     clearSession();
   }
-  if(location.hash==='#suri'){showPublicSuri();return}
   renderLogin();
 })();`
 
@@ -331,6 +336,12 @@ for (const secret of [password, pilotoPassword]) {
   const roundPayload = JSON.parse(unwrapPacked(packed, secret))
   if (!roundPayload.js.includes('function checkoutHTML') || !roundPayload.css.includes('.deal{')) {
     throw new Error('Encrypted payload is missing the payment flow')
+  }
+  if (!roundPayload.js.includes('instituto-percorre.png') || !roundPayload.js.includes('Lorem ipsum')) {
+    throw new Error('Encrypted payload is missing the current Suri Shop page')
+  }
+  if (!roundPayload.css.includes('.suri-inner')) {
+    throw new Error('Encrypted payload is missing Suri Shop layout CSS')
   }
 }
 
