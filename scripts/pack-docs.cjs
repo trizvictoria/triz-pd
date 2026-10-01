@@ -178,7 +178,7 @@ function renderLogin(){
 }
 function experienceRoot(){
   const p=location.pathname;
-  const i=p.search(/\/(totvs|construcao)(?:\/|$)/);
+  const i=p.search(new RegExp('/(totvs|construcao)(?:/|$)'));
   if(i>=0) return p.slice(0,i)+'/';
   return p.endsWith('/')?p:p.replace(/[^/]+$/,'');
 }
@@ -304,8 +304,8 @@ const publicHtml =
   `<script>\n${gate}\n</script>` +
   source.slice(scriptEnd + '</script>'.length)
 
-if (publicHtml.includes("p==='123'") || publicHtml.includes('totvspay2809') || publicHtml.includes("new Set(['nic'")) {
-  throw new Error('Public HTML still contains plaintext credentials')
+if (publicHtml.includes('p.search(//') || publicHtml.includes("p==='123'") || publicHtml.includes('totvspay2809') || publicHtml.includes("new Set(['nic'")) {
+  throw new Error('Public HTML still contains plaintext credentials or a broken path regex')
 }
 if (publicHtml.includes('function checkoutHTML') || publicHtml.includes('MALGA_LOGO') || publicHtml.includes('checkout-main') || publicHtml.includes('totvsMark')) {
   throw new Error('Public HTML still contains flow source')

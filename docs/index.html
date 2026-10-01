@@ -282,7 +282,7 @@ function renderLogin(){
 }
 function experienceRoot(){
   const p=location.pathname;
-  const i=p.search(//(totvs|construcao)(?:/|$)/);
+  const i=p.search(new RegExp('/(totvs|construcao)(?:/|$)'));
   if(i>=0) return p.slice(0,i)+'/';
   return p.endsWith('/')?p:p.replace(/[^/]+$/,'');
 }
