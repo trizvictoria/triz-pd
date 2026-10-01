@@ -8,17 +8,17 @@ export function SuriShopPage() {
         <section className="suri-hero">
           <div className="suri-copy">
             <img className="suri-brand" src={asset('instituto-percorre.png')} alt="Instituto Percorre" />
-            <h1>Suri Shop</h1>
+            <h1>Lorem ipsum</h1>
             <p>
-              Aponte a câmera para o QR Code e converse com a Suri Shop no WhatsApp para finalizar um pedido de
-              demonstração.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua.
             </p>
           </div>
           <a className="suri-qr" href={SURI_WHATSAPP} target="_blank" rel="noreferrer">
             <img src={asset('suri-qr.png')} alt="QR Code da Suri Shop no WhatsApp" />
           </a>
         </section>
-        <p className="suri-credit">Suri by Chatbot Maker · 2026</p>
+        <p className="suri-credit">Lorem ipsum dolor sit amet</p>
       </div>
     </div>
   )
