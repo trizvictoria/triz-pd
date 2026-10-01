@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/prototipouniverso/totvs/assets/totvs-logo-BQRHc5D5.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TOTVS Pay — Payments Universo TOTVS</title>
+    <script>
+      (function () {
+        var KEY = 'pd-ai-auth'
+        var PASS_KEY = 'pd-ai-pass'
+        var PASS = 'e9e69fcd703e857da732ae1e8c0d839920a24cb3407cc98440c04a4c7b62545d'
+        function isReload() {
+          try {
+            var nav = performance.getEntriesByType('navigation')[0]
+            if (nav) return nav.type === 'reload'
+          } catch (e) {}
+          return performance.navigation && performance.navigation.type === 1
+        }
+        try {
+          if (isReload()) {
+            sessionStorage.removeItem(KEY)
+            sessionStorage.removeItem(PASS_KEY)
+          }
+          if (sessionStorage.getItem(KEY) !== PASS) {
+            location.replace('/prototipouniverso/')
+            return
+          }
+        } catch (e) {
+          location.replace('/prototipouniverso/')
+          return
+        }
+        var path = sessionStorage.getItem('spa-path')
+        if (path && path.indexOf('/totvs') !== -1) {
+          sessionStorage.removeItem('spa-path')
+          history.replaceState(null, '', path)
+        }
+      })()
+    </script>
+    <script type="module" crossorigin src="/prototipouniverso/totvs/assets/index-BdGaCzor.js"></script>
+    <link rel="stylesheet" crossorigin href="/prototipouniverso/totvs/assets/index-DU_-DrXh.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

@@ -1,82 +1,67 @@
-import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
-import { StoreProvider, useStore } from './context/Store'
-import { AdvanceProvider } from './advance/store'
-import { PaywallPage } from './pages/Paywall'
-import { OnboardingPage } from './pages/Onboarding'
-import { DashboardPage } from './pages/Dashboard'
-import { PaymentLinksPage } from './pages/PaymentLinks'
-import { CreateLinkPage } from './pages/CreateLink'
-import { LinkDetailPage } from './pages/LinkDetail'
-import { ProposalPage } from './pages/advance/ProposalPage'
-import { WhatsAppPage } from './pages/advance/WhatsAppPage'
-import { EmailPage } from './pages/advance/EmailPage'
-import { CheckoutPage } from './pages/advance/CheckoutPage'
-import type { ReactNode } from 'react'
+import { lazy, Suspense, useEffect, useState, type ReactNode } from 'react'
+import { DemoBanner } from './components/DemoBanner'
+import { TotvsShell } from './layout/TotvsShell'
+import { readAuthSession, writeAuthSession } from './lib/auth'
+import { LoginPage, type LoginProduct } from './pages/LoginPage'
+import { SuriShopPage } from './pages/SuriShopPage'
 
-function Guard({ children }: { children: ReactNode }) {
-  const { onboarded } = useStore()
-  if (!onboarded) return <Navigate to="/credenciamento" replace />
-  return children
-}
+const AuthedApp = lazy(() => import('./pages/AuthedApp'))
 
-function AdvanceLayout() {
-  return (
-    <AdvanceProvider>
-      <Outlet />
-    </AdvanceProvider>
-  )
+function useHash() {
+  const [hash, setHash] = useState(() => window.location.hash.replace('#', ''))
+  useEffect(() => {
+    function onHash() {
+      setHash(window.location.hash.replace('#', ''))
+    }
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
+  return hash
 }
 
 export default function App() {
-  const basename = import.meta.env.BASE_URL.replace(/\/$/, '') || '/'
+  const [authed, setAuthed] = useState(() => readAuthSession())
+  const hash = useHash()
+
+  function handleLogin(product: LoginProduct, password: string) {
+    writeAuthSession(true, password)
+    if (product === 'totvs') {
+      const base = import.meta.env.BASE_URL.endsWith('/')
+        ? import.meta.env.BASE_URL
+        : `${import.meta.env.BASE_URL}/`
+      window.location.assign(`${base}totvs/`)
+      return
+    }
+    setAuthed(true)
+  }
+
+  const shell = (children: ReactNode, variant: 'login' | 'suri' = 'login') => (
+    <>
+      <DemoBanner />
+      <TotvsShell variant={variant}>{children}</TotvsShell>
+    </>
+  )
+
+  if (hash === 'suri') return shell(<SuriShopPage />, 'suri')
+
+  if (!authed) {
+    return shell(<LoginPage onSuccess={handleLogin} />)
+  }
 
   return (
-    <StoreProvider>
-      <BrowserRouter basename={basename}>
-        <Routes>
-          <Route path="/" element={<PaywallPage />} />
-          <Route path="/credenciamento" element={<OnboardingPage />} />
-          <Route
-            path="/dashboard"
-            element={
-              <Guard>
-                <DashboardPage />
-              </Guard>
-            }
-          />
-          <Route
-            path="/links"
-            element={
-              <Guard>
-                <PaymentLinksPage />
-              </Guard>
-            }
-          />
-          <Route
-            path="/links/novo"
-            element={
-              <Guard>
-                <CreateLinkPage />
-              </Guard>
-            }
-          />
-          <Route
-            path="/links/:id"
-            element={
-              <Guard>
-                <LinkDetailPage />
-              </Guard>
-            }
-          />
-          <Route element={<AdvanceLayout />}>
-            <Route path="/proposta" element={<ProposalPage />} />
-            <Route path="/whatsapp" element={<WhatsAppPage />} />
-            <Route path="/email" element={<EmailPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
-          </Route>
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </StoreProvider>
+    <>
+      <DemoBanner />
+      <Suspense
+        fallback={
+          <TotvsShell>
+            <div className="login">
+              <p className="login-error">Carregando…</p>
+            </div>
+          </TotvsShell>
+        }
+      >
+        <AuthedApp hash={hash} />
+      </Suspense>
+    </>
   )
 }

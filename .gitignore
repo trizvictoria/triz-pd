@@ -12,11 +12,13 @@ dist
 dist-ssr
 *.local
 
-.DS_Store
+# Editor
 .vscode/*
 !.vscode/extensions.json
 .idea
-
-# PROTOTYPE: in-memory only, no env secrets expected
-.env
-.env.*
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

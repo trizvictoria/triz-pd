@@ -1,18 +1,14 @@
-# Payments Universo TOTVS (protótipo)
+# pd-ai
 
-Protótipo throwaway da experiência TOTVS Pay, baseado no [arquivo Figma](https://www.figma.com/design/0lRpjpN4PLJkvF377w8GSh/Untitled).
+Protótipo navegável da wave 3 — criação de links de pagamento no RD Station CRM.
 
-**Interface pública:** https://trizvictoria.github.io/triz-pd/
-
-Fluxo: **paywall → credenciamento → dashboard**. No dashboard, a funcionalidade interativa é **links de pagamento** (criar, listar, copiar, inativar, detalhar). Os números do dashboard e da listagem são dados falsos.
-
-## Como rodar
+## Rodar
 
 ```bash
 npm install
 npm run dev
 ```
 
-Abre em `http://localhost:5173`.
+O app abre na negociação **Projeto MRV - Mário e Tarsila**. O fluxo está no bloco **Pagamentos**: criar link simples, especificar itens, copiar URL e reabrir o link publicado (congelado).
 
-Estado fica só em memória: recarregar a página volta os links mockados e pede o credenciamento de novo.
+Design system: Tangram (`docs/DESIGN.md`).
