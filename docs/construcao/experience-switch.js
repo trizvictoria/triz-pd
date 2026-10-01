@@ -1,21 +1,21 @@
 (function () {
   var STYLE =
-    '.evt-brand-wrap{display:flex;align-items:center;gap:2px;position:relative}' +
-    '#pd-product-switch{display:flex;align-items:center}' +
-    '.product-switch{position:relative;display:flex;align-items:center}' +
-    '.product-switch__toggle{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#54666c;background:transparent;border:0;cursor:pointer;flex-shrink:0;padding:0}' +
-    '.product-switch__toggle:hover,.product-switch__toggle[aria-expanded="true"]{background:rgba(0,0,0,.06)}' +
-    '.product-switch__menu{position:absolute;top:calc(100% + 8px);left:0;min-width:228px;padding:12px 0;background:#001927;border-radius:8px;box-shadow:0 12px 24px rgba(0,34,51,.28);z-index:10000}' +
-    '.product-switch__label{padding:4px 16px 8px;color:rgba(255,255,255,.55);font:700 11px/14px "DM Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase}' +
-    '.product-switch__item{display:block;width:100%;padding:8px 16px;color:#fff;font:500 14px/20px "DM Sans",sans-serif;text-align:left;background:transparent;border:0;cursor:pointer}' +
-    '.product-switch__item:hover:not(:disabled){background:rgba(255,255,255,.08)}' +
-    '.product-switch__item.is-disabled,.product-switch__item:disabled{color:rgba(255,255,255,.42);cursor:default}' +
-    '.product-switch__sep{display:block;height:1px;margin:8px 12px;background:rgba(255,255,255,.12)}'
+    '#pd-product-switch-host{position:fixed;z-index:2147483646;pointer-events:none}' +
+    '#pd-product-switch-host .product-switch{pointer-events:auto;position:relative;display:flex;align-items:center}' +
+    '#pd-product-switch-host .product-switch__toggle{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:0;border-radius:8px;padding:0;margin:0;background:transparent;color:#00558b;cursor:pointer}' +
+    '#pd-product-switch-host .product-switch__toggle:hover,#pd-product-switch-host .product-switch__toggle[aria-expanded="true"]{background:rgba(0,85,139,.12)}' +
+    '#pd-product-switch-host .product-switch__toggle svg{width:18px!important;height:18px!important;display:block!important;fill:none!important;stroke:currentColor!important;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important}' +
+    '#pd-product-switch-host .product-switch__menu{position:absolute;top:calc(100% + 8px);left:0;min-width:228px;padding:12px 0;background:#001927;border-radius:8px;box-shadow:0 12px 24px rgba(0,34,51,.28);z-index:2147483647}' +
+    '#pd-product-switch-host .product-switch__label{padding:4px 16px 8px;color:rgba(255,255,255,.55);font:700 11px/14px "DM Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase}' +
+    '#pd-product-switch-host .product-switch__item{display:block;width:100%;padding:8px 16px;color:#fff;font:500 14px/20px "DM Sans",sans-serif;text-align:left;background:transparent;border:0;cursor:pointer}' +
+    '#pd-product-switch-host .product-switch__item:hover:not(:disabled){background:rgba(255,255,255,.08)}' +
+    '#pd-product-switch-host .product-switch__item.is-disabled,#pd-product-switch-host .product-switch__item:disabled{color:rgba(255,255,255,.42);cursor:default}' +
+    '#pd-product-switch-host .product-switch__sep{display:block;height:1px;margin:8px 12px;background:rgba(255,255,255,.12)}'
 
   var MENU =
     '<div class="product-switch">' +
     '<button type="button" class="product-switch__toggle" data-act="toggle-products" aria-haspopup="true" aria-expanded="false" aria-label="Trocar produto">' +
-    '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M9.611 13.408 5.161 8.957a.5.5 0 0 1 0-.777l.519-.519a.5.5 0 0 1 .776 0L10 11.187l3.544-3.527a.5.5 0 0 1 .776 0l.519.519a.5.5 0 0 1 0 .777l-4.45 4.45a.5.5 0 0 1-.778 0Z" fill="currentColor"/></svg>' +
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>' +
     '</button>' +
     '<div class="product-switch__menu" hidden>' +
     '<p class="product-switch__label">Produtos</p>' +
@@ -46,37 +46,43 @@
     else location.assign(root)
   }
 
-  function fill(slot) {
-    if (!slot || slot.getAttribute('data-ready') === '1') return
-    slot.innerHTML = MENU
-    slot.setAttribute('data-ready', '1')
+  function host() {
+    var el = document.getElementById('pd-product-switch-host')
+    if (!el) {
+      el = document.createElement('div')
+      el.id = 'pd-product-switch-host'
+      document.body.appendChild(el)
+    }
+    return el
   }
 
-  function ensureSlot() {
-    var existing = document.getElementById('pd-product-switch')
-    if (existing) return existing
+  function position() {
     var brand = document.querySelector('.evt-brand')
-    if (!brand) return null
-    var wrap = document.createElement('div')
-    wrap.className = 'evt-brand-wrap'
-    brand.parentNode.insertBefore(wrap, brand)
-    wrap.appendChild(brand)
-    var slot = document.createElement('span')
-    slot.id = 'pd-product-switch'
-    wrap.appendChild(slot)
-    return slot
+    var el = host()
+    if (!brand) {
+      el.style.visibility = 'hidden'
+      return
+    }
+    var rect = brand.getBoundingClientRect()
+    el.style.visibility = 'visible'
+    el.style.left = Math.round(rect.right + 2) + 'px'
+    el.style.top = Math.round(rect.top + rect.height / 2 - 14) + 'px'
   }
 
-  function scan() {
-    fill(ensureSlot())
-    document.querySelectorAll('#pd-product-switch').forEach(fill)
+  function mount() {
+    var el = host()
+    if (el.getAttribute('data-ready') !== '1') {
+      el.innerHTML = MENU
+      el.setAttribute('data-ready', '1')
+    }
+    position()
   }
 
   function closeAll() {
-    document.querySelectorAll('.product-switch__menu').forEach(function (menu) {
+    document.querySelectorAll('#pd-product-switch-host .product-switch__menu').forEach(function (menu) {
       menu.hidden = true
     })
-    document.querySelectorAll('[data-act="toggle-products"]').forEach(function (button) {
+    document.querySelectorAll('#pd-product-switch-host [data-act="toggle-products"]').forEach(function (button) {
       button.setAttribute('aria-expanded', 'false')
     })
   }
@@ -89,9 +95,10 @@
   }
 
   document.addEventListener('click', function (event) {
-    var toggle = event.target.closest('[data-act="toggle-products"]')
+    var toggle = event.target.closest('#pd-product-switch-host [data-act="toggle-products"]')
     if (toggle) {
       event.preventDefault()
+      event.stopPropagation()
       var wrap = toggle.closest('.product-switch')
       var menu = wrap && wrap.querySelector('.product-switch__menu')
       var willOpen = menu && menu.hidden
@@ -102,21 +109,27 @@
       }
       return
     }
-    var item = event.target.closest('[data-product]')
+    var item = event.target.closest('#pd-product-switch-host [data-product]')
     if (item && !item.disabled) {
+      event.preventDefault()
+      event.stopPropagation()
       closeAll()
       goProduct(item.getAttribute('data-product'))
       return
     }
-    if (!event.target.closest('.product-switch')) closeAll()
+    if (!event.target.closest('#pd-product-switch-host')) closeAll()
   })
 
   document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') closeAll()
   })
 
-  var observer = new MutationObserver(scan)
+  window.addEventListener('resize', position)
+  window.addEventListener('scroll', position, true)
+
+  var observer = new MutationObserver(mount)
   observer.observe(document.documentElement, { childList: true, subtree: true })
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scan)
-  else scan()
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount)
+  else mount()
+  setInterval(position, 250)
 })()
