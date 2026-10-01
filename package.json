@@ -5,13 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:construcao": "VITE_ADVANCE_ONLY=true vite",
     "build": "tsc --noEmit && vite build",
+    "build:construcao": "VITE_ADVANCE_ONLY=true vite build",
     "preview": "vite preview",
     "pack:docs": "node scripts/pack-docs.cjs"
   },
   "dependencies": {
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.18.4"
   },
   "devDependencies": {
     "@types/react": "^19.1.12",

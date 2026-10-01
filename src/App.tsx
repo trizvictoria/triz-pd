@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect, useState, type ReactNode } from 'react'
 import { DemoBanner } from './components/DemoBanner'
 import { TotvsShell } from './layout/TotvsShell'
 import { readAuthSession, writeAuthSession } from './lib/auth'
+import { AdvanceApp } from './pages/advance/AdvanceApp'
 import { LoginPage, type LoginProduct } from './pages/LoginPage'
 import { SuriShopPage } from './pages/SuriShopPage'
 
@@ -22,6 +23,10 @@ function useHash() {
 export default function App() {
   const [authed, setAuthed] = useState(() => readAuthSession())
   const hash = useHash()
+
+  if (import.meta.env.VITE_ADVANCE_ONLY === 'true') {
+    return <AdvanceApp />
+  }
 
   function handleLogin(product: LoginProduct, password: string) {
     writeAuthSession(true, password)
