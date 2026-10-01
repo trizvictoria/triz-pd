@@ -690,18 +690,11 @@ function act(a,id){
   if(a==='copy-link'){const l=state.links.find(x=>x.id===id); if(l) copyLink(l.url)}
 }
 window.__pdNavigate=function(id){
-  if(id==='construcao'){
+  if(id==='totvs'||id==='construcao'){
     const p=location.pathname;
-    const i=p.indexOf('/totvs');
+    const i=p.search(/\/(totvs|construcao)(?:\/|$)/);
     const root=i>=0?p.slice(0,i)+'/': (p.endsWith('/')?p:p.replace(/[^/]+$/,''));
-    location.assign(root+'construcao/');
-    return;
-  }
-  if(id==='totvs'){
-    const p=location.pathname;
-    const i=p.indexOf('/totvs');
-    const root=i>=0?p.slice(0,i)+'/': (p.endsWith('/')?p:p.replace(/[^/]+$/,''));
-    location.assign(root+'totvs/');
+    location.assign(root+(id==='totvs'?'totvs/':'construcao/'));
     return;
   }
   if(id==='suri'){state.view='suri';state.checkout=null;state.checkoutDemo=false;history.replaceState(null,'','#suri');render();return}
