@@ -1,12 +1,16 @@
 import { useState, type FormEvent } from 'react'
 import { Button, Field, SelectField } from '../components/ui'
 import { isValidLogin } from '../lib/auth'
+import type { ExperienceTarget } from '../lib/experience'
 
-export type LoginProduct = 'totvs' | 'rd'
+export type LoginProduct = ExperienceTarget
 
 const PRODUCTS: { value: LoginProduct; label: string }[] = [
-  { value: 'totvs', label: 'TOTVS Pay' },
   { value: 'rd', label: 'RD Vendas' },
+  { value: 'totvs', label: 'TOTVS Pay' },
+  { value: 'suri', label: 'Suri Shop' },
+  { value: 'construcao', label: 'Construção' },
+  { value: 'checkout', label: 'Checkout' },
 ]
 
 export function LoginPage({ onSuccess }: { onSuccess: (product: LoginProduct, password: string) => void }) {

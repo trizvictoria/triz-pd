@@ -5,6 +5,7 @@ import { readAuthSession, writeAuthSession } from './lib/auth'
 import { AdvanceApp } from './pages/advance/AdvanceApp'
 import { LoginPage, type LoginProduct } from './pages/LoginPage'
 import { SuriShopPage } from './pages/SuriShopPage'
+import { goExperience } from './lib/experience'
 
 const AuthedApp = lazy(() => import('./pages/AuthedApp'))
 
@@ -30,12 +31,12 @@ export default function App() {
 
   function handleLogin(product: LoginProduct, password: string) {
     writeAuthSession(true, password)
-    if (product === 'totvs') {
-      const base = import.meta.env.BASE_URL.endsWith('/')
-        ? import.meta.env.BASE_URL
-        : `${import.meta.env.BASE_URL}/`
-      window.location.assign(`${base}totvs/`)
+    if (product === 'totvs' || product === 'construcao') {
+      goExperience(product)
       return
+    }
+    if (product === 'suri' || product === 'checkout') {
+      window.location.hash = product
     }
     setAuthed(true)
   }

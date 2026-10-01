@@ -95,14 +95,14 @@
     .suri-qr img{width:100%;height:auto;display:block}
     .suri-credit{margin:28px 0 0;text-align:center;color:rgba(255,255,255,.72);font:500 12px/16px var(--font)}
     @media(max-width:800px){.suri-hero{flex-direction:column;text-align:center}.suri-brand{margin-left:auto;margin-right:auto}.suri-copy h1,.suri-copy p{margin-left:auto;margin-right:auto}}
-    .totvs-brand{display:flex;align-items:center;gap:8px;height:40px;padding-left:8px}
+    .totvs-brand{display:flex;align-items:center;gap:6px;height:40px;padding-left:8px}
     .totvs-brand--checkout,.totvs-brand--powered{padding-left:0;height:auto}
     .totvs-brand--powered{gap:4px}
-    .totvs-brand__logo{display:block;height:32px;width:auto}
+    .totvs-brand__logo{display:block;height:28px;width:auto;flex-shrink:0}
     .totvs-brand--checkout .totvs-brand__logo{height:28px}
     .totvs-brand--powered .totvs-brand__logo{height:14px}
     .totvs-brand__pay{font-family:var(--font);font-weight:700;letter-spacing:-.02em;line-height:1}
-    .totvs-brand__pay--navy{color:#00dbff;font-size:22px}
+    .totvs-brand__pay--navy{color:#00dbff;font-size:24px}
     .totvs-brand__pay--dark{color:#111;font-size:20px}
     .totvs-brand--powered .totvs-brand__pay--dark{font-size:12px}
     .login-card{width:100%;max-width:412px;display:flex;flex-direction:column;gap:24px;padding:24px;background:#fff;border:1px solid #d6dbde;border-radius:16px}
@@ -122,7 +122,7 @@
   <nav class="navbar" id="login-nav">
     <div class="navbar-logo">
       <span class="totvs-brand" aria-label="TOTVS Pay">
-        <img class="totvs-brand__logo" src="totvs/assets/totvs-logo-_JTenmhF.svg" alt="" />
+        <img class="totvs-brand__logo" src="totvs-logo-navy.svg" alt="" />
         <span class="totvs-brand__pay totvs-brand__pay--navy">Pay</span>
       </span>
       <div class="product-switch">
@@ -250,7 +250,7 @@ function loginView(){
     <div class="login-card__fields">
       <label class="tg-field"><span class="tg-field__label">Usuário</span><span class="tg-input"><input id="login-user" placeholder="Insira o usuário" autocomplete="username"></span></label>
       <label class="tg-field"><span class="tg-field__label">Senha</span><span class="tg-input"><input id="login-password" type="password" placeholder="Insira a senha" autocomplete="current-password"></span></label>
-      <label class="tg-field"><span class="tg-field__label">Produto</span><span class="tg-input"><select id="login-product"><option value="" disabled ${!state.product?'selected':''}>Selecione</option><option value="totvs" ${state.product==='totvs'?'selected':''}>TOTVS Pay</option><option value="rd" ${state.product==='rd'?'selected':''}>RD Vendas</option></select></span></label>
+      <label class="tg-field"><span class="tg-field__label">Produto</span><span class="tg-input"><select id="login-product"><option value="" disabled ${!state.product?'selected':''}>Selecione</option><option value="rd" ${state.product==='rd'?'selected':''}>RD Vendas</option><option value="totvs" ${state.product==='totvs'?'selected':''}>TOTVS Pay</option><option value="suri" ${state.product==='suri'?'selected':''}>Suri Shop</option><option value="construcao" ${state.product==='construcao'?'selected':''}>Construção</option><option value="checkout" ${state.product==='checkout'?'selected':''}>Checkout</option></select></span></label>
     </div>
     ${state.error?`<p class="login-error" role="alert">${state.error}</p>`:''}
     <button class="tg-button tg-button--primary" data-act="login" ${can?'':'disabled'}>${state.busy?'Entrando…':'Entrar'}</button>
@@ -340,10 +340,12 @@ async function unlock(){
   const ok=uh===PILOTO?ph===PILOTO_PASS:(USERS.has(uh)&&ph===PASS);
   if(!ok){state.error='Usuário ou senha inválidos';renderLogin();return}
   rememberSession(state.pass);
-  if(state.product==='totvs'){
-    location.href='totvs/';
-    return;
-  }
+  const root=experienceRoot();
+  if(state.product==='totvs'){location.assign(root+'totvs/');return}
+  if(state.product==='construcao'){location.assign(root+'construcao/');return}
+  if(state.product==='suri'){location.hash='suri';showPublicSuri();return}
+  if(state.product==='checkout') location.hash='checkout';
+  else location.hash='deal';
   state.busy=true;state.error='';renderLogin();
   const loaded=await loadFlow(state.pass);
   if(!loaded){state.busy=false;state.error='Não foi possível carregar o fluxo';renderLogin()}
