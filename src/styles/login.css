@@ -23,6 +23,7 @@
   background: #2418d6;
   padding: 0;
   border-radius: 0;
+  display: flex;
 }
 
 .totvs-brand {

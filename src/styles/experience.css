@@ -90,31 +90,38 @@
 }
 
 .suri {
+  width: 100%;
   min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+  box-sizing: border-box;
   background: radial-gradient(90% 80% at 70% 45%, #3b28f2 0%, #2418d6 48%, #1a12b8 100%);
   color: #fff;
 }
 
 .suri-inner {
-  width: calc(100% - 48px);
-  max-width: 1120px;
-  margin: 0 auto;
-  min-height: 100%;
+  width: min(100%, 880px);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
 }
 
 .suri-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: clamp(32px, 6vw, 80px);
+  display: flex;
   align-items: center;
-  padding: clamp(48px, 8vw, 96px) 0 24px;
+  justify-content: center;
+  gap: clamp(28px, 5vw, 72px);
+  width: 100%;
+}
+
+.suri-copy {
+  max-width: 28rem;
 }
 
 .suri-brand {
-  width: min(100%, 320px);
+  width: min(100%, 280px);
   height: auto;
   display: block;
   margin: 0 0 24px;
@@ -138,7 +145,8 @@
 
 .suri-qr {
   display: block;
-  width: min(100%, 320px);
+  width: min(100%, 280px);
+  flex: none;
 }
 
 .suri-qr img {
@@ -148,14 +156,26 @@
 }
 
 .suri-credit {
-  margin: 0 0 40px;
+  margin: 28px 0 0;
+  text-align: center;
   color: rgba(255, 255, 255, 0.72);
   font: 500 12px / 16px var(--font);
 }
 
 @media (max-width: 800px) {
   .suri-hero {
-    grid-template-columns: 1fr;
-    justify-items: start;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .suri-brand {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .suri-copy h1,
+  .suri-copy p {
+    margin-left: auto;
+    margin-right: auto;
   }
 }
