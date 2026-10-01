@@ -31,7 +31,12 @@ export default function App() {
 
   function handleLogin(product: LoginProduct, password: string) {
     writeAuthSession(true, password)
-    if (product === 'totvs' || product === 'construcao') {
+    if (
+      product === 'totvs' ||
+      product === 'totvs-credenciamento' ||
+      product === 'totvs-dashboard' ||
+      product === 'construcao'
+    ) {
       goExperience(product)
       return
     }

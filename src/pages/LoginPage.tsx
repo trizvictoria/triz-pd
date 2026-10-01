@@ -7,7 +7,8 @@ export type LoginProduct = ExperienceTarget
 
 const PRODUCTS: { value: LoginProduct; label: string }[] = [
   { value: 'rd', label: 'RD Vendas' },
-  { value: 'totvs', label: 'TOTVS Pay' },
+  { value: 'totvs-credenciamento', label: 'TOTVS Pay - Credenciamento' },
+  { value: 'totvs-dashboard', label: 'TOTVS Pay - Dashboard' },
   { value: 'suri', label: 'Suri Shop' },
   { value: 'construcao', label: 'Construção' },
   { value: 'checkout', label: 'Checkout' },

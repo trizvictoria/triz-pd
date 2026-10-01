@@ -1,4 +1,11 @@
-export type ExperienceTarget = 'rd' | 'totvs' | 'suri' | 'checkout' | 'construcao'
+export type ExperienceTarget =
+  | 'rd'
+  | 'totvs'
+  | 'totvs-credenciamento'
+  | 'totvs-dashboard'
+  | 'suri'
+  | 'checkout'
+  | 'construcao'
 
 export function experienceRoot() {
   const path = window.location.pathname
@@ -8,11 +15,21 @@ export function experienceRoot() {
   return base.endsWith('/') ? base : `${base}/`
 }
 
+function markTotvsOnboarded(onboarded: boolean) {
+  try {
+    sessionStorage.setItem('totvs-onboarded', onboarded ? '1' : '0')
+  } catch {
+    /* ignore */
+  }
+}
+
 export function experienceUrls() {
   const root = experienceRoot()
   return {
     rd: root,
     totvs: `${root}totvs/`,
+    'totvs-credenciamento': `${root}totvs/`,
+    'totvs-dashboard': `${root}totvs/dashboard`,
     suri: `${root}#suri`,
     checkout: `${root}#checkout`,
     construcao: `${root}construcao/`,
@@ -21,8 +38,18 @@ export function experienceUrls() {
 
 export function goExperience(target: ExperienceTarget) {
   const urls = experienceUrls()
-  if (target === 'totvs' || target === 'construcao') {
-    window.location.assign(urls[target])
+  if (target === 'totvs' || target === 'totvs-credenciamento') {
+    markTotvsOnboarded(false)
+    window.location.assign(urls['totvs-credenciamento'])
+    return
+  }
+  if (target === 'totvs-dashboard') {
+    markTotvsOnboarded(true)
+    window.location.assign(urls['totvs-dashboard'])
+    return
+  }
+  if (target === 'construcao') {
+    window.location.assign(urls.construcao)
     return
   }
   const here = window.location.pathname.replace(/\/+$/, '')

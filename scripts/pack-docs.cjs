@@ -143,7 +143,7 @@ function loginView(){
     <div class="login-card__fields">
       <label class="tg-field"><span class="tg-field__label">Usuário</span><span class="tg-input"><input id="login-user" placeholder="Insira o usuário" autocomplete="username"></span></label>
       <label class="tg-field"><span class="tg-field__label">Senha</span><span class="tg-input"><input id="login-password" type="password" placeholder="Insira a senha" autocomplete="current-password"></span></label>
-      <label class="tg-field"><span class="tg-field__label">Produto</span><span class="tg-input"><select id="login-product"><option value="" disabled \${!state.product?'selected':''}>Selecione</option><option value="rd" \${state.product==='rd'?'selected':''}>RD Vendas</option><option value="totvs" \${state.product==='totvs'?'selected':''}>TOTVS Pay</option><option value="suri" \${state.product==='suri'?'selected':''}>Suri Shop</option><option value="construcao" \${state.product==='construcao'?'selected':''}>Construção</option><option value="checkout" \${state.product==='checkout'?'selected':''}>Checkout</option></select></span></label>
+      <label class="tg-field"><span class="tg-field__label">Produto</span><span class="tg-input"><select id="login-product"><option value="" disabled \${!state.product?'selected':''}>Selecione</option><option value="rd" \${state.product==='rd'?'selected':''}>RD Vendas</option><option value="totvs-credenciamento" \${state.product==='totvs-credenciamento'?'selected':''}>TOTVS Pay - Credenciamento</option><option value="totvs-dashboard" \${state.product==='totvs-dashboard'?'selected':''}>TOTVS Pay - Dashboard</option><option value="suri" \${state.product==='suri'?'selected':''}>Suri Shop</option><option value="construcao" \${state.product==='construcao'?'selected':''}>Construção</option><option value="checkout" \${state.product==='checkout'?'selected':''}>Checkout</option></select></span></label>
     </div>
     \${state.error?\`<p class="login-error" role="alert">\${state.error}</p>\`:''}
     <button class="tg-button tg-button--primary" data-act="login" \${can?'':'disabled'}>\${state.busy?'Entrando…':'Entrar'}</button>
@@ -197,7 +197,8 @@ function showPublicSuri(){
 function goProduct(id){
   if(window.__pdNavigate && (id==='rd'||id==='suri'||id==='checkout')){window.__pdNavigate(id);return}
   const root=experienceRoot();
-  if(id==='totvs'){location.assign(root+'totvs/');return}
+  if(id==='totvs'||id==='totvs-credenciamento'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/');return}
+  if(id==='totvs-dashboard'){try{sessionStorage.setItem('totvs-onboarded','1')}catch(e){}location.assign(root+'totvs/dashboard');return}
   if(id==='construcao'){location.assign(root+'construcao/');return}
   if(id==='suri'){location.hash='suri';if(sessionPass()){loadFlow(sessionPass());return}showPublicSuri();return}
   if(id==='rd'){location.hash='deal';if(sessionPass()){loadFlow(sessionPass());return}renderLogin();return}
@@ -234,7 +235,8 @@ async function unlock(){
   if(!ok){state.error='Usuário ou senha inválidos';renderLogin();return}
   rememberSession(state.pass);
   const root=experienceRoot();
-  if(state.product==='totvs'){location.assign(root+'totvs/');return}
+  if(state.product==='totvs'||state.product==='totvs-credenciamento'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/');return}
+  if(state.product==='totvs-dashboard'){try{sessionStorage.setItem('totvs-onboarded','1')}catch(e){}location.assign(root+'totvs/dashboard');return}
   if(state.product==='construcao'){location.assign(root+'construcao/');return}
   if(state.product==='suri'){location.hash='suri';showPublicSuri();return}
   if(state.product==='checkout') location.hash='checkout';

@@ -7,7 +7,8 @@ const ITEMS: Array<
   | { type: 'sep'; id: string }
 > = [
   { type: 'item', id: 'rd', label: 'RD Vendas' },
-  { type: 'item', id: 'totvs', label: 'TOTVS Pay' },
+  { type: 'item', id: 'totvs-credenciamento', label: 'TOTVS Pay - Credenciamento' },
+  { type: 'item', id: 'totvs-dashboard', label: 'TOTVS Pay - Dashboard' },
   { type: 'item', id: 'suri', label: 'Suri Shop' },
   { type: 'sep', id: 'sep-1' },
   { type: 'item', id: 'construcao', label: 'Construção' },
