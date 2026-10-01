@@ -52,7 +52,23 @@
     slot.setAttribute('data-ready', '1')
   }
 
+  function ensureSlot() {
+    var existing = document.getElementById('pd-product-switch')
+    if (existing) return existing
+    var brand = document.querySelector('.evt-brand')
+    if (!brand) return null
+    var wrap = document.createElement('div')
+    wrap.className = 'evt-brand-wrap'
+    brand.parentNode.insertBefore(wrap, brand)
+    wrap.appendChild(brand)
+    var slot = document.createElement('span')
+    slot.id = 'pd-product-switch'
+    wrap.appendChild(slot)
+    return slot
+  }
+
   function scan() {
+    fill(ensureSlot())
     document.querySelectorAll('#pd-product-switch').forEach(fill)
   }
 
