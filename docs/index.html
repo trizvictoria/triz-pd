@@ -133,7 +133,7 @@
           <button type="button" class="product-switch__item" data-product="totvs">TOTVS Pay</button>
           <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
           <span class="product-switch__sep"></span>
-          <button type="button" class="product-switch__item is-disabled" data-product="construcao" disabled>Construção</button>
+          <button type="button" class="product-switch__item" data-product="construcao">Construção</button>
           <span class="product-switch__sep"></span>
           <button type="button" class="product-switch__item" data-product="checkout">Checkout</button>
           <span class="product-switch__sep"></span>
@@ -171,7 +171,7 @@
             <button type="button" class="product-switch__item" data-product="totvs">TOTVS Pay</button>
             <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
             <span class="product-switch__sep"></span>
-            <button type="button" class="product-switch__item is-disabled" data-product="construcao" disabled>Construção</button>
+            <button type="button" class="product-switch__item" data-product="construcao">Construção</button>
             <span class="product-switch__sep"></span>
             <button type="button" class="product-switch__item" data-product="checkout">Checkout</button>
             <span class="product-switch__sep"></span>
@@ -300,6 +300,7 @@ function showPublicSuri(){
   app.innerHTML=suriHTML();
 }
 function goProduct(id){
+  if(id==='construcao'){location.assign(experienceRoot()+'construcao/');return}
   if(window.__pdNavigate && (id==='rd'||id==='suri'||id==='checkout')){window.__pdNavigate(id);return}
   const root=experienceRoot();
   if(id==='totvs'){location.assign(root+'totvs/');return}
