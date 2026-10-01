@@ -178,7 +178,7 @@ function experienceRoot(){
   return p.endsWith('/')?p:p.replace(/[^/]+$/,'');
 }
 function suriHTML(){
-  return '<div class="suri"><div class="suri-inner"><section class="suri-hero"><div class="suri-copy"><h1>Suri Shop</h1><p>Experimente a experiência de compra TOTVS Pay através da Suri Shop. Aponte a câmera para o QR Code e finalize um pedido de demonstração com os mesmos passos de pagamento usados no checkout.</p></div><div class="suri-qr" aria-label="Espaço reservado para o QR Code"><div class="suri-qr__frame"><span class="suri-qr__mark" aria-hidden="true"></span><p>QR Code</p><small>versão final em breve</small></div></div></section></div></div>';
+  return '<div class="suri"><div class="suri-inner"><section class="suri-hero"><div class="suri-copy"><img class="suri-brand" src="instituto-percorre.png" alt="Instituto Percorre"><h1>Lorem ipsum</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div><a class="suri-qr" href="https://wa.me/5511975019280" target="_blank" rel="noreferrer"><img src="suri-qr.png" alt="QR Code da Suri Shop no WhatsApp"></a></section><p class="suri-credit">Lorem ipsum dolor sit amet</p></div></div>';
 }
 function showPublicSuri(){
   const app=document.getElementById('app');
