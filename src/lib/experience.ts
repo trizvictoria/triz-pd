@@ -1,9 +1,9 @@
-export type ExperienceTarget = 'rd' | 'totvs' | 'suri' | 'checkout'
+export type ExperienceTarget = 'rd' | 'totvs' | 'suri' | 'checkout' | 'construcao'
 
 export function experienceRoot() {
   const path = window.location.pathname
-  const totvsAt = path.indexOf('/totvs')
-  if (totvsAt >= 0) return `${path.slice(0, totvsAt)}/`
+  const nested = path.search(/\/(totvs|construcao)(?:\/|$)/)
+  if (nested >= 0) return `${path.slice(0, nested)}/`
   const base = import.meta.env.BASE_URL || '/'
   return base.endsWith('/') ? base : `${base}/`
 }
@@ -15,13 +15,14 @@ export function experienceUrls() {
     totvs: `${root}totvs/`,
     suri: `${root}#suri`,
     checkout: `${root}#checkout`,
+    construcao: `${root}construcao/`,
   }
 }
 
 export function goExperience(target: ExperienceTarget) {
   const urls = experienceUrls()
-  if (target === 'totvs') {
-    window.location.assign(urls.totvs)
+  if (target === 'totvs' || target === 'construcao') {
+    window.location.assign(urls[target])
     return
   }
   const here = window.location.pathname.replace(/\/+$/, '')

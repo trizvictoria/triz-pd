@@ -133,7 +133,7 @@
           <button type="button" class="product-switch__item" data-product="totvs">TOTVS Pay</button>
           <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
           <span class="product-switch__sep"></span>
-          <button type="button" class="product-switch__item is-disabled" data-product="construcao" disabled>Construção</button>
+          <button type="button" class="product-switch__item" data-product="construcao">Construção</button>
           <span class="product-switch__sep"></span>
           <button type="button" class="product-switch__item" data-product="checkout">Checkout</button>
           <span class="product-switch__sep"></span>
@@ -171,7 +171,7 @@
             <button type="button" class="product-switch__item" data-product="totvs">TOTVS Pay</button>
             <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
             <span class="product-switch__sep"></span>
-            <button type="button" class="product-switch__item is-disabled" data-product="construcao" disabled>Construção</button>
+            <button type="button" class="product-switch__item" data-product="construcao">Construção</button>
             <span class="product-switch__sep"></span>
             <button type="button" class="product-switch__item" data-product="checkout">Checkout</button>
             <span class="product-switch__sep"></span>
@@ -278,7 +278,7 @@ function renderLogin(){
 }
 function experienceRoot(){
   const p=location.pathname;
-  const i=p.indexOf('/totvs');
+  const i=p.search(/\/(totvs|construcao)(?:\/|$)/);
   if(i>=0) return p.slice(0,i)+'/';
   return p.endsWith('/')?p:p.replace(/[^/]+$/,'');
 }
@@ -303,6 +303,7 @@ function goProduct(id){
   if(window.__pdNavigate && (id==='rd'||id==='suri'||id==='checkout')){window.__pdNavigate(id);return}
   const root=experienceRoot();
   if(id==='totvs'){location.assign(root+'totvs/');return}
+  if(id==='construcao'){location.assign(root+'construcao/');return}
   if(id==='suri'){location.hash='suri';if(sessionPass()){loadFlow(sessionPass());return}showPublicSuri();return}
   if(id==='rd'){location.hash='deal';if(sessionPass()){loadFlow(sessionPass());return}renderLogin();return}
   if(id==='checkout'){location.hash='checkout';if(sessionPass()){loadFlow(sessionPass());return}renderLogin()}

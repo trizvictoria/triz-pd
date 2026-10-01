@@ -10,7 +10,7 @@ const ITEMS: Array<
   { type: 'item', id: 'totvs', label: 'TOTVS Pay' },
   { type: 'item', id: 'suri', label: 'Suri Shop' },
   { type: 'sep', id: 'sep-1' },
-  { type: 'soon', id: 'construcao', label: 'Construção' },
+  { type: 'item', id: 'construcao', label: 'Construção' },
   { type: 'sep', id: 'sep-2' },
   { type: 'item', id: 'checkout', label: 'Checkout' },
   { type: 'sep', id: 'sep-3' },
