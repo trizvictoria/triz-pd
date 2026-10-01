@@ -1,3 +1,5 @@
+import { ProductMenu } from './ProductMenu'
+
 const asset = (name: string) => `${import.meta.env.BASE_URL}navbar/${name}`
 
 export function CrmLogo() {
@@ -11,9 +13,7 @@ export function CrmLogo() {
             <img className="navbar-crm-word" src={asset('crm-lettering.svg')} alt="" />
           </span>
         </span>
-        <span className="navbar-product-item" aria-hidden>
-          <img src={asset('chevron-down.svg')} alt="" />
-        </span>
+        <ProductMenu />
       </div>
     </div>
   )

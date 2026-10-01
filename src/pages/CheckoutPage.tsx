@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { ProductMenu } from '../components/ProductMenu'
 import { TotvsPayLogo } from '../components/TotvsPayLogo'
 import { formatBRL } from '../lib/deal'
 import { usePayments } from '../state/payments'
@@ -231,7 +232,10 @@ export function CheckoutPage() {
         <button type="button" className="checkout-back" aria-label="Voltar ao CRM" onClick={completeCheckout}>
           <BackIcon />
         </button>
-        <TotvsPayLogo variant="dark" size="checkout" />
+        <div className="navbar-logo">
+          <TotvsPayLogo variant="dark" size="checkout" />
+          <ProductMenu tone="light" />
+        </div>
       </header>
 
       {layout ? (

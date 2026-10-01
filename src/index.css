@@ -2,6 +2,7 @@
 @import './styles/shell.css';
 @import './styles/ui.css';
 @import './styles/login.css';
+@import './styles/experience.css';
 
 *,
 *::before,
@@ -15,6 +16,12 @@ html,
 body,
 #root {
   height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 }
 
 body {

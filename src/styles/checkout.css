@@ -1,5 +1,7 @@
 .checkout {
-  min-height: 100vh;
+  flex: 1;
+  min-height: 0;
+  height: auto;
   background: linear-gradient(180deg, #fff 0, #f5faf8 140px, #f7f9f8 100%);
   color: #171717;
   font-family: Inter, 'DM Sans', sans-serif;

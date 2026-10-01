@@ -1,16 +1,20 @@
 import { useState, type ReactNode } from 'react'
 import { NavbarAvatar, NavbarIcon } from '../components/CrmLogo'
+import { ProductMenu } from '../components/ProductMenu'
 import { TotvsPayLogo } from '../components/TotvsPayLogo'
 
 const NAV_ICONS = [{ src: 'search.svg' }, { src: 'bell.svg', badge: true }, { src: 'settings.svg' }] as const
 
-export function TotvsShell({ children }: { children: ReactNode }) {
+export function TotvsShell({ children, variant = 'login' }: { children: ReactNode; variant?: 'login' | 'suri' }) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <div className="layout layout-totvs">
+    <div className={`layout layout-totvs${variant === 'suri' ? ' is-suri' : ''}`}>
       <nav className="navbar">
-        <TotvsPayLogo variant="navy" size="nav" />
+        <div className="navbar-logo">
+          <TotvsPayLogo variant="navy" size="nav" />
+          <ProductMenu />
+        </div>
         <div className="navbar-secondary">
           <div className="navbar-icons">
             {NAV_ICONS.map((item) => (

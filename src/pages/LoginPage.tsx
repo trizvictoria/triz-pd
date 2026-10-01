@@ -9,7 +9,7 @@ const PRODUCTS: { value: LoginProduct; label: string }[] = [
   { value: 'rd', label: 'RD Vendas' },
 ]
 
-export function LoginPage({ onSuccess }: { onSuccess: (product: LoginProduct) => void }) {
+export function LoginPage({ onSuccess }: { onSuccess: (product: LoginProduct, password: string) => void }) {
   const [user, setUser] = useState('')
   const [password, setPassword] = useState('')
   const [product, setProduct] = useState<LoginProduct | ''>('')
@@ -28,7 +28,7 @@ export function LoginPage({ onSuccess }: { onSuccess: (product: LoginProduct) =>
       return
     }
     setError('')
-    onSuccess(product)
+    onSuccess(product, password)
   }
 
   return (

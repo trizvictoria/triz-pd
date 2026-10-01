@@ -1,15 +1,30 @@
-import { lazy, Suspense, useState } from 'react'
+import { lazy, Suspense, useEffect, useState, type ReactNode } from 'react'
+import { DemoBanner } from './components/DemoBanner'
 import { TotvsShell } from './layout/TotvsShell'
+import { readAuthSession, writeAuthSession } from './lib/auth'
 import { LoginPage, type LoginProduct } from './pages/LoginPage'
-import { writeAuthSession } from './lib/auth'
+import { SuriShopPage } from './pages/SuriShopPage'
 
 const AuthedApp = lazy(() => import('./pages/AuthedApp'))
 
-export default function App() {
-  const [authed, setAuthed] = useState(false)
+function useHash() {
+  const [hash, setHash] = useState(() => window.location.hash.replace('#', ''))
+  useEffect(() => {
+    function onHash() {
+      setHash(window.location.hash.replace('#', ''))
+    }
+    window.addEventListener('hashchange', onHash)
+    return () => window.removeEventListener('hashchange', onHash)
+  }, [])
+  return hash
+}
 
-  function handleLogin(product: LoginProduct) {
-    writeAuthSession(true)
+export default function App() {
+  const [authed, setAuthed] = useState(() => readAuthSession())
+  const hash = useHash()
+
+  function handleLogin(product: LoginProduct, password: string) {
+    writeAuthSession(true, password)
     if (product === 'totvs') {
       const base = import.meta.env.BASE_URL.endsWith('/')
         ? import.meta.env.BASE_URL
@@ -20,25 +35,33 @@ export default function App() {
     setAuthed(true)
   }
 
+  const shell = (children: ReactNode, variant: 'login' | 'suri' = 'login') => (
+    <>
+      <DemoBanner />
+      <TotvsShell variant={variant}>{children}</TotvsShell>
+    </>
+  )
+
+  if (hash === 'suri') return shell(<SuriShopPage />, 'suri')
+
   if (!authed) {
-    return (
-      <TotvsShell>
-        <LoginPage onSuccess={handleLogin} />
-      </TotvsShell>
-    )
+    return shell(<LoginPage onSuccess={handleLogin} />)
   }
 
   return (
-    <Suspense
-      fallback={
-        <TotvsShell>
-          <div className="login">
-            <p className="login-error">Carregando…</p>
-          </div>
-        </TotvsShell>
-      }
-    >
-      <AuthedApp />
-    </Suspense>
+    <>
+      <DemoBanner />
+      <Suspense
+        fallback={
+          <TotvsShell>
+            <div className="login">
+              <p className="login-error">Carregando…</p>
+            </div>
+          </TotvsShell>
+        }
+      >
+        <AuthedApp hash={hash} />
+      </Suspense>
+    </>
   )
 }

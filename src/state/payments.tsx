@@ -1,4 +1,5 @@
 import { createContext, useContext, useMemo, useRef, useState, type ReactNode } from 'react'
+import { DEMO_CHECKOUT } from '../lib/experience'
 import {
   DEAL,
   PREVIOUS_LINK_STATUSES,
@@ -43,7 +44,10 @@ type Store = {
   copyUrl: (url?: string) => Promise<void>
   view: 'deal' | 'checkout'
   checkoutLink: PaymentLink | null
+  checkoutDemo: boolean
   openCheckout: (id: string) => void
+  openDemoCheckout: () => void
+  closeDemoCheckout: () => void
   completeCheckout: () => void
   focusHistory: boolean
   consumeFocusHistory: () => void
@@ -69,13 +73,21 @@ export function PaymentProvider({ children }: { children: ReactNode }) {
   const [toast, setToast] = useState<ToastMessage | null>(null)
   const [view, setView] = useState<Store['view']>('deal')
   const [checkoutId, setCheckoutId] = useState<string | null>(null)
+  const [checkoutDemo, setCheckoutDemo] = useState(false)
   const [focusHistory, setFocusHistory] = useState(false)
   const toastTimer = useRef<number | undefined>(undefined)
   const pendingCreateToast = useRef(false)
 
   const activeLink = links.find((link) => link.id === activeId) ?? null
   const visibleLinks = links.filter((link) => !link.paid)
-  const checkoutLink = links.find((link) => link.id === checkoutId) ?? null
+  const checkoutLink = checkoutDemo
+    ? {
+        ...DEMO_CHECKOUT,
+        createdAt: new Date(),
+        expiresAt: addDays(new Date(), 31),
+        status: 'ativo' as const,
+      }
+    : (links.find((link) => link.id === checkoutId) ?? null)
 
   function showToast(next: ToastMessage) {
     window.clearTimeout(toastTimer.current)
@@ -200,13 +212,33 @@ export function PaymentProvider({ children }: { children: ReactNode }) {
     },
     view,
     checkoutLink,
+    checkoutDemo,
     openCheckout(id) {
       pendingCreateToast.current = false
+      setCheckoutDemo(false)
       setCheckoutId(id)
       setDrawer('closed')
       setView('checkout')
     },
+    openDemoCheckout() {
+      pendingCreateToast.current = false
+      setCheckoutId(null)
+      setCheckoutDemo(true)
+      setDrawer('closed')
+      setView('checkout')
+    },
+    closeDemoCheckout() {
+      setCheckoutDemo(false)
+      setCheckoutId(null)
+      setView('deal')
+    },
     completeCheckout() {
+      if (checkoutDemo) {
+        setCheckoutDemo(false)
+        setView('deal')
+        if (window.location.hash.replace('#', '') === 'checkout') window.location.hash = 'deal'
+        return
+      }
       if (checkoutId) {
         setLinks((current) =>
           current.map((link) =>
