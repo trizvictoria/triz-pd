@@ -2,7 +2,7 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/prototipouniverso/totvs/assets/totvs-logo-BQRHc5D5.svg" />
+    <link rel="icon" type="image/svg+xml" href="/triz-pd/totvs/assets/totvs-logo-BQRHc5D5.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TOTVS Pay — Payments Universo TOTVS</title>
     <script>
@@ -23,11 +23,11 @@
             sessionStorage.removeItem(PASS_KEY)
           }
           if (sessionStorage.getItem(KEY) !== PASS) {
-            location.replace('/prototipouniverso/')
+            location.replace('/triz-pd/')
             return
           }
         } catch (e) {
-          location.replace('/prototipouniverso/')
+          location.replace('/triz-pd/')
           return
         }
         var path = sessionStorage.getItem('spa-path')
@@ -37,8 +37,8 @@
         }
       })()
     </script>
-    <script type="module" crossorigin src="/prototipouniverso/totvs/assets/index-BdGaCzor.js"></script>
-    <link rel="stylesheet" crossorigin href="/prototipouniverso/totvs/assets/index-DU_-DrXh.css">
+    <script type="module" crossorigin src="/triz-pd/totvs/assets/index-BdGaCzor.js"></script>
+    <link rel="stylesheet" crossorigin href="/triz-pd/totvs/assets/index-DU_-DrXh.css">
   </head>
   <body>
     <div id="root"></div>
