@@ -5,7 +5,7 @@
     '#pd-product-switch-host .product-switch__toggle{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:0;border-radius:8px;padding:0;margin:0;background:transparent;color:#00558b;cursor:pointer}' +
     '#pd-product-switch-host .product-switch__toggle:hover,#pd-product-switch-host .product-switch__toggle[aria-expanded="true"]{background:rgba(0,85,139,.12)}' +
     '#pd-product-switch-host .product-switch__toggle svg{width:18px!important;height:18px!important;display:block!important;fill:none!important;stroke:currentColor!important;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important}' +
-    '#pd-product-switch-host .product-switch__menu{position:absolute;top:calc(100% + 8px);left:0;min-width:228px;padding:12px 0;background:#001927;border-radius:8px;box-shadow:0 12px 24px rgba(0,34,51,.28);z-index:2147483647}' +
+    '#pd-product-switch-host .product-switch__menu{position:absolute;top:calc(100% + 8px);left:0;min-width:280px;padding:12px 0;background:#001927;border-radius:8px;box-shadow:0 12px 24px rgba(0,34,51,.28);z-index:2147483647}' +
     '#pd-product-switch-host .product-switch__label{padding:4px 16px 8px;color:rgba(255,255,255,.55);font:700 11px/14px "DM Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase}' +
     '#pd-product-switch-host .product-switch__item{display:block;width:100%;padding:8px 16px;color:#fff;font:500 14px/20px "DM Sans",sans-serif;text-align:left;background:transparent;border:0;cursor:pointer}' +
     '#pd-product-switch-host .product-switch__item:hover:not(:disabled){background:rgba(255,255,255,.08)}' +
@@ -20,7 +20,8 @@
     '<div class="product-switch__menu" hidden>' +
     '<p class="product-switch__label">Produtos</p>' +
     '<button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>' +
-    '<button type="button" class="product-switch__item" data-product="totvs">TOTVS Pay</button>' +
+    '<button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay - Credenciamento</button>' +
+    '<button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay - Dashboard</button>' +
     '<button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="construcao">Construção</button>' +
@@ -40,8 +41,13 @@
   function goProduct(id) {
     var root = experienceRoot()
     if (id === 'construcao') return
-    if (id === 'totvs') location.assign(root + 'totvs/')
-    else if (id === 'suri') location.assign(root + '#suri')
+    if (id === 'totvs' || id === 'totvs-credenciamento') {
+      try { sessionStorage.setItem('totvs-onboarded', '0') } catch (e) {}
+      location.assign(root + 'totvs/')
+    } else if (id === 'totvs-dashboard') {
+      try { sessionStorage.setItem('totvs-onboarded', '1') } catch (e) {}
+      location.assign(root + 'totvs/dashboard')
+    } else if (id === 'suri') location.assign(root + '#suri')
     else if (id === 'checkout') location.assign(root + '#checkout')
     else location.assign(root)
   }

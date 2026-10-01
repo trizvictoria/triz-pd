@@ -31,7 +31,7 @@
     .product-switch--light .product-switch__toggle{color:#111}
     .product-switch__toggle:hover,.product-switch__toggle[aria-expanded='true']{background:rgba(255,255,255,.08)}
     .product-switch--light .product-switch__toggle:hover,.product-switch--light .product-switch__toggle[aria-expanded='true']{background:#f3f3f3}
-    .product-switch__menu{position:absolute;top:calc(100% + 8px);left:0;min-width:228px;padding:12px 0;background:#001927;border-radius:8px;box-shadow:0 12px 24px rgba(0,34,51,.28);z-index:9700}
+    .product-switch__menu{position:absolute;top:calc(100% + 8px);left:0;min-width:280px;padding:12px 0;background:#001927;border-radius:8px;box-shadow:0 12px 24px rgba(0,34,51,.28);z-index:9700}
     .product-switch__label{padding:4px 16px 8px;color:rgba(255,255,255,.55);font:700 11px/14px var(--font);letter-spacing:.08em;text-transform:uppercase}
     .product-switch__item{display:block;width:100%;padding:8px 16px;color:#fff;font:500 14px/20px var(--font);text-align:left}
     .product-switch__item:hover:not(:disabled){background:rgba(255,255,255,.08)}
@@ -302,7 +302,8 @@
         <div class="product-switch__menu" hidden>
           <p class="product-switch__label">Produtos</p>
           <button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>
-          <button type="button" class="product-switch__item" data-product="totvs">TOTVS Pay</button>
+          <button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay - Credenciamento</button>
+          <button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay - Dashboard</button>
           <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
           <span class="product-switch__sep"></span>
           <button type="button" class="product-switch__item" data-product="construcao">Construção</button>
@@ -340,7 +341,8 @@
           <div class="product-switch__menu" hidden>
             <p class="product-switch__label">Produtos</p>
             <button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>
-            <button type="button" class="product-switch__item" data-product="totvs">TOTVS Pay</button>
+            <button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay - Credenciamento</button>
+          <button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay - Dashboard</button>
             <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
             <span class="product-switch__sep"></span>
             <button type="button" class="product-switch__item" data-product="construcao">Construção</button>
@@ -420,7 +422,8 @@ function productMenuHTML(tone){
     <div class="product-switch__menu" hidden>
       <p class="product-switch__label">Produtos</p>
       <button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>
-      <button type="button" class="product-switch__item" data-product="totvs">TOTVS Pay</button>
+      <button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay - Credenciamento</button>
+          <button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay - Dashboard</button>
       <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
       <span class="product-switch__sep"></span>
       <button type="button" class="product-switch__item" data-product="construcao">Construção</button>
@@ -691,11 +694,13 @@ function act(a,id){
   if(a==='copy-link'){const l=state.links.find(x=>x.id===id); if(l) copyLink(l.url)}
 }
 window.__pdNavigate=function(id){
-  if(id==='totvs'||id==='construcao'){
+  if(id==='totvs'||id==='totvs-credenciamento'||id==='totvs-dashboard'||id==='construcao'){
     const p=location.pathname;
     const i=p.search(/\/(totvs|construcao)(?:\/|$)/);
     const root=i>=0?p.slice(0,i)+'/': (p.endsWith('/')?p:p.replace(/[^/]+$/,''));
-    location.assign(root+(id==='totvs'?'totvs/':'construcao/'));
+    if(id==='construcao'){location.assign(root+'construcao/');return}
+    try{sessionStorage.setItem('totvs-onboarded',id==='totvs-dashboard'?'1':'0')}catch(e){}
+    location.assign(root+(id==='totvs-dashboard'?'totvs/dashboard':'totvs/'));
     return;
   }
   if(id==='suri'){state.view='suri';state.checkout=null;state.checkoutDemo=false;history.replaceState(null,'','#suri');render();return}
