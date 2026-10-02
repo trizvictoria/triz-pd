@@ -66,47 +66,85 @@
     }).join('')
   }
 
+  var H_JOINT = [
+    [1, -1, 1],
+    [-1, 1, -1],
+    [1, -1, 1],
+  ]
+  var V_JOINT = [
+    [-1, 1, -1, 1],
+    [1, -1, 1, -1],
+  ]
+
   function round(n) {
     return Math.round(n * 100) / 100
   }
 
+  function vertEdge(d, x, yA, yB, kind, centerX, radius, gap) {
+    if (!kind) {
+      d.push('L', round(x), round(yB))
+      return
+    }
+    var midY = (yA + yB) / 2
+    var down = yB > yA
+    var r = kind === 1 ? radius : radius + gap * 0.9
+    var dist = x - centerX
+    var dy = Math.sqrt(Math.max(0, r * r - dist * dist))
+    var yFirst = down ? midY - dy : midY + dy
+    var ySecond = down ? midY + dy : midY - dy
+    d.push('L', round(x), round(yFirst))
+    var centerRight = centerX > x
+    var sweep
+    if (kind === 1) {
+      sweep = (down && centerRight) || (!down && !centerRight) ? 1 : 0
+      d.push('A', round(r), round(r), 0, 1, sweep, round(x), round(ySecond))
+    } else {
+      sweep = (down && centerRight) || (!down && !centerRight) ? 0 : 1
+      d.push('A', round(r), round(r), 0, 0, sweep, round(x), round(ySecond))
+    }
+    d.push('L', round(x), round(yB))
+  }
+
+  function horizEdge(d, y, xA, xB, kind, centerY, radius, gap) {
+    if (!kind) {
+      d.push('L', round(xB), round(y))
+      return
+    }
+    var midX = (xA + xB) / 2
+    var right = xB > xA
+    var r = kind === 1 ? radius : radius + gap * 0.9
+    var dist = y - centerY
+    var dx = Math.sqrt(Math.max(0, r * r - dist * dist))
+    var xFirst = right ? midX - dx : midX + dx
+    var xSecond = right ? midX + dx : midX - dx
+    d.push('L', round(xFirst), round(y))
+    var centerDown = centerY > y
+    var sweep
+    if (kind === 1) {
+      sweep = (right && centerDown) || (!right && !centerDown) ? 1 : 0
+      d.push('A', round(r), round(r), 0, 1, sweep, round(xSecond), round(y))
+    } else {
+      sweep = (right && centerDown) || (!right && !centerDown) ? 0 : 1
+      d.push('A', round(r), round(r), 0, 0, sweep, round(xSecond), round(y))
+    }
+    d.push('L', round(xB), round(y))
+  }
+
   function piecePath(col, row, cellW, cellH, gap, radius) {
-    var k = 0.56
     var x0 = col * cellW + gap
     var x1 = (col + 1) * cellW - gap
     var y0 = row * cellH + gap
     var y1 = (row + 1) * cellH - gap
-    var midY = row * cellH + cellH / 2
-    var hasTab = col < 3
-    var hasHole = col > 0
-    var d = ['M', round(x0), round(y0), 'L', round(x1), round(y0)]
-
-    if (hasTab) {
-      var cx = x1 + radius * k
-      var dy = Math.sqrt(Math.max(0, radius * radius - (cx - x1) * (cx - x1)))
-      d.push('L', round(x1), round(midY - dy))
-      d.push('A', round(radius), round(radius), 0, 1, 1, round(x1), round(midY + dy))
-      d.push('L', round(x1), round(y1))
-    } else {
-      d.push('L', round(x1), round(y1))
-    }
-
-    d.push('L', round(x0), round(y1))
-
-    if (hasHole) {
-      var prevX1 = col * cellW - gap
-      var cxh = prevX1 + radius * k
-      var holeR = radius + gap * 0.9
-      var dxh = x0 - cxh
-      var inside = holeR * holeR - dxh * dxh
-      if (inside > 0) {
-        var dyh = Math.sqrt(inside)
-        d.push('L', round(x0), round(midY + dyh))
-        d.push('A', round(holeR), round(holeR), 0, 1, 0, round(x0), round(midY - dyh))
-      }
-    }
-
-    d.push('L', round(x0), round(y0), 'Z')
+    var top = row === 0 ? 0 : -V_JOINT[row - 1][col]
+    var right = col === 3 ? 0 : H_JOINT[row][col]
+    var bottom = row === 2 ? 0 : V_JOINT[row][col]
+    var left = col === 0 ? 0 : -H_JOINT[row][col - 1]
+    var d = ['M', round(x0), round(y0)]
+    horizEdge(d, y0, x0, x1, top, row * cellH, radius, gap)
+    vertEdge(d, x1, y0, y1, right, (col + 1) * cellW, radius, gap)
+    horizEdge(d, y1, x1, x0, bottom, (row + 1) * cellH, radius, gap)
+    vertEdge(d, x0, y1, y0, left, col * cellW, radius, gap)
+    d.push('Z')
     return d.join(' ')
   }
 
@@ -259,7 +297,7 @@
     var link = document.createElement('link')
     link.id = 'lp-extra-style'
     link.rel = 'stylesheet'
-    link.href = '/triz-pd/totvs/landing-extra.css?v=3'
+    link.href = '/triz-pd/totvs/landing-extra.css?v=4'
     document.head.appendChild(link)
   }
 
