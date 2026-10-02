@@ -67,10 +67,12 @@
   }
 
   function puzzleHTML() {
-    return PUZZLE.map(function (cell) {
+    return PUZZLE.map(function (cell, index) {
       return (
         '<div class="lp-puzzle__cell lp-puzzle__cell--' +
         cell.tone +
+        '" data-piece="' +
+        (index + 1) +
         '">' +
         ICONS[cell.icon] +
         '<span>' +
@@ -120,7 +122,7 @@
       '<p class="lp-rate__hint">por boleto pago</p>' +
       '</article></div></section>' +
       '<section class="lp-platform" aria-labelledby="lp-platform-title">' +
-      '<h2 id="lp-platform-title">TOTVS Pay é a <em>plataforma</em> de pagamentos digitais da TOTVS</h2>' +
+      '<h2 id="lp-platform-title">TOTVS Pay é a plataforma de<br>pagamentos digitais da TOTVS</h2>' +
       '<div class="lp-platform__layout">' +
       '<div class="lp-platform__cards">' +
       '<article class="lp-platform__card"><span class="lp-platform__num">01</span><h3>One Stop Shop</h3><p>O cliente não precisa contratar mais ninguém além da gente para ter uma solução de pagamento completa.</p><div class="lp-platform__tags"><span>Adquirência</span><span>Antifraude</span><span>3DS</span><span>Vault</span><span>Tokenização</span></div></article>' +
@@ -157,7 +159,7 @@
     var link = document.createElement('link')
     link.id = 'lp-extra-style'
     link.rel = 'stylesheet'
-    link.href = '/triz-pd/totvs/landing-extra.css?v=1'
+    link.href = '/triz-pd/totvs/landing-extra.css?v=2'
     document.head.appendChild(link)
   }
 
