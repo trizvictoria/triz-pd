@@ -1,7 +1,7 @@
 .lp-extra {
-  width: calc(100% - (var(--page-pad-x, 24px) * 2));
-  max-width: 1281px;
-  margin: 0 auto 72px;
+  width: 100%;
+  max-width: none;
+  margin: 0 0 48px;
   color: var(--white);
   box-sizing: border-box;
 }
@@ -142,11 +142,13 @@
 }
 
 .lp-platform {
-  margin-top: clamp(40px, 5vw, 64px);
-  background: #fff;
-  color: #002233;
+  margin-top: 48px;
+  width: 100%;
+  max-width: none;
+  background: var(--white);
+  color: var(--text);
   border-radius: 28px;
-  padding: clamp(28px, 3.6vw, 56px) clamp(20px, 3.2vw, 56px);
+  padding: clamp(28px, 3.6vw, 56px) clamp(24px, 3.2vw, 56px);
   box-sizing: border-box;
 }
 
@@ -256,7 +258,7 @@
 
 .lp-puzzle__labels {
   position: absolute;
-  inset: 0;
+  inset: 2%;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-template-rows: repeat(3, minmax(0, 1fr));
@@ -268,13 +270,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: clamp(4px, 0.8vw, 8px);
-  padding: clamp(6px, 1.2vw, 12px) clamp(8px, 1.6vw, 16px);
+  gap: clamp(4px, 0.7vw, 8px);
+  padding: 16% 18%;
   text-align: center;
-  font: 700 clamp(9px, 1.05vw, 14px)/1.25 "DM Sans", sans-serif;
+  font: 700 clamp(8px, 0.95vw, 13px)/1.25 "DM Sans", sans-serif;
   letter-spacing: -0.01em;
   color: #fff;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .lp-puzzle__label svg {
@@ -344,12 +347,6 @@
 }
 
 @media (max-width: 720px) {
-  .lp-extra {
-    width: auto;
-    margin-left: 16px;
-    margin-right: 16px;
-  }
-
   .lp-rate__installments {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -359,13 +356,15 @@
   }
 
   .lp-platform {
-    padding: 24px 16px 28px;
-    border-radius: 20px;
+    padding: 24px 16px 32px;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%;
   }
 
   .lp-puzzle__label {
-    font-size: clamp(8px, 2.6vw, 11px);
-    padding: 6px 4px;
+    padding: 14% 16%;
+    font-size: clamp(8px, 2.4vw, 11px);
     gap: 4px;
   }
 

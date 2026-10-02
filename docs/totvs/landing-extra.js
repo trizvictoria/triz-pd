@@ -87,7 +87,7 @@
     }
     var midY = (yA + yB) / 2
     var down = yB > yA
-    var r = kind === 1 ? radius : radius + gap * 0.9
+    var r = kind === 1 ? radius : radius + 2 * gap
     var dist = x - centerX
     var dy = Math.sqrt(Math.max(0, r * r - dist * dist))
     var yFirst = down ? midY - dy : midY + dy
@@ -112,7 +112,7 @@
     }
     var midX = (xA + xB) / 2
     var right = xB > xA
-    var r = kind === 1 ? radius : radius + gap * 0.9
+    var r = kind === 1 ? radius : radius + 2 * gap
     var dist = y - centerY
     var dx = Math.sqrt(Math.max(0, r * r - dist * dist))
     var xFirst = right ? midX - dx : midX + dx
@@ -159,8 +159,8 @@
     var cellW = w / 4
     var cellH = h / 3
     var minSide = Math.min(cellW, cellH)
-    var gap = Math.max(3, minSide * 0.032)
-    var radius = Math.max(8, minSide * 0.132)
+    var gap = Math.max(6, minSide * 0.042)
+    var radius = Math.max(10, minSide * 0.118)
     var paths = svg.querySelectorAll('path')
     for (var i = 0; i < paths.length; i += 1) {
       paths[i].setAttribute(
@@ -297,7 +297,7 @@
     var link = document.createElement('link')
     link.id = 'lp-extra-style'
     link.rel = 'stylesheet'
-    link.href = '/triz-pd/totvs/landing-extra.css?v=4'
+    link.href = '/triz-pd/totvs/landing-extra.css?v=5'
     document.head.appendChild(link)
   }
 
