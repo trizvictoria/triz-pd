@@ -228,9 +228,9 @@
   min-width: 0;
   min-height: 0;
   height: 100%;
-  background: #eceff2;
-  border-radius: 16px;
-  padding: 10px;
+  background: #e8edf1;
+  border-radius: 18px;
+  padding: 12px;
   box-sizing: border-box;
 }
 
@@ -255,11 +255,12 @@
   stroke: #fff;
   stroke-linejoin: round;
   stroke-linecap: round;
+  paint-order: fill stroke;
 }
 
-.lp-puzzle__piece--cyan { fill: #00dbff; }
-.lp-puzzle__piece--navy { fill: #003d5c; }
-.lp-puzzle__piece--deep { fill: #002233; }
+.lp-puzzle__piece--cyan { fill: #00c6f5; }
+.lp-puzzle__piece--navy { fill: #0a3550; }
+.lp-puzzle__piece--deep { fill: #041e2c; }
 .lp-puzzle__piece--mute { fill: #6b7280; }
 
 .lp-puzzle__labels {
