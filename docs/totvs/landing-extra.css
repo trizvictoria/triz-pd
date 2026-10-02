@@ -290,6 +290,13 @@
   color: #002233;
 }
 
+.lp-puzzle__label:nth-child(5),
+.lp-puzzle__label:nth-child(6),
+.lp-puzzle__label:nth-child(7),
+.lp-puzzle__label:nth-child(8) {
+  padding: 22% 24%;
+}
+
 @media (max-width: 1100px) {
   .lp-rates__grid {
     grid-template-columns: minmax(140px, 1fr) minmax(0, 2.2fr) minmax(140px, 1fr);
