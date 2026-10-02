@@ -54,6 +54,16 @@
     { label: '+ Outras', tone: 'mute', icon: 'plus' },
   ]
 
+  var H_JOINT = [
+    [1, -1, 1],
+    [-1, 1, -1],
+    [1, 1, 1],
+  ]
+  var V_JOINT = [
+    [-1, 1, -1, 1],
+    [1, -1, 1, -1],
+  ]
+
   function instHTML() {
     return INSTALLMENTS.map(function (item) {
       return (
@@ -80,70 +90,66 @@
     return Math.round(n * 100) / 100
   }
 
-  function vertEdge(d, x, yA, yB, kind, centerX, radius, gap) {
-    if (!kind) {
+  function vertEdge(d, x, yA, yB, tabSign, boundaryX, radius, offset) {
+    if (!tabSign) {
       d.push('L', round(x), round(yB))
       return
     }
     var midY = (yA + yB) / 2
+    var cx = boundaryX + tabSign * offset
+    var dy = Math.sqrt(Math.max(0, radius * radius - (x - cx) * (x - cx)))
     var down = yB > yA
-    var r = radius
-    var dist = x - centerX
-    var dy = Math.sqrt(Math.max(0, r * r - dist * dist))
     var yFirst = down ? midY - dy : midY + dy
     var ySecond = down ? midY + dy : midY - dy
     d.push('L', round(x), round(yFirst))
-    var centerRight = centerX > x
-    var sweep
-    if (kind === 1) {
-      sweep = (down && centerRight) || (!down && !centerRight) ? 1 : 0
-      d.push('A', round(r), round(r), 0, 1, sweep, round(x), round(ySecond))
-    } else {
-      sweep = (down && centerRight) || (!down && !centerRight) ? 0 : 1
-      d.push('A', round(r), round(r), 0, 0, sweep, round(x), round(ySecond))
-    }
+    var centerRight = cx > x
+    var sweep = (down && centerRight) || (!down && !centerRight) ? 1 : 0
+    d.push('A', round(radius), round(radius), 0, 1, sweep, round(x), round(ySecond))
     d.push('L', round(x), round(yB))
   }
 
-  function horizEdge(d, y, xA, xB, kind, centerY, radius, gap) {
-    if (!kind) {
+  function horizEdge(d, y, xA, xB, tabSign, boundaryY, radius, offset) {
+    if (!tabSign) {
       d.push('L', round(xB), round(y))
       return
     }
     var midX = (xA + xB) / 2
+    var cy = boundaryY + tabSign * offset
+    var dx = Math.sqrt(Math.max(0, radius * radius - (y - cy) * (y - cy)))
     var right = xB > xA
-    var r = radius
-    var dist = y - centerY
-    var dx = Math.sqrt(Math.max(0, r * r - dist * dist))
     var xFirst = right ? midX - dx : midX + dx
     var xSecond = right ? midX + dx : midX - dx
     d.push('L', round(xFirst), round(y))
-    var centerDown = centerY > y
-    var sweep
-    if (kind === 1) {
-      sweep = (right && centerDown) || (!right && !centerDown) ? 1 : 0
-      d.push('A', round(r), round(r), 0, 1, sweep, round(xSecond), round(y))
-    } else {
-      sweep = (right && centerDown) || (!right && !centerDown) ? 0 : 1
-      d.push('A', round(r), round(r), 0, 0, sweep, round(xSecond), round(y))
-    }
+    var centerDown = cy > y
+    var sweep = (right && centerDown) || (!right && !centerDown) ? 1 : 0
+    d.push('A', round(radius), round(radius), 0, 1, sweep, round(xSecond), round(y))
     d.push('L', round(xB), round(y))
   }
 
-  function piecePath(col, row, cellW, cellH, gap, radius) {
-    var x0 = col * cellW + gap
-    var x1 = (col + 1) * cellW - gap
-    var y0 = row * cellH + gap
-    var y1 = (row + 1) * cellH - gap
-    var top = row === 0 ? 0 : -V_JOINT[row - 1][col]
+  function piecePath(col, row, cellW, cellH, pad, radius, offset, cornerR) {
+    var x0 = pad + col * cellW
+    var x1 = pad + (col + 1) * cellW
+    var y0 = pad + row * cellH
+    var y1 = pad + (row + 1) * cellH
+    var top = row === 0 ? 0 : V_JOINT[row - 1][col]
     var right = col === 3 ? 0 : H_JOINT[row][col]
     var bottom = row === 2 ? 0 : V_JOINT[row][col]
-    var left = col === 0 ? 0 : -H_JOINT[row][col - 1]
-    var d = ['M', round(x0), round(y0)]
-    horizEdge(d, y0, x0, x1, top, row * cellH, radius, gap)
-    vertEdge(d, x1, y0, y1, right, (col + 1) * cellW, radius, gap)
-    horizEdge(d, y1, x1, x0, bottom, (row + 1) * cellH, radius, gap)
-    vertEdge(d, x0, y1, y0, left, col * cellW, radius, gap)
+    var left = col === 0 ? 0 : H_JOINT[row][col - 1]
+    var tl = col === 0 && row === 0
+    var tr = col === 3 && row === 0
+    var br = col === 3 && row === 2
+    var bl = col === 0 && row === 2
+    var cr = Math.min(cornerR, (x1 - x0) / 3, (y1 - y0) / 3)
+    var d = tl
+      ? ['M', round(x0), round(y0 + cr), 'A', round(cr), round(cr), 0, 0, 1, round(x0 + cr), round(y0)]
+      : ['M', round(x0), round(y0)]
+    horizEdge(d, y0, tl ? x0 + cr : x0, tr ? x1 - cr : x1, top, y0, radius, offset)
+    if (tr) d.push('A', round(cr), round(cr), 0, 0, 1, round(x1), round(y0 + cr))
+    vertEdge(d, x1, tr ? y0 + cr : y0, br ? y1 - cr : y1, right, x1, radius, offset)
+    if (br) d.push('A', round(cr), round(cr), 0, 0, 1, round(x1 - cr), round(y1))
+    horizEdge(d, y1, br ? x1 - cr : x1, bl ? x0 + cr : x0, bottom, y1, radius, offset)
+    if (bl) d.push('A', round(cr), round(cr), 0, 0, 1, round(x0), round(y1 - cr))
+    vertEdge(d, x0, bl ? y1 - cr : y1, tl ? y0 + cr : y0, left, x0, radius, offset)
     d.push('Z')
     return d.join(' ')
   }
@@ -156,17 +162,19 @@
     var h = stage.clientHeight
     if (w < 8 || h < 8) return
     svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h)
-    var cellW = w / 4
-    var cellH = h / 3
+    var stroke = Math.max(3.5, Math.min(w / 4, h / 3) * 0.02)
+    var pad = stroke * 0.5
+    var cellW = (w - pad * 2) / 4
+    var cellH = (h - pad * 2) / 3
     var minSide = Math.min(cellW, cellH)
-    var stroke = Math.max(5, minSide * 0.032)
-    var gap = stroke * 0.5
-    var radius = Math.max(12, minSide * 0.16)
+    var radius = Math.max(14, minSide * 0.148)
+    var offset = radius * 0.72
+    var cornerR = Math.max(10, minSide * 0.09)
     var paths = svg.querySelectorAll('path')
     for (var i = 0; i < paths.length; i += 1) {
       paths[i].setAttribute(
         'd',
-        piecePath(i % 4, Math.floor(i / 4), cellW, cellH, gap, radius)
+        piecePath(i % 4, Math.floor(i / 4), cellW, cellH, pad, radius, offset, cornerR)
       )
       paths[i].setAttribute('stroke', '#fff')
       paths[i].setAttribute('stroke-width', String(round(stroke)))
@@ -202,13 +210,17 @@
       )
     }).join('')
     var labels = PUZZLE.map(function (cell) {
+      var text = cell.label
+        .replace('Adquirência / Sub Adquirência', 'Adquirência / Sub<br>Adquirência')
+        .replace('Meios de Pagamento', 'Meios de<br>Pagamento')
+        .replace('Tokeniz. Bandeira', 'Tokeniz.<br>Bandeira')
       return (
         '<div class="lp-puzzle__label lp-puzzle__label--' +
         cell.tone +
         '">' +
         ICONS[cell.icon] +
         '<span>' +
-        cell.label +
+        text +
         '</span></div>'
       )
     }).join('')
@@ -302,7 +314,7 @@
     var link = document.createElement('link')
     link.id = 'lp-extra-style'
     link.rel = 'stylesheet'
-    link.href = '/triz-pd/totvs/landing-extra.css?v=8'
+    link.href = '/triz-pd/totvs/landing-extra.css?v=9'
     document.head.appendChild(link)
   }
 
