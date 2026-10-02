@@ -310,64 +310,138 @@
     )
   }
 
-  function navDot(kind, active) {
-    var paths = {
-      home: '<path d="M4 10.5 12 4l8 6.5V20H4V10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 20v-6h6v6" fill="none" stroke="currentColor" stroke-width="1.8"/>',
-      bag: '<rect x="6" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 8V7a3 3 0 0 1 6 0v1" fill="none" stroke="currentColor" stroke-width="1.8"/>',
-      user: '<circle cx="12" cy="8.5" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6.5 19c.6-3.2 2.6-5 5.5-5s4.9 1.8 5.5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
-      card: '<rect x="4" y="7" width="16" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 11h16" stroke="currentColor" stroke-width="1.8"/>',
-      list: '<path d="M8 7h12M8 12h12M8 17h12M4 7h.01M4 12h.01M4 17h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
-      chart: '<path d="M5 19V9M12 19V5M19 19v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
-    }
+  function ico(file, w, h) {
+    h = h == null ? w : h
+    return (
+      '<img src="' +
+      ASSET +
+      file +
+      '" alt="" width="' +
+      w +
+      '" height="' +
+      h +
+      '">'
+    )
+  }
+
+  function navIco(file, cls) {
     return (
       '<span class="lp-shot__nav-ico' +
-      (active ? ' is-on' : '') +
-      '"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">' +
-      (paths[kind] || '') +
-      '</svg></span>'
+      (cls ? ' ' + cls : '') +
+      '">' +
+      ico(file, 9) +
+      '</span>'
+    )
+  }
+
+  function shotRow(name, status, cls, value, type, qty, created) {
+    created = created || '29/03/2026'
+    return (
+      '<tr><td>' +
+      name +
+      '</td><td><em class="' +
+      cls +
+      '">' +
+      status +
+      '</em></td><td>' +
+      created +
+      '</td><td>' +
+      created +
+      '</td><td>' +
+      value +
+      '</td><td>' +
+      type +
+      '</td><td>' +
+      qty +
+      '</td><td><span class="lp-shot__plus">' +
+      ico('shot-icon3.svg', 9) +
+      '</span></td></tr>'
     )
   }
 
   function shotHTML() {
     return (
-      '<div class="lp-shot">' +
+      '<div class="lp-shot lp-shot--fig">' +
       '<div class="lp-shot__app">' +
       '<header class="lp-shot__top">' +
-      '<span class="lp-shot__brand"><img src="/triz-pd/totvs/assets/totvs-logo-BQRHc5D5.svg" alt="" width="70" height="20"><span>Pay</span></span>' +
-      '<span class="lp-shot__top-tools"><i></i><i></i><i></i><i></i><b>Agência RD</b></span>' +
-      '</header>' +
+      '<span class="lp-shot__brand">' +
+      ico('shot-menu.svg', 9) +
+      ico('shot-wordmark.svg', 46, 13) +
+      '<b>Pay</b></span>' +
+      '<span class="lp-shot__top-tools">' +
+      ico('shot-nav-search.svg', 9) +
+      ico('shot-ai.svg', 10) +
+      ico('shot-nav-diamond.svg', 9) +
+      ico('shot-nav-apps.svg', 9) +
+      ico('shot-nav-settings.svg', 9) +
+      '<span class="lp-shot__vr"></span>' +
+      '<span class="lp-shot__avatar"></span>' +
+      '<strong>Agência RD</strong>' +
+      ico('shot-chevron.svg', 9) +
+      '</span></header>' +
       '<div class="lp-shot__body">' +
       '<aside class="lp-shot__nav">' +
-      navDot('home', true) +
-      navDot('bag') +
-      navDot('user') +
-      navDot('card') +
-      navDot('list') +
-      navDot('chart') +
+      navIco('shot-home.svg') +
+      navIco('shot-vector.svg') +
+      navIco('shot-person.svg') +
+      '<span class="lp-shot__nav-ico is-on">' +
+      ico('shot-sidebar-on.svg', 17, 15) +
+      '<i></i></span>' +
+      navIco('shot-chat.svg') +
+      navIco('shot-file.svg') +
+      '<span class="lp-shot__nav-ico"><svg viewBox="0 0 9 9" width="9" height="9" aria-hidden="true"><path d="M1.6 7.2V4.4M4.5 7.2V2M7.4 7.2V5.1" fill="none" stroke="#fff" stroke-width="1.1" stroke-linecap="round"/></svg></span>' +
       '</aside>' +
       '<div class="lp-shot__main">' +
       '<p class="lp-shot__crumb">Cobranças</p>' +
-      '<div class="lp-shot__heading"><h3>Links de Pagamentos</h3><span class="lp-shot__cta">Criar link</span></div>' +
-      '<div class="lp-shot__filters"><span class="lp-shot__search">Buscar link</span><span>Status</span><span>Data</span></div>' +
-      '<table class="lp-shot__table"><thead><tr><th>Nome do link</th><th>Status</th><th>Criação</th><th>Vencimento</th><th>Valor do link</th><th>Tipo de link</th><th>Quant. pagamentos</th></tr></thead><tbody>' +
-      '<tr><td>Abril – EF – Turma B Noturno</td><td><em class="is-ok">Ativo</em></td><td>29/03/2026</td><td>29/03/2026</td><td>R$ 3000,00</td><td>Único</td><td>1 de 1</td></tr>' +
-      '<tr><td>Abril – EF – Turma B Matutino</td><td><em class="is-off">Inativo</em></td><td>29/03/2026</td><td>29/03/2026</td><td>R$ 4000,00</td><td>Reutilizável</td><td>20</td></tr>' +
-      '<tr><td>Abril – EM – Turma B Noturno</td><td><em class="is-wait">Rascunho</em></td><td>29/03/2026</td><td>29/03/2026</td><td>R$ 5000,00</td><td>Reutilizável</td><td>0</td></tr>' +
+      '<div class="lp-shot__heading"><h3>Links de Pagamentos</h3>' +
+      '<span class="lp-shot__actions">' +
+      '<span class="lp-shot__gear">' +
+      ico('shot-gear.svg', 9) +
+      '</span>' +
+      '<span class="lp-shot__cta">Criar link</span></span></div>' +
+      '<div class="lp-shot__filters">' +
+      '<span class="lp-shot__search">Buscar link' +
+      ico('shot-loupe.svg', 9) +
+      '</span>' +
+      '<span class="lp-shot__select">' +
+      ico('shot-tag.svg', 9) +
+      'Status' +
+      ico('shot-caret.svg', 9) +
+      '</span>' +
+      '<span class="lp-shot__select">' +
+      ico('shot-calendar.svg', 9) +
+      'Data' +
+      ico('shot-caret.svg', 9) +
+      '</span></div>' +
+      '<table class="lp-shot__table"><thead><tr>' +
+      '<th>nome do link</th>' +
+      '<th>status ' + ico('shot-question.svg', 9) + '</th>' +
+      '<th>criação ' + ico('shot-caret-down.svg', 9) + '</th>' +
+      '<th>vencimento ' + ico('shot-caret-down.svg', 9) + '</th>' +
+      '<th>valor do link ' + ico('shot-caret-down.svg', 9) + '</th>' +
+      '<th>tipo de link ' + ico('shot-question.svg', 9) + '</th>' +
+      '<th>quant. pagamentos</th><th></th></tr></thead><tbody>' +
+      shotRow('Abril - EF - Turma B Noturno', 'ATIVO', 'is-ok', 'R$ 3000,00', 'Único', '1 de 1') +
+      shotRow('Abril - EF - Turma B Matutino', 'INATIVO', 'is-off', 'R$ 4000,00', 'Reutilizável', '20') +
+      shotRow('Abril - EM - Turma B Noturno', 'RASCUNHO', 'is-wait', 'R$ 5000,00', 'Reutilizável', '0') +
+      shotRow('Abril - EM - Turma B Matutino', 'EXPIRADO', 'is-exp', 'R$ 6000,00', 'Reutilizável', '1') +
+      shotRow('Março - EM - Turma A Noturno', 'ENCERRADO', 'is-end', 'R$ 9000,00', 'Único', '4999', '27/02/2026') +
+      shotRow('Março - EM - Turma A Matutino', 'RASCUNHO', 'is-wait', 'R$ 8000,00', 'Reutilizável', '0', '27/02/2026') +
       '</tbody></table></div></div></div>' +
       '<aside class="lp-shot__modal">' +
-      '<header><div><p>Sua cobrança foi criada</p><h4>Use seu link em suas estratégias</h4></div><img src="' +
-      ASSET +
-      'icon-close.svg" alt="" width="16" height="16"></header>' +
-      '<div class="lp-shot__url">https://totvspay.com<img src="' +
-      ASSET +
-      'icon-copy.svg" alt="" width="16" height="16"></div>' +
+      '<header><div><p>Sua cobrança foi criada</p><h4>Use seu link em suas estratégias</h4></div>' +
+      ico('shot-close.svg', 16) +
+      '</header>' +
+      '<div class="lp-shot__url">https://totvspay.com' +
+      ico('shot-copy.svg', 16) +
+      '</div>' +
       '<div class="lp-shot__share">' +
-      '<div><img src="' +
-      ASSET +
-      'icon-envelope.svg" alt="" width="32" height="32"><div><strong>E-mail</strong><span>Use o link nos emails</span></div></div>' +
-      '<div><img src="' +
-      ASSET +
-      'icon-whatsapp.svg" alt="" width="32" height="32"><div><strong>WhatsApp</strong><span>Use o link no whatsapp</span></div></div>' +
+      '<div>' +
+      ico('shot-envelope.svg', 33) +
+      '<div><strong>E-mail</strong><span>Use o link nos emails</span></div></div>' +
+      '<div>' +
+      ico('shot-whatsapp.svg', 33) +
+      '<div><strong>WhatsApp</strong><span>Use o link no whatsapp</span></div></div>' +
       '</div></aside></div>'
     )
   }
@@ -378,7 +452,7 @@
       hero.innerHTML = heroHTML()
     }
     var stack = document.querySelector('.preview-stack')
-    if (stack && !stack.querySelector('.lp-shot')) {
+    if (stack && !stack.querySelector('.lp-shot--fig')) {
       stack.innerHTML = shotHTML()
     }
   }
@@ -405,7 +479,7 @@
     var link = document.createElement('link')
     link.id = 'lp-extra-style'
     link.rel = 'stylesheet'
-    link.href = '/triz-pd/totvs/landing-extra.css?v=11'
+    link.href = '/triz-pd/totvs/landing-extra.css?v=12'
     document.head.appendChild(link)
   }
 
