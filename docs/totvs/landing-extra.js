@@ -69,7 +69,7 @@
   var H_JOINT = [
     [1, -1, 1],
     [-1, 1, -1],
-    [1, -1, 1],
+    [1, 1, 1],
   ]
   var V_JOINT = [
     [-1, 1, -1, 1],
@@ -159,14 +159,19 @@
     var cellW = w / 4
     var cellH = h / 3
     var minSide = Math.min(cellW, cellH)
-    var gap = Math.max(8, minSide * 0.058)
-    var radius = Math.max(8, Math.min(minSide * 0.07, minSide / 2 - gap * 2.6))
+    var stroke = Math.max(5, minSide * 0.032)
+    var gap = stroke * 0.5
+    var radius = Math.max(12, minSide * 0.16)
     var paths = svg.querySelectorAll('path')
     for (var i = 0; i < paths.length; i += 1) {
       paths[i].setAttribute(
         'd',
         piecePath(i % 4, Math.floor(i / 4), cellW, cellH, gap, radius)
       )
+      paths[i].setAttribute('stroke', '#fff')
+      paths[i].setAttribute('stroke-width', String(round(stroke)))
+      paths[i].setAttribute('stroke-linejoin', 'round')
+      paths[i].setAttribute('stroke-linecap', 'round')
     }
   }
 
@@ -297,7 +302,7 @@
     var link = document.createElement('link')
     link.id = 'lp-extra-style'
     link.rel = 'stylesheet'
-    link.href = '/triz-pd/totvs/landing-extra.css?v=7'
+    link.href = '/triz-pd/totvs/landing-extra.css?v=8'
     document.head.appendChild(link)
   }
 
