@@ -66,13 +66,102 @@
     }).join('')
   }
 
+  function round(n) {
+    return Math.round(n * 100) / 100
+  }
+
+  function piecePath(col, row, cellW, cellH, gap, radius) {
+    var k = 0.56
+    var x0 = col * cellW + gap
+    var x1 = (col + 1) * cellW - gap
+    var y0 = row * cellH + gap
+    var y1 = (row + 1) * cellH - gap
+    var midY = row * cellH + cellH / 2
+    var hasTab = col < 3
+    var hasHole = col > 0
+    var d = ['M', round(x0), round(y0), 'L', round(x1), round(y0)]
+
+    if (hasTab) {
+      var cx = x1 + radius * k
+      var dy = Math.sqrt(Math.max(0, radius * radius - (cx - x1) * (cx - x1)))
+      d.push('L', round(x1), round(midY - dy))
+      d.push('A', round(radius), round(radius), 0, 1, 1, round(x1), round(midY + dy))
+      d.push('L', round(x1), round(y1))
+    } else {
+      d.push('L', round(x1), round(y1))
+    }
+
+    d.push('L', round(x0), round(y1))
+
+    if (hasHole) {
+      var prevX1 = col * cellW - gap
+      var cxh = prevX1 + radius * k
+      var holeR = radius + gap * 0.9
+      var dxh = x0 - cxh
+      var inside = holeR * holeR - dxh * dxh
+      if (inside > 0) {
+        var dyh = Math.sqrt(inside)
+        d.push('L', round(x0), round(midY + dyh))
+        d.push('A', round(holeR), round(holeR), 0, 1, 0, round(x0), round(midY - dyh))
+      }
+    }
+
+    d.push('L', round(x0), round(y0), 'Z')
+    return d.join(' ')
+  }
+
+  function renderPuzzle(board) {
+    var stage = board.querySelector('.lp-puzzle__stage')
+    var svg = board.querySelector('.lp-puzzle__board')
+    if (!stage || !svg) return
+    var w = stage.clientWidth
+    var h = stage.clientHeight
+    if (w < 8 || h < 8) return
+    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h)
+    var cellW = w / 4
+    var cellH = h / 3
+    var minSide = Math.min(cellW, cellH)
+    var gap = Math.max(3, minSide * 0.032)
+    var radius = Math.max(8, minSide * 0.132)
+    var paths = svg.querySelectorAll('path')
+    for (var i = 0; i < paths.length; i += 1) {
+      paths[i].setAttribute(
+        'd',
+        piecePath(i % 4, Math.floor(i / 4), cellW, cellH, gap, radius)
+      )
+    }
+  }
+
+  function enhancePuzzle() {
+    var board = document.querySelector('.lp-puzzle')
+    if (!board) return
+    renderPuzzle(board)
+    requestAnimationFrame(function () {
+      renderPuzzle(board)
+    })
+    if (board.dataset.ready === '1') return
+    board.dataset.ready = '1'
+    var stage = board.querySelector('.lp-puzzle__stage') || board
+    if (window.ResizeObserver) {
+      new ResizeObserver(function () {
+        renderPuzzle(board)
+      }).observe(stage)
+    }
+    window.addEventListener('resize', function () {
+      renderPuzzle(board)
+    })
+  }
+
   function puzzleHTML() {
-    return PUZZLE.map(function (cell, index) {
+    var paths = PUZZLE.map(function (cell) {
       return (
-        '<div class="lp-puzzle__cell lp-puzzle__cell--' +
+        '<path class="lp-puzzle__piece lp-puzzle__piece--' + cell.tone + '"></path>'
+      )
+    }).join('')
+    var labels = PUZZLE.map(function (cell) {
+      return (
+        '<div class="lp-puzzle__label lp-puzzle__label--' +
         cell.tone +
-        '" data-piece="' +
-        (index + 1) +
         '">' +
         ICONS[cell.icon] +
         '<span>' +
@@ -80,6 +169,15 @@
         '</span></div>'
       )
     }).join('')
+    return (
+      '<div class="lp-puzzle__stage">' +
+      '<svg class="lp-puzzle__board" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
+      paths +
+      '</svg>' +
+      '<div class="lp-puzzle__labels">' +
+      labels +
+      '</div></div>'
+    )
   }
 
   function extraHTML() {
@@ -150,16 +248,18 @@
     if (!inner) return
     if (existing) {
       if (existing.parentNode !== inner) inner.appendChild(existing)
+      enhancePuzzle()
       return
     }
     inner.insertAdjacentHTML('beforeend', extraHTML())
+    enhancePuzzle()
   }
 
   if (!document.getElementById('lp-extra-style')) {
     var link = document.createElement('link')
     link.id = 'lp-extra-style'
     link.rel = 'stylesheet'
-    link.href = '/triz-pd/totvs/landing-extra.css?v=2'
+    link.href = '/triz-pd/totvs/landing-extra.css?v=3'
     document.head.appendChild(link)
   }
 
