@@ -293,20 +293,93 @@
     return /\/totvs$/.test(path)
   }
 
-  function applyFigmaShots() {
+  function heroHTML() {
+    return (
+      '<img class="hero-chart-img lp-hero-built" src="' +
+      ASSET +
+      'hero-chart.svg" alt="" width="485" height="314">' +
+      '<article class="float-card float-sales"><span class="ic"><img src="' +
+      ASSET +
+      'icon-sales.svg" alt="" width="48" height="48"></span><div><small>Total em vendas</small><strong>R$ 100.493,99</strong></div></article>' +
+      '<article class="float-card float-ticket"><span class="ic"><img src="' +
+      ASSET +
+      'icon-ticket.svg" alt="" width="32" height="32"></span><div><small>Ticket médio</small><strong>R$ 3690,00</strong></div></article>' +
+      '<article class="float-card float-pix"><span class="ic"><img src="' +
+      ASSET +
+      'icon-pix-hero.svg" alt="" width="32" height="32"></span><div><small>No pix</small><strong>R$ 70.000</strong></div></article>'
+    )
+  }
+
+  function navDot(kind, active) {
+    var paths = {
+      home: '<path d="M4 10.5 12 4l8 6.5V20H4V10.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 20v-6h6v6" fill="none" stroke="currentColor" stroke-width="1.8"/>',
+      bag: '<rect x="6" y="8" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 8V7a3 3 0 0 1 6 0v1" fill="none" stroke="currentColor" stroke-width="1.8"/>',
+      user: '<circle cx="12" cy="8.5" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M6.5 19c.6-3.2 2.6-5 5.5-5s4.9 1.8 5.5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+      card: '<rect x="4" y="7" width="16" height="11" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 11h16" stroke="currentColor" stroke-width="1.8"/>',
+      list: '<path d="M8 7h12M8 12h12M8 17h12M4 7h.01M4 12h.01M4 17h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+      chart: '<path d="M5 19V9M12 19V5M19 19v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>',
+    }
+    return (
+      '<span class="lp-shot__nav-ico' +
+      (active ? ' is-on' : '') +
+      '"><svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">' +
+      (paths[kind] || '') +
+      '</svg></span>'
+    )
+  }
+
+  function shotHTML() {
+    return (
+      '<div class="lp-shot">' +
+      '<div class="lp-shot__app">' +
+      '<header class="lp-shot__top">' +
+      '<span class="lp-shot__brand"><img src="/triz-pd/totvs/assets/totvs-logo-BQRHc5D5.svg" alt="" width="70" height="20"><span>Pay</span></span>' +
+      '<span class="lp-shot__top-tools"><i></i><i></i><i></i><i></i><b>Agência RD</b></span>' +
+      '</header>' +
+      '<div class="lp-shot__body">' +
+      '<aside class="lp-shot__nav">' +
+      navDot('home', true) +
+      navDot('bag') +
+      navDot('user') +
+      navDot('card') +
+      navDot('list') +
+      navDot('chart') +
+      '</aside>' +
+      '<div class="lp-shot__main">' +
+      '<p class="lp-shot__crumb">Cobranças</p>' +
+      '<div class="lp-shot__heading"><h3>Links de Pagamentos</h3><span class="lp-shot__cta">Criar link</span></div>' +
+      '<div class="lp-shot__filters"><span class="lp-shot__search">Buscar link</span><span>Status</span><span>Data</span></div>' +
+      '<table class="lp-shot__table"><thead><tr><th>Nome do link</th><th>Status</th><th>Criação</th><th>Vencimento</th><th>Valor do link</th><th>Tipo de link</th><th>Quant. pagamentos</th></tr></thead><tbody>' +
+      '<tr><td>Abril – EF – Turma B Noturno</td><td><em class="is-ok">Ativo</em></td><td>29/03/2026</td><td>29/03/2026</td><td>R$ 3000,00</td><td>Único</td><td>1 de 1</td></tr>' +
+      '<tr><td>Abril – EF – Turma B Matutino</td><td><em class="is-off">Inativo</em></td><td>29/03/2026</td><td>29/03/2026</td><td>R$ 4000,00</td><td>Reutilizável</td><td>20</td></tr>' +
+      '<tr><td>Abril – EM – Turma B Noturno</td><td><em class="is-wait">Rascunho</em></td><td>29/03/2026</td><td>29/03/2026</td><td>R$ 5000,00</td><td>Reutilizável</td><td>0</td></tr>' +
+      '</tbody></table></div></div></div>' +
+      '<aside class="lp-shot__modal">' +
+      '<header><div><p>Sua cobrança foi criada</p><h4>Use seu link em suas estratégias</h4></div><img src="' +
+      ASSET +
+      'icon-close.svg" alt="" width="16" height="16"></header>' +
+      '<div class="lp-shot__url">https://totvspay.com<img src="' +
+      ASSET +
+      'icon-copy.svg" alt="" width="16" height="16"></div>' +
+      '<div class="lp-shot__share">' +
+      '<div><img src="' +
+      ASSET +
+      'icon-envelope.svg" alt="" width="32" height="32"><div><strong>E-mail</strong><span>Use o link nos emails</span></div></div>' +
+      '<div><img src="' +
+      ASSET +
+      'icon-whatsapp.svg" alt="" width="32" height="32"><div><strong>WhatsApp</strong><span>Use o link no whatsapp</span></div></div>' +
+      '</div></aside></div>'
+    )
+  }
+
+  function applyFigmaArt() {
     var hero = document.querySelector('.hero-art')
-    if (hero && !hero.querySelector('.lp-figma-hero')) {
-      hero.innerHTML =
-        '<img class="lp-figma-hero" src="' +
-        ASSET +
-        'hero-art.png" alt="" width="1758" height="1128">'
+    if (hero && !hero.querySelector('.lp-hero-built')) {
+      hero.innerHTML = heroHTML()
     }
     var stack = document.querySelector('.preview-stack')
-    if (stack && !stack.querySelector('.lp-figma-preview')) {
-      stack.innerHTML =
-        '<img class="lp-figma-preview" src="' +
-        ASSET +
-        'preview-stack.png" alt="" width="1293" height="918">'
+    if (stack && !stack.querySelector('.lp-shot')) {
+      stack.innerHTML = shotHTML()
     }
   }
 
@@ -318,7 +391,7 @@
     }
     var inner = document.querySelector('.paywall-inner')
     if (!inner) return
-    applyFigmaShots()
+    applyFigmaArt()
     if (existing) {
       if (existing.parentNode !== inner) inner.appendChild(existing)
       enhancePuzzle()
@@ -332,7 +405,7 @@
     var link = document.createElement('link')
     link.id = 'lp-extra-style'
     link.rel = 'stylesheet'
-    link.href = '/triz-pd/totvs/landing-extra.css?v=10'
+    link.href = '/triz-pd/totvs/landing-extra.css?v=11'
     document.head.appendChild(link)
   }
 
