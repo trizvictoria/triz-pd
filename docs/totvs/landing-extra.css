@@ -386,3 +386,31 @@
     display: none;
   }
 }
+
+.hero-art {
+  aspect-ratio: 1758 / 1128;
+}
+
+.hero-art .lp-figma-hero {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: auto;
+  display: block;
+  max-width: none;
+}
+
+.preview-stack {
+  aspect-ratio: 1293 / 918;
+  max-width: 601px;
+}
+
+.preview-stack .lp-figma-preview {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 100%;
+  height: auto;
+  display: block;
+  max-width: none;
+}

@@ -293,6 +293,23 @@
     return /\/totvs$/.test(path)
   }
 
+  function applyFigmaShots() {
+    var hero = document.querySelector('.hero-art')
+    if (hero && !hero.querySelector('.lp-figma-hero')) {
+      hero.innerHTML =
+        '<img class="lp-figma-hero" src="' +
+        ASSET +
+        'hero-art.png" alt="" width="1758" height="1128">'
+    }
+    var stack = document.querySelector('.preview-stack')
+    if (stack && !stack.querySelector('.lp-figma-preview')) {
+      stack.innerHTML =
+        '<img class="lp-figma-preview" src="' +
+        ASSET +
+        'preview-stack.png" alt="" width="1293" height="918">'
+    }
+  }
+
   function mount() {
     var existing = document.getElementById(HOST_ID)
     if (!isPaywall()) {
@@ -301,6 +318,7 @@
     }
     var inner = document.querySelector('.paywall-inner')
     if (!inner) return
+    applyFigmaShots()
     if (existing) {
       if (existing.parentNode !== inner) inner.appendChild(existing)
       enhancePuzzle()
@@ -314,7 +332,7 @@
     var link = document.createElement('link')
     link.id = 'lp-extra-style'
     link.rel = 'stylesheet'
-    link.href = '/triz-pd/totvs/landing-extra.css?v=9'
+    link.href = '/triz-pd/totvs/landing-extra.css?v=10'
     document.head.appendChild(link)
   }
 
