@@ -87,7 +87,7 @@
     }
     var midY = (yA + yB) / 2
     var down = yB > yA
-    var r = kind === 1 ? radius : radius + gap
+    var r = radius
     var dist = x - centerX
     var dy = Math.sqrt(Math.max(0, r * r - dist * dist))
     var yFirst = down ? midY - dy : midY + dy
@@ -112,7 +112,7 @@
     }
     var midX = (xA + xB) / 2
     var right = xB > xA
-    var r = kind === 1 ? radius : radius + gap
+    var r = radius
     var dist = y - centerY
     var dx = Math.sqrt(Math.max(0, r * r - dist * dist))
     var xFirst = right ? midX - dx : midX + dx
@@ -297,7 +297,7 @@
     var link = document.createElement('link')
     link.id = 'lp-extra-style'
     link.rel = 'stylesheet'
-    link.href = '/triz-pd/totvs/landing-extra.css?v=6'
+    link.href = '/triz-pd/totvs/landing-extra.css?v=7'
     document.head.appendChild(link)
   }
 
