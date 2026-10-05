@@ -273,12 +273,7 @@
       '<p class="lp-rate__name">Boleto</p>' +
       '<p class="lp-rate__value">R$1,99</p>' +
       '<p class="lp-rate__hint">por boleto pago</p>' +
-      '</article></div></section>' +
-      '<section class="lp-platform lp-platform--puzzle-only" aria-labelledby="lp-platform-title">' +
-      '<h2 id="lp-platform-title">TOTVS Pay é a plataforma de<br>pagamentos digitais da TOTVS</h2>' +
-      '<div class="lp-puzzle" aria-hidden="true">' +
-      puzzleHTML() +
-      '</div></section></div>'
+      '</article></div></section></div>'
     )
   }
 
@@ -460,7 +455,7 @@
     var inner = document.querySelector('.paywall-inner')
     if (!inner) return
     applyFigmaArt()
-    if (existing && !existing.querySelector('.lp-platform--puzzle-only')) {
+    if (existing && existing.querySelector('.lp-platform')) {
       existing.remove()
       existing = null
     }
@@ -477,7 +472,7 @@
     var link = document.createElement('link')
     link.id = 'lp-extra-style'
     link.rel = 'stylesheet'
-    link.href = '/triz-pd/totvs/landing-extra.css?v=13'
+    link.href = '/triz-pd/totvs/landing-extra.css?v=14'
     document.head.appendChild(link)
   }
 
