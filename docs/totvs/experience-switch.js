@@ -4,6 +4,7 @@
     '<button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>' +
     '<button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay - Credenciamento</button>' +
     '<button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay - Dashboard</button>' +
+    '<button type="button" class="product-switch__item" data-product="educacional">educacional</button>' +
     '<button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="construcao">Construção</button>' +
@@ -31,7 +32,8 @@
       location.assign(root + 'totvs/dashboard')
       return
     }
-    if (id === 'construcao') location.assign(root + 'construcao/')
+    if (id === 'educacional') location.assign(root + 'educacional/')
+    else if (id === 'construcao') location.assign(root + 'construcao/')
     else if (id === 'suri') location.assign(root + '#suri')
     else if (id === 'checkout') location.assign(root + '#checkout')
     else location.assign(root)

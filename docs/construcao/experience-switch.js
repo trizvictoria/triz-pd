@@ -22,6 +22,7 @@
     '<button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>' +
     '<button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay - Credenciamento</button>' +
     '<button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay - Dashboard</button>' +
+    '<button type="button" class="product-switch__item" data-product="educacional">educacional</button>' +
     '<button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="construcao">Construção</button>' +
@@ -40,6 +41,10 @@
 
   function goProduct(id) {
     var root = experienceRoot()
+    if (id === 'educacional') {
+      location.assign(root + 'educacional/')
+      return
+    }
     if (id === 'construcao') return
     if (id === 'totvs' || id === 'totvs-credenciamento') {
       try { sessionStorage.setItem('totvs-onboarded', '0') } catch (e) {}
