@@ -131,13 +131,15 @@
         </button>
         <div class="product-switch__menu" hidden>
           <p class="product-switch__label">Produtos</p>
-          <button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>
           <button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay - Credenciamento</button>
           <button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay - Dashboard</button>
-          <button type="button" class="product-switch__item" data-product="educacional">Educacional</button>
-          <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
+          <span class="product-switch__sep"></span>
+          <button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>
           <span class="product-switch__sep"></span>
           <button type="button" class="product-switch__item" data-product="construcao">Construção</button>
+          <button type="button" class="product-switch__item" data-product="educacional">Educacional</button>
+          <span class="product-switch__sep"></span>
+          <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
           <span class="product-switch__sep"></span>
           <button type="button" class="product-switch__item" data-product="checkout">Checkout</button>
           <span class="product-switch__sep"></span>
@@ -171,13 +173,15 @@
           </button>
           <div class="product-switch__menu" hidden>
             <p class="product-switch__label">Produtos</p>
-            <button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>
             <button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay - Credenciamento</button>
-          <button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay - Dashboard</button>
-          <button type="button" class="product-switch__item" data-product="educacional">Educacional</button>
-            <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
+            <button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay - Dashboard</button>
+            <span class="product-switch__sep"></span>
+            <button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>
             <span class="product-switch__sep"></span>
             <button type="button" class="product-switch__item" data-product="construcao">Construção</button>
+            <button type="button" class="product-switch__item" data-product="educacional">Educacional</button>
+            <span class="product-switch__sep"></span>
+            <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
             <span class="product-switch__sep"></span>
             <button type="button" class="product-switch__item" data-product="checkout">Checkout</button>
             <span class="product-switch__sep"></span>
@@ -254,7 +258,7 @@ function loginView(){
     <div class="login-card__fields">
       <label class="tg-field"><span class="tg-field__label">Usuário</span><span class="tg-input"><input id="login-user" placeholder="Insira o usuário" autocomplete="username"></span></label>
       <label class="tg-field"><span class="tg-field__label">Senha</span><span class="tg-input"><input id="login-password" type="password" placeholder="Insira a senha" autocomplete="current-password"></span></label>
-      <label class="tg-field"><span class="tg-field__label">Produto</span><span class="tg-input"><select id="login-product"><option value="" disabled ${!state.product?'selected':''}>Selecione</option><option value="rd" ${state.product==='rd'?'selected':''}>RD Vendas</option><option value="totvs-credenciamento" ${state.product==='totvs-credenciamento'?'selected':''}>TOTVS Pay - Credenciamento</option><option value="totvs-dashboard" ${state.product==='totvs-dashboard'?'selected':''}>TOTVS Pay - Dashboard</option><option value="educacional" ${state.product==='educacional'?'selected':''}>Educacional</option><option value="suri" ${state.product==='suri'?'selected':''}>Suri Shop</option><option value="construcao" ${state.product==='construcao'?'selected':''}>Construção</option><option value="checkout" ${state.product==='checkout'?'selected':''}>Checkout</option></select></span></label>
+      <label class="tg-field"><span class="tg-field__label">Produto</span><span class="tg-input"><select id="login-product"><option value="" disabled ${!state.product?'selected':''}>Selecione</option><option value="totvs-credenciamento" ${state.product==='totvs-credenciamento'?'selected':''}>TOTVS Pay - Credenciamento</option><option value="totvs-dashboard" ${state.product==='totvs-dashboard'?'selected':''}>TOTVS Pay - Dashboard</option><option disabled>────────</option><option value="rd" ${state.product==='rd'?'selected':''}>RD Vendas</option><option disabled>────────</option><option value="construcao" ${state.product==='construcao'?'selected':''}>Construção</option><option value="educacional" ${state.product==='educacional'?'selected':''}>Educacional</option><option disabled>────────</option><option value="suri" ${state.product==='suri'?'selected':''}>Suri Shop</option><option disabled>────────</option><option value="checkout" ${state.product==='checkout'?'selected':''}>Checkout</option></select></span></label>
     </div>
     ${state.error?`<p class="login-error" role="alert">${state.error}</p>`:''}
     <button class="tg-button tg-button--primary" data-act="login" ${can?'':'disabled'}>${state.busy?'Entrando…':'Entrar'}</button>

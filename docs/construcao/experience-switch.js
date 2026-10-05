@@ -19,13 +19,15 @@
     '</button>' +
     '<div class="product-switch__menu" hidden>' +
     '<p class="product-switch__label">Produtos</p>' +
-    '<button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>' +
     '<button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay - Credenciamento</button>' +
     '<button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay - Dashboard</button>' +
-    '<button type="button" class="product-switch__item" data-product="educacional">Educacional</button>' +
-    '<button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>' +
+    '<span class="product-switch__sep"></span>' +
+    '<button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="construcao">Construção</button>' +
+    '<button type="button" class="product-switch__item" data-product="educacional">Educacional</button>' +
+    '<span class="product-switch__sep"></span>' +
+    '<button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="checkout">Checkout</button>' +
     '<span class="product-switch__sep"></span>' +
