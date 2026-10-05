@@ -5,6 +5,7 @@ import { readAuthSession, writeAuthSession } from './lib/auth'
 import { AdvanceApp } from './pages/advance/AdvanceApp'
 import { LoginPage, type LoginProduct } from './pages/LoginPage'
 import { SuriShopPage } from './pages/SuriShopPage'
+import { EducacionalApp } from './educacional/EducacionalApp'
 import { goExperience } from './lib/experience'
 
 const AuthedApp = lazy(() => import('./pages/AuthedApp'))
@@ -21,7 +22,16 @@ function useHash() {
   return hash
 }
 
+function isEducacionalPath() {
+  return /\/educacional(?:\/|$)/.test(window.location.pathname)
+}
+
 export default function App() {
+  if (isEducacionalPath()) return <EducacionalApp />
+  return <MainApp />
+}
+
+function MainApp() {
   const [authed, setAuthed] = useState(() => readAuthSession())
   const hash = useHash()
 
@@ -35,7 +45,8 @@ export default function App() {
       product === 'totvs' ||
       product === 'totvs-credenciamento' ||
       product === 'totvs-dashboard' ||
-      product === 'construcao'
+      product === 'construcao' ||
+      product === 'educacional'
     ) {
       goExperience(product)
       return

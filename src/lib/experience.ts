@@ -6,10 +6,11 @@ export type ExperienceTarget =
   | 'suri'
   | 'checkout'
   | 'construcao'
+  | 'educacional'
 
 export function experienceRoot() {
   const path = window.location.pathname
-  const nested = path.search(/\/(totvs|construcao)(?:\/|$)/)
+  const nested = path.search(/\/(totvs|construcao|educacional)(?:\/|$)/)
   if (nested >= 0) return `${path.slice(0, nested)}/`
   const base = import.meta.env.BASE_URL || '/'
   return base.endsWith('/') ? base : `${base}/`
@@ -33,6 +34,7 @@ export function experienceUrls() {
     suri: `${root}#suri`,
     checkout: `${root}#checkout`,
     construcao: `${root}construcao/`,
+    educacional: `${root}educacional/`,
   }
 }
 
@@ -50,6 +52,10 @@ export function goExperience(target: ExperienceTarget) {
   }
   if (target === 'construcao') {
     window.location.assign(urls.construcao)
+    return
+  }
+  if (target === 'educacional') {
+    window.location.assign(urls.educacional)
     return
   }
   const here = window.location.pathname.replace(/\/+$/, '')
