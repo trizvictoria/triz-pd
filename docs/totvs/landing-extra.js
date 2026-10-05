@@ -274,17 +274,11 @@
       '<p class="lp-rate__value">R$1,99</p>' +
       '<p class="lp-rate__hint">por boleto pago</p>' +
       '</article></div></section>' +
-      '<section class="lp-platform" aria-labelledby="lp-platform-title">' +
+      '<section class="lp-platform lp-platform--puzzle-only" aria-labelledby="lp-platform-title">' +
       '<h2 id="lp-platform-title">TOTVS Pay é a plataforma de<br>pagamentos digitais da TOTVS</h2>' +
-      '<div class="lp-platform__layout">' +
-      '<div class="lp-platform__cards">' +
-      '<article class="lp-platform__card"><span class="lp-platform__num">01</span><h3>One Stop Shop</h3><p>O cliente não precisa contratar mais ninguém além da gente para ter uma solução de pagamento completa.</p><div class="lp-platform__tags"><span>Adquirência</span><span>Antifraude</span><span>3DS</span><span>Vault</span><span>Tokenização</span></div></article>' +
-      '<article class="lp-platform__card"><span class="lp-platform__num">02</span><h3>Modelo de negócio simplificado</h3><p>Cliente paga um % sobre o volume de vendas, compartilhando o risco e o sucesso. Nosso principal incentivo é o sucesso do nosso cliente.</p></article>' +
-      '<article class="lp-platform__card"><span class="lp-platform__num">03</span><h3>Embarcado na TOTVS</h3><p>Todo produto TOTVS pode usar o TOTVS Pay para ter produtos de pagamentos para seus clientes — dentro do produto que já usam.</p></article>' +
-      '</div>' +
       '<div class="lp-puzzle" aria-hidden="true">' +
       puzzleHTML() +
-      '</div></div></section></div>'
+      '</div></section></div>'
     )
   }
 
@@ -466,6 +460,10 @@
     var inner = document.querySelector('.paywall-inner')
     if (!inner) return
     applyFigmaArt()
+    if (existing && !existing.querySelector('.lp-platform--puzzle-only')) {
+      existing.remove()
+      existing = null
+    }
     if (existing) {
       if (existing.parentNode !== inner) inner.appendChild(existing)
       enhancePuzzle()
@@ -479,7 +477,7 @@
     var link = document.createElement('link')
     link.id = 'lp-extra-style'
     link.rel = 'stylesheet'
-    link.href = '/triz-pd/totvs/landing-extra.css?v=12'
+    link.href = '/triz-pd/totvs/landing-extra.css?v=13'
     document.head.appendChild(link)
   }
 

@@ -1,7 +1,15 @@
+.paywall-hero {
+  padding-bottom: clamp(96px, 12vw, 160px);
+}
+
+.paywall-panel {
+  margin-bottom: clamp(96px, 12vw, 160px);
+}
+
 .lp-extra {
   width: 100%;
   max-width: none;
-  margin: 0 0 48px;
+  margin: 0 0 clamp(64px, 8vw, 96px);
   color: var(--white);
   box-sizing: border-box;
 }
@@ -142,7 +150,7 @@
 }
 
 .lp-platform {
-  margin-top: 48px;
+  margin-top: clamp(96px, 12vw, 160px);
   width: 100%;
   max-width: none;
   background: var(--white);
@@ -158,76 +166,22 @@
 }
 
 .lp-platform__layout {
-  display: grid;
-  grid-template-columns: minmax(min(100%, 240px), 320px) minmax(0, 1fr);
-  gap: clamp(16px, 3vw, 40px);
-  align-items: stretch;
+  display: block;
 }
 
-.lp-platform__cards {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(12px, 1.6vw, 16px);
-  min-width: 0;
-  min-height: 0;
-}
-
+.lp-platform__cards,
 .lp-platform__card {
-  position: relative;
-  flex: 1 1 0;
-  background: #002233;
-  color: #fff;
-  border-radius: 16px;
-  padding: clamp(16px, 2vw, 20px) clamp(16px, 2.2vw, 24px) clamp(16px, 2vw, 20px) clamp(16px, 2vw, 20px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-sizing: border-box;
-}
-
-.lp-platform__num {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  font: 700 28px/1 "DM Sans", sans-serif;
-  color: #00dbff;
-  opacity: 0.9;
-}
-
-.lp-platform__card h3 {
-  margin: 0 0 8px;
-  padding-right: 36px;
-  font: 700 16px/1.4 "DM Sans", sans-serif;
-  color: #fff;
-}
-
-.lp-platform__card p {
-  margin: 0;
-  font: 500 13px/1.5 "DM Sans", sans-serif;
-  color: rgba(255, 255, 255, 0.78);
-}
-
-.lp-platform__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 10px;
-}
-
-.lp-platform__tags span {
-  background: #003d5c;
-  color: #00dbff;
-  border-radius: 999px;
-  padding: 2px 8px;
-  font: 700 11px/1.4 "DM Sans", sans-serif;
+  display: none;
 }
 
 .lp-puzzle {
   position: relative;
   display: flex;
+  width: 100%;
   min-width: 0;
   min-height: 0;
-  height: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
   background: #e8edf1;
   border-radius: 18px;
   padding: 12px;
@@ -311,10 +265,6 @@
   .lp-rate--card {
     margin: 0 -8px;
   }
-
-  .lp-platform__layout {
-    grid-template-columns: minmax(min(100%, 220px), 280px) minmax(0, 1fr);
-  }
 }
 
 @media (max-width: 860px) {
@@ -331,10 +281,6 @@
 
   .lp-rate__installments {
     grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
-  .lp-platform__layout {
-    grid-template-columns: 1fr;
   }
 
   .lp-puzzle {
