@@ -4,7 +4,7 @@
     '<button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>' +
     '<button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay - Credenciamento</button>' +
     '<button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay - Dashboard</button>' +
-    '<button type="button" class="product-switch__item" data-product="educacional">educacional</button>' +
+    '<button type="button" class="product-switch__item" data-product="educacional">Educacional</button>' +
     '<button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="construcao">Construção</button>' +
