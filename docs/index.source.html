@@ -333,6 +333,8 @@
           <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
           <span class="product-switch__sep"></span>
           <button type="button" class="product-switch__item" data-product="checkout">Checkout</button>
+          <span class="product-switch__sep"></span>
+          <button type="button" class="product-switch__item" data-product="interesse">Lista de interesse</button>
         </div>
       </div>
     </div>
@@ -373,6 +375,8 @@
             <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
             <span class="product-switch__sep"></span>
             <button type="button" class="product-switch__item" data-product="checkout">Checkout</button>
+          <span class="product-switch__sep"></span>
+          <button type="button" class="product-switch__item" data-product="interesse">Lista de interesse</button>
           </div>
         </div>
       </div>
@@ -455,6 +459,8 @@ function productMenuHTML(tone){
       <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
       <span class="product-switch__sep"></span>
       <button type="button" class="product-switch__item" data-product="checkout">Checkout</button>
+          <span class="product-switch__sep"></span>
+          <button type="button" class="product-switch__item" data-product="interesse">Lista de interesse</button>
     </div>
   </div>`;
 }
@@ -754,6 +760,7 @@ function act(a,id){
   if(a==='copy-link'){const l=state.links.find(x=>x.id===id); if(l) copyLink(l.url)}
 }
 window.__pdNavigate=function(id){
+  if(id==='interesse'){location.assign('https://materiais.rdstation.com/2026-totvspay-material-lp-hr-totvs-pay-universo');return}
   if(id==='totvs'||id==='totvs-credenciamento'||id==='totvs-dashboard'||id==='construcao'||id==='educacional'||id==='checkout'){
     const p=location.pathname;
     const i=p.search(new RegExp('/(totvs|construcao|educacional)(?:/|$)'));

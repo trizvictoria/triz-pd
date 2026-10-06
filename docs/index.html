@@ -163,6 +163,8 @@
           <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
           <span class="product-switch__sep"></span>
           <button type="button" class="product-switch__item" data-product="checkout">Checkout</button>
+          <span class="product-switch__sep"></span>
+          <button type="button" class="product-switch__item" data-product="interesse">Lista de interesse</button>
         </div>
       </div>
     </div>
@@ -203,6 +205,8 @@
             <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
             <span class="product-switch__sep"></span>
             <button type="button" class="product-switch__item" data-product="checkout">Checkout</button>
+          <span class="product-switch__sep"></span>
+          <button type="button" class="product-switch__item" data-product="interesse">Lista de interesse</button>
           </div>
         </div>
       </div>
@@ -363,6 +367,7 @@ function showPublicSuri(){
   bindSuri();
 }
 function goProduct(id){
+  if(id==='interesse'){location.assign('https://materiais.rdstation.com/2026-totvspay-material-lp-hr-totvs-pay-universo');return}
   if(window.__pdNavigate && (id==='rd'||id==='suri'||id==='checkout')){window.__pdNavigate(id);return}
   const root=experienceRoot();
   if(id==='totvs'||id==='totvs-credenciamento'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/');return}

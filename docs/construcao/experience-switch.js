@@ -30,6 +30,8 @@
     '<button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="checkout">Checkout</button>' +
+    '<span class="product-switch__sep"></span>' +
+    '<button type="button" class="product-switch__item" data-product="interesse">Lista de interesse</button>' +
     '</div></div>'
 
   function experienceRoot() {
@@ -40,6 +42,10 @@
   }
 
   function goProduct(id) {
+    if (id === 'interesse') {
+      location.assign('https://materiais.rdstation.com/2026-totvspay-material-lp-hr-totvs-pay-universo')
+      return
+    }
     var root = experienceRoot()
     if (id === 'educacional') {
       location.assign(root + 'educacional/')
