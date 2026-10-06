@@ -276,9 +276,10 @@ export function PayCheckout({
 
   const header = (
     <header className="checkout-header">
-      <img className="checkout-logo" src={logoUrl} alt="TOTVS Pay" />
+      <span className="checkout-brand evt-brand">
+        <img className="checkout-logo" src={logoUrl} alt="TOTVS Pay" />
+      </span>
       {headerExtra}
-      <span className="evt-brand checkout-menu-anchor" />
     </header>
   )
 

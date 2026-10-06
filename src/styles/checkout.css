@@ -23,9 +23,15 @@
   z-index: 5;
 }
 
+.checkout-brand {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+}
+
 .checkout-logo {
   display: block;
-  height: 22px;
+  height: 32px;
   width: auto;
   flex-shrink: 0;
 }
@@ -50,9 +56,9 @@
 }
 
 .checkout-menu-anchor {
-  margin-left: auto;
-  width: 28px;
-  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 4px;
   flex-shrink: 0;
 }
 
@@ -217,7 +223,7 @@
 }
 
 .ck-panel > .checkout-submit {
-  margin-top: 8px;
+  margin-top: 32px;
 }
 
 .checkout-submit:hover:not(:disabled),
