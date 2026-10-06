@@ -53,7 +53,7 @@
     }
     if (id === 'construcao') location.assign(root + 'construcao/')
     else if (id === 'suri') location.assign(root + '#suri')
-    else if (id === 'checkout') location.assign(root + '#checkout')
+    else if (id === 'checkout') location.assign(root + 'construcao/checkout/')
     else location.assign(root)
   }
 

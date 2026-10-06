@@ -53,7 +53,7 @@
       try { sessionStorage.setItem('totvs-onboarded', '1') } catch (e) {}
       location.assign(root + 'totvs/dashboard')
     } else if (id === 'suri') location.assign(root + '#suri')
-    else if (id === 'checkout') location.assign(root + '#checkout')
+    else if (id === 'checkout') location.assign(root + 'construcao/checkout/')
     else location.assign(root)
   }
 

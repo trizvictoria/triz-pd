@@ -371,7 +371,7 @@ function goProduct(id){
   if(id==='construcao'){location.assign(root+'construcao/');return}
   if(id==='suri'){location.hash='suri';showPublicSuri();return}
   if(id==='rd'){location.hash='deal';if(sessionPass()){loadFlow(sessionPass());return}renderLogin();return}
-  if(id==='checkout'){location.hash='checkout';if(sessionPass()){loadFlow(sessionPass());return}renderLogin()}
+  if(id==='checkout'){location.assign(root+'construcao/checkout/');return}
 }
 document.addEventListener('click',ev=>{
   const toggle=ev.target.closest('[data-act="toggle-products"]');
@@ -409,7 +409,7 @@ async function unlock(){
   if(state.product==='educacional'){location.assign(root+'educacional/');return}
   if(state.product==='construcao'){location.assign(root+'construcao/');return}
   if(state.product==='suri'){location.hash='suri';showPublicSuri();return}
-  if(state.product==='checkout') location.hash='checkout';
+  if(state.product==='checkout'){location.assign(root+'construcao/checkout/');return}
   else location.hash='deal';
   state.busy=true;state.error='';renderLogin();
   const loaded=await loadFlow(state.pass);
