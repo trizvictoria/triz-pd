@@ -6,8 +6,8 @@ import { PayCheckout, type CheckoutPhase } from '../../components/PayCheckout'
 import { FlowNav } from './FlowNav'
 
 const PREFILL = {
-  name: 'Cristiano',
-  email: 'cristiano@totvs.com',
+  name: 'Bruno Matos',
+  email: 'bruno@totvs.com',
   phone: '(31) 91111-1111',
   docType: 'CPF',
   doc: '111.111.111-11',
