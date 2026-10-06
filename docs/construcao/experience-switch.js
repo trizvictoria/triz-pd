@@ -30,8 +30,6 @@
     '<button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="checkout">Checkout</button>' +
-    '<span class="product-switch__sep"></span>' +
-    '<button type="button" class="product-switch__item is-disabled" data-product="early" disabled>Early adopters</button>' +
     '</div></div>'
 
   function experienceRoot() {
