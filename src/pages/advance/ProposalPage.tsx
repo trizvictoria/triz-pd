@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import '../../advance/advance.css'
 import qrDemo from '../../assets/advance/qr-demo.svg'
@@ -7,25 +7,48 @@ import {
   formatDue,
   PROPOSAL,
 } from '../../advance/model'
-import { useAdvance, type AdvanceLink } from '../../advance/store'
+import { useAdvance, type AdvanceComponent, type AdvanceLink } from '../../advance/store'
 import { formatBRL } from '../../data/mock'
 import { FlowNav } from './FlowNav'
 
 type Dialog = 'whatsapp' | 'cancel' | null
 type Modal = 'form' | 'share' | null
 
-const ROWS = [
-  { name: 'Ato', qty: '1', due: '05/05/2025', amount: '300,00', percent: '5,00', commission: '700,00', checked: true, grayQty: true },
-  { name: 'Entrada 02', qty: '1', due: '05/05/2025', amount: '200,00', percent: '1,00', commission: '0,00', checked: true, grayQty: true },
-  { name: 'Entrada 03', qty: '1', due: '05/05/2025', amount: '200,00', percent: '1,00', commission: '0,00', checked: true, grayQty: true },
-  { name: 'Mensal', qty: '1', due: '05/06/2025', amount: '4.600,00', percent: '23,00', commission: '0,00', checked: true, grayQty: false },
-  { name: 'Intermediaria', qty: '1', due: '05/06/2025', amount: '200,00', percent: '1,00', commission: '0,00', checked: false, grayQty: false },
-  { name: 'Bimestral', qty: '1', due: '05/06/2025', amount: '200,00', percent: '1,00', commission: '0,00', checked: false, grayQty: false },
-  { name: 'Trimestral', qty: '1', due: '05/06/2025', amount: '200,00', percent: '1,00', commission: '0,00', checked: false, grayQty: false },
-  { name: 'FB', qty: '1', due: '05/06/2025', amount: '13.000,00', percent: '65,00', commission: '0,00', checked: false, grayQty: false },
-  { name: 'Semestral', qty: '1', due: '05/06/2025', amount: '200,00', percent: '1,00', commission: '0,00', checked: false, grayQty: false },
-  { name: 'Anual', qty: '1', due: '05/06/2025', amount: '200,00', percent: '1,00', commission: '0,00', checked: false, grayQty: false },
+type PaymentRow = {
+  name: string
+  qty: string
+  due: string
+  amountCents: number
+  percent: string
+  commission: string
+  checked: boolean
+  grayQty: boolean
+}
+
+const ROWS: PaymentRow[] = [
+  { name: 'Ato', qty: '1', due: '05/05/2025', amountCents: 30000, percent: '5,00', commission: '700,00', checked: true, grayQty: true },
+  { name: 'Entrada 02', qty: '1', due: '05/05/2025', amountCents: 20000, percent: '1,00', commission: '0,00', checked: true, grayQty: true },
+  { name: 'Entrada 03', qty: '1', due: '05/05/2025', amountCents: 20000, percent: '1,00', commission: '0,00', checked: true, grayQty: true },
+  { name: 'Mensal', qty: '1', due: '05/06/2025', amountCents: 460000, percent: '23,00', commission: '0,00', checked: true, grayQty: false },
+  { name: 'Intermediaria', qty: '1', due: '05/06/2025', amountCents: 20000, percent: '1,00', commission: '0,00', checked: false, grayQty: false },
+  { name: 'Bimestral', qty: '1', due: '05/06/2025', amountCents: 20000, percent: '1,00', commission: '0,00', checked: false, grayQty: false },
+  { name: 'Trimestral', qty: '1', due: '05/06/2025', amountCents: 20000, percent: '1,00', commission: '0,00', checked: false, grayQty: false },
+  { name: 'FB', qty: '1', due: '05/06/2025', amountCents: 1300000, percent: '65,00', commission: '0,00', checked: false, grayQty: false },
+  { name: 'Semestral', qty: '1', due: '05/06/2025', amountCents: 20000, percent: '1,00', commission: '0,00', checked: false, grayQty: false },
+  { name: 'Anual', qty: '1', due: '05/06/2025', amountCents: 20000, percent: '1,00', commission: '0,00', checked: false, grayQty: false },
 ]
+
+function selectionCents(items: PaymentRow[]) {
+  return items.reduce((sum, row) => sum + (row.checked ? row.amountCents : 0), 0)
+}
+
+function selectionComponents(items: PaymentRow[]): AdvanceComponent[] {
+  return items.filter((row) => row.checked).map((row) => ({ name: row.name, amount: row.amountCents / 100 }))
+}
+
+function formatAmount(cents: number) {
+  return (cents / 100).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}
 
 
 export function ProposalPage() {
@@ -34,7 +57,8 @@ export function ProposalPage() {
   const { link, generate, cancel, reset } = useAdvance()
   const [toast, setToast] = useState('')
   const [tableOpen, setTableOpen] = useState(true)
-  const [cents, setCents] = useState(0)
+  const [rows, setRows] = useState(ROWS)
+  const [cents, setCents] = useState(() => selectionCents(ROWS))
   const [due, setDue] = useState('2026-10-07')
   const [expiryMode, setExpiryMode] = useState('vencimento')
   const [componentId, setComponentId] = useState('')
@@ -46,6 +70,15 @@ export function ProposalPage() {
     return null
   })
   const [dialog, setDialog] = useState<Dialog>(routeState?.view === 'share' ? (routeState.dialog ?? null) : null)
+  const rowsRef = useRef(rows)
+  rowsRef.current = rows
+  const selected = selectionComponents(rows)
+
+  function openForm() {
+    setCents(selectionCents(rowsRef.current))
+    setDialog(null)
+    setModal('form')
+  }
 
   useEffect(() => {
     if (!toast) return
@@ -56,6 +89,7 @@ export function ProposalPage() {
   useEffect(() => {
     if (!routeState) return
     if (routeState.view === 'form') {
+      setCents(selectionCents(rowsRef.current))
       setModal('form')
       setDialog(null)
     } else if (routeState.view === 'share') {
@@ -80,6 +114,11 @@ export function ProposalPage() {
   const amount = cents / 100
 
   function publish() {
+    const components = selectionComponents(rowsRef.current)
+    if (components.length === 0) {
+      setToast('Marque ao menos um componente na tabela')
+      return
+    }
     if (amount <= 0) {
       setToast('Informe o valor da cobrança')
       return
@@ -88,7 +127,7 @@ export function ProposalPage() {
       setToast('Informe a data de vencimento')
       return
     }
-    generate(amount, expiryMode === 'vencimento' ? formatDue(due) : 'Sem expiração')
+    generate(amount, expiryMode === 'vencimento' ? formatDue(due) : 'Sem expiração', components)
     navigate('/proposta', { replace: true, state: { view: 'share' } })
     setToast('Link de pagamento gerado')
   }
@@ -123,7 +162,8 @@ export function ProposalPage() {
     reset()
     setModal(null)
     setDialog(null)
-    setCents(0)
+    setRows(ROWS)
+    setCents(selectionCents(ROWS))
     setDue('2026-10-07')
     setComponentId('')
     setTableOpen(true)
@@ -226,7 +266,7 @@ export function ProposalPage() {
             <div><i>✓</i><span>Resumo da proposta</span></div>
           </div>
           <div className="evt-tabs">
-            <button type="button" onClick={() => setModal(link && link.status !== 'cancelled' ? 'share' : 'form')}>Adiantamento</button>
+            <button type="button" onClick={() => (link && link.status !== 'cancelled' ? setModal('share') : openForm())}>Adiantamento</button>
             <button type="button" onClick={demo}>Comissão</button>
             <button type="button" onClick={demo}>Restaurar tabela</button>
             <button type="button" onClick={demo}>Desconto</button>
@@ -272,7 +312,7 @@ export function ProposalPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {ROWS.map((row) => (
+                      {rows.map((row) => (
                         <tr key={row.name}>
                           <td>⠿</td>
                           <td className="evt-ok">✓</td>
@@ -280,10 +320,20 @@ export function ProposalPage() {
                           <td><span className={`evt-cell${row.grayQty ? ' is-gray' : ''}`}>{row.qty}</span></td>
                           <td><span className="evt-cell">{row.due}</span></td>
                           <td className="evt-cal"><LineIcon d="M4 5h16v16H4zM4 10h16M8 3v5m8-5v5M8 14h2m4 0h2" /></td>
-                          <td><span className="evt-cell evt-money">{row.amount}</span></td>
+                          <td><span className="evt-cell evt-money">{formatAmount(row.amountCents)}</span></td>
                           <td><span className="evt-cell is-gray">{row.percent}</span></td>
-                          <td><span className="evt-cell evt-money">{row.amount}</span></td>
-                          <td><span className={`evt-check${row.checked ? ' is-on' : ''}`}>{row.checked ? '✓' : ''}</span></td>
+                          <td><span className="evt-cell evt-money">{formatAmount(row.amountCents)}</span></td>
+                          <td>
+                            <button
+                              className={`evt-check${row.checked ? ' is-on' : ''}`}
+                              type="button"
+                              aria-pressed={row.checked}
+                              aria-label={`${row.checked ? 'Remover' : 'Incluir'} ${row.name} no adiantamento`}
+                              onClick={() => setRows((current) => current.map((item) => (item.name === row.name ? { ...item, checked: !item.checked } : item)))}
+                            >
+                              {row.checked ? '✓' : ''}
+                            </button>
+                          </td>
                           <td><span className="evt-cell is-gray evt-money">{row.commission}</span></td>
                           <td><span className="evt-check" /></td>
                           <td className="evt-dots">···</td>
@@ -328,6 +378,10 @@ export function ProposalPage() {
               <div className="adv-alert">
                 <strong>ATENÇÃO</strong>
               </div>
+              <section className="adv-included">
+                <h3>Componentes incluídos</h3>
+                <IncludedList items={selected} empty="Nenhum componente marcado. Selecione na tabela para habilitar a geração do link." />
+              </section>
               <label className="adv-field">
                 <span>
                   Valor R$ da Cobrança <em>*</em>
@@ -338,6 +392,7 @@ export function ProposalPage() {
                   value={formatBRL(amount)}
                   onChange={(event) => setCents(Number(event.target.value.replace(/\D/g, '').slice(0, 9) || '0'))}
                 />
+                <small className="adv-help">Preenchido com a soma dos componentes marcados. O valor continua editável.</small>
               </label>
               <div className="adv-grid-2">
                 <label className="adv-field">
@@ -361,7 +416,7 @@ export function ProposalPage() {
               <button className="adv-btn adv-btn-secondary" type="button" onClick={() => setModal(null)}>
                 Fechar
               </button>
-              <button className="adv-btn adv-btn-primary" type="button" onClick={publish} disabled={amount <= 0 || (expiryMode === 'vencimento' && !due)}>
+              <button className="adv-btn adv-btn-primary" type="button" onClick={publish} disabled={selected.length === 0 || amount <= 0 || (expiryMode === 'vencimento' && !due)}>
                 Gerar link de pagamento
               </button>
             </footer>
@@ -382,10 +437,7 @@ export function ProposalPage() {
             onSms={() => setToast('Mensagem de SMS pronta com o link de pagamento')}
             onApply={applyComponent}
             onCancel={() => setDialog('cancel')}
-            onNew={() => {
-              setModal('form')
-              setDialog(null)
-            }}
+            onNew={openForm}
           />
         </div>
       ) : null}
@@ -464,8 +516,7 @@ export function ProposalPage() {
                 type="button"
                 onClick={() => {
                   cancel()
-                  setDialog(null)
-                  setModal('form')
+                  openForm()
                   setToast('Link de pagamento cancelado')
                 }}
               >
@@ -563,6 +614,13 @@ function ShareModal({
           </p>
         </section>
 
+        {link.components.length ? (
+          <section className="adv-panel">
+            <h3>Componentes incluídos</h3>
+            <IncludedList items={link.components} />
+          </section>
+        ) : null}
+
         <section className="adv-panel">
           <h3>Onde deseja abater o adiantamento?</h3>
           <p className="adv-help">Selecione um componente de entrada com saldo suficiente.</p>
@@ -607,6 +665,20 @@ function ShareModal({
         </button>
       </footer>
     </section>
+  )
+}
+
+function IncludedList({ items, empty }: { items: AdvanceComponent[]; empty?: string }) {
+  if (!items.length) return <p className="adv-help">{empty}</p>
+  return (
+    <ul className="adv-included-list">
+      {items.map((item) => (
+        <li key={item.name}>
+          <span>{item.name}</span>
+          <b>{formatBRL(item.amount)}</b>
+        </li>
+      ))}
+    </ul>
   )
 }
 
