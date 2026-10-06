@@ -3,17 +3,23 @@ import { CREATED_LABEL, DEFAULT_AMOUNT, DEFAULT_DUE, PAYMENT_URL } from './model
 
 export type AdvanceStatus = 'waiting' | 'paid' | 'cancelled'
 
+export type AdvanceComponent = {
+  name: string
+  amount: number
+}
+
 export type AdvanceLink = {
   status: AdvanceStatus
   amount: number
   dueLabel: string
   createdLabel: string
   url: string
+  components: AdvanceComponent[]
 }
 
 type AdvanceContextValue = {
   link: AdvanceLink | null
-  generate: (amount: number, dueLabel: string) => void
+  generate: (amount: number, dueLabel: string, components?: AdvanceComponent[]) => void
   ensureGenerated: () => void
   cancel: () => void
   markPaid: () => void
@@ -22,27 +28,28 @@ type AdvanceContextValue = {
 
 const AdvanceContext = createContext<AdvanceContextValue | null>(null)
 
-function waitingLink(amount = DEFAULT_AMOUNT, dueLabel = DEFAULT_DUE): AdvanceLink {
+function waitingLink(amount = DEFAULT_AMOUNT, dueLabel = DEFAULT_DUE, components: AdvanceComponent[] = []): AdvanceLink {
   return {
     status: 'waiting',
     amount,
     dueLabel,
     createdLabel: CREATED_LABEL,
     url: PAYMENT_URL,
+    components,
   }
 }
 
 export function AdvanceProvider({ children }: { children: ReactNode }) {
   const [link, setLink] = useState<AdvanceLink | null>(null)
 
-  const generate = useCallback((amount: number, dueLabel: string) => {
-    setLink(waitingLink(amount, dueLabel))
+  const generate = useCallback((amount: number, dueLabel: string, components: AdvanceComponent[] = []) => {
+    setLink(waitingLink(amount, dueLabel, components))
   }, [])
 
   const ensureGenerated = useCallback(() => {
     setLink((current) => {
       if (current && current.status !== 'cancelled') return current
-      return waitingLink(current?.amount, current?.dueLabel)
+      return waitingLink(current?.amount, current?.dueLabel, current?.components)
     })
   }, [])
 
