@@ -568,7 +568,7 @@ export function PayCheckout({
                 {summary}
                 <div className="ck-pay">
                   <h2>Pagamento</h2>
-                  <div className="ck-pay-group">
+                  <div className="ck-pay-list">
                     <button type="button" className="ck-pay-opt" onClick={() => setStep('card')}>
                       <span className="ck-pay-opt__main">
                         <CardIcon /> Cartão de crédito
@@ -585,13 +585,13 @@ export function PayCheckout({
                       </span>
                       <ChevronRight />
                     </button>
+                    <button type="button" className="ck-pay-opt" onClick={() => setStep('boleto')}>
+                      <span className="ck-pay-opt__main">
+                        <BoletoIcon /> Boleto
+                      </span>
+                      <ChevronRight />
+                    </button>
                   </div>
-                  <button type="button" className="ck-pay-opt ck-pay-opt--solo" onClick={() => setStep('boleto')}>
-                    <span className="ck-pay-opt__main">
-                      <BoletoIcon /> Boleto
-                    </span>
-                    <ChevronRight />
-                  </button>
                 </div>
               </>
             ) : null}

@@ -211,13 +211,13 @@
     .ck-edit{display:inline-flex;align-items:center;gap:6px;color:#1f4a67;font-size:14px;font-weight:500}
     .ck-id-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 32px;font-size:14px;line-height:20px;color:#737373}
     .ck-id-grid p{margin:0}
-    .ck-pay h2,.ck-method-title{font-size:20px;font-weight:600;line-height:28px;margin:0 0 16px}
-    .ck-pay-group{border:1px solid #e5e5e5;border-radius:10px;overflow:hidden;background:#fff}
-    .ck-pay-opt{width:100%;min-height:52px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid #e5e5e5;color:#252525;font-size:14px;font-weight:500;text-align:left;cursor:pointer}
-    .ck-pay-group .ck-pay-opt{border:0;border-bottom:1px solid #e5e5e5;border-radius:0}
-    .ck-pay-group .ck-pay-opt:last-child{border-bottom:0}
-    .ck-pay-opt--solo{margin-top:12px;border-radius:10px}
-    .ck-pay-opt--pix{min-height:64px}
+    .ck-pay{display:flex;flex-direction:column;gap:16px}
+    .ck-pay h2,.ck-method-title{font-size:20px;font-weight:600;line-height:28px;margin:0}
+    .ck-method-title{margin-bottom:16px}
+    .ck-pay-list{display:flex;flex-direction:column;gap:12px}
+    .ck-pay-opt{width:100%;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid #e5e5e5;border-radius:16px;box-shadow:0 1px 2px rgba(0,0,0,.05);color:#252525;font-size:14px;font-weight:500;text-align:left;cursor:pointer}
+    .ck-pay-opt:hover{background:#f5f5f5}
+    .ck-pay-opt:focus-visible{outline:none;border-color:#87b0d1;box-shadow:0 0 0 3px rgba(135,176,209,.45)}
     .ck-pay-opt__main{display:inline-flex;align-items:center;gap:10px;min-width:0}
     .ck-pay-opt--pix .ck-pay-opt__main{align-items:flex-start}
     .ck-pay-opt--pix .ck-pay-opt__main svg{margin-top:2px;flex-shrink:0}
@@ -560,7 +560,7 @@ function checkoutHTML(link){
     const cardIco='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.6"/></svg>';
     const pixIco='<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.72 1.4a1.02 1.02 0 0 0-1.44 0L1.4 7.28a1.02 1.02 0 0 0 0 1.44l5.88 5.88a1.02 1.02 0 0 0 1.44 0l5.88-5.88a1.02 1.02 0 0 0 0-1.44L8.72 1.4Z"/></svg>';
     const boletoIco='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7v10M7 7v10M9 7v10M12 7v10M16 7v10M20 7v10" stroke="currentColor" stroke-width="1.7"/></svg>';
-    section=`${summary}<div class="ck-pay"><h2>Pagamento</h2><div class="ck-pay-group"><button type="button" class="ck-pay-opt" data-act="pay-card"><span class="ck-pay-opt__main">${cardIco} Cartão de crédito</span>${chev}</button><button type="button" class="ck-pay-opt ck-pay-opt--pix" data-act="pay-pix"><span class="ck-pay-opt__main">${pixIco}<span class="ck-pay-opt__copy"><span class="ck-pay-opt__label">Pix</span><small>Aprovação em instantes</small></span></span>${chev}</button></div><button type="button" class="ck-pay-opt ck-pay-opt--solo" data-act="pay-boleto"><span class="ck-pay-opt__main">${boletoIco} Boleto</span>${chev}</button></div>`;
+    section=`${summary}<div class="ck-pay"><h2>Pagamento</h2><div class="ck-pay-list"><button type="button" class="ck-pay-opt" data-act="pay-card"><span class="ck-pay-opt__main">${cardIco} Cartão de crédito</span>${chev}</button><button type="button" class="ck-pay-opt ck-pay-opt--pix" data-act="pay-pix"><span class="ck-pay-opt__main">${pixIco}<span class="ck-pay-opt__copy"><span class="ck-pay-opt__label">Pix</span><small>Aprovação em instantes</small></span></span>${chev}</button><button type="button" class="ck-pay-opt" data-act="pay-boleto"><span class="ck-pay-opt__main">${boletoIco} Boleto</span>${chev}</button></div></div>`;
   }else{
     const summary=`<div class="ck-panel"><div class="ck-id-head"><h1 class="checkout-title">Identificação</h1><button type="button" class="ck-edit" data-act="edit-ident"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20h4l10.5-10.5a2.12 2.12 0 0 0-3-3L5 17v3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg> Editar</button></div><div class="ck-id-grid"><div><p>${dash(ident.name)}</p><p>${dash(ident.email)}</p><p>${dash(ident.phone)}</p><p>${dash(ident.doc)}</p></div><div><p>${dash([ident.street,ident.number].filter(Boolean).join(', '))}</p><p>${dash(ident.district)}</p><p>${dash([ident.city,ident.uf].filter(Boolean).join(', '))}</p><p>${dash(ident.cep)}</p></div></div></div>`;
     const back=`${summary}<button type="button" class="ck-other" data-act="other-method">${chevronLeft()} Pagar com outro método</button>`;
