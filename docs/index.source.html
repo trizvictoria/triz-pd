@@ -183,8 +183,8 @@
     .checkout-back{width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;border-radius:8px;background:transparent;box-shadow:none;color:#171717;flex-shrink:0}
     .checkout-back:hover{background:#f5f5f5}
     .checkout-menu-anchor{margin-left:auto;display:flex;align-items:center;flex-shrink:0}
-    .checkout-main{width:min(1440px,calc(100% - 48px));margin:0 auto;padding:76px 0 80px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.9fr);gap:64px;align-items:start}
-    .checkout-col{display:flex;flex-direction:column;gap:24px;min-width:0}
+    .checkout-main{width:100%;margin:0;padding:76px 0 24px;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:16px;row-gap:16px;align-items:start}
+    .checkout-col{grid-column:2 / span 5;display:flex;flex-direction:column;gap:24px;min-width:0}
     .ck-panel,.checkout-order,.ck-card-box,.ck-info-box,.ck-success-card{background:#fafafa;border:1px solid rgba(0,0,0,.04);border-radius:14px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
     .ck-panel{padding:24px}
     .checkout-title{font-size:20px;font-weight:600;line-height:28px;margin:0 0 24px}
@@ -241,11 +241,12 @@
     .ck-instructions ol{margin:8px 0 0 18px}
     .ck-boleto-code{display:flex;align-items:stretch;height:64px;gap:2px;margin-bottom:16px}
     .ck-boleto-code span{background:#111;height:100%;display:block}
-    .checkout-order{position:sticky;top:32px;padding:24px;display:flex;flex-direction:column;gap:24px}
+    .checkout-order{grid-column:8 / span 4;position:sticky;top:32px;align-self:start;padding:24px;display:flex;flex-direction:column;gap:24px}
     .checkout-order h2{font-size:20px;font-weight:600;line-height:28px;margin:0}
     .checkout-order__items{display:flex;flex-direction:column;gap:24px}
     .checkout-item{display:flex;flex-direction:column;gap:4px}
-    .checkout-item__row{display:flex;justify-content:space-between;gap:16px;font-size:14px;font-weight:500;line-height:20px}
+    .checkout-item__row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;font-size:14px;font-weight:600;line-height:20px}
+    .checkout-item__row p:last-child{font-weight:500;white-space:nowrap}
     .checkout-item__desc,.checkout-item__qty{font-size:14px;line-height:20px;color:#737373}
     .checkout-order__total{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:24px;border-top:1px solid #e5e5e5;font-size:18px;font-weight:600;line-height:28px}
     .login{min-height:100%;display:flex;align-items:center;justify-content:center;padding:40px 24px}
@@ -304,7 +305,8 @@
     .login-card__fields{display:flex;flex-direction:column;gap:16px}
     .login-error{font:var(--text-sm);color:#c20046}
     .login-card .tg-button{width:100%}
-    @media(max-width:1100px){.checkout-main{grid-template-columns:1fr;width:min(720px,calc(100% - 32px));padding:32px 0 64px;gap:24px}.checkout-order{position:static}.ck-pix-box{grid-template-columns:1fr}}
+    @media(max-width:1023px){.checkout-col{grid-column:2 / span 6}.checkout-order{grid-column:9 / span 3}}
+    @media(max-width:767px){.checkout-main{padding:32px 16px 64px}.checkout-col,.checkout-order{grid-column:1 / -1}.checkout-order{position:static}.ck-pix-box{grid-template-columns:1fr}}
     @media(max-width:720px){.checkout-row,.ck-id-grid{grid-template-columns:1fr}}
     @media(max-width:1280px){
       .content{padding:0 16px 16px}
@@ -534,7 +536,7 @@ function checkoutHTML(link){
   const step=state.checkoutStep||'identify';
   const ident=state.ident||emptyIdent();
   const amount=fmt(link.total);
-  const header=`<header class="checkout-header"><button type="button" class="checkout-back" data-act="back-pay" aria-label="Voltar">${backIco()}</button><img class="checkout-logo" src="totvs-pay-logo.png" alt="TOTVS Pay"><span class="checkout-menu-anchor">${productMenuHTML('light')}</span></header>`;
+  const header=`<header class="checkout-header"><img class="checkout-logo" src="totvs-pay-logo.png" alt="TOTVS Pay"><span class="checkout-menu-anchor">${productMenuHTML('light')}</span></header>`;
   const pixCode=`00020101021226580014BR.GOV.BCB.PIX0136${String(link.id).replace(/-/g,'').slice(0,32)}520400005303986540${(link.total/100).toFixed(2)}5802BR5925TOTVS PAY6009Sao Paulo62070503***6304ABCD`;
   const boletoCode='23793.38128 60007.827136 95000.063305 1 844700000'+String(link.total).padStart(8,'0');
   if(step==='pix-success'||step==='boleto-success'||step==='card-success'){

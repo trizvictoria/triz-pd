@@ -89,15 +89,6 @@ function dash(value: string) {
   return value.trim() || '—'
 }
 
-function BackIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path d="M19 12H5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="m12 19-7-7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
 function ChevronLeft() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -285,9 +276,6 @@ export function PayCheckout({
 
   const header = (
     <header className="checkout-header">
-      <button type="button" className="checkout-back" aria-label={leaveLabel} onClick={onLeave}>
-        <BackIcon />
-      </button>
       <img className="checkout-logo" src={logoUrl} alt="TOTVS Pay" />
       {headerExtra}
       <span className="evt-brand checkout-menu-anchor" />
