@@ -37,7 +37,7 @@ export function PaymentLinksPage() {
         <div className="page-title-row">
           <h1 className="page-title">Links de Pagamentos</h1>
           <Button type="button" onClick={() => navigate('/links/novo')}>
-            Criar link
+            Criar link de pagamento
           </Button>
         </div>
         <div className="filters">
