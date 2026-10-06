@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react'
 function formatBRL(cents: number) {
   return (cents / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 }
-import { TotvsPayLogo } from './TotvsPayLogo'
+import logoUrl from '../assets/totvs-pay-logo.png'
 import '../styles/checkout.css'
 
 const STATES: Array<[string, string]> = [
@@ -91,8 +91,17 @@ function dash(value: string) {
 
 function BackIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path d="M15 18 9 12l6-6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M19 12H5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="m12 19-7-7 7-7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function ChevronLeft() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="m15 18-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
 }
@@ -279,10 +288,9 @@ export function PayCheckout({
       <button type="button" className="checkout-back" aria-label={leaveLabel} onClick={onLeave}>
         <BackIcon />
       </button>
-      <div className="navbar-logo evt-brand">
-        <TotvsPayLogo variant="dark" size="checkout" />
-        {headerExtra}
-      </div>
+      <img className="checkout-logo" src={logoUrl} alt="TOTVS Pay" />
+      {headerExtra}
+      <span className="evt-brand checkout-menu-anchor" />
     </header>
   )
 
@@ -603,7 +611,7 @@ export function PayCheckout({
               <>
                 {summary}
                 <button type="button" className="ck-other" onClick={() => setStep('method')}>
-                  <BackIcon /> Pagar com outro método
+                  <ChevronLeft /> Pagar com outro método
                 </button>
                 {step === 'pix' ? (
                   <>

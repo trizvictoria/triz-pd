@@ -1,7 +1,9 @@
 .checkout {
-  flex: 1;
-  min-height: 0;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
   overflow: auto;
+  min-height: 100%;
   background: #fff;
   color: #252525;
   font-family: Inter, 'DM Sans', sans-serif;
@@ -10,7 +12,7 @@
 .checkout-header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   height: 64px;
   padding: 0 24px;
   background: #fff;
@@ -21,18 +23,37 @@
   z-index: 5;
 }
 
+.checkout-logo {
+  display: block;
+  height: 22px;
+  width: auto;
+  flex-shrink: 0;
+}
+
 .checkout-back {
   width: 36px;
   height: 36px;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  padding: 0;
+  border: 0;
   border-radius: 8px;
-  color: #252525;
+  background: transparent;
+  box-shadow: none;
+  color: #171717;
+  flex-shrink: 0;
 }
 
 .checkout-back:hover {
-  background: #f3f3f3;
+  background: #f5f5f5;
+}
+
+.checkout-menu-anchor {
+  margin-left: auto;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
 }
 
 .checkout-main {
