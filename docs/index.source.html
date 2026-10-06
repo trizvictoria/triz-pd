@@ -194,6 +194,7 @@
     .checkout-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     .checkout-field{display:flex;flex-direction:column;gap:8px;min-width:0}
     .checkout-field span{font-size:14px;font-weight:500;line-height:1}
+    .ck-installment-note{font-size:12px;font-weight:400;line-height:16px;color:#737373}
     .checkout-field input,.checkout-field select{height:36px;width:100%;padding:4px 12px;border:1px solid #e5e5e5;border-radius:8px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.05);font-size:14px;line-height:20px;color:#252525;outline:none}
     .checkout-field select{appearance:none;padding-right:36px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='m6 9 6 6 6-6' stroke='%23737373' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
     .checkout-field input::placeholder{color:#8a8a8a}
@@ -532,6 +533,15 @@ function captureIdent(){
   const v=id=>(document.getElementById(id)||{}).value||'';
   state.ident={name:v('ck-name'),email:v('ck-email'),phone:v('ck-phone'),doc:v('ck-doc'),street:v('ck-street'),number:v('ck-number'),complement:v('ck-comp'),district:v('ck-district'),city:v('ck-city'),uf:v('ck-uf'),cep:v('ck-cep')};
 }
+function cardInstallments(total){
+  return Array.from({length:12},(_,i)=>{
+    const count=i+1;
+    const interest=count>1;
+    const charged=interest?Math.round((total*1015)/1000):total;
+    const each=Math.round(charged/count);
+    return {count,charged,label:`${count}x de ${fmt(each)} ${interest?'com juros':'sem juros'}`};
+  });
+}
 function checkoutHTML(link){
   const step=state.checkoutStep||'identify';
   const ident=state.ident||emptyIdent();
@@ -543,7 +553,7 @@ function checkoutHTML(link){
     let body='';
     if(step==='pix-success') body=`<section class="ck-success-card"><h1>Finalize seu pagamento via pix</h1><p class="ck-success-lead">Escaneie o QR Code ou copie o código abaixo.</p><div class="ck-summary"><strong>Resumo do pedido</strong><p>Pedido: #${link.id}</p><p>Valor total: ${amount}</p></div><div class="ck-pix-box">${qrHTML()}<div class="ck-pix-copy"><p>Esse código expira em: <strong>23:59:56</strong></p><textarea readonly rows="3">${pixCode}</textarea><button type="button" class="ck-copy-btn" data-act="copy-pix">Copiar Código</button></div></div><div class="ck-instructions"><strong>Instruções para pagamento</strong><ol><li>Abra o aplicativo do seu banco e selecione o ambiente do PIX.</li><li>Escolha a opção pagar com QR Code e escaneie o código acima ou copie e cole a chave PIX para efetuar o pagamento.</li><li>Confirme as informações e finalize a compra antes que o código expire.</li></ol></div></section>`;
     if(step==='boleto-success') body=`<section class="ck-success-card"><h1>Finalize seu pagamento via boleto</h1><p class="ck-success-lead">Copie a linha digitável ou use o código de barras abaixo.</p><div class="ck-summary"><strong>Resumo do pedido</strong><p>Pedido: #${link.id}</p><p>Valor total: ${amount}</p></div><div class="ck-boleto-code">${Array.from({length:48},(_,i)=>`<span style="width:${i%7===0?3:i%3===0?2:1}px"></span>`).join('')}</div><textarea readonly rows="2">${boletoCode}</textarea><button type="button" class="ck-copy-btn" data-act="copy-boleto">Copiar Código</button></section>`;
-    if(step==='card-success') body=`<section class="ck-success-card"><h1>Pagamento aprovado</h1><p class="ck-success-lead">Recebemos o pagamento de ${amount}. O pedido já consta como pago.</p><div class="ck-summary"><strong>Resumo do pedido</strong><p>Pedido: #${link.id}</p><p>Valor total: ${amount}</p></div><button type="button" class="checkout-submit" data-act="back-pay">Voltar ao CRM</button></section>`;
+    if(step==='card-success'){const paid=fmt((cardInstallments(link.total).find(p=>p.count===Number(state.cardInstallments||1))||{charged:link.total}).charged);body=`<section class="ck-success-card"><h1>Pagamento aprovado</h1><p class="ck-success-lead">Recebemos o pagamento de ${paid}. O pedido já consta como pago.</p><div class="ck-summary"><strong>Resumo do pedido</strong><p>Pedido: #${link.id}</p><p>Valor total: ${paid}</p></div><button type="button" class="checkout-submit" data-act="back-pay">Voltar ao CRM</button></section>`;}
     return `<div class="checkout">${header}<main class="checkout-success">${body}</main></div>`;
   }
   const states=[['AC','Acre'],['AL','Alagoas'],['AP','Amapá'],['AM','Amazonas'],['BA','Bahia'],['CE','Ceará'],['DF','Distrito Federal'],['ES','Espírito Santo'],['GO','Goiás'],['MA','Maranhão'],['MT','Mato Grosso'],['MS','Mato Grosso do Sul'],['MG','Minas Gerais'],['PA','Pará'],['PB','Paraíba'],['PR','Paraná'],['PE','Pernambuco'],['PI','Piauí'],['RJ','Rio de Janeiro'],['RN','Rio Grande do Norte'],['RS','Rio Grande do Sul'],['RO','Rondônia'],['RR','Roraima'],['SC','Santa Catarina'],['SP','São Paulo'],['SE','Sergipe'],['TO','Tocantins']].map(([uf,name])=>`<option value="${uf}" ${ident.uf===uf?'selected':''}>${name}</option>`).join('');
@@ -566,11 +576,20 @@ function checkoutHTML(link){
     const back=`${summary}<button type="button" class="ck-other" data-act="other-method">${chevronLeft()} Pagar com outro método</button>`;
     if(step==='pix') section=`${back}<h2 class="ck-method-title">Pix</h2><div class="ck-info-box">Para concluir com Pix, finalize o pedido. O QR Code para pagamento será exibido na próxima tela.</div><button type="button" class="checkout-submit" data-act="pix-success">Pagar ${amount}</button>`;
     if(step==='boleto') section=`${back}<h2 class="ck-method-title">Boleto</h2><div class="ck-info-box">Para gerar o boleto, finalize o pedido. Ele será exibido na próxima tela.</div><button type="button" class="checkout-submit" data-act="boleto-success">Pagar ${amount}</button>`;
-    if(step==='card') section=`${back}<h2 class="ck-method-title">Cartão de crédito</h2><div class="ck-card-box"><label class="checkout-field"><span>Número do cartão</span><input placeholder="0000 0000 0000 0000"></label><div class="checkout-row"><label class="checkout-field"><span>Data de expiração</span><input placeholder="MM/AA"></label><label class="checkout-field"><span>CVV</span><input placeholder="3 dígitos"></label></div><div class="checkout-row"><label class="checkout-field"><span>Nome do titular do cartão</span><input placeholder="Nome no cartão"></label><label class="checkout-field"><span>Parcelamento</span><select><option>1x de ${amount}</option></select></label></div></div><button type="button" class="checkout-submit" data-act="card-success">Pagar ${amount}</button>`;
+    if(step==='card'){const plans=cardInstallments(link.total);const plan=plans.find(p=>p.count===Number(state.cardInstallments||1))||plans[0];const options=plans.map(p=>`<option value="${p.count}"${p.count===plan.count?' selected':''}>${p.label}</option>`).join('');section=`${back}<h2 class="ck-method-title">Cartão de crédito</h2><div class="ck-card-box"><label class="checkout-field"><span>Número do cartão</span><input placeholder="0000 0000 0000 0000"></label><div class="checkout-row"><label class="checkout-field"><span>Data de expiração</span><input placeholder="MM/AA"></label><label class="checkout-field"><span>CVV</span><input placeholder="3 dígitos"></label></div><div class="checkout-row"><label class="checkout-field"><span>Nome do titular do cartão</span><input placeholder="Nome no cartão"></label><label class="checkout-field"><span>Parcelamento</span><select id="ck-installments">${options}</select><small class="ck-installment-note">1ª sem juros. A partir da 2ª, +1,5% de juros.</small></label></div></div><button type="button" class="checkout-submit" data-act="card-success">Pagar ${fmt(plan.charged)}</button>`;}
   }
   return `<div class="checkout">${header}<main class="checkout-main"><section class="checkout-col">${section}</section>${orderHTML(link)}</main></div>`;
 }
 function syncCheckout(){
+  const select=document.getElementById('ck-installments');
+  const pay=document.querySelector('[data-act="card-success"]');
+  if(select&&pay&&state.checkout){
+    select.onchange=()=>{
+      state.cardInstallments=select.value;
+      const plan=cardInstallments(state.checkout.total).find(p=>String(p.count)===String(select.value));
+      if(plan) pay.textContent='Pagar '+fmt(plan.charged);
+    };
+  }
   const btn=document.querySelector('[data-act="continue-ident"]');
   if(!btn) return;
   const ids=['ck-name','ck-email','ck-phone','ck-doc','ck-cep','ck-street','ck-number','ck-district','ck-city','ck-uf'];
@@ -595,6 +614,7 @@ function openDemoCheckout(){
   state.view='checkout';
   state.checkoutStep='identify';
   state.ident=emptyIdent();
+  state.cardInstallments='1';
   state.drawer='closed';
   state.pendingSuccess=false;
 }
@@ -757,7 +777,7 @@ function act(a,id){
     render();
   }
   if(a==='open'){state.active=state.links.find(l=>l.id===id);state.drawer='ready';render()}
-  if(a==='open-checkout'){const l=state.links.find(x=>x.id===id); if(!l) return; state.checkoutDemo=false; state.checkout=l; state.view='checkout'; state.checkoutStep='identify'; state.ident=emptyIdent(); state.drawer='closed'; state.pendingSuccess=false; render()}
+  if(a==='open-checkout'){const l=state.links.find(x=>x.id===id); if(!l) return; state.checkoutDemo=false; state.checkout=l; state.view='checkout'; state.checkoutStep='identify'; state.ident=emptyIdent(); state.cardInstallments='1'; state.drawer='closed'; state.pendingSuccess=false; render()}
   if(a==='continue-ident'){captureIdent(); state.checkoutStep='method'; render()}
   if(a==='edit-ident'){state.checkoutStep='identify'; render()}
   if(a==='other-method'){state.checkoutStep='method'; render()}

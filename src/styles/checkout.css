@@ -139,6 +139,13 @@
   color: #252525;
 }
 
+.ck-installment-note {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: #737373;
+}
+
 .checkout-field input,
 .checkout-field select {
   height: 36px;

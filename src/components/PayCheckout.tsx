@@ -89,6 +89,20 @@ function dash(value: string) {
   return value.trim() || '—'
 }
 
+function cardInstallments(totalCents: number) {
+  return Array.from({ length: 12 }, (_, index) => {
+    const count = index + 1
+    const interest = count > 1
+    const charged = interest ? Math.round((totalCents * 1015) / 1000) : totalCents
+    const each = Math.round(charged / count)
+    return {
+      count,
+      charged,
+      label: `${count}x de ${formatBRL(each)} ${interest ? 'com juros' : 'sem juros'}`,
+    }
+  })
+}
+
 function ChevronLeft() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -241,14 +255,9 @@ export function PayCheckout({
   }, [phase])
 
   const amount = formatBRL(totalCents)
-  const installments = useMemo(
-    () =>
-      [1, 2, 3, 6].map((count) => ({
-        count,
-        label: `${count}x de ${formatBRL(Math.round(totalCents / count))}`,
-      })),
-    [totalCents],
-  )
+  const installments = useMemo(() => cardInstallments(totalCents), [totalCents])
+  const selectedPlan = installments.find((item) => String(item.count) === card.installments) ?? installments[0]
+  const cardAmount = formatBRL(selectedPlan.charged)
   const pixCode = `00020101021226580014BR.GOV.BCB.PIX0136${(orderId ?? 'totvspay').replace(/-/g, '').slice(0, 32)}520400005303986540${(totalCents / 100).toFixed(2)}5802BR5925TOTVS PAY6009Sao Paulo62070503***6304ABCD`
   const boletoCode = '23793.38128 60007.827136 95000.063305 1 844700000' + String(totalCents).padStart(8, '0')
   const identReady = [ident.name, ident.email, ident.phone, ident.doc, ident.cep, ident.street, ident.number, ident.district, ident.city, ident.uf].every(
@@ -400,11 +409,11 @@ export function PayCheckout({
           {step === 'card-success' ? (
             <section className="ck-success-card">
               <h1>Pagamento aprovado</h1>
-              <p className="ck-success-lead">Recebemos o pagamento de {amount}. O pedido já consta como pago.</p>
+              <p className="ck-success-lead">Recebemos o pagamento de {cardAmount}. O pedido já consta como pago.</p>
               <div className="ck-summary">
                 <strong>Resumo do pedido</strong>
                 {orderId ? <p>Pedido: #{orderId}</p> : null}
-                <p>Valor total: {amount}</p>
+                <p>Valor total: {cardAmount}</p>
               </div>
               <button type="button" className="checkout-submit" onClick={onLeave}>
                 {leaveLabel}
@@ -685,11 +694,12 @@ export function PayCheckout({
                               </option>
                             ))}
                           </select>
+                          <small className="ck-installment-note">1ª sem juros. A partir da 2ª, +1,5% de juros.</small>
                         </label>
                       </div>
                     </div>
                     <button type="button" className="checkout-submit" disabled={!cardReady} onClick={() => pay('card')}>
-                      Pagar {amount}
+                      Pagar {cardAmount}
                     </button>
                   </>
                 ) : null}
