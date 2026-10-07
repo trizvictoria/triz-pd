@@ -553,7 +553,7 @@ function checkoutHTML(link){
     let body='';
     if(step==='pix-success') body=`<section class="ck-success-card"><h1>Finalize seu pagamento via pix</h1><p class="ck-success-lead">Escaneie o QR Code ou copie o código abaixo.</p><div class="ck-summary"><strong>Resumo do pedido</strong><p>Pedido: #${link.id}</p><p>Valor total: ${amount}</p></div><div class="ck-pix-box">${qrHTML()}<div class="ck-pix-copy"><p>Esse código expira em: <strong>23:59:56</strong></p><textarea readonly rows="3">${pixCode}</textarea><button type="button" class="ck-copy-btn" data-act="copy-pix">Copiar Código</button></div></div><div class="ck-instructions"><strong>Instruções para pagamento</strong><ol><li>Abra o aplicativo do seu banco e selecione o ambiente do PIX.</li><li>Escolha a opção pagar com QR Code e escaneie o código acima ou copie e cole a chave PIX para efetuar o pagamento.</li><li>Confirme as informações e finalize a compra antes que o código expire.</li></ol></div></section>`;
     if(step==='boleto-success') body=`<section class="ck-success-card"><h1>Finalize seu pagamento via boleto</h1><p class="ck-success-lead">Copie a linha digitável ou use o código de barras abaixo.</p><div class="ck-summary"><strong>Resumo do pedido</strong><p>Pedido: #${link.id}</p><p>Valor total: ${amount}</p></div><div class="ck-boleto-code">${Array.from({length:48},(_,i)=>`<span style="width:${i%7===0?3:i%3===0?2:1}px"></span>`).join('')}</div><textarea readonly rows="2">${boletoCode}</textarea><button type="button" class="ck-copy-btn" data-act="copy-boleto">Copiar Código</button></section>`;
-    if(step==='card-success'){const paid=fmt((cardInstallments(link.total).find(p=>p.count===Number(state.cardInstallments||1))||{charged:link.total}).charged);body=`<section class="ck-success-card"><h1>Pagamento aprovado</h1><p class="ck-success-lead">Recebemos o pagamento de ${paid}. O pedido já consta como pago.</p><div class="ck-summary"><strong>Resumo do pedido</strong><p>Pedido: #${link.id}</p><p>Valor total: ${paid}</p></div><button type="button" class="checkout-submit" data-act="back-pay">Voltar ao CRM</button></section>`;}
+    if(step==='card-success'){const paid=fmt((cardInstallments(link.total).find(p=>p.count===Number(state.cardInstallments||1))||{charged:link.total}).charged);const backLabel=state.checkoutDemo?'Reiniciar demonstração':'Voltar ao CRM';body=`<section class="ck-success-card"><h1>Pagamento aprovado</h1><p class="ck-success-lead">Recebemos o pagamento de ${paid}. O pedido já consta como pago.</p><div class="ck-summary"><strong>Resumo do pedido</strong><p>Pedido: #${link.id}</p><p>Valor total: ${paid}</p></div><button type="button" class="checkout-submit" data-act="back-pay">${backLabel}</button></section>`;}
     return `<div class="checkout">${header}<main class="checkout-success">${body}</main></div>`;
   }
   const states=[['AC','Acre'],['AL','Alagoas'],['AP','Amapá'],['AM','Amazonas'],['BA','Bahia'],['CE','Ceará'],['DF','Distrito Federal'],['ES','Espírito Santo'],['GO','Goiás'],['MA','Maranhão'],['MT','Mato Grosso'],['MS','Mato Grosso do Sul'],['MG','Minas Gerais'],['PA','Pará'],['PB','Paraíba'],['PR','Paraná'],['PE','Pernambuco'],['PI','Piauí'],['RJ','Rio de Janeiro'],['RN','Rio Grande do Norte'],['RS','Rio Grande do Sul'],['RO','Rondônia'],['RR','Roraima'],['SC','Santa Catarina'],['SP','São Paulo'],['SE','Sergipe'],['TO','Tocantins']].map(([uf,name])=>`<option value="${uf}" ${ident.uf===uf?'selected':''}>${name}</option>`).join('');
@@ -783,8 +783,8 @@ function act(a,id){
   if(a==='copy-pix'||a==='copy-boleto'){const ta=document.querySelector('#checkout-root textarea'); if(ta) navigator.clipboard.writeText(ta.value).catch(()=>{});}
   if(a==='back-pay'&&state.checkout){
     if(state.checkoutDemo){
-      state.checkout=null; state.checkoutDemo=false; state.view='deal';
-      if(location.hash==='#checkout') history.replaceState(null,'','#deal');
+      openDemoCheckout();
+      history.replaceState(null,'','#checkout');
       render();return;
     }
     const step=state.checkoutStep||'identify';
@@ -802,13 +802,18 @@ function act(a,id){
 }
 window.__pdNavigate=function(id){
   if(id==='interesse'){location.assign('https://materiais.rdstation.com/2026-totvspay-material-lp-hr-totvs-pay-universo');return}
-  if(id==='totvs'||id==='totvs-credenciamento'||id==='totvs-dashboard'||id==='construcao'||id==='educacional'||id==='checkout'){
+  if(id==='checkout'){
+    openDemoCheckout();
+    history.replaceState(null,'','#checkout');
+    render();
+    return;
+  }
+  if(id==='totvs'||id==='totvs-credenciamento'||id==='totvs-dashboard'||id==='construcao'||id==='educacional'){
     const p=location.pathname;
     const i=p.search(new RegExp('/(totvs|construcao|educacional)(?:/|$)'));
     const root=i>=0?p.slice(0,i)+'/': (p.endsWith('/')?p:p.replace(/[^/]+$/,''));
     if(id==='educacional'){location.assign(root+'educacional/');return}
     if(id==='construcao'){location.assign(root+'construcao/');return}
-    if(id==='checkout'){location.assign(root+'construcao/checkout/');return}
     try{sessionStorage.setItem('totvs-onboarded',id==='totvs-dashboard'?'1':'0')}catch(e){}
     location.assign(root+(id==='totvs-dashboard'?'totvs/dashboard':'totvs/'));
     return;
