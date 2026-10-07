@@ -546,7 +546,7 @@ function checkoutHTML(link){
   const step=state.checkoutStep||'identify';
   const ident=state.ident||emptyIdent();
   const amount=fmt(link.total);
-  const header=`<header class="checkout-header"><img class="checkout-logo" src="totvs-pay-logo.png" alt="TOTVS Pay"><span class="checkout-menu-anchor">${productMenuHTML('light')}</span></header>`;
+  const header=`<header class="checkout-header"><button type="button" class="checkout-back" data-act="back-pay" aria-label="Voltar">${backIco()}</button><img class="checkout-logo" src="totvs-pay-logo.png" alt="TOTVS Pay"><span class="checkout-menu-anchor">${productMenuHTML('light')}</span></header>`;
   const pixCode=`00020101021226580014BR.GOV.BCB.PIX0136${String(link.id).replace(/-/g,'').slice(0,32)}520400005303986540${(link.total/100).toFixed(2)}5802BR5925TOTVS PAY6009Sao Paulo62070503***6304ABCD`;
   const boletoCode='23793.38128 60007.827136 95000.063305 1 844700000'+String(link.total).padStart(8,'0');
   if(step==='pix-success'||step==='boleto-success'||step==='card-success'){
@@ -787,10 +787,14 @@ function act(a,id){
       if(location.hash==='#checkout') history.replaceState(null,'','#deal');
       render();return;
     }
-    const id=state.checkout.id;
-    state.links=state.links.map(l=>l.id===id?{...l,paid:true,status:'concluido',paidAt:new Date()}:l);
+    const step=state.checkoutStep||'identify';
+    const paidStep=step==='pix-success'||step==='boleto-success'||step==='card-success';
+    if(paidStep){
+      const id=state.checkout.id;
+      state.links=state.links.map(l=>l.id===id?{...l,paid:true,status:'concluido',paidAt:new Date()}:l);
+      showToast({title:'Pagamento confirmado',description:'O link saiu da lista lateral e o pagamento consta no histórico'});
+    }
     state.checkout=null; state.view='deal'; state.tab='Histórico';
-    showToast({title:'Pagamento confirmado',description:'O link saiu da lista lateral e o pagamento consta no histórico'});
     render();
   }
   if(a==='copy'&&state.active){copyLink(state.active.url)}
