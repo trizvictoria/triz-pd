@@ -1,20 +1,7 @@
 (function () {
   var ASSET = '/triz-pd/totvs/assets/landing/'
   var HOST_ID = 'lp-extra-host'
-
-  var INSTALLMENTS = [
-    ['2x', '5,19%'],
-    ['3x', '6,92%'],
-    ['4x', '8,68%'],
-    ['5x', '10,47%'],
-    ['6x', '12,28%'],
-    ['7x', '12,63%'],
-    ['8x', '13,51%'],
-    ['9x', '15,43%'],
-    ['10x', '16,37%'],
-    ['11x', '18,35%'],
-    ['12x', '19,99%'],
-  ]
+  var RATES_VERSION = '16'
 
   function icon(name, d) {
     return (
@@ -64,16 +51,18 @@
     [1, -1, 1, -1],
   ]
 
-  function instHTML() {
-    return INSTALLMENTS.map(function (item) {
-      return (
-        '<div class="lp-rate__inst"><span>' +
-        item[0] +
-        '</span><strong>' +
-        item[1] +
-        '</strong></div>'
-      )
-    }).join('')
+  function cardInstallmentsHTML() {
+    return (
+      '<div class="lp-rate__installments">' +
+      '<div class="lp-rate__inst"><span>2x à 6x</span><strong>3,49%</strong></div>' +
+      '<div class="lp-rate__inst"><span>7x à 12x</span><strong>3,99%</strong></div>' +
+      '<div class="lp-rate__inst lp-rate__inst--note">' +
+      '<img src="' +
+      ASSET +
+      'icon-info-navy.svg" alt="" width="16" height="16">' +
+      '<p>Antecipação em 30 dias<br>com taxa de 1,70% ao mês</p>' +
+      '</div></div>'
+    )
   }
 
   var H_JOINT = [
@@ -239,6 +228,8 @@
     return (
       '<div class="lp-extra" id="' +
       HOST_ID +
+      '" data-rates-version="' +
+      RATES_VERSION +
       '">' +
       '<section class="lp-rates" aria-labelledby="lp-rates-title">' +
       '<h2 id="lp-rates-title">Confira as taxas por métodos de pagamento</h2>' +
@@ -252,20 +243,14 @@
       '<p class="lp-rate__hint">por transação aprovada</p>' +
       '</article>' +
       '<article class="lp-rate lp-rate--card">' +
-      '<div class="lp-rate__head">' +
       '<div class="lp-rate__icon"><img src="' +
       ASSET +
       'icon-card.svg" alt="" width="32" height="32"></div>' +
-      '<span class="lp-rate__tag"><img src="' +
-      ASSET +
-      'icon-info.svg" alt="" width="16" height="16">Antecipação em até 30 dias já incluída, sem taxa extra</span>' +
-      '</div>' +
       '<p class="lp-rate__name">Cartão de crédito</p>' +
       '<p class="lp-rate__value">3,19%</p>' +
       '<p class="lp-rate__hint">à vista ou</p>' +
-      '<div class="lp-rate__installments">' +
-      instHTML() +
-      '</div></article>' +
+      cardInstallmentsHTML() +
+      '</article>' +
       '<article class="lp-rate">' +
       '<div class="lp-rate__icon"><img src="' +
       ASSET +
@@ -459,6 +444,13 @@
       existing.remove()
       existing = null
     }
+    if (
+      existing &&
+      existing.getAttribute('data-rates-version') !== RATES_VERSION
+    ) {
+      existing.remove()
+      existing = null
+    }
     if (existing) {
       if (existing.parentNode !== inner) inner.appendChild(existing)
       enhancePuzzle()
@@ -472,7 +464,7 @@
     var link = document.createElement('link')
     link.id = 'lp-extra-style'
     link.rel = 'stylesheet'
-    link.href = '/triz-pd/totvs/landing-extra.css?v=14'
+    link.href = '/triz-pd/totvs/landing-extra.css?v=16'
     document.head.appendChild(link)
   }
 
