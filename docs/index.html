@@ -8,13 +8,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,700;9..40,800;9..40,900&family=Inter:wght@400;500;600&family=Nunito+Sans:wght@400;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,1,0&display=swap" rel="stylesheet" />
   <style>
-    :root{--color-nav-bg:#001927;--font:'DM Sans',sans-serif;--font-crm:'Nunito Sans','DM Sans',sans-serif;--primary-border:#00dbff;--primary-icon:#0077b2;--primary-icon-hover:#005580;--primary-icon-on-color:#00dbff;--primary-icon-on-color-hover:#66e9ff;--primary-surface-high-emphasis:#00dbff;--primary-surface-low-emphasis:#b2f4ff;--primary-surface-hover:#66ebff;--primary-text:#0077b2;--primary-text-hover:#005580;--primary-text-on-color:#00dbff;--primary-text-on-color-hover:#66e9ff;--neutral-border:#d6dbde;--neutral-border-interactive:#b2bcc1;--neutral-icon-high-emphasis:#002233;--neutral-icon-low-emphasis:#596b7a;--neutral-icon-disabled:#8c98a3;--neutral-icon-inverse:#fff;--neutral-surface:#fff;--neutral-surface-high-emphasis:#e5e8ea;--neutral-surface-low-emphasis:#eceeef;--neutral-surface-hover:#dadee0;--neutral-surface-disabled:#edeff1;--neutral-surface-inverse:#002233;--neutral-surface-inverse-interactive:#002233;--neutral-surface-inverse-interactive-hover:#003347;--neutral-text-high-emphasis:#002233;--neutral-text-low-emphasis:#405466;--neutral-text-disabled:#7f8d99;--neutral-text-inverse:#fff;--neutral-focus-outline:#00dbff;--danger-text:#c20046;--success-icon:#087a3a;--success-text:#087a3a;--success-border:#0ed869;--success-surface-low-emphasis:#d6fae8;--highlight-text:#6e00c5;--highlight-surface-low-emphasis:#edd6ff;--support-mint:#00f2c9;--size-spacing-01:4px;--size-spacing-02:8px;--size-spacing-03:12px;--size-spacing-04:16px;--size-spacing-05:24px;--size-spacing-06:32px;--border-radius-xs:4px;--border-radius-sm:8px;--border-radius-md:12px;--border-radius-lg:16px;--border-radius-pill:999px;--shadow-xs:0 2px 6px rgba(0,34,51,.1);--shadow-md:0 8px 18px rgba(0,34,51,.16);--shadow-lg:0 12px 24px rgba(0,34,51,.2);--zindex-3:1020;--zindex-4:1030;--zindex-6:1050;--motion-duration-extra-fast:100ms;--motion-duration-normal:300ms;--motion-timing-function-ease-out:cubic-bezier(.215,.61,.355,1);--motion-timing-function-ease-in-out:cubic-bezier(.645,.045,.355,1);--text-xl:800 28px/36px var(--font);--text-lg:500 20px/30px var(--font);--text-lg-bold:700 20px/30px var(--font);--text-md:500 16px/24px var(--font);--text-md-bold:700 16px/24px var(--font);--text-sm:500 14px/20px var(--font);--text-sm-bold:700 14px/20px var(--font);--text-xs:500 12px/16px var(--font)}
+    :root{--color-nav-bg:#001927;--font:'DM Sans',sans-serif;--font-crm:'Nunito Sans','DM Sans',sans-serif;--primary-border:#00dbff;--primary-icon:#0077b2;--primary-icon-hover:#005580;--primary-icon-on-color:#00dbff;--primary-icon-on-color-hover:#66e9ff;--primary-surface-high-emphasis:#00dbff;--primary-surface-low-emphasis:#b2f4ff;--primary-surface-hover:#66ebff;--primary-text:#0077b2;--primary-text-hover:#005580;--primary-text-on-color:#00dbff;--primary-text-on-color-hover:#66e9ff;--neutral-border:#d6dbde;--neutral-border-interactive:#b2bcc1;--neutral-icon-high-emphasis:#002233;--neutral-icon-low-emphasis:#596b7a;--neutral-icon-disabled:#8c98a3;--neutral-icon-inverse:#fff;--neutral-surface:#fff;--neutral-surface-high-emphasis:#e5e8ea;--neutral-surface-low-emphasis:#eceeef;--neutral-surface-hover:#dadee0;--neutral-surface-disabled:#edeff1;--neutral-surface-inverse:#002233;--neutral-surface-inverse-interactive:#002233;--neutral-surface-inverse-interactive-hover:#003347;--neutral-text-high-emphasis:#002233;--neutral-text-low-emphasis:#405466;--neutral-text-disabled:#7f8d99;--neutral-text-inverse:#fff;--neutral-focus-outline:#00dbff;--danger-text:#c20046;--success-icon:#087a3a;--success-text:#087a3a;--success-border:#0ed869;--success-surface-low-emphasis:#d6fae8;--highlight-text:#6e00c5;--highlight-surface-low-emphasis:#edd6ff;--support-mint:#00f2c9;--size-spacing-01:4px;--size-spacing-02:8px;--size-spacing-03:12px;--size-spacing-04:16px;--size-spacing-05:24px;--size-spacing-06:32px;--size-spacing-07:40px;--border-radius-xs:4px;--border-radius-sm:8px;--border-radius-md:12px;--border-radius-lg:16px;--border-radius-pill:999px;--shadow-xs:0 2px 6px rgba(0,34,51,.1);--shadow-md:0 8px 18px rgba(0,34,51,.16);--shadow-lg:0 12px 24px rgba(0,34,51,.2);--zindex-3:1020;--zindex-4:1030;--zindex-6:1050;--motion-duration-extra-fast:100ms;--motion-duration-normal:300ms;--motion-timing-function-ease-out:cubic-bezier(.215,.61,.355,1);--motion-timing-function-ease-in-out:cubic-bezier(.645,.045,.355,1);--text-xl:800 28px/36px var(--font);--text-lg:500 20px/30px var(--font);--text-lg-bold:700 20px/30px var(--font);--text-md:500 16px/24px var(--font);--text-md-bold:700 16px/24px var(--font);--text-sm:500 14px/20px var(--font);--text-sm-bold:700 14px/20px var(--font);--text-xs:500 12px/16px var(--font)}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     [hidden]{display:none!important}
     html,body{height:100%}
-    body{display:flex;flex-direction:column;font-family:var(--font);color:var(--neutral-text-high-emphasis);background:var(--color-nav-bg);-webkit-font-smoothing:antialiased}
+    body{display:flex;flex-direction:column;padding-top:28px;font-family:var(--font);color:var(--neutral-text-high-emphasis);background:var(--color-nav-bg);-webkit-font-smoothing:antialiased}
     button,input,select{font-family:inherit}button{cursor:pointer;border:none;background:none}
-    .demo-banner{position:relative;z-index:12000;width:100%;height:28px;display:flex;align-items:center;justify-content:center;background:#00dbff;color:#002233;font:700 12px/16px var(--font);letter-spacing:.01em;flex-shrink:0}
+    .demo-banner{position:fixed;top:0;left:0;right:0;z-index:12000;width:100%;height:28px;display:flex;align-items:center;justify-content:center;background:#00dbff;color:#002233;font:700 12px/16px var(--font);letter-spacing:.01em;flex-shrink:0}
     .layout{display:grid;grid-template-rows:64px 1fr;grid-template-columns:64px 1fr;grid-template-areas:"navbar navbar" "sidebar content";flex:1;min-height:0;height:auto;overflow:hidden}
     .navbar{grid-area:navbar;background:var(--color-nav-bg);display:flex;align-items:center;justify-content:space-between;padding:var(--size-spacing-03);height:64px;z-index:9600}
     .navbar img{max-width:none;display:block}
@@ -83,18 +83,33 @@
     .layout.is-login{grid-template-columns:1fr;grid-template-areas:"navbar" "content"}
     .layout.is-login .sidebar{display:none}
     .layout.is-login .content{border-radius:0}
+    .layout.is-suri .navbar,.layout.is-suri .content{min-width:0;max-width:100%}
     .layout.is-suri .content{background:#2418d6;padding:0;border-radius:0;display:flex}
-    .suri{width:100%;min-height:100%;display:flex;align-items:center;justify-content:center;padding:32px 24px;box-sizing:border-box;background:radial-gradient(90% 80% at 70% 45%,#3b28f2 0%,#2418d6 48%,#1a12b8 100%);color:#fff}
-    .suri-inner{width:min(100%,880px);display:flex;flex-direction:column;align-items:center}
-    .suri-hero{display:flex;align-items:center;justify-content:center;gap:clamp(28px,5vw,72px);width:100%}
-    .suri-copy{max-width:28rem}
-    .suri-brand{width:min(100%,280px);height:auto;display:block;margin:0 0 24px}
-    .suri-copy h1{margin:0 0 16px;font-size:clamp(32px,4vw,48px);line-height:1.12;letter-spacing:-.02em;max-width:14ch}
-    .suri-copy p{margin:0;max-width:46ch;font-size:clamp(14px,1.2vw,18px);line-height:1.55;color:rgba(255,255,255,.86)}
-    .suri-qr{display:block;width:min(100%,280px);flex:none}
+    .suri{width:100%;min-height:100%;display:flex;align-items:flex-start;justify-content:center;padding:var(--size-spacing-06) var(--size-spacing-05);box-sizing:border-box;background:radial-gradient(90% 80% at 70% 45%,#3b28f2 0%,#2418d6 48%,#1a12b8 100%);color:var(--neutral-text-inverse)}
+    .suri-layout{width:min(100%,1080px);display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:var(--size-spacing-06);align-items:start}
+    .suri-stories{display:flex;flex-direction:column;gap:var(--size-spacing-07,40px);min-width:0}
+    .suri-story{display:grid;grid-template-columns:minmax(0,1fr) 232px;gap:var(--size-spacing-06);align-items:center}
+    .suri-story--desk{grid-template-columns:minmax(0,1fr);align-items:stretch;gap:var(--size-spacing-04)}
+    .suri-kicker{margin:0 0 var(--size-spacing-02);font:var(--text-xs);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+    .suri-copy h1,.suri-copy h2{margin:0;font:var(--text-xl);letter-spacing:-.01em;color:var(--neutral-text-inverse)}
+    .suri-card{position:sticky;top:var(--size-spacing-05);display:flex;flex-direction:column;align-items:center;gap:var(--size-spacing-04);padding:var(--size-spacing-05);background:var(--neutral-surface);color:var(--neutral-text-high-emphasis);border-radius:var(--border-radius-lg);box-shadow:var(--shadow-lg);text-align:center}
+    .suri-brand{width:min(100%,180px);height:auto;display:block}
+    .suri-qr{display:block;width:min(100%,200px);border-radius:var(--border-radius-md)}
+    .suri-qr:focus-visible{outline:var(--size-spacing-01) solid var(--neutral-focus-outline);outline-offset:var(--size-spacing-01)}
     .suri-qr img{width:100%;height:auto;display:block}
-    .suri-credit{margin:28px 0 0;text-align:center;color:rgba(255,255,255,.72);font:500 12px/16px var(--font)}
-    @media(max-width:800px){.suri-hero{flex-direction:column;text-align:center}.suri-brand{margin-left:auto;margin-right:auto}.suri-copy h1,.suri-copy p{margin-left:auto;margin-right:auto}}
+    .suri-card p{margin:0;font:var(--text-sm);color:var(--neutral-text-low-emphasis)}
+    .suri-card strong{font:var(--text-sm-bold);color:var(--neutral-text-high-emphasis)}
+    .device-phone{width:232px;padding:10px;border-radius:36px;background:var(--neutral-surface-inverse);box-shadow:var(--shadow-lg)}
+    .device-phone__screen{position:relative;overflow:hidden;border-radius:26px;background:#000}
+    .device-phone__screen::after{content:'';position:absolute;top:8px;left:50%;width:84px;height:18px;transform:translateX(-50%);border-radius:var(--border-radius-pill);background:#000;pointer-events:none}
+    .device-phone__screen video,.device-laptop__bezel video{display:block;width:100%;height:auto;background:#000}
+    .device-phone__screen video{aspect-ratio:720/1434;object-fit:cover}
+    .device-laptop{padding:0 18px;min-width:0}
+    .device-laptop__bezel{position:relative;border:10px solid var(--neutral-surface-inverse);border-bottom-width:14px;border-radius:var(--border-radius-lg) var(--border-radius-lg) 0 0;background:var(--neutral-surface-inverse);box-shadow:var(--shadow-lg)}
+    .device-laptop__bezel::before{content:'';position:absolute;top:-7px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:var(--border-radius-pill);background:var(--neutral-border-interactive);z-index:1}
+    .device-laptop__bezel video{aspect-ratio:1600/904;object-fit:cover;border-radius:var(--border-radius-xs)}
+    .device-laptop__base{height:14px;margin:0 -18px;border-radius:0 0 var(--border-radius-md) var(--border-radius-md);background:var(--neutral-surface-inverse);box-shadow:inset 0 1px 0 rgba(255,255,255,.16)}
+    @media(max-width:900px){.suri-layout,.suri-story{grid-template-columns:minmax(0,1fr)}.suri-card{position:static}.device-phone{justify-self:center}}
     .totvs-brand{display:flex;align-items:center;gap:6px;height:40px;padding-left:8px}
     .totvs-brand--checkout,.totvs-brand--powered{padding-left:0;height:auto}
     .totvs-brand--powered{gap:4px}
@@ -287,7 +302,7 @@ function experienceRoot(){
   return p.endsWith('/')?p:p.replace(/[^/]+$/,'');
 }
 function suriHTML(){
-  return '<div class="suri"><div class="suri-inner"><section class="suri-hero"><div class="suri-copy"><img class="suri-brand" src="instituto-percorre.png" alt="Instituto Percorre"><h1>Lorem ipsum</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div><a class="suri-qr" href="https://wa.me/5511975019280" target="_blank" rel="noreferrer"><img src="suri-qr.png" alt="QR Code da Suri Shop no WhatsApp"></a></section><p class="suri-credit">Lorem ipsum dolor sit amet</p></div></div>';
+  return '<div class="suri"><div class="suri-layout"><div class="suri-stories"><article class="suri-story"><div class="suri-copy"><p class="suri-kicker">Venda automatizada</p><h1>Suri + TOTVS Pay: a jornada de venda completa, automatizada com IA</h1></div><div class="device-phone"><div class="device-phone__screen"><video src="suri/venda-automatizada.mp4" poster="suri/poster-automatizada.jpg" playsinline muted autoplay loop controls aria-label="Demonstração da venda automatizada no WhatsApp da Loja Instituto Percorre"></video></div></div></article><article class="suri-story suri-story--desk"><div class="suri-copy"><p class="suri-kicker">Venda assistida</p><h2>Suri + TOTVS Pay: seu time atende, vende e recebe</h2></div><div class="device-laptop"><div class="device-laptop__bezel"><video src="suri/venda-assistida.mp4" poster="suri/poster-assistida.jpg" playsinline muted autoplay loop controls aria-label="Demonstração da venda assistida no painel da Suri"></video></div><div class="device-laptop__base" aria-hidden="true"></div></div></article></div><aside class="suri-card"><img class="suri-brand" src="instituto-percorre-mark.png" alt="Instituto Percorre"><a class="suri-qr" href="https://wa.me/5511975019280" target="_blank" rel="noreferrer"><img src="suri-qr.png" alt="QR Code da Suri Shop no WhatsApp"></a><p>Acesse o QR Code, apoie o Instituto Percorre e retire a sua compra diretamente na loja durante o <strong>Universo TOTVS</strong>!</p></aside></div></div>';
 }
 function showPublicSuri(){
   const app=document.getElementById('app');

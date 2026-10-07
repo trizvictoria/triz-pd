@@ -1,5 +1,26 @@
-export const TOTAL_CENTS = 50000
+export const TUITION_CENTS = 100000
 export const MIN_CENTS = 500
+export const MAX_CARDS = 3
+
+export type TuitionStatus = 'overdue' | 'open'
+
+export type Tuition = {
+  id: string
+  month: string
+  due: string
+  status: TuitionStatus
+  cents: number
+}
+
+export const TUITIONS: Tuition[] = [
+  { id: '2026-07', month: 'Julho/2026', due: '31/07/2026', status: 'overdue', cents: TUITION_CENTS },
+  { id: '2026-08', month: 'Agosto/2026', due: '31/08/2026', status: 'overdue', cents: TUITION_CENTS },
+  { id: '2026-09', month: 'Setembro/2026', due: '30/09/2026', status: 'open', cents: TUITION_CENTS },
+]
+
+export function tuitionStatusLabel(status: TuitionStatus) {
+  return status === 'overdue' ? 'Vencida' : 'Em aberto'
+}
 
 export type Brand = 'visa' | 'mastercard'
 
@@ -162,9 +183,8 @@ export function installmentLabel(amountCents: number, plan: Installment) {
   const count = Number(plan)
   const total = installmentTotal(amountCents, plan)
   const each = Math.round(total / count)
-  if (count <= 1) return `1x ${formatBRL(each)} (Sem juros)`
-  const added = ((count - 1) * 1.5).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-  return `${count}x ${formatBRL(each)} (+${added}% · 1,50% por parcela)`
+  if (count <= 1) return `1x ${formatBRL(each)} (sem juros)`
+  return `${count}x ${formatBRL(each)} (com juros de 1,5% por parcela)`
 }
 
 export function emptyPayment(): CardPayment {

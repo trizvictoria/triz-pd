@@ -183,7 +183,7 @@ function experienceRoot(){
   return p.endsWith('/')?p:p.replace(/[^/]+$/,'');
 }
 function suriHTML(){
-  return '<div class="suri"><div class="suri-inner"><section class="suri-hero"><div class="suri-copy"><img class="suri-brand" src="instituto-percorre.png" alt="Instituto Percorre"><h1>Lorem ipsum</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div><a class="suri-qr" href="https://wa.me/5511975019280" target="_blank" rel="noreferrer"><img src="suri-qr.png" alt="QR Code da Suri Shop no WhatsApp"></a></section><p class="suri-credit">Lorem ipsum dolor sit amet</p></div></div>';
+  return '<div class="suri"><div class="suri-layout"><div class="suri-stories"><article class="suri-story"><div class="suri-copy"><p class="suri-kicker">Venda automatizada</p><h1>Suri + TOTVS Pay: a jornada de venda completa, automatizada com IA</h1></div><div class="device-phone"><div class="device-phone__screen"><video src="suri/venda-automatizada.mp4" poster="suri/poster-automatizada.jpg" playsinline muted autoplay loop controls aria-label="Demonstração da venda automatizada no WhatsApp da Loja Instituto Percorre"></video></div></div></article><article class="suri-story suri-story--desk"><div class="suri-copy"><p class="suri-kicker">Venda assistida</p><h2>Suri + TOTVS Pay: seu time atende, vende e recebe</h2></div><div class="device-laptop"><div class="device-laptop__bezel"><video src="suri/venda-assistida.mp4" poster="suri/poster-assistida.jpg" playsinline muted autoplay loop controls aria-label="Demonstração da venda assistida no painel da Suri"></video></div><div class="device-laptop__base" aria-hidden="true"></div></div></article></div><aside class="suri-card"><img class="suri-brand" src="instituto-percorre-mark.png" alt="Instituto Percorre"><a class="suri-qr" href="https://wa.me/5511975019280" target="_blank" rel="noreferrer"><img src="suri-qr.png" alt="QR Code da Suri Shop no WhatsApp"></a><p>Acesse o QR Code, apoie o Instituto Percorre e retire a sua compra diretamente na loja durante o <strong>Universo TOTVS</strong>!</p></aside></div></div>';
 }
 function showPublicSuri(){
   const app=document.getElementById('app');
@@ -337,10 +337,10 @@ for (const secret of [password, pilotoPassword]) {
   if (!roundPayload.js.includes('function checkoutHTML') || !roundPayload.css.includes('.deal{')) {
     throw new Error('Encrypted payload is missing the payment flow')
   }
-  if (!roundPayload.js.includes('instituto-percorre.png') || !roundPayload.js.includes('Lorem ipsum')) {
+  if (!roundPayload.js.includes('instituto-percorre-mark.png') || !roundPayload.js.includes('jornada de venda completa')) {
     throw new Error('Encrypted payload is missing the current Suri Shop page')
   }
-  if (!roundPayload.css.includes('.suri-inner')) {
+  if (!roundPayload.css.includes('.suri-layout') || !roundPayload.css.includes('.device-phone')) {
     throw new Error('Encrypted payload is missing Suri Shop layout CSS')
   }
 }

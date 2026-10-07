@@ -4,9 +4,10 @@ import {
   EMPTY_DRAFT,
   INITIAL_CARDS,
   INSTALLMENT_PLANS,
+  MAX_CARDS,
   PROFILE,
   STATES,
-  TOTAL_CENTS,
+  TUITIONS,
   brandFromNumber,
   cardLabel,
   digitsOnly,
@@ -22,10 +23,12 @@ import {
   maskMoney,
   maskPhone,
   moneyToCents,
+  tuitionStatusLabel,
   type CardDraft,
   type CardPayment,
   type Installment,
   type SavedCard,
+  type Tuition,
 } from './model'
 import './educacional.css'
 
@@ -104,28 +107,35 @@ function Field({
   )
 }
 
-function LaunchSummary({ totalCents, split }: { totalCents: number; split?: Array<{ kind?: string; label: string; value: string }> }) {
+function LaunchSummary({
+  totalCents,
+  tuitions,
+  split,
+}: {
+  totalCents: number
+  tuitions: Tuition[]
+  split?: Array<{ kind?: string; label: string; value: string }>
+}) {
   return (
     <aside className="edu-card edu-summary">
       <div className="edu-summary__top">
         <h2>Resumo do lançamento</h2>
-        <p className="edu-due">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M7 3.5h1.4V5h7.2V3.5H17V5h1.1A1.9 1.9 0 0 1 20 6.9v11.2A1.9 1.9 0 0 1 18.1 20H5.9A1.9 1.9 0 0 1 4 18.1V6.9A1.9 1.9 0 0 1 5.9 5H7V3.5ZM5.6 9v9h12.8V9H5.6Z" fill="#1a1a1a" />
-          </svg>
-          <span>
-            Vencimento: <strong>15/06/2024</strong>
-          </span>
-        </p>
       </div>
       <hr className="edu-divider" />
-      <div>
-        <p className="edu-month">Junho/2024</p>
-        <p className="edu-line">
-          <span>5444-2 - MENSALIDADE</span>
-          <span>R$500,00</span>
-        </p>
-      </div>
+      {tuitions.map((item) => (
+        <div className="edu-summary__item" key={item.id}>
+          <p className="edu-month">{item.month}</p>
+          <p className="edu-line">
+            <span>MENSALIDADE · {tuitionStatusLabel(item.status)}</span>
+            <span>{formatBRL(item.cents)}</span>
+          </p>
+          <p className="edu-due">
+            <span>
+              Vencimento: <strong>{item.due}</strong>
+            </span>
+          </p>
+        </div>
+      ))}
       {split ? (
         <>
           <hr className="edu-divider" />
@@ -187,8 +197,9 @@ export function EducacionalApp() {
     document.title = 'Extrato financeiro · Pensando Juntos'
   }, [])
 
-  const [journey, setJourney] = useState<EduJourney>('all')
+  const [journey, setJourney] = useState<EduJourney>('card')
   const [step, setStep] = useState<Step>('statement')
+  const [tuitionIds, setTuitionIds] = useState<string[]>([])
   const [payMode, setPayMode] = useState<'combine' | 'card'>('combine')
   const [cards, setCards] = useState<SavedCard[]>(INITIAL_CARDS)
   const [selected, setSelected] = useState<string[]>([])
@@ -211,7 +222,11 @@ export function EducacionalApp() {
     return () => document.removeEventListener('keydown', onKey)
   }, [offer])
 
+  const selectedTuitions = TUITIONS.filter((item) => tuitionIds.includes(item.id))
+  const payCents = selectedTuitions.reduce((sum, item) => sum + item.cents, 0)
+  const canPay = payCents > 0
   const selectedCards = cards.filter((card) => selected.includes(card.id))
+  const cardLimitReached = selected.length >= MAX_CARDS
   const slots = useMemo(() => {
     const list: Array<{ key: string; kind: 'pix' } | { key: string; kind: 'card'; card: SavedCard }> = []
     if (payMode === 'card' && pixOn) list.push({ key: 'pix', kind: 'pix' })
@@ -225,7 +240,7 @@ export function EducacionalApp() {
     if (slot.kind === 'pix') return sum + pixCents
     return sum + (payments[slot.card.id]?.amountCents || 0)
   }, 0)
-  const remainder = Math.max(TOTAL_CENTS - enteredBefore, 0)
+  const remainder = Math.max(payCents - enteredBefore, 0)
 
   const reviewTotal = useMemo(() => {
     return selectedCards.reduce((sum, card) => {
@@ -235,12 +250,21 @@ export function EducacionalApp() {
     }, 0)
   }, [payments, selectedCards])
 
+  function toggleTuition(id: string) {
+    setTuitionIds((current) => (current.includes(id) ? current.filter((item) => item !== id) : [...current, id]))
+  }
+
   function toggle(id: string) {
     setError('')
-    setSelected((current) => (current.includes(id) ? current.filter((item) => item !== id) : [...current, id]))
+    setSelected((current) => {
+      if (current.includes(id)) return current.filter((item) => item !== id)
+      if (current.length >= MAX_CARDS) return current
+      return [...current, id]
+    })
   }
 
   function openAddCard() {
+    if (selected.length >= MAX_CARDS) return
     setDraft(EMPTY_DRAFT)
     setCardStep(0)
     setError('')
@@ -250,6 +274,7 @@ export function EducacionalApp() {
   function chooseJourney(next: EduJourney) {
     setJourney(next)
     setStep('statement')
+    setTuitionIds([])
     setSelected([])
     setPixOn(false)
     setPixCents(0)
@@ -259,6 +284,7 @@ export function EducacionalApp() {
   }
 
   function openCards() {
+    if (!canPay) return
     setPayMode('combine')
     setSelected([])
     setPixOn(false)
@@ -266,6 +292,7 @@ export function EducacionalApp() {
   }
 
   function openMix() {
+    if (!canPay) return
     setPayMode('card')
     setSelected([])
     setPixOn(false)
@@ -273,6 +300,7 @@ export function EducacionalApp() {
   }
 
   function openPix() {
+    if (!canPay) return
     setPayMode('card')
     setSelected([])
     setPixOn(true)
@@ -425,8 +453,12 @@ export function EducacionalApp() {
             </span>
           </div>
           <div className="edu-paybar__actions">
+            <p className="edu-selected-total">
+              <span>Total selecionado</span>
+              <b>{formatBRL(payCents)}</b>
+            </p>
             {journey === 'all' ? (
-              <button type="button" className="edu-btn" onClick={() => setOffer('pix')}>
+              <button type="button" className="edu-btn" onClick={() => setOffer('pix')} disabled={!canPay}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <path d="M12 3.5 14.2 8.2 19.2 9l-3.6 3.5.9 5-4.5-2.4L7.5 17.5l.9-5L4.8 9l5-.8L12 3.5Z" fill="#fff" />
                 </svg>
@@ -434,21 +466,21 @@ export function EducacionalApp() {
               </button>
             ) : null}
             {journey === 'all' ? (
-              <button type="button" className="edu-btn" onClick={() => setOffer('mix')}>
+              <button type="button" className="edu-btn" onClick={() => setOffer('mix')} disabled={!canPay}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <path d="M6 8h5V6H6v2Zm7 0h5V6h-5v2ZM6 18h5v-2H6v2Zm7-6H6v2h7v-2Zm2 1.2 3.2 3.2-1.2 1.2-3.2-3.2 1.2-1.2Z" fill="#fff" />
                 </svg>
                 Combinar pagamentos
               </button>
             ) : null}
-            <button type="button" className="edu-btn" onClick={openCards}>
+            <button type="button" className="edu-btn" onClick={openCards} disabled={!canPay}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path d="M4 7.5h16v9H4v-9Zm0-1.5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Zm1.5 6.2h4v1.4h-4v-1.4Z" fill="#fff" />
               </svg>
               Cartão
             </button>
             {journey === 'all' ? (
-              <button type="button" className="edu-btn edu-btn--ghost" onClick={() => setOffer('boleto')}>
+              <button type="button" className="edu-btn edu-btn--ghost" onClick={() => setOffer('boleto')} disabled={!canPay}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <path d="M6 6h1.4v12H6V6Zm2.4 0H10v12H8.4V6Zm2.6 0h2.2v12h-2.2V6Zm3.2 0H16v12h-1.8V6Zm2.6 0H20v12h-1.8V6Z" fill="currentColor" />
                 </svg>
@@ -460,50 +492,67 @@ export function EducacionalApp() {
             ) : null}
           </div>
         </div>
-        <article className="edu-charge">
-          <div className="edu-charge__who">
-            <span className="edu-charge__check" aria-hidden>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                <path d="M5 12.5 9.2 17 19 7" stroke="#fff" strokeWidth="2.4" />
-              </svg>
-            </span>
-            <span className="edu-charge__avatar" aria-hidden>
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                <path d="M12 12.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4ZM6.4 18.4c.5-2.3 2.5-3.6 5.6-3.6s5.1 1.3 5.6 3.6v.6H6.4v-.6Z" fill="#fff" />
-              </svg>
-            </span>
-            <p>
-              <span>Setembro/2026</span>
-              <strong>R$1.000,00</strong>
-            </p>
-          </div>
-          <div className="edu-charge__info">
-            <p>
-              <b>Aluno:</b> ANA PAULA PACMEN ENSINO SUPERIOR
-            </p>
-            <p>
-              <b>Responsável:</b> ANA PAULA PACMEN RESPONSAVEL FINANCEIRO ALUNO
-            </p>
-            <p>Período letivo: 2025/1</p>
-            <button type="button" className="edu-detail">
-              Exibir detalhamento
-            </button>
-          </div>
-          <p className="edu-charge__due">
-            <span className="edu-charge__due-label">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <path d="M7 3.5h1.4V5h7.2V3.5H17V5h1.1A1.9 1.9 0 0 1 20 6.9v11.2A1.9 1.9 0 0 1 18.1 20H5.9A1.9 1.9 0 0 1 4 18.1V6.9A1.9 1.9 0 0 1 5.9 5H7V3.5ZM5.6 9v9h12.8V9H5.6Z" fill="#2e9b4f" />
-              </svg>
-              <span>
-                Vencimento
-                <strong>30/09/2026</strong>
-              </span>
-            </span>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-              <path d="M7 8a5 5 0 0 1 8.2-1.6L17 8h-3.2V6.4H17V10h-3.6l1.4-1.2A6.6 6.6 0 0 0 7 8Zm10 8a5 5 0 0 1-8.2 1.6L7 16h3.2v1.6H7V14h3.6l-1.4 1.2A6.6 6.6 0 0 0 17 16Z" fill="#7b3fe4" />
-            </svg>
-          </p>
-        </article>
+        <div className="edu-charges">
+          {TUITIONS.map((item) => {
+            const on = tuitionIds.includes(item.id)
+            const overdue = item.status === 'overdue'
+            return (
+              <article className="edu-charge" key={item.id}>
+                <div className="edu-charge__who">
+                  <button
+                    type="button"
+                    className={`edu-charge__check${on ? ' is-on' : ''}`}
+                    aria-pressed={on}
+                    aria-label={`${on ? 'Remover' : 'Selecionar'} mensalidade de ${item.month}`}
+                    onClick={() => toggleTuition(item.id)}
+                  >
+                    {on ? (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12.5 9.2 17 19 7" stroke="#fff" strokeWidth="2.4" />
+                      </svg>
+                    ) : null}
+                  </button>
+                  <span className="edu-charge__avatar" aria-hidden>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                      <path d="M12 12.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4ZM6.4 18.4c.5-2.3 2.5-3.6 5.6-3.6s5.1 1.3 5.6 3.6v.6H6.4v-.6Z" fill="#fff" />
+                    </svg>
+                  </span>
+                  <p>
+                    <span>{item.month}</span>
+                    <strong>{formatBRL(item.cents)}</strong>
+                  </p>
+                </div>
+                <div className="edu-charge__info">
+                  <p>
+                    <b>Aluno:</b> ANA PAULA DA SILVA ENSINO SUPERIOR
+                  </p>
+                  <p>
+                    <b>Responsável:</b> ANA PAULA DA SILVA RESPONSAVEL FINANCEIRO ALUNO
+                  </p>
+                  <p>Período letivo: 2025/1</p>
+                  <button type="button" className="edu-detail">
+                    Exibir detalhamento
+                  </button>
+                </div>
+                <p className="edu-charge__due">
+                  <span className="edu-charge__due-label">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+                      <path d="M7 3.5h1.4V5h7.2V3.5H17V5h1.1A1.9 1.9 0 0 1 20 6.9v11.2A1.9 1.9 0 0 1 18.1 20H5.9A1.9 1.9 0 0 1 4 18.1V6.9A1.9 1.9 0 0 1 5.9 5H7V3.5ZM5.6 9v9h12.8V9H5.6Z" fill={overdue ? '#e10600' : '#2e9b4f'} />
+                    </svg>
+                    <span>
+                      Vencimento
+                      <strong>{item.due}</strong>
+                    </span>
+                  </span>
+                  <em className={`edu-charge__status${overdue ? ' is-overdue' : ' is-open'}`}>{tuitionStatusLabel(item.status)}</em>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M7 8a5 5 0 0 1 8.2-1.6L17 8h-3.2V6.4H17V10h-3.6l1.4-1.2A6.6 6.6 0 0 0 7 8Zm10 8a5 5 0 0 1-8.2 1.6L7 16h3.2v1.6H7V14h3.6l-1.4 1.2A6.6 6.6 0 0 0 17 16Z" fill="#7b3fe4" />
+                  </svg>
+                </p>
+              </article>
+            )
+          })}
+        </div>
       </section>
     )
   }
@@ -534,22 +583,26 @@ export function EducacionalApp() {
                   PIX
                 </button>
               ) : null}
-              {cards.map((card) => (
-                <button type="button" className="edu-method" key={card.id} onClick={() => toggle(card.id)} aria-pressed={selected.includes(card.id)}>
-                  <Check on={selected.includes(card.id)} />
-                  <BrandIcon brand={card.brand} />
-                  {cardLabel(card)}
-                </button>
-              ))}
-              <button type="button" className="edu-method" onClick={openAddCard}>
+              {cards.map((card) => {
+                const on = selected.includes(card.id)
+                return (
+                  <button type="button" className="edu-method" key={card.id} onClick={() => toggle(card.id)} aria-pressed={on} disabled={!on && cardLimitReached}>
+                    <Check on={on} />
+                    <BrandIcon brand={card.brand} />
+                    {cardLabel(card)}
+                  </button>
+                )
+              })}
+              <button type="button" className="edu-method" onClick={openAddCard} disabled={cardLimitReached}>
                 <BrandIcon brand="add" />
                 Adicionar novo cartão de crédito
               </button>
+              {cardLimitReached ? <p className="edu-limit">Você pode usar até 3 cartões</p> : null}
             </section>
             {error ? <p className="edu-hint">{error}</p> : null}
             <Primary onClick={continueMethods}>Continuar</Primary>
           </div>
-          <LaunchSummary totalCents={TOTAL_CENTS} />
+          <LaunchSummary totalCents={payCents} tuitions={selectedTuitions} />
         </div>
       </>
     )
@@ -645,7 +698,7 @@ export function EducacionalApp() {
     const payingCard = currentSlot.kind === 'card' ? currentSlot.card : null
     const payment = payingCard ? payments[payingCard.id] || emptyPayment() : emptyPayment()
     const typedCents = isLastAmount ? remainder : payingCard ? payment.amountCents : pixCents
-    const forwardRemainder = Math.max(TOTAL_CENTS - enteredBefore - typedCents, 0)
+    const forwardRemainder = Math.max(payCents - enteredBefore - typedCents, 0)
     const following = slots.slice(amountIndex + 1)
     const followerName = (slot: (typeof slots)[number]) => (slot.kind === 'pix' ? 'Pix' : cardLabel(slot.card))
     const previousSplit = slots.slice(0, amountIndex).map((slot) => {
@@ -796,7 +849,7 @@ export function EducacionalApp() {
               <Primary onClick={() => saveAmount(amountIndex + 1)}>{comboPix && isLastAmount ? 'Gerar QR Code' : 'Próximo'}</Primary>
             </div>
           </div>
-          <LaunchSummary totalCents={TOTAL_CENTS} split={liveSplit} />
+          <LaunchSummary totalCents={payCents} tuitions={selectedTuitions} split={liveSplit} />
         </div>
       </>
     )
@@ -822,15 +875,12 @@ export function EducacionalApp() {
                   )}
                   {card ? cardLabel(card) : 'Cartão'}
                 </span>
-                <span>{formatBRL(TOTAL_CENTS)}</span>
+                <span>{formatBRL(payCents)}</span>
               </div>
             </section>
             <Primary onClick={() => setStep('done')}>Efetuar pagamento</Primary>
           </div>
-          <LaunchSummary
-            totalCents={TOTAL_CENTS}
-            split={[{ kind: 'Pix', label: '***.***.***-46', value: 'R$100,00' }]}
-          />
+          <LaunchSummary totalCents={payCents} tuitions={selectedTuitions} />
         </div>
       </>
     )
@@ -853,12 +903,12 @@ export function EducacionalApp() {
                   </span>
                   Pix
                 </span>
-                <span>{formatBRL(TOTAL_CENTS)}</span>
+                <span>{formatBRL(payCents)}</span>
               </div>
             </section>
             <Primary onClick={() => setStep('pixPay')}>Efetuar pagamento</Primary>
           </div>
-          <LaunchSummary totalCents={TOTAL_CENTS} split={[{ kind: 'Pix', label: '***.***.***-46', value: 'R$100,00' }]} />
+          <LaunchSummary totalCents={payCents} tuitions={selectedTuitions} />
         </div>
       </>
     )
@@ -911,7 +961,7 @@ export function EducacionalApp() {
             </div>
             <div className="edu-pixpay__side">
               <p>Valor a ser pago por Pix</p>
-              <strong>{comboPix ? formatBRL(pixCents) : 'R$ 100,00'}</strong>
+              <strong>{comboPix ? formatBRL(pixCents) : formatBRL(payCents)}</strong>
               <button
                 type="button"
                 className="edu-btn"
@@ -996,7 +1046,8 @@ export function EducacionalApp() {
             <Primary onClick={() => setStep('done')}>Efetuar pagamento</Primary>
           </div>
           <LaunchSummary
-            totalCents={reviewTotal || TOTAL_CENTS}
+            totalCents={reviewTotal || payCents}
+            tuitions={selectedTuitions}
             split={selectedCards.map((card) => ({
               label: cardLabel(card),
               value: payments[card.id]?.installment ? installmentLabel(payments[card.id].amountCents, payments[card.id].installment as Installment) : '',

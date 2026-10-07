@@ -8,13 +8,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,700;9..40,800;9..40,900&family=Inter:wght@400;500;600&family=Nunito+Sans:wght@400;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,1,0&display=swap" rel="stylesheet" />
   <style>
-    :root{--color-nav-bg:#001927;--font:'DM Sans',sans-serif;--font-crm:'Nunito Sans','DM Sans',sans-serif;--primary-border:#00dbff;--primary-icon:#0077b2;--primary-icon-hover:#005580;--primary-icon-on-color:#00dbff;--primary-icon-on-color-hover:#66e9ff;--primary-surface-high-emphasis:#00dbff;--primary-surface-low-emphasis:#b2f4ff;--primary-surface-hover:#66ebff;--primary-text:#0077b2;--primary-text-hover:#005580;--primary-text-on-color:#00dbff;--primary-text-on-color-hover:#66e9ff;--neutral-border:#d6dbde;--neutral-border-interactive:#b2bcc1;--neutral-icon-high-emphasis:#002233;--neutral-icon-low-emphasis:#596b7a;--neutral-icon-disabled:#8c98a3;--neutral-icon-inverse:#fff;--neutral-surface:#fff;--neutral-surface-high-emphasis:#e5e8ea;--neutral-surface-low-emphasis:#eceeef;--neutral-surface-hover:#dadee0;--neutral-surface-disabled:#edeff1;--neutral-surface-inverse:#002233;--neutral-surface-inverse-interactive:#002233;--neutral-surface-inverse-interactive-hover:#003347;--neutral-text-high-emphasis:#002233;--neutral-text-low-emphasis:#405466;--neutral-text-disabled:#7f8d99;--neutral-text-inverse:#fff;--neutral-focus-outline:#00dbff;--danger-text:#c20046;--success-icon:#087a3a;--success-text:#087a3a;--success-border:#0ed869;--success-surface-low-emphasis:#d6fae8;--highlight-text:#6e00c5;--highlight-surface-low-emphasis:#edd6ff;--support-mint:#00f2c9;--size-spacing-01:4px;--size-spacing-02:8px;--size-spacing-03:12px;--size-spacing-04:16px;--size-spacing-05:24px;--size-spacing-06:32px;--border-radius-xs:4px;--border-radius-sm:8px;--border-radius-md:12px;--border-radius-lg:16px;--border-radius-pill:999px;--shadow-xs:0 2px 6px rgba(0,34,51,.1);--shadow-md:0 8px 18px rgba(0,34,51,.16);--shadow-lg:0 12px 24px rgba(0,34,51,.2);--zindex-3:1020;--zindex-4:1030;--zindex-6:1050;--motion-duration-extra-fast:100ms;--motion-duration-normal:300ms;--motion-timing-function-ease-out:cubic-bezier(.215,.61,.355,1);--motion-timing-function-ease-in-out:cubic-bezier(.645,.045,.355,1);--text-xl:800 28px/36px var(--font);--text-lg:500 20px/30px var(--font);--text-lg-bold:700 20px/30px var(--font);--text-md:500 16px/24px var(--font);--text-md-bold:700 16px/24px var(--font);--text-sm:500 14px/20px var(--font);--text-sm-bold:700 14px/20px var(--font);--text-xs:500 12px/16px var(--font)}
+    :root{--color-nav-bg:#001927;--font:'DM Sans',sans-serif;--font-crm:'Nunito Sans','DM Sans',sans-serif;--primary-border:#00dbff;--primary-icon:#0077b2;--primary-icon-hover:#005580;--primary-icon-on-color:#00dbff;--primary-icon-on-color-hover:#66e9ff;--primary-surface-high-emphasis:#00dbff;--primary-surface-low-emphasis:#b2f4ff;--primary-surface-hover:#66ebff;--primary-text:#0077b2;--primary-text-hover:#005580;--primary-text-on-color:#00dbff;--primary-text-on-color-hover:#66e9ff;--neutral-border:#d6dbde;--neutral-border-interactive:#b2bcc1;--neutral-icon-high-emphasis:#002233;--neutral-icon-low-emphasis:#596b7a;--neutral-icon-disabled:#8c98a3;--neutral-icon-inverse:#fff;--neutral-surface:#fff;--neutral-surface-high-emphasis:#e5e8ea;--neutral-surface-low-emphasis:#eceeef;--neutral-surface-hover:#dadee0;--neutral-surface-disabled:#edeff1;--neutral-surface-inverse:#002233;--neutral-surface-inverse-interactive:#002233;--neutral-surface-inverse-interactive-hover:#003347;--neutral-text-high-emphasis:#002233;--neutral-text-low-emphasis:#405466;--neutral-text-disabled:#7f8d99;--neutral-text-inverse:#fff;--neutral-focus-outline:#00dbff;--danger-text:#c20046;--success-icon:#087a3a;--success-text:#087a3a;--success-border:#0ed869;--success-surface-low-emphasis:#d6fae8;--highlight-text:#6e00c5;--highlight-surface-low-emphasis:#edd6ff;--support-mint:#00f2c9;--size-spacing-01:4px;--size-spacing-02:8px;--size-spacing-03:12px;--size-spacing-04:16px;--size-spacing-05:24px;--size-spacing-06:32px;--size-spacing-07:40px;--border-radius-xs:4px;--border-radius-sm:8px;--border-radius-md:12px;--border-radius-lg:16px;--border-radius-pill:999px;--shadow-xs:0 2px 6px rgba(0,34,51,.1);--shadow-md:0 8px 18px rgba(0,34,51,.16);--shadow-lg:0 12px 24px rgba(0,34,51,.2);--zindex-3:1020;--zindex-4:1030;--zindex-6:1050;--motion-duration-extra-fast:100ms;--motion-duration-normal:300ms;--motion-timing-function-ease-out:cubic-bezier(.215,.61,.355,1);--motion-timing-function-ease-in-out:cubic-bezier(.645,.045,.355,1);--text-xl:800 28px/36px var(--font);--text-lg:500 20px/30px var(--font);--text-lg-bold:700 20px/30px var(--font);--text-md:500 16px/24px var(--font);--text-md-bold:700 16px/24px var(--font);--text-sm:500 14px/20px var(--font);--text-sm-bold:700 14px/20px var(--font);--text-xs:500 12px/16px var(--font)}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     [hidden]{display:none!important}
     html,body{height:100%}
-    body{display:flex;flex-direction:column;font-family:var(--font);color:var(--neutral-text-high-emphasis);background:var(--color-nav-bg);-webkit-font-smoothing:antialiased}
+    body{display:flex;flex-direction:column;padding-top:28px;font-family:var(--font);color:var(--neutral-text-high-emphasis);background:var(--color-nav-bg);-webkit-font-smoothing:antialiased}
     button,input,select{font-family:inherit}button{cursor:pointer;border:none;background:none}
-    .demo-banner{position:relative;z-index:12000;width:100%;height:28px;display:flex;align-items:center;justify-content:center;background:#00dbff;color:#002233;font:700 12px/16px var(--font);letter-spacing:.01em;flex-shrink:0}
+    .demo-banner{position:fixed;top:0;left:0;right:0;z-index:12000;width:100%;height:28px;display:flex;align-items:center;justify-content:center;background:#00dbff;color:#002233;font:700 12px/16px var(--font);letter-spacing:.01em;flex-shrink:0}
     .layout{display:grid;grid-template-rows:64px 1fr;grid-template-columns:64px 1fr;grid-template-areas:"navbar navbar" "sidebar content";flex:1;min-height:0;height:auto;overflow:hidden}
     .navbar{grid-area:navbar;background:var(--color-nav-bg);display:flex;align-items:center;justify-content:space-between;padding:var(--size-spacing-03);height:64px;z-index:9600}
     .navbar img{max-width:none;display:block}
@@ -177,87 +177,107 @@
     .toast__content{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;padding:4px 0}
     .toast__title{font:var(--text-md-bold)}
     .toast__description{font:var(--text-sm);white-space:normal;overflow-wrap:anywhere}
-    .checkout{flex:1;min-height:0;height:auto;background:linear-gradient(180deg,#fff 0,#f5faf8 140px,#f7f9f8 100%);color:#171717;font-family:Inter,'DM Sans',sans-serif}
-    .checkout-header{display:flex;align-items:center;gap:12px;height:64px;padding:0 24px;background:#fff;border-bottom:1px solid #ebebeb}
-    .checkout-back{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#171717}
+    .checkout{flex:1;min-height:0;height:auto;background:#fff;color:#252525;font-family:Inter,'DM Sans',sans-serif}
+    .checkout-header{display:flex;align-items:center;gap:12px;height:64px;padding:0 24px;background:#fff;border-bottom:1px solid #ebebeb;box-shadow:0 1px 2px rgba(0,0,0,.05);position:sticky;top:0;z-index:5}
+    .checkout-back{width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#252525}
     .checkout-back:hover{background:#f3f3f3}
     .checkout-logo{display:flex;color:#111}
-    .checkout-main{max-width:1180px;margin:0 auto;padding:40px 48px 80px;display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:72px;align-items:start}
-    .checkout-title{font-size:24px;font-weight:600;line-height:32px;margin-bottom:28px}
-    .checkout-section+.checkout-section{margin-top:28px}
+    .checkout-main{width:min(1440px,calc(100% - 48px));margin:0 auto;padding:76px 0 80px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.9fr);gap:64px;align-items:start}
+    .checkout-col{display:flex;flex-direction:column;gap:24px;min-width:0}
+    .ck-panel,.checkout-order,.ck-card-box,.ck-info-box,.ck-success-card{background:#fafafa;border:1px solid rgba(0,0,0,.04);border-radius:14px;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+    .ck-panel{padding:24px}
+    .checkout-title{font-size:20px;font-weight:600;line-height:28px;margin:0 0 24px}
+    .checkout-section+.checkout-section{margin-top:16px}
     .checkout-section h3{font-size:16px;font-weight:600;margin-bottom:16px}
     .checkout-fields{display:flex;flex-direction:column;gap:16px}
     .checkout-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    .checkout-field{display:flex;flex-direction:column;gap:6px;min-width:0}
-    .checkout-field span{font-size:14px;font-weight:500}
-    .checkout-field input,.checkout-field select{height:36px;width:100%;padding:4px 12px;border:1px solid #e5e5e5;border-radius:8px;background:#fcfcfc;font-size:16px;line-height:24px;color:#171717;outline:none}
-    .checkout-field input::placeholder{color:#a3a3a3}
-    .checkout-phone{display:flex;align-items:center;gap:8px;height:36px;padding:4px 12px;border:1px solid #e5e5e5;border-radius:8px;background:#fcfcfc}
-    .checkout-phone input{border:0;height:28px;padding:0;background:transparent}
-    .checkout-flag{width:18px;height:18px;border-radius:50%;background:#009b3a;box-shadow:inset 0 0 0 2px #fedf00;flex-shrink:0}
-    .checkout-submit{margin-top:28px;width:100%;height:36px;border-radius:8px;background:#257c70;color:#f7f7f7;font-size:14px;font-weight:500}
+    .checkout-field{display:flex;flex-direction:column;gap:8px;min-width:0}
+    .checkout-field span{font-size:14px;font-weight:500;line-height:1}
+    .checkout-field input,.checkout-field select{height:36px;width:100%;padding:4px 12px;border:1px solid #e5e5e5;border-radius:8px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.05);font-size:14px;line-height:20px;color:#252525;outline:none}
+    .checkout-field select{appearance:none;padding-right:36px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='m6 9 6 6 6-6' stroke='%23737373' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+    .checkout-field input::placeholder{color:#8a8a8a}
+    .checkout-field input:focus,.checkout-field select:focus,.checkout-phone:focus-within{border-color:#87b0d1;box-shadow:0 0 0 3px rgba(135,176,209,.45)}
+    .checkout-phone{display:flex;align-items:center;gap:8px;height:36px;padding:4px 12px;border:1px solid #e5e5e5;border-radius:8px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+    .checkout-phone input{border:0;height:28px;padding:0;background:transparent;box-shadow:none}
+    .checkout-flag{width:16px;height:16px;flex-shrink:0;display:block}
+    .checkout-submit,.ck-copy-btn{height:36px;border:0;border-radius:8px;background:#1f4a67;color:#fafafa;font-size:14px;font-weight:500;box-shadow:0 1px 2px rgba(0,0,0,.05);cursor:pointer}
+    .checkout-submit{margin-top:16px;width:100%}
+    .ck-panel>.checkout-submit{margin-top:8px}
     .checkout-submit:disabled{opacity:.5;cursor:not-allowed}
+    .ck-copy-btn{width:auto;margin-top:12px;padding:0 16px}
     .ck-id-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
     .ck-id-head .checkout-title{margin-bottom:16px}
-    .ck-edit{display:inline-flex;align-items:center;gap:6px;color:#257c70;font-size:14px;font-weight:500}
-    .ck-id-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px 48px;margin-bottom:28px;font-size:14px;line-height:22px;color:#525252}
-    .ck-pay h2,.ck-method-title{font-size:18px;font-weight:600;margin:0 0 16px}
-    .ck-pay-group{border:1px solid #ebebeb;border-radius:12px;overflow:hidden;background:#fff}
-    .ck-pay-opt{width:100%;min-height:52px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid #ebebeb;color:#171717;font-size:14px;font-weight:500;text-align:left}
-    .ck-pay-group .ck-pay-opt{border:0;border-bottom:1px solid #ebebeb}
+    .ck-edit{display:inline-flex;align-items:center;gap:6px;color:#1f4a67;font-size:14px;font-weight:500}
+    .ck-id-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 32px;font-size:14px;line-height:20px;color:#737373}
+    .ck-id-grid p{margin:0}
+    .ck-pay h2,.ck-method-title{font-size:20px;font-weight:600;line-height:28px;margin:0 0 16px}
+    .ck-pay-group{border:1px solid #e5e5e5;border-radius:10px;overflow:hidden;background:#fff}
+    .ck-pay-opt{width:100%;min-height:52px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid #e5e5e5;color:#252525;font-size:14px;font-weight:500;text-align:left;cursor:pointer}
+    .ck-pay-group .ck-pay-opt{border:0;border-bottom:1px solid #e5e5e5;border-radius:0}
     .ck-pay-group .ck-pay-opt:last-child{border-bottom:0}
-    .ck-pay-opt--solo{margin-top:12px;border-radius:12px}
+    .ck-pay-opt--solo{margin-top:12px;border-radius:10px}
     .ck-pay-opt--pix{min-height:64px}
     .ck-pay-opt__main{display:inline-flex;align-items:center;gap:10px;min-width:0}
     .ck-pay-opt--pix .ck-pay-opt__main{align-items:flex-start}
     .ck-pay-opt--pix .ck-pay-opt__main svg{margin-top:2px;flex-shrink:0}
     .ck-pay-opt__copy{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
-    .ck-pay-opt__label{font-size:14px;font-weight:500;line-height:20px;color:#171717}
+    .ck-pay-opt__label{font-size:14px;font-weight:500;line-height:20px;color:#252525}
     .ck-pay-opt__copy small{font-size:12px;font-weight:400;line-height:16px;color:#737373}
-    .ck-powered{margin-top:28px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:#737373}
-    .ck-other{display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 12px;border:1px solid #ebebeb;border-radius:999px;background:#fff;color:#171717;font-size:14px;margin-bottom:24px}
-    .ck-info-box{border:1px solid #ebebeb;border-radius:12px;background:#fff;padding:16px 18px;font-size:14px;line-height:22px;color:#525252}
-    .ck-card-box{border:1px solid #ebebeb;border-radius:12px;background:#fff;padding:20px;display:flex;flex-direction:column;gap:16px}
-    .checkout-success{max-width:760px;margin:0 auto;padding:48px 24px 80px}
-    .ck-success-card{background:#fff;border:1px solid #ebebeb;border-radius:16px;padding:28px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+    .ck-other{display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 12px;border:1px solid #e5e5e5;border-radius:999px;background:#fff;color:#252525;font-size:14px;width:fit-content;cursor:pointer}
+    .ck-info-box{padding:16px 20px;font-size:14px;line-height:22px;color:#525252;text-align:center}
+    .ck-card-box{padding:20px;display:flex;flex-direction:column;gap:16px}
+    .checkout-success{width:min(760px,calc(100% - 48px));margin:0 auto;padding:48px 0 80px}
+    .ck-success-card{padding:28px}
     .ck-success-card h1{font-size:22px;font-weight:600;margin-bottom:8px}
     .ck-success-lead{font-size:14px;color:#525252;margin-bottom:20px}
-    .ck-summary{border:1px solid #ebebeb;border-radius:12px;padding:16px;margin-bottom:20px;font-size:14px;line-height:22px}
+    .ck-summary{border-radius:12px;padding:16px;margin-bottom:20px;font-size:14px;line-height:22px;background:#fff}
     .ck-summary strong{display:block;margin-bottom:8px}
-    .ck-pix-box{display:grid;grid-template-columns:148px 1fr;gap:20px;align-items:start;border:1px solid #ebebeb;border-radius:12px;padding:16px}
+    .ck-pix-box{display:grid;grid-template-columns:148px 1fr;gap:20px;align-items:start;border-radius:12px;padding:16px;background:#fff}
     .ck-qr{width:148px;height:148px;background:#fff}
     .ck-pix-copy p{font-size:14px;margin-bottom:8px}
-    .ck-pix-copy textarea,.ck-success-card textarea{width:100%;border:1px solid #e5e5e5;border-radius:8px;padding:10px 12px;font-size:12px;line-height:18px;resize:none;background:#fcfcfc;color:#171717}
-    .ck-copy-btn{margin-top:12px;height:36px;padding:0 16px;border-radius:8px;background:#257c70;color:#fff;font-size:14px;font-weight:500}
+    .ck-pix-copy textarea,.ck-success-card textarea{width:100%;border:1px solid #e5e5e5;border-radius:8px;padding:10px 12px;font-size:12px;line-height:18px;resize:none;background:#fff;color:#252525}
     .ck-instructions{margin-top:20px;font-size:13px;line-height:20px;color:#525252}
     .ck-instructions ol{margin:8px 0 0 18px}
     .ck-boleto-code{display:flex;align-items:stretch;height:64px;gap:2px;margin-bottom:16px}
     .ck-boleto-code span{background:#111;height:100%;display:block}
-    .checkout-order{background:#fff;border:1px solid #ebebeb;border-radius:16px;padding:28px 24px 24px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
-    .checkout-order__head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px}
-    .checkout-order__head h2{font-size:16px;font-weight:500;margin:0}
-    .checkout-order__amount{display:inline-flex;align-items:center;gap:8px;font-size:20px;font-weight:700;color:#171717}
-    .checkout-order__amount svg{color:#737373}
-    .checkout-item{display:flex;flex-direction:column;gap:4px;padding:8px 0}
-    .checkout-item__row{display:flex;justify-content:space-between;gap:16px;font-size:14px;font-weight:500}
-    .checkout-item__qty{font-size:14px;color:#737373}
-    .checkout-order__total{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:16px;border-top:1px solid #ebebeb;font-size:16px;font-weight:600}
+    .checkout-order{position:sticky;top:32px;padding:24px;display:flex;flex-direction:column;gap:24px}
+    .checkout-order h2{font-size:20px;font-weight:600;line-height:28px;margin:0}
+    .checkout-order__items{display:flex;flex-direction:column;gap:24px}
+    .checkout-item{display:flex;flex-direction:column;gap:4px}
+    .checkout-item__row{display:flex;justify-content:space-between;gap:16px;font-size:14px;font-weight:500;line-height:20px}
+    .checkout-item__desc,.checkout-item__qty{font-size:14px;line-height:20px;color:#737373}
+    .checkout-order__total{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:24px;border-top:1px solid #e5e5e5;font-size:18px;font-weight:600;line-height:28px}
     .login{min-height:100%;display:flex;align-items:center;justify-content:center;padding:40px 24px}
     .layout.is-login{grid-template-columns:1fr;grid-template-areas:"navbar" "content"}
     .layout.is-login .sidebar{display:none}
     .layout.is-login .content{border-radius:0}
+    .layout.is-suri .navbar,.layout.is-suri .content{min-width:0;max-width:100%}
     .layout.is-suri .content{background:#2418d6;padding:0;border-radius:0;display:flex}
-    .suri{width:100%;min-height:100%;display:flex;align-items:center;justify-content:center;padding:32px 24px;box-sizing:border-box;background:radial-gradient(90% 80% at 70% 45%,#3b28f2 0%,#2418d6 48%,#1a12b8 100%);color:#fff}
-    .suri-inner{width:min(100%,880px);display:flex;flex-direction:column;align-items:center}
-    .suri-hero{display:flex;align-items:center;justify-content:center;gap:clamp(28px,5vw,72px);width:100%}
-    .suri-copy{max-width:28rem}
-    .suri-brand{width:min(100%,280px);height:auto;display:block;margin:0 0 24px}
-    .suri-copy h1{margin:0 0 16px;font-size:clamp(32px,4vw,48px);line-height:1.12;letter-spacing:-.02em;max-width:14ch}
-    .suri-copy p{margin:0;max-width:46ch;font-size:clamp(14px,1.2vw,18px);line-height:1.55;color:rgba(255,255,255,.86)}
-    .suri-qr{display:block;width:min(100%,280px);flex:none}
+    .suri{width:100%;min-height:100%;display:flex;align-items:flex-start;justify-content:center;padding:var(--size-spacing-06) var(--size-spacing-05);box-sizing:border-box;background:radial-gradient(90% 80% at 70% 45%,#3b28f2 0%,#2418d6 48%,#1a12b8 100%);color:var(--neutral-text-inverse)}
+    .suri-layout{width:min(100%,1080px);display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:var(--size-spacing-06);align-items:start}
+    .suri-stories{display:flex;flex-direction:column;gap:var(--size-spacing-07,40px);min-width:0}
+    .suri-story{display:grid;grid-template-columns:minmax(0,1fr) 232px;gap:var(--size-spacing-06);align-items:center}
+    .suri-story--desk{grid-template-columns:minmax(0,1fr);align-items:stretch;gap:var(--size-spacing-04)}
+    .suri-kicker{margin:0 0 var(--size-spacing-02);font:var(--text-xs);letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+    .suri-copy h1,.suri-copy h2{margin:0;font:var(--text-xl);letter-spacing:-.01em;color:var(--neutral-text-inverse)}
+    .suri-card{position:sticky;top:var(--size-spacing-05);display:flex;flex-direction:column;align-items:center;gap:var(--size-spacing-04);padding:var(--size-spacing-05);background:var(--neutral-surface);color:var(--neutral-text-high-emphasis);border-radius:var(--border-radius-lg);box-shadow:var(--shadow-lg);text-align:center}
+    .suri-brand{width:min(100%,180px);height:auto;display:block}
+    .suri-qr{display:block;width:min(100%,200px);border-radius:var(--border-radius-md)}
+    .suri-qr:focus-visible{outline:var(--size-spacing-01) solid var(--neutral-focus-outline);outline-offset:var(--size-spacing-01)}
     .suri-qr img{width:100%;height:auto;display:block}
-    .suri-credit{margin:28px 0 0;text-align:center;color:rgba(255,255,255,.72);font:500 12px/16px var(--font)}
-    @media(max-width:800px){.suri-hero{flex-direction:column;text-align:center}.suri-brand{margin-left:auto;margin-right:auto}.suri-copy h1,.suri-copy p{margin-left:auto;margin-right:auto}}
+    .suri-card p{margin:0;font:var(--text-sm);color:var(--neutral-text-low-emphasis)}
+    .suri-card strong{font:var(--text-sm-bold);color:var(--neutral-text-high-emphasis)}
+    .device-phone{width:232px;padding:10px;border-radius:36px;background:var(--neutral-surface-inverse);box-shadow:var(--shadow-lg)}
+    .device-phone__screen{position:relative;overflow:hidden;border-radius:26px;background:#000}
+    .device-phone__screen::after{content:'';position:absolute;top:8px;left:50%;width:84px;height:18px;transform:translateX(-50%);border-radius:var(--border-radius-pill);background:#000;pointer-events:none}
+    .device-phone__screen video,.device-laptop__bezel video{display:block;width:100%;height:auto;background:#000}
+    .device-phone__screen video{aspect-ratio:720/1434;object-fit:cover}
+    .device-laptop{padding:0 18px;min-width:0}
+    .device-laptop__bezel{position:relative;border:10px solid var(--neutral-surface-inverse);border-bottom-width:14px;border-radius:var(--border-radius-lg) var(--border-radius-lg) 0 0;background:var(--neutral-surface-inverse);box-shadow:var(--shadow-lg)}
+    .device-laptop__bezel::before{content:'';position:absolute;top:-7px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:var(--border-radius-pill);background:var(--neutral-border-interactive);z-index:1}
+    .device-laptop__bezel video{aspect-ratio:1600/904;object-fit:cover;border-radius:var(--border-radius-xs)}
+    .device-laptop__base{height:14px;margin:0 -18px;border-radius:0 0 var(--border-radius-md) var(--border-radius-md);background:var(--neutral-surface-inverse);box-shadow:inset 0 1px 0 rgba(255,255,255,.16)}
+    @media(max-width:900px){.suri-layout,.suri-story{grid-template-columns:minmax(0,1fr)}.suri-card{position:static}.device-phone{justify-self:center}}
     .totvs-brand{display:flex;align-items:center;gap:6px;height:40px;padding-left:8px}
     .totvs-brand--checkout,.totvs-brand--powered{padding-left:0;height:auto}
     .totvs-brand--powered{gap:4px}
@@ -277,7 +297,7 @@
     .login-card__fields{display:flex;flex-direction:column;gap:16px}
     .login-error{font:var(--text-sm);color:#c20046}
     .login-card .tg-button{width:100%}
-    @media(max-width:1100px){.checkout-main{grid-template-columns:1fr;padding:32px 20px 64px;gap:32px}.checkout-order{margin-top:0}.ck-pix-box{grid-template-columns:1fr}}
+    @media(max-width:1100px){.checkout-main{grid-template-columns:1fr;width:min(720px,calc(100% - 32px));padding:32px 0 64px;gap:24px}.checkout-order{position:static}.ck-pix-box{grid-template-columns:1fr}}
     @media(max-width:720px){.checkout-row,.ck-id-grid{grid-template-columns:1fr}}
     @media(max-width:1280px){
       .content{padding:0 16px 16px}
@@ -435,13 +455,15 @@ function productMenuHTML(tone){
   </div>`;
 }
 function suriHTML(){
-  return `<div class="suri"><div class="suri-inner"><section class="suri-hero"><div class="suri-copy"><img class="suri-brand" src="instituto-percorre.png" alt="Instituto Percorre"><h1>Lorem ipsum</h1><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div><a class="suri-qr" href="https://wa.me/5511975019280" target="_blank" rel="noreferrer"><img src="suri-qr.png" alt="QR Code da Suri Shop no WhatsApp"></a></section><p class="suri-credit">Lorem ipsum dolor sit amet</p></div></div>`;
+  return `<div class="suri"><div class="suri-layout"><div class="suri-stories"><article class="suri-story"><div class="suri-copy"><p class="suri-kicker">Venda automatizada</p><h1>Suri + TOTVS Pay: a jornada de venda completa, automatizada com IA</h1></div><div class="device-phone"><div class="device-phone__screen"><video src="suri/venda-automatizada.mp4" poster="suri/poster-automatizada.jpg" playsinline muted autoplay loop controls aria-label="Demonstração da venda automatizada no WhatsApp da Loja Instituto Percorre"></video></div></div></article><article class="suri-story suri-story--desk"><div class="suri-copy"><p class="suri-kicker">Venda assistida</p><h2>Suri + TOTVS Pay: seu time atende, vende e recebe</h2></div><div class="device-laptop"><div class="device-laptop__bezel"><video src="suri/venda-assistida.mp4" poster="suri/poster-assistida.jpg" playsinline muted autoplay loop controls aria-label="Demonstração da venda assistida no painel da Suri"></video></div><div class="device-laptop__base" aria-hidden="true"></div></div></article></div><aside class="suri-card"><img class="suri-brand" src="instituto-percorre-mark.png" alt="Instituto Percorre"><a class="suri-qr" href="https://wa.me/5511975019280" target="_blank" rel="noreferrer"><img src="suri-qr.png" alt="QR Code da Suri Shop no WhatsApp"></a><p>Acesse o QR Code, apoie o Instituto Percorre e retire a sua compra diretamente na loja durante o <strong>Universo TOTVS</strong>!</p></aside></div></div>`;
 }
 function backIco(){return `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 18 9 12l6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`}
-function orderHTML(link,withAmount){
-  const items=link.items.map(i=>`<div class="checkout-item"><div class="checkout-item__row"><p>${i.name}</p><p>${fmt(i.unit*i.qty)}</p></div><p class="checkout-item__qty">Quantidade: ${i.qty}</p></div>`).join('');
-  const amount=withAmount?`<span class="checkout-order__amount">${fmt(link.total)}<svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m18 15-6-6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>`:'';
-  return `<aside class="checkout-order"><div class="checkout-order__head"><h2>Pedido</h2>${amount}</div>${items}<div class="checkout-order__total"><span>Total</span><span>${fmt(link.total)}</span></div></aside>`;
+function orderHTML(link){
+  const items=link.items.map((i,idx)=>{
+    const desc=i.description||(idx===0&&link.description&&link.description!==i.name?link.description:'');
+    return `<div class="checkout-item"><div class="checkout-item__row"><p>${i.name}</p><p>${fmt(i.unit*i.qty)}</p></div>${desc?`<p class="checkout-item__desc">${desc}</p>`:''}<p class="checkout-item__qty">Quantidade: ${i.qty}</p></div>`;
+  }).join('');
+  return `<aside class="checkout-order"><h2>Pedido</h2><div class="checkout-order__items">${items}</div><div class="checkout-order__total"><span>Total</span><span>${fmt(link.total)}</span></div></aside>`;
 }
 function qrHTML(){
   let cells='';
@@ -461,7 +483,6 @@ function checkoutHTML(link){
   const ident=state.ident||emptyIdent();
   const amount=fmt(link.total);
   const header=`<header class="checkout-header"><button type="button" class="checkout-back" data-act="back-pay" aria-label="Voltar">${backIco()}</button><div class="navbar-logo">${totvsMark('checkout')}${productMenuHTML('light')}</div></header>`;
-  const powered=`<p class="ck-powered">Powered by ${totvsMark('powered')}</p>`;
   const pixCode=`00020101021226580014BR.GOV.BCB.PIX0136${String(link.id).replace(/-/g,'').slice(0,32)}520400005303986540${(link.total/100).toFixed(2)}5802BR5925TOTVS PAY6009Sao Paulo62070503***6304ABCD`;
   const boletoCode='23793.38128 60007.827136 95000.063305 1 844700000'+String(link.total).padStart(8,'0');
   if(step==='pix-success'||step==='boleto-success'||step==='card-success'){
@@ -469,27 +490,40 @@ function checkoutHTML(link){
     if(step==='pix-success') body=`<section class="ck-success-card"><h1>Finalize seu pagamento via pix</h1><p class="ck-success-lead">Escaneie o QR Code ou copie o código abaixo.</p><div class="ck-summary"><strong>Resumo do pedido</strong><p>Pedido: #${link.id}</p><p>Valor total: ${amount}</p></div><div class="ck-pix-box">${qrHTML()}<div class="ck-pix-copy"><p>Esse código expira em: <strong>23:59:56</strong></p><textarea readonly rows="3">${pixCode}</textarea><button type="button" class="ck-copy-btn" data-act="copy-pix">Copiar Código</button></div></div><div class="ck-instructions"><strong>Instruções para pagamento</strong><ol><li>Abra o aplicativo do seu banco e selecione o ambiente do PIX.</li><li>Escolha a opção pagar com QR Code e escaneie o código acima ou copie e cole a chave PIX para efetuar o pagamento.</li><li>Confirme as informações e finalize a compra antes que o código expire.</li></ol></div></section>`;
     if(step==='boleto-success') body=`<section class="ck-success-card"><h1>Finalize seu pagamento via boleto</h1><p class="ck-success-lead">Copie a linha digitável ou use o código de barras abaixo.</p><div class="ck-summary"><strong>Resumo do pedido</strong><p>Pedido: #${link.id}</p><p>Valor total: ${amount}</p></div><div class="ck-boleto-code">${Array.from({length:48},(_,i)=>`<span style="width:${i%7===0?3:i%3===0?2:1}px"></span>`).join('')}</div><textarea readonly rows="2">${boletoCode}</textarea><button type="button" class="ck-copy-btn" data-act="copy-boleto">Copiar Código</button></section>`;
     if(step==='card-success') body=`<section class="ck-success-card"><h1>Pagamento aprovado</h1><p class="ck-success-lead">Recebemos o pagamento de ${amount}. O pedido já consta como pago.</p><div class="ck-summary"><strong>Resumo do pedido</strong><p>Pedido: #${link.id}</p><p>Valor total: ${amount}</p></div><button type="button" class="checkout-submit" data-act="back-pay">Voltar ao CRM</button></section>`;
-    return `<div class="checkout">${header}<main class="checkout-success">${body}${powered}</main></div>`;
+    return `<div class="checkout">${header}<main class="checkout-success">${body}</main></div>`;
   }
-  const states=['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'].map(s=>`<option ${ident.uf===s?'selected':''}>${s}</option>`).join('');
+  const states=[['AC','Acre'],['AL','Alagoas'],['AP','Amapá'],['AM','Amazonas'],['BA','Bahia'],['CE','Ceará'],['DF','Distrito Federal'],['ES','Espírito Santo'],['GO','Goiás'],['MA','Maranhão'],['MT','Mato Grosso'],['MS','Mato Grosso do Sul'],['MG','Minas Gerais'],['PA','Pará'],['PB','Paraíba'],['PR','Paraná'],['PE','Pernambuco'],['PI','Piauí'],['RJ','Rio de Janeiro'],['RN','Rio Grande do Norte'],['RS','Rio Grande do Sul'],['RO','Rondônia'],['RR','Roraima'],['SC','Santa Catarina'],['SP','São Paulo'],['SE','Sergipe'],['TO','Tocantins']].map(([uf,name])=>`<option value="${uf}" ${ident.uf===uf?'selected':''}>${name}</option>`).join('');
   let section='';
   if(step==='identify'){
-    section=`<h1 class="checkout-title">Identificação</h1>
-      <div class="checkout-section"><h3>Dados pessoais</h3><div class="checkout-fields"><label class="checkout-field"><span>Nome completo</span><input id="ck-name" placeholder="Digite seu nome completo" value="${ident.name||''}"></label><div class="checkout-row"><label class="checkout-field"><span>E-mail</span><input id="ck-email" placeholder="Digite seu e-mail" value="${ident.email||''}"></label><label class="checkout-field"><span>Telefone</span><span class="checkout-phone"><span class="checkout-flag" aria-hidden="true"></span><input id="ck-phone" placeholder="(00) 00000-0000" value="${ident.phone||''}"></span></label></div></div></div>
+    section=`<div class="ck-panel"><h1 class="checkout-title">Identificação</h1>
+      <div class="checkout-section"><h3>Dados pessoais</h3><div class="checkout-fields"><label class="checkout-field"><span>Nome completo</span><input id="ck-name" placeholder="Digite seu nome completo" value="${ident.name||''}"></label><div class="checkout-row"><label class="checkout-field"><span>E-mail</span><input id="ck-email" placeholder="Digite seu e-mail" value="${ident.email||''}"></label><label class="checkout-field"><span>Telefone</span><span class="checkout-phone"><svg class="checkout-flag" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#009b3a"/><path d="M8 3.2 13.2 8 8 12.8 2.8 8Z" fill="#fedf00"/><circle cx="8" cy="8" r="2.1" fill="#002776"/></svg><input id="ck-phone" placeholder="(00) 00000-0000" value="${ident.phone||''}"></span></label></div></div></div>
       <div class="checkout-section"><h3>Documento</h3><div class="checkout-fields"><div class="checkout-row"><label class="checkout-field"><span>País do documento</span><select><option>Brasil</option></select></label><label class="checkout-field"><span>Tipo de documento</span><select><option>CPF</option><option>CNPJ</option></select></label></div><label class="checkout-field"><span>Número do documento</span><input id="ck-doc" placeholder="000.000.000-00" value="${ident.doc||''}"></label></div></div>
       <div class="checkout-section"><h3>Endereço</h3><div class="checkout-fields"><div class="checkout-row"><label class="checkout-field"><span>País do endereço</span><select><option>Brasil</option></select></label><label class="checkout-field"><span>Código postal (CEP)</span><input id="ck-cep" placeholder="00000-000" value="${ident.cep||''}"></label></div><label class="checkout-field"><span>Rua</span><input id="ck-street" placeholder="Nome da rua" value="${ident.street||''}"></label><div class="checkout-row"><label class="checkout-field"><span>Número</span><input id="ck-number" placeholder="Ex: 123" value="${ident.number||''}"></label><label class="checkout-field"><span>Complemento (opcional)</span><input id="ck-comp" placeholder="Apto, casa, fundos, etc." value="${ident.complement||''}"></label></div><label class="checkout-field"><span>Bairro</span><input id="ck-district" placeholder="Nome do bairro" value="${ident.district||''}"></label><div class="checkout-row"><label class="checkout-field"><span>Cidade</span><input id="ck-city" placeholder="Nome da cidade" value="${ident.city||''}"></label><label class="checkout-field"><span>Estado</span><select id="ck-uf"><option value="">Selecione o estado</option>${states}</select></label></div></div></div>
-      <button type="button" class="checkout-submit" data-act="continue-ident">Continuar</button>`;
+      <button type="button" class="checkout-submit" data-act="continue-ident" disabled>Continuar</button></div>`;
   }else if(step==='method'){
-    section=`<div class="ck-id-head"><h1 class="checkout-title">Identificação</h1><button type="button" class="ck-edit" data-act="edit-ident">Editar</button></div>
-      <div class="ck-id-grid"><div><p>${dash(ident.name)}</p><p>${dash(ident.email)}</p><p>${dash(ident.phone)}</p><p>${dash(ident.doc)}</p></div><div><p>${dash([ident.street,ident.number].filter(Boolean).join(', '))}</p><p>${dash(ident.district)}</p><p>${dash([ident.city,ident.uf].filter(Boolean).join(', '))}</p><p>${dash(ident.cep)}</p></div></div>
-      <div class="ck-pay"><h2>Pagamento</h2><div class="ck-pay-group"><button type="button" class="ck-pay-opt" data-act="pay-card"><span class="ck-pay-opt__main">Cartão de crédito</span></button><button type="button" class="ck-pay-opt ck-pay-opt--pix" data-act="pay-pix"><span class="ck-pay-opt__main"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.72 1.4a1.02 1.02 0 0 0-1.44 0L1.4 7.28a1.02 1.02 0 0 0 0 1.44l5.88 5.88a1.02 1.02 0 0 0 1.44 0l5.88-5.88a1.02 1.02 0 0 0 0-1.44L8.72 1.4Z"/></svg><span class="ck-pay-opt__copy"><span class="ck-pay-opt__label">Pix</span><small>Aprovação em instantes</small></span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div><button type="button" class="ck-pay-opt ck-pay-opt--solo" data-act="pay-boleto"><span class="ck-pay-opt__main">Boleto</span></button></div>${powered}`;
+    const summary=`<div class="ck-panel"><div class="ck-id-head"><h1 class="checkout-title">Identificação</h1><button type="button" class="ck-edit" data-act="edit-ident"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20h4l10.5-10.5a2.12 2.12 0 0 0-3-3L5 17v3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg> Editar</button></div><div class="ck-id-grid"><div><p>${dash(ident.name)}</p><p>${dash(ident.email)}</p><p>${dash(ident.phone)}</p><p>${dash(ident.doc)}</p></div><div><p>${dash([ident.street,ident.number].filter(Boolean).join(', '))}</p><p>${dash(ident.district)}</p><p>${dash([ident.city,ident.uf].filter(Boolean).join(', '))}</p><p>${dash(ident.cep)}</p></div></div></div>`;
+    const chev='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    const cardIco='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.6"/></svg>';
+    const pixIco='<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8.72 1.4a1.02 1.02 0 0 0-1.44 0L1.4 7.28a1.02 1.02 0 0 0 0 1.44l5.88 5.88a1.02 1.02 0 0 0 1.44 0l5.88-5.88a1.02 1.02 0 0 0 0-1.44L8.72 1.4Z"/></svg>';
+    const boletoIco='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7v10M7 7v10M9 7v10M12 7v10M16 7v10M20 7v10" stroke="currentColor" stroke-width="1.7"/></svg>';
+    section=`${summary}<div class="ck-pay"><h2>Pagamento</h2><div class="ck-pay-group"><button type="button" class="ck-pay-opt" data-act="pay-card"><span class="ck-pay-opt__main">${cardIco} Cartão de crédito</span>${chev}</button><button type="button" class="ck-pay-opt ck-pay-opt--pix" data-act="pay-pix"><span class="ck-pay-opt__main">${pixIco}<span class="ck-pay-opt__copy"><span class="ck-pay-opt__label">Pix</span><small>Aprovação em instantes</small></span></span>${chev}</button></div><button type="button" class="ck-pay-opt ck-pay-opt--solo" data-act="pay-boleto"><span class="ck-pay-opt__main">${boletoIco} Boleto</span>${chev}</button></div>`;
   }else{
-    const back=`<button type="button" class="ck-other" data-act="other-method">${backIco()} Pagar com outro método</button>`;
-    if(step==='pix') section=`${back}<h2 class="ck-method-title">Pix</h2><div class="ck-info-box">Para concluir com Pix, finalize o pedido. O QR Code para pagamento será exibido na próxima tela.</div><button type="button" class="checkout-submit" data-act="pix-success">Pagar ${amount}</button>${powered}`;
-    if(step==='boleto') section=`${back}<h2 class="ck-method-title">Boleto</h2><div class="ck-info-box">Para gerar o boleto, finalize o pedido. Ele será exibido na próxima tela.</div><button type="button" class="checkout-submit" data-act="boleto-success">Pagar ${amount}</button>${powered}`;
-    if(step==='card') section=`${back}<h2 class="ck-method-title">Cartão de crédito</h2><div class="ck-card-box"><label class="checkout-field"><span>Número do cartão</span><input placeholder="0000 0000 0000 0000"></label><div class="checkout-row"><label class="checkout-field"><span>Data de expiração</span><input placeholder="MM/AA"></label><label class="checkout-field"><span>CVV</span><input placeholder="3 dígitos"></label></div><div class="checkout-row"><label class="checkout-field"><span>Nome do titular do cartão</span><input placeholder="Nome no cartão"></label><label class="checkout-field"><span>Parcelamento</span><select><option>1x de ${amount}</option></select></label></div></div><button type="button" class="checkout-submit" data-act="card-success">Pagar ${amount}</button>${powered}`;
+    const summary=`<div class="ck-panel"><div class="ck-id-head"><h1 class="checkout-title">Identificação</h1><button type="button" class="ck-edit" data-act="edit-ident"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20h4l10.5-10.5a2.12 2.12 0 0 0-3-3L5 17v3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg> Editar</button></div><div class="ck-id-grid"><div><p>${dash(ident.name)}</p><p>${dash(ident.email)}</p><p>${dash(ident.phone)}</p><p>${dash(ident.doc)}</p></div><div><p>${dash([ident.street,ident.number].filter(Boolean).join(', '))}</p><p>${dash(ident.district)}</p><p>${dash([ident.city,ident.uf].filter(Boolean).join(', '))}</p><p>${dash(ident.cep)}</p></div></div></div>`;
+    const back=`${summary}<button type="button" class="ck-other" data-act="other-method">${backIco()} Pagar com outro método</button>`;
+    if(step==='pix') section=`${back}<h2 class="ck-method-title">Pix</h2><div class="ck-info-box">Para concluir com Pix, finalize o pedido. O QR Code para pagamento será exibido na próxima tela.</div><button type="button" class="checkout-submit" data-act="pix-success">Pagar ${amount}</button>`;
+    if(step==='boleto') section=`${back}<h2 class="ck-method-title">Boleto</h2><div class="ck-info-box">Para gerar o boleto, finalize o pedido. Ele será exibido na próxima tela.</div><button type="button" class="checkout-submit" data-act="boleto-success">Pagar ${amount}</button>`;
+    if(step==='card') section=`${back}<h2 class="ck-method-title">Cartão de crédito</h2><div class="ck-card-box"><label class="checkout-field"><span>Número do cartão</span><input placeholder="0000 0000 0000 0000"></label><div class="checkout-row"><label class="checkout-field"><span>Data de expiração</span><input placeholder="MM/AA"></label><label class="checkout-field"><span>CVV</span><input placeholder="3 dígitos"></label></div><div class="checkout-row"><label class="checkout-field"><span>Nome do titular do cartão</span><input placeholder="Nome no cartão"></label><label class="checkout-field"><span>Parcelamento</span><select><option>1x de ${amount}</option></select></label></div></div><button type="button" class="checkout-submit" data-act="card-success">Pagar ${amount}</button>`;
   }
-  return `<div class="checkout">${header}<main class="checkout-main"><section>${section}</section>${orderHTML(link,step==='identify')}</main></div>`;
+  return `<div class="checkout">${header}<main class="checkout-main"><section class="checkout-col">${section}</section>${orderHTML(link)}</main></div>`;
+}
+function syncCheckout(){
+  const btn=document.querySelector('[data-act="continue-ident"]');
+  if(!btn) return;
+  const ids=['ck-name','ck-email','ck-phone','ck-doc','ck-cep','ck-street','ck-number','ck-district','ck-city','ck-uf'];
+  const ready=()=>ids.every(id=>{const el=document.getElementById(id);return el&&String(el.value||'').trim()});
+  const paint=()=>{captureIdent();btn.disabled=!ready()};
+  ids.forEach(id=>{const el=document.getElementById(id);if(!el)return;el.oninput=paint;el.onchange=paint});
+  btn.disabled=!ready();
 }
 function setChrome(mode){
   const root=document.getElementById('crm-root');
@@ -553,7 +587,7 @@ function render(){
   }
   setChrome('crm');
   if(state.view==='checkout'&&state.checkout){
-    crm.hidden=true; ck.hidden=false; document.body.style.background='#f6f7f6';
+    crm.hidden=true; ck.hidden=false; document.body.style.background='#fff';
     document.getElementById('overlay-root').innerHTML='';
     ck.innerHTML=checkoutHTML(state.checkout);
     ck.querySelectorAll('[data-act]').forEach(el=>{

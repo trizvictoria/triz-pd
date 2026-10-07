@@ -19,11 +19,19 @@
   overflow: hidden;
 }
 
+.layout-totvs.is-suri .navbar,
 .layout-totvs.is-suri .content {
-  background: #2418d6;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.layout-totvs.is-suri .content {
+  background: #2a1cdd;
   padding: 0;
   border-radius: 0;
-  display: flex;
+  display: block;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .totvs-brand {

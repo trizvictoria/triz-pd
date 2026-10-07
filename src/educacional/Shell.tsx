@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { goExperience, type ExperienceTarget } from '../lib/experience'
 
 function Icon({ d, size = 22 }: { d: string; size?: number }) {
   return (
@@ -34,6 +35,20 @@ const JOURNEYS: Array<{ id: EduJourney; label: string }> = [
   { id: 'all', label: 'Todos os meios de pagamento' },
 ]
 
+const EXPERIENCES: Array<{ type: 'item'; id: ExperienceTarget; label: string } | { type: 'sep'; id: string } | { type: 'soon'; id: string; label: string }> = [
+  { type: 'item', id: 'totvs-credenciamento', label: 'TOTVS Pay - Credenciamento' },
+  { type: 'item', id: 'totvs-dashboard', label: 'TOTVS Pay - Dashboard' },
+  { type: 'sep', id: 'sep-1' },
+  { type: 'item', id: 'rd', label: 'RD Vendas' },
+  { type: 'sep', id: 'sep-2' },
+  { type: 'item', id: 'construcao', label: 'Construção' },
+  { type: 'item', id: 'educacional', label: 'Educacional' },
+  { type: 'sep', id: 'sep-3' },
+  { type: 'item', id: 'suri', label: 'Suri Shop' },
+  { type: 'sep', id: 'sep-4' },
+  { type: 'item', id: 'checkout', label: 'Checkout' },
+]
+
 export function PortalShell({
   journey,
   onJourney,
@@ -44,15 +59,22 @@ export function PortalShell({
   children: ReactNode
 }) {
   const [open, setOpen] = useState(false)
+  const [productsOpen, setProductsOpen] = useState(false)
   const menu = useRef<HTMLDivElement>(null)
+  const products = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!open) return
+    if (!open && !productsOpen) return
     function onDoc(event: MouseEvent) {
-      if (menu.current && !menu.current.contains(event.target as Node)) setOpen(false)
+      const target = event.target as Node
+      if (open && menu.current && !menu.current.contains(target)) setOpen(false)
+      if (productsOpen && products.current && !products.current.contains(target)) setProductsOpen(false)
     }
     function onKey(event: KeyboardEvent) {
-      if (event.key === 'Escape') setOpen(false)
+      if (event.key === 'Escape') {
+        setOpen(false)
+        setProductsOpen(false)
+      }
     }
     document.addEventListener('mousedown', onDoc)
     document.addEventListener('keydown', onKey)
@@ -60,13 +82,55 @@ export function PortalShell({
       document.removeEventListener('mousedown', onDoc)
       document.removeEventListener('keydown', onKey)
     }
-  }, [open])
+  }, [open, productsOpen])
 
   return (
     <div className="edu">
       <header className="edu-header">
         <div className="edu-topbar">
-          <span>Grupo Pensando Juntos</span>
+          <div className="edu-experiences" ref={products}>
+            <span>Grupo Pensando Juntos</span>
+            <button
+              type="button"
+              className="edu-experiences__toggle"
+              data-edu-experiences=""
+              aria-haspopup="menu"
+              aria-expanded={productsOpen}
+              aria-label="Trocar produto"
+              onClick={() => setProductsOpen((value) => !value)}
+            >
+              <Icon d={ICONS.caret} size={16} />
+            </button>
+            {productsOpen ? (
+              <div className="edu-experiences__menu" role="menu">
+                <p className="edu-experiences__label">Produtos</p>
+                {EXPERIENCES.map((item) => {
+                  if (item.type === 'sep') return <span className="edu-experiences__sep" key={item.id} />
+                  if (item.type === 'soon') {
+                    return (
+                      <button key={item.id} type="button" className="edu-experiences__item is-disabled" disabled role="menuitem">
+                        {item.label}
+                      </button>
+                    )
+                  }
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      className="edu-experiences__item"
+                      role="menuitem"
+                      onClick={() => {
+                        setProductsOpen(false)
+                        goExperience(item.id)
+                      }}
+                    >
+                      {item.label}
+                    </button>
+                  )
+                })}
+              </div>
+            ) : null}
+          </div>
           <span className="edu-topbar__rule" />
           <span>DIREITO</span>
           <span className="edu-topbar__rule" />

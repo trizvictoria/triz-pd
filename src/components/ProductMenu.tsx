@@ -6,17 +6,17 @@ const ITEMS: Array<
   | { type: 'soon'; id: string; label: string }
   | { type: 'sep'; id: string }
 > = [
-  { type: 'item', id: 'rd', label: 'RD Vendas' },
   { type: 'item', id: 'totvs-credenciamento', label: 'TOTVS Pay - Credenciamento' },
   { type: 'item', id: 'totvs-dashboard', label: 'TOTVS Pay - Dashboard' },
-  { type: 'item', id: 'educacional', label: 'educacional' },
-  { type: 'item', id: 'suri', label: 'Suri Shop' },
   { type: 'sep', id: 'sep-1' },
-  { type: 'item', id: 'construcao', label: 'Construção' },
+  { type: 'item', id: 'rd', label: 'RD Vendas' },
   { type: 'sep', id: 'sep-2' },
-  { type: 'item', id: 'checkout', label: 'Checkout' },
+  { type: 'item', id: 'construcao', label: 'Construção' },
+  { type: 'item', id: 'educacional', label: 'Educacional' },
   { type: 'sep', id: 'sep-3' },
-  { type: 'soon', id: 'early', label: 'Early adopters' },
+  { type: 'item', id: 'suri', label: 'Suri Shop' },
+  { type: 'sep', id: 'sep-4' },
+  { type: 'item', id: 'checkout', label: 'Checkout' },
 ]
 
 export function ProductMenu({ tone = 'navy' }: { tone?: 'navy' | 'light' }) {

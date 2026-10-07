@@ -125,9 +125,9 @@
 
 .drawer {
   position: fixed;
-  top: 0;
+  top: var(--demo-banner-h, 28px);
   right: 0;
-  height: 100vh;
+  height: calc(100vh - var(--demo-banner-h, 28px));
   width: min(600px, 100%);
   background: var(--neutral-surface);
   box-shadow: var(--shadow-md);

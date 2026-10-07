@@ -14,7 +14,10 @@
 
 .advance-root {
   position: fixed;
-  inset: 0;
+  top: var(--demo-banner-h, 28px);
+  right: 0;
+  bottom: 0;
+  left: 0;
   z-index: 2;
   overflow: auto;
   background: #f3f5f7;
@@ -102,7 +105,7 @@
 
 .evt-side {
   position: fixed;
-  top: 49px;
+  top: calc(49px + var(--demo-banner-h, 28px));
   bottom: 0;
   width: 56px;
   border: 1px solid #d7dbdc;
@@ -1587,7 +1590,7 @@ button.evt-check.is-on:hover {
 
 .adv-toast {
   position: fixed;
-  top: 16px;
+  top: calc(16px + var(--demo-banner-h, 28px));
   left: 50%;
   transform: translateX(-50%);
   z-index: 70;

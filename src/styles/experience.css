@@ -1,8 +1,15 @@
+:root {
+  --demo-banner-h: 28px;
+}
+
 .demo-banner {
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 12000;
   width: 100%;
-  height: 28px;
+  height: var(--demo-banner-h);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,61 +99,137 @@
 .suri {
   width: 100%;
   min-height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 32px 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) min(483px, 34vw);
+  align-items: start;
   box-sizing: border-box;
-  background: radial-gradient(90% 80% at 70% 45%, #3b28f2 0%, #2418d6 48%, #1a12b8 100%);
+  background: #2a1cdd;
+  color: var(--neutral-text-inverse);
+}
+
+.suri-main {
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  padding: 72px 40px 96px;
+}
+
+.suri-stories {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 128px;
+  width: min(100%, 728px);
+  min-width: 0;
+  box-sizing: border-box;
+  padding-left: 48px;
+}
+
+.suri-rail {
+  position: absolute;
+  top: 6px;
+  bottom: 0;
+  left: 0;
+  width: 14px;
+}
+
+.suri-rail__line {
+  position: absolute;
+  top: 14px;
+  bottom: 0;
+  left: 6px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.suri-rail__fill {
+  display: block;
+  width: 100%;
+  height: 0;
+  background: #00b63a;
+}
+
+.suri-rail__dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  z-index: 1;
+}
+
+.suri-rail__dot.is-on {
+  background: #00b63a;
+  box-shadow: 0 0 0 7px rgba(4, 250, 16, 0.29);
+}
+
+.suri-story {
+  display: grid;
+  grid-template-columns: minmax(220px, 380px) 228px;
+  gap: 56px;
+  align-items: center;
+  justify-content: start;
+}
+
+.suri-story--desk {
+  grid-template-columns: minmax(0, 680px);
+  align-items: stretch;
+  gap: 28px;
+}
+
+.suri-kicker {
+  margin: 0 0 12px;
+  font: 700 16px/1.5 var(--font);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
   color: #fff;
 }
 
-.suri-inner {
-  width: min(100%, 880px);
+.suri-copy h1,
+.suri-copy h2 {
+  margin: 0;
+  font: 700 36px/46px var(--font);
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.suri-panel {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.suri-hero {
-  display: flex;
-  align-items: center;
   justify-content: center;
-  gap: clamp(28px, 5vw, 72px);
+  gap: 20px;
   width: 100%;
-}
-
-.suri-copy {
-  max-width: 28rem;
+  height: calc(100vh - 92px);
+  padding: 40px 48px 56px;
+  box-sizing: border-box;
+  background: var(--neutral-surface);
+  color: var(--neutral-text-high-emphasis);
+  border-radius: 0;
+  text-align: center;
 }
 
 .suri-brand {
-  width: min(100%, 280px);
+  width: min(100%, 210px);
   height: auto;
   display: block;
-  margin: 0 0 24px;
-}
-
-.suri-copy h1 {
-  margin: 0 0 16px;
-  font-size: clamp(32px, 4vw, 48px);
-  line-height: 1.12;
-  letter-spacing: -0.02em;
-  max-width: 14ch;
-}
-
-.suri-copy p {
-  margin: 0;
-  max-width: 46ch;
-  font-size: clamp(14px, 1.2vw, 18px);
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.86);
 }
 
 .suri-qr {
   display: block;
-  width: min(100%, 280px);
-  flex: none;
+  width: min(100%, 220px);
+  border-radius: var(--border-radius-md);
+}
+
+.suri-qr:focus-visible {
+  outline: var(--size-spacing-01) solid var(--neutral-focus-outline);
+  outline-offset: var(--size-spacing-01);
 }
 
 .suri-qr img {
@@ -155,27 +238,138 @@
   display: block;
 }
 
-.suri-credit {
-  margin: 28px 0 0;
-  text-align: center;
-  color: rgba(255, 255, 255, 0.72);
-  font: 500 12px / 16px var(--font);
+.suri-panel p {
+  margin: 0;
+  max-width: 28ch;
+  font: var(--text-sm);
+  color: var(--neutral-text-low-emphasis);
 }
 
-@media (max-width: 800px) {
-  .suri-hero {
-    flex-direction: column;
-    text-align: center;
+.suri-panel strong {
+  font: var(--text-sm-bold);
+  color: var(--neutral-text-high-emphasis);
+}
+
+.suri-screen {
+  position: relative;
+  overflow: hidden;
+  background: #111;
+}
+
+.suri-screen video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #111;
+}
+
+.suri-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  padding: 0 0 0 4px;
+  border-radius: var(--border-radius-pill);
+  background: #fff;
+  color: var(--neutral-text-high-emphasis);
+  box-shadow: var(--shadow-lg);
+  transform: translate(-50%, -50%);
+}
+
+.suri-play:focus-visible {
+  outline: var(--size-spacing-01) solid var(--neutral-focus-outline);
+  outline-offset: var(--size-spacing-01);
+}
+
+.device-phone {
+  width: 228px;
+  padding: 8px;
+  border-radius: 32px;
+  background: #111;
+  box-shadow: var(--shadow-lg);
+}
+
+.device-phone .suri-screen {
+  border-radius: 24px;
+  aspect-ratio: 720 / 1434;
+}
+
+.device-laptop {
+  width: min(100%, 656px);
+  min-width: 0;
+}
+
+.device-laptop__bezel {
+  position: relative;
+  padding: 10px 10px 0;
+  border-radius: 16px 16px 0 0;
+  background: #1c1c1e;
+  box-shadow: var(--shadow-lg);
+}
+
+.device-laptop__bezel::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  margin-left: -3px;
+  border-radius: var(--border-radius-pill);
+  background: #3a3a3c;
+}
+
+.device-laptop .suri-screen {
+  border-radius: 4px 4px 0 0;
+  aspect-ratio: 1600 / 904;
+}
+
+.device-laptop__base {
+  height: 16px;
+  border-radius: 0 0 12px 12px;
+  background: #1c1c1e;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+@media (max-width: 960px) {
+  .suri {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .suri-brand {
-    margin-left: auto;
-    margin-right: auto;
+  .suri-main {
+    padding: 48px 24px 80px;
+  }
+
+  .suri-stories {
+    width: min(100%, 640px);
+  }
+
+  .suri-panel {
+    position: static;
+    height: auto;
+    max-height: none;
+    border-radius: 0;
+    order: -1;
+  }
+
+  .suri-story,
+  .suri-story--desk {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .device-phone,
+  .device-laptop {
+    justify-self: center;
   }
 
   .suri-copy h1,
-  .suri-copy p {
-    margin-left: auto;
-    margin-right: auto;
+  .suri-copy h2 {
+    font-size: 28px;
+    line-height: 36px;
   }
 }

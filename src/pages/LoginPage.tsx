@@ -6,12 +6,12 @@ import type { ExperienceTarget } from '../lib/experience'
 export type LoginProduct = ExperienceTarget
 
 const PRODUCTS: { value: LoginProduct; label: string }[] = [
-  { value: 'rd', label: 'RD Vendas' },
   { value: 'totvs-credenciamento', label: 'TOTVS Pay - Credenciamento' },
   { value: 'totvs-dashboard', label: 'TOTVS Pay - Dashboard' },
-  { value: 'educacional', label: 'educacional' },
-  { value: 'suri', label: 'Suri Shop' },
+  { value: 'rd', label: 'RD Vendas' },
   { value: 'construcao', label: 'Construção' },
+  { value: 'educacional', label: 'Educacional' },
+  { value: 'suri', label: 'Suri Shop' },
   { value: 'checkout', label: 'Checkout' },
 ]
 

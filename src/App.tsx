@@ -27,8 +27,12 @@ function isEducacionalPath() {
 }
 
 export default function App() {
-  if (isEducacionalPath()) return <EducacionalApp />
-  return <MainApp />
+  return (
+    <>
+      <DemoBanner />
+      {isEducacionalPath() ? <EducacionalApp /> : <MainApp />}
+    </>
+  )
 }
 
 function MainApp() {
@@ -58,10 +62,7 @@ function MainApp() {
   }
 
   const shell = (children: ReactNode, variant: 'login' | 'suri' = 'login') => (
-    <>
-      <DemoBanner />
-      <TotvsShell variant={variant}>{children}</TotvsShell>
-    </>
+    <TotvsShell variant={variant}>{children}</TotvsShell>
   )
 
   if (hash === 'suri') return shell(<SuriShopPage />, 'suri')
@@ -71,19 +72,16 @@ function MainApp() {
   }
 
   return (
-    <>
-      <DemoBanner />
-      <Suspense
-        fallback={
-          <TotvsShell>
-            <div className="login">
-              <p className="login-error">Carregando…</p>
-            </div>
-          </TotvsShell>
-        }
-      >
-        <AuthedApp hash={hash} />
-      </Suspense>
-    </>
+    <Suspense
+      fallback={
+        <TotvsShell>
+          <div className="login">
+            <p className="login-error">Carregando…</p>
+          </div>
+        </TotvsShell>
+      }
+    >
+      <AuthedApp hash={hash} />
+    </Suspense>
   )
 }
