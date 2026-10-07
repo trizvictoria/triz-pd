@@ -29,9 +29,10 @@
 
 .lp-rates__grid {
   display: grid;
-  grid-template-columns: minmax(160px, 307px) minmax(0, 707px) minmax(160px, 307px);
+  grid-template-columns: minmax(160px, 307px) minmax(0, 535px) minmax(160px, 307px);
   align-items: center;
   gap: 0;
+  justify-content: center;
 }
 
 .lp-rate {
@@ -48,8 +49,8 @@
 
 .lp-rate--card {
   z-index: 2;
-  padding: 32px 32px 28px;
-  min-height: 428px;
+  padding: 32px;
+  min-height: 352px;
   margin: 0 -12px;
 }
 
@@ -70,31 +71,8 @@
   display: block;
 }
 
-.lp-rate__head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
+.lp-rate--card .lp-rate__icon {
   margin: 0 0 16px;
-}
-
-.lp-rate__tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  background: #005a87;
-  color: #fff;
-  border-radius: 4px;
-  padding: 4px 8px;
-  font: 900 12px/1.3 "DM Sans", sans-serif;
-  letter-spacing: -0.12px;
-  white-space: nowrap;
-}
-
-.lp-rate__tag img {
-  width: 16px;
-  height: 16px;
-  display: block;
 }
 
 .lp-rate__name {
@@ -119,8 +97,9 @@
 }
 
 .lp-rate__installments {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
   gap: 8px;
   margin-top: 18px;
 }
@@ -129,12 +108,37 @@
   background: #fff;
   border-radius: 16px;
   min-height: 68px;
-  padding: 10px 8px;
+  flex: 0 0 98px;
+  padding: 16px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+.lp-rate__inst--note {
+  flex: 1 1 200px;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 8px;
+  text-align: left;
+}
+
+.lp-rate__inst--note img {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.lp-rate__inst--note p {
+  margin: 0;
+  font: 700 14px/1.4 "DM Sans", sans-serif;
+  letter-spacing: -0.14px;
+  color: #002233;
 }
 
 .lp-rate__inst span {
@@ -279,10 +283,6 @@
     order: -1;
   }
 
-  .lp-rate__installments {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-
   .lp-puzzle {
     height: auto;
     aspect-ratio: 4 / 3;
@@ -300,12 +300,13 @@
 }
 
 @media (max-width: 720px) {
-  .lp-rate__installments {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+  .lp-rate__inst {
+    flex: 1 1 calc(50% - 4px);
+    min-width: 98px;
   }
 
-  .lp-rate__tag {
-    white-space: normal;
+  .lp-rate__inst--note {
+    flex: 1 1 100%;
   }
 
   .lp-platform {
