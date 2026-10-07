@@ -692,7 +692,7 @@ function act(a,id){
   if(a==='create'&&canCreate()){
     const now=new Date(); const t=total();
     const items=state.draft.specify?state.draft.items.map(i=>({...i})):[{id:uid(),name:state.draft.description,unit:t,qty:1}];
-    const link={id:uid(),name:state.draft.name,description:state.draft.description,total:t,items,url:'https://link.malga.io/'+uid(),created:now,expires:new Date(now.getTime()+31*86400000),status:'ativo'};
+    const link={id:uid(),name:state.draft.name,description:state.draft.description,total:t,items,url:'https://totvspay.com/l/'+uid().slice(0,8),created:now,expires:new Date(now.getTime()+31*86400000),status:'ativo'};
     state.links=state.links.map((l,i)=>({...l,status:PREV[i%PREV.length]}));
     state.links.unshift(link);
     state.active=link;

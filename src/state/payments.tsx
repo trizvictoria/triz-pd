@@ -180,7 +180,7 @@ export function PaymentProvider({ children }: { children: ReactNode }) {
         totalCents,
         specifyItems: draft.specifyItems,
         items,
-        url: `https://link.malga.io/${crypto.randomUUID()}`,
+        url: `https://totvspay.com/l/${crypto.randomUUID().slice(0, 8)}`,
         createdAt,
         expiresAt: addDays(createdAt, 31),
         status: 'ativo',
