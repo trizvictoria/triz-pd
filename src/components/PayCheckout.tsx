@@ -260,9 +260,6 @@ export function PayCheckout({
   const cardAmount = formatBRL(selectedPlan.charged)
   const pixCode = `00020101021226580014BR.GOV.BCB.PIX0136${(orderId ?? 'totvspay').replace(/-/g, '').slice(0, 32)}520400005303986540${(totalCents / 100).toFixed(2)}5802BR5925TOTVS PAY6009Sao Paulo62070503***6304ABCD`
   const boletoCode = '23793.38128 60007.827136 95000.063305 1 844700000' + String(totalCents).padStart(8, '0')
-  const identReady = [ident.name, ident.email, ident.phone, ident.doc, ident.cep, ident.street, ident.number, ident.district, ident.city, ident.uf].every(
-    (value) => value.trim(),
-  )
   const cardReady = [card.number, card.expiry, card.cvv, card.name].every((value) => value.trim())
   const layout = step === 'pix-success' || step === 'boleto-success' || step === 'card-success'
 
@@ -271,7 +268,6 @@ export function PayCheckout({
   }
 
   function continueIdent() {
-    if (!identReady) return
     setStep('method')
     onPhase?.('method')
   }
@@ -566,7 +562,7 @@ export function PayCheckout({
                     </div>
                   </div>
                 </div>
-                <button type="button" className="checkout-submit" disabled={!identReady} onClick={continueIdent}>
+                <button type="button" className="checkout-submit" onClick={continueIdent}>
                   Continuar
                 </button>
               </div>

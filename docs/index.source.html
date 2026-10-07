@@ -563,7 +563,7 @@ function checkoutHTML(link){
       <div class="checkout-section"><h3>Dados pessoais</h3><div class="checkout-fields"><label class="checkout-field"><span>Nome completo</span><input id="ck-name" placeholder="Digite seu nome completo" value="${ident.name||''}"></label><div class="checkout-row"><label class="checkout-field"><span>E-mail</span><input id="ck-email" placeholder="Digite seu e-mail" value="${ident.email||''}"></label><label class="checkout-field"><span>Telefone</span><span class="checkout-phone"><svg class="checkout-flag" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#009b3a"/><path d="M8 3.2 13.2 8 8 12.8 2.8 8Z" fill="#fedf00"/><circle cx="8" cy="8" r="2.1" fill="#002776"/></svg><input id="ck-phone" placeholder="(00) 00000-0000" value="${ident.phone||''}"></span></label></div></div></div>
       <div class="checkout-section"><h3>Documento</h3><div class="checkout-fields"><div class="checkout-row"><label class="checkout-field"><span>País do documento</span><select><option>Brasil</option></select></label><label class="checkout-field"><span>Tipo de documento</span><select><option>CPF</option><option>CNPJ</option></select></label></div><label class="checkout-field"><span>Número do documento</span><input id="ck-doc" placeholder="000.000.000-00" value="${ident.doc||''}"></label></div></div>
       <div class="checkout-section"><h3>Endereço</h3><div class="checkout-fields"><div class="checkout-row"><label class="checkout-field"><span>País do endereço</span><select><option>Brasil</option></select></label><label class="checkout-field"><span>Código postal (CEP)</span><input id="ck-cep" placeholder="00000-000" value="${ident.cep||''}"></label></div><label class="checkout-field"><span>Rua</span><input id="ck-street" placeholder="Nome da rua" value="${ident.street||''}"></label><div class="checkout-row"><label class="checkout-field"><span>Número</span><input id="ck-number" placeholder="Ex: 123" value="${ident.number||''}"></label><label class="checkout-field"><span>Complemento (opcional)</span><input id="ck-comp" placeholder="Apto, casa, fundos, etc." value="${ident.complement||''}"></label></div><label class="checkout-field"><span>Bairro</span><input id="ck-district" placeholder="Nome do bairro" value="${ident.district||''}"></label><div class="checkout-row"><label class="checkout-field"><span>Cidade</span><input id="ck-city" placeholder="Nome da cidade" value="${ident.city||''}"></label><label class="checkout-field"><span>Estado</span><select id="ck-uf"><option value="">Selecione o estado</option>${states}</select></label></div></div></div>
-      <button type="button" class="checkout-submit" data-act="continue-ident" disabled>Continuar</button></div>`;
+      <button type="button" class="checkout-submit" data-act="continue-ident">Continuar</button></div>`;
   }else if(step==='method'){
     const summary=`<div class="ck-panel"><div class="ck-id-head"><h1 class="checkout-title">Identificação</h1><button type="button" class="ck-edit" data-act="edit-ident"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 20h4l10.5-10.5a2.12 2.12 0 0 0-3-3L5 17v3Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg> Editar</button></div><div class="ck-id-grid"><div><p>${dash(ident.name)}</p><p>${dash(ident.email)}</p><p>${dash(ident.phone)}</p><p>${dash(ident.doc)}</p></div><div><p>${dash([ident.street,ident.number].filter(Boolean).join(', '))}</p><p>${dash(ident.district)}</p><p>${dash([ident.city,ident.uf].filter(Boolean).join(', '))}</p><p>${dash(ident.cep)}</p></div></div></div>`;
     const chev='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 6 6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -590,13 +590,6 @@ function syncCheckout(){
       if(plan) pay.textContent='Pagar '+fmt(plan.charged);
     };
   }
-  const btn=document.querySelector('[data-act="continue-ident"]');
-  if(!btn) return;
-  const ids=['ck-name','ck-email','ck-phone','ck-doc','ck-cep','ck-street','ck-number','ck-district','ck-city','ck-uf'];
-  const ready=()=>ids.every(id=>{const el=document.getElementById(id);return el&&String(el.value||'').trim()});
-  const paint=()=>{captureIdent();btn.disabled=!ready()};
-  ids.forEach(id=>{const el=document.getElementById(id);if(!el)return;el.oninput=paint;el.onchange=paint});
-  btn.disabled=!ready();
 }
 function setChrome(mode){
   const root=document.getElementById('crm-root');
