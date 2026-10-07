@@ -31,8 +31,13 @@ export function CheckoutPage() {
   const totalCents = Math.round(amount * 100)
   const phase: CheckoutPhase = paid ? 'paid' : etapa === 'pagamento' ? 'method' : 'identify'
 
-  function leave() {
-    navigate('/proposta')
+  function returnToProposal() {
+    navigate('/proposta', { state: { view: 'share' } })
+  }
+
+  function completePayment() {
+    markPaid()
+    returnToProposal()
   }
 
   return (
@@ -49,20 +54,14 @@ export function CheckoutPage() {
         ]}
         totalCents={totalCents}
         orderId={PROPOSAL.number}
-        onLeave={leave}
+        onLeave={returnToProposal}
         leaveLabel="Voltar para a proposta"
         initialIdent={PREFILL}
         phase={cancelled ? 'identify' : phase}
         onPhase={(next) => {
           if (next === 'method') setParams({ etapa: 'pagamento' })
-          if (next === 'paid') {
-            markPaid()
-            setParams({ etapa: 'confirmado' })
-          }
+          if (next === 'paid') completePayment()
           if (next === 'identify') setParams({})
-        }}
-        onPaid={() => {
-          markPaid()
         }}
         unavailable={
           cancelled
