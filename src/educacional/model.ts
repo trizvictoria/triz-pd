@@ -197,5 +197,5 @@ export function installmentSplitLabel(amountCents: number, plan: Installment) {
 }
 
 export function emptyPayment(): CardPayment {
-  return { amountCents: 0, installment: '', cvv: '', cpf: '' }
+  return { amountCents: 0, installment: '1', cvv: '', cpf: '' }
 }

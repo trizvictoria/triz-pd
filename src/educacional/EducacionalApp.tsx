@@ -5,6 +5,7 @@ import {
   INITIAL_CARDS,
   INSTALLMENT_PLANS,
   MAX_CARDS,
+  MIN_CENTS,
   PROFILE,
   STATES,
   TUITIONS,
@@ -402,7 +403,7 @@ export function EducacionalApp() {
       const next = { ...current }
       selectedCards.forEach((card) => {
         const previous = next[card.id] || emptyPayment()
-        next[card.id] = { ...previous, amountCents: 0 }
+        next[card.id] = { ...emptyPayment(), ...previous, amountCents: 0, installment: previous.installment || '1' }
       })
       return next
     })
@@ -431,6 +432,34 @@ export function EducacionalApp() {
     if (!slot) return
     const amount = isLastAmount ? remainder : slot.kind === 'pix' ? pixCents : payments[slot.card.id]?.amountCents || 0
     setError('')
+    const followingCount = slots.length - amountIndex - 1
+    if (amount < MIN_CENTS) {
+      setError(
+        isLastAmount
+          ? 'O valor restante deve ser de pelo menos R$ 5,00. Ajuste os valores anteriores.'
+          : 'Informe o valor para este método de pagamento (mínimo R$ 5,00).',
+      )
+      return
+    }
+    if (!isLastAmount && followingCount > 0) {
+      const remainingAfter = payCents - enteredBefore - amount
+      const minNeeded = MIN_CENTS * followingCount
+      if (remainingAfter < minNeeded) {
+        setError(
+          followingCount === 1
+            ? `Deixe pelo menos ${formatBRL(MIN_CENTS)} para o próximo pagamento.`
+            : `Deixe pelo menos ${formatBRL(minNeeded)} para os próximos pagamentos.`,
+        )
+        return
+      }
+    }
+    if (slot.kind === 'card') {
+      const payment = payments[slot.card.id] || emptyPayment()
+      if (!payment.installment) {
+        setError('Escolha o parcelamento.')
+        return
+      }
+    }
     if (slot.kind === 'pix') setPixCents(amount)
     else {
       const payment = payments[slot.card.id] || emptyPayment()
@@ -928,15 +957,14 @@ export function EducacionalApp() {
                     <span>Parcelamento</span>
                     <select
                       className="edu-input edu-select"
-                      value={payment.installment}
+                      value={payment.installment || '1'}
                       onChange={(event) =>
                         setPayments((current) => ({
                           ...current,
-                          [payingCard.id]: { ...(current[payingCard.id] || emptyPayment()), installment: event.target.value as Installment | '' },
+                          [payingCard.id]: { ...(current[payingCard.id] || emptyPayment()), installment: event.target.value as Installment },
                         }))
                       }
                     >
-                      <option value="">Escolha o parcelamento</option>
                       {INSTALLMENT_PLANS.map((plan) => (
                         <option key={plan} value={plan}>
                           {installmentLabel(isLastAmount ? remainder : payment.amountCents || 0, plan)}
