@@ -44,18 +44,18 @@
 
   function goProduct(id) {
     if (id === 'interesse') {
-      location.assign('https://materiais.rdstation.com/2026-totvspay-material-lp-hr-totvs-pay-universo')
+      location.assign(experienceRoot() + 'interesse/')
       return
     }
     var root = experienceRoot()
     if (id === 'educacional') return
     if (id === 'totvs' || id === 'totvs-credenciamento') {
-      try { sessionStorage.setItem('totvs-onboarded', '0'); sessionStorage.setItem('pd-ai-auth', 'e9e69fcd703e857da732ae1e8c0d839920a24cb3407cc98440c04a4c7b62545d') } catch (e) {}
-      location.assign(root + 'totvs/credenciamento')
+      try { sessionStorage.setItem('totvs-onboarded', '0') } catch (e) {}
+      location.assign(root + 'totvs/')
       return
     }
     if (id === 'totvs-dashboard') {
-      try { sessionStorage.setItem('totvs-onboarded', '1'); sessionStorage.setItem('pd-ai-auth', 'e9e69fcd703e857da732ae1e8c0d839920a24cb3407cc98440c04a4c7b62545d') } catch (e) {}
+      try { sessionStorage.setItem('totvs-onboarded', '1') } catch (e) {}
       location.assign(root + 'totvs/dashboard')
       return
     }
@@ -63,7 +63,7 @@
     else if (id === 'winthor') location.assign(root + 'winthor/')
     else if (id === 'suri') location.assign(root + '#suri')
     else if (id === 'checkout') location.assign(root + 'construcao/checkout/')
-    else location.assign(root + '#deal')
+    else location.assign(root)
   }
 
   function copy() {
