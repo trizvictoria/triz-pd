@@ -23,6 +23,12 @@
             sessionStorage.removeItem(PASS_KEY)
           }
           if (sessionStorage.getItem(KEY) !== PASS) {
+            try {
+              var returnPath = location.pathname + location.search + location.hash
+              if (returnPath.indexOf('/totvs') !== -1) {
+                sessionStorage.setItem('spa-path', returnPath)
+              }
+            } catch (e) {}
             location.replace('/triz-pd/')
             return
           }

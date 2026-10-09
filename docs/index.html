@@ -370,7 +370,8 @@ function goProduct(id){
   if(id==='interesse'){location.assign('https://materiais.rdstation.com/2026-totvspay-material-lp-hr-totvs-pay-universo');return}
   if(window.__pdNavigate && (id==='rd'||id==='suri'||id==='checkout')){window.__pdNavigate(id);return}
   const root=experienceRoot();
-  if(id==='totvs'||id==='totvs-credenciamento'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/');return}
+  if(id==='totvs-credenciamento'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/credenciamento');return}
+  if(id==='totvs'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/');return}
   if(id==='totvs-dashboard'){try{sessionStorage.setItem('totvs-onboarded','1')}catch(e){}location.assign(root+'totvs/dashboard');return}
   if(id==='educacional'){location.assign(root+'educacional/');return}
   if(id==='construcao'){location.assign(root+'construcao/');return}
@@ -409,7 +410,8 @@ async function unlock(){
   if(!ok){state.error='Usuário ou senha inválidos';renderLogin();return}
   rememberSession(state.pass);
   const root=experienceRoot();
-  if(state.product==='totvs'||state.product==='totvs-credenciamento'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/');return}
+  if(state.product==='totvs-credenciamento'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/credenciamento');return}
+  if(state.product==='totvs'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/');return}
   if(state.product==='totvs-dashboard'){try{sessionStorage.setItem('totvs-onboarded','1')}catch(e){}location.assign(root+'totvs/dashboard');return}
   if(state.product==='educacional'){location.assign(root+'educacional/');return}
   if(state.product==='construcao'){location.assign(root+'construcao/');return}
