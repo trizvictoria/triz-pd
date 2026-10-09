@@ -30,9 +30,10 @@ import {
   type SavedCard,
   type Tuition,
 } from './model'
+import { PortalPaymentModals, type PortalFlow } from './PortalPaymentModals'
 import './educacional.css'
 
-type Step = 'statement' | 'methods' | 'card' | 'amount' | 'review' | 'cardReview' | 'pixReview' | 'pixPay' | 'done'
+type Step = 'statement' | 'methods' | 'card' | 'amount' | 'review' | 'cardReview' | 'pixPay' | 'done'
 
 function BrandIcon({ brand, large = false }: { brand: SavedCard['brand'] | 'add'; large?: boolean }) {
   const file = brand === 'visa' ? 'icon-visa.svg' : brand === 'mastercard' ? 'icon-mastercard.svg' : 'icon-add-card.svg'
@@ -205,22 +206,38 @@ export function EducacionalApp() {
   const [selected, setSelected] = useState<string[]>([])
   const [pixOn, setPixOn] = useState(false)
   const [pixCents, setPixCents] = useState(0)
-  const [pixEntry, setPixEntry] = useState<'statement' | 'methods'>('statement')
   const [payments, setPayments] = useState<Record<string, CardPayment>>({})
   const [amountIndex, setAmountIndex] = useState(0)
   const [cardStep, setCardStep] = useState<0 | 1 | 2>(0)
   const [draft, setDraft] = useState<CardDraft>(EMPTY_DRAFT)
   const [error, setError] = useState('')
-  const [offer, setOffer] = useState<'pix' | 'mix' | 'boleto' | null>(null)
+  const [offer, setOffer] = useState<'mix' | null>(null)
+  const [portalFlow, setPortalFlow] = useState<PortalFlow | null>(null)
+  const [portalToast, setPortalToast] = useState<string | null>(null)
+  const [boletoMenuOpen, setBoletoMenuOpen] = useState(false)
 
   useEffect(() => {
-    if (!offer) return
+    if (!offer && !portalFlow) return
     function onKey(event: KeyboardEvent) {
-      if (event.key === 'Escape') setOffer(null)
+      if (event.key !== 'Escape') return
+      setOffer(null)
+      setPortalFlow(null)
+      setPortalToast(null)
     }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
-  }, [offer])
+  }, [offer, portalFlow])
+
+  useEffect(() => {
+    if (!boletoMenuOpen) return
+    function onPointer(event: MouseEvent) {
+      const target = event.target
+      if (!(target instanceof Element)) return
+      if (!target.closest('.edu-boleto-split')) setBoletoMenuOpen(false)
+    }
+    document.addEventListener('click', onPointer)
+    return () => document.removeEventListener('click', onPointer)
+  }, [boletoMenuOpen])
 
   const selectedTuitions = TUITIONS.filter((item) => tuitionIds.includes(item.id))
   const payCents = selectedTuitions.reduce((sum, item) => sum + item.cents, 0)
@@ -281,6 +298,25 @@ export function EducacionalApp() {
     setPayMode('combine')
     setError('')
     setOffer(null)
+    setPortalFlow(null)
+    setPortalToast(null)
+    setBoletoMenuOpen(false)
+  }
+
+  function closePortalFlow() {
+    setPortalFlow(null)
+    setPortalToast(null)
+  }
+
+  function finishPortalFlow() {
+    closePortalFlow()
+    setStep('statement')
+  }
+
+  function startBoleto(kind: 'boleto' | 'barcode') {
+    if (!canPay) return
+    setBoletoMenuOpen(false)
+    setPortalFlow({ kind, stage: 'summary' })
   }
 
   function openCards() {
@@ -304,15 +340,13 @@ export function EducacionalApp() {
     setPayMode('card')
     setSelected([])
     setPixOn(true)
-    setPixEntry('statement')
-    setStep('pixReview')
+    setPortalFlow({ kind: 'pix', stage: 'summary' })
   }
 
   function continueMethods() {
     setError('')
     if (payMode === 'card' && pixOn && selectedCards.length === 0) {
-      setPixEntry('methods')
-      setStep('pixReview')
+      setPortalFlow({ kind: 'pix', stage: 'summary' })
       return
     }
     const single = payMode === 'card' && selectedCards.length + (pixOn ? 1 : 0) <= 1
@@ -355,7 +389,12 @@ export function EducacionalApp() {
       }))
     }
     if (nextIndex >= slots.length) {
-      setStep(comboPix ? 'pixPay' : 'review')
+      if (comboPix) {
+        setPortalFlow({ kind: 'pix', stage: 'pay' })
+        setStep('pixPay')
+        return
+      }
+      setStep('review')
       return
     }
     setAmountIndex(nextIndex)
@@ -458,9 +497,9 @@ export function EducacionalApp() {
               <b>{formatBRL(payCents)}</b>
             </p>
             {journey === 'all' ? (
-              <button type="button" className="edu-btn" onClick={() => setOffer('pix')} disabled={!canPay}>
+              <button type="button" className="edu-btn" onClick={openPix} disabled={!canPay}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="M12 3.5 14.2 8.2 19.2 9l-3.6 3.5.9 5-4.5-2.4L7.5 17.5l.9-5L4.8 9l5-.8L12 3.5Z" fill="#fff" />
+                  <path d="M7 7h3.2v3.2H7V7Zm6.8 0H17v3.2h-3.2V7ZM7 13.8h3.2V17H7v-3.2Zm6.8 0H17V17h-3.2v-3.2Z" fill="#fff" />
                 </svg>
                 Pix
               </button>
@@ -480,15 +519,33 @@ export function EducacionalApp() {
               Cartão
             </button>
             {journey === 'all' ? (
-              <button type="button" className="edu-btn edu-btn--ghost" onClick={() => setOffer('boleto')} disabled={!canPay}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="M6 6h1.4v12H6V6Zm2.4 0H10v12H8.4V6Zm2.6 0h2.2v12h-2.2V6Zm3.2 0H16v12h-1.8V6Zm2.6 0H20v12h-1.8V6Z" fill="currentColor" />
-                </svg>
-                Boleto
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="M7 10h10l-5 6-5-6Z" fill="currentColor" />
-                </svg>
-              </button>
+              <div className="edu-boleto-split">
+                <button
+                  type="button"
+                  className="edu-btn edu-btn--ghost"
+                  disabled={!canPay}
+                  aria-expanded={boletoMenuOpen}
+                  onClick={() => setBoletoMenuOpen((open) => !open)}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M6 6h1.4v12H6V6Zm2.4 0H10v12H8.4V6Zm2.6 0h2.2v12h-2.2V6Zm3.2 0H16v12h-1.8V6Zm2.6 0H20v12h-1.8V6Z" fill="currentColor" />
+                  </svg>
+                  Boleto
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M7 10h10l-5 6-5-6Z" fill="currentColor" />
+                  </svg>
+                </button>
+                {boletoMenuOpen ? (
+                  <div className="edu-boleto-menu" role="menu">
+                    <button type="button" role="menuitem" onClick={() => startBoleto('boleto')}>
+                      Gerar boleto
+                    </button>
+                    <button type="button" role="menuitem" onClick={() => startBoleto('barcode')}>
+                      Gerar código de barras
+                    </button>
+                  </div>
+                ) : null}
+              </div>
             ) : null}
           </div>
         </div>
@@ -886,105 +943,18 @@ export function EducacionalApp() {
     )
   }
 
-  if (step === 'pixReview') {
-    content = (
-      <>
-        <h1 className="edu-title">Revise seu pagamento</h1>
-        <p className="edu-lead">Confira os detalhes da divisão do valor e confirme as formas de pagamento antes de finalizar a transação.</p>
-        <BackLink onClick={() => setStep(pixEntry === 'statement' ? 'statement' : 'methods')}>Voltar para formas de pagamento</BackLink>
-        <div className="edu-layout">
-          <div className="edu-col">
-            <section className="edu-card">
-              <h2>Resumo de Pagamento</h2>
-              <div className="edu-payline">
-                <span className="edu-payline__id">
-                  <span className="edu-pix" aria-hidden>
-                    PIX
-                  </span>
-                  Pix
-                </span>
-                <span>{formatBRL(payCents)}</span>
-              </div>
-            </section>
-            <Primary onClick={() => setStep('pixPay')}>Efetuar pagamento</Primary>
-          </div>
-          <LaunchSummary totalCents={payCents} tuitions={selectedTuitions} />
-        </div>
-      </>
-    )
-  }
-
   if (step === 'pixPay') {
-    const chargeBits = selectedCards.map((card) => {
-      const payment = payments[card.id]
-      const cents = payment?.amountCents || 0
-      const detail = payment?.installment ? installmentLabel(cents, payment.installment as Installment) : formatBRL(cents)
-      return `${cardLabel(card)} (${detail})`
-    })
-    const chargeCopy =
-      chargeBits.length <= 1
-        ? `Ao pagar este QR Code, o valor será descontado no cartão ${chargeBits[0] || 'selecionado'}.`
-        : `Ao pagar este QR Code, os valores serão descontados nos cartões ${chargeBits.slice(0, -1).join(', ')} e ${chargeBits[chargeBits.length - 1]}.`
     content = (
       <>
-        <h1 className="edu-title">Confirme seu pagamento pix</h1>
-        <p className="edu-lead">
-          {comboPix
-            ? `Escaneie o QR Code ou use o Pix Copia e Cola. Ao pagar o Pix, o valor restante é descontado no${selectedCards.length > 1 ? 's cartões' : ' cartão'}.`
-            : 'Escaneie o QR Code ou use o Pix Copia e Cola no aplicativo do seu banco para concluir.'}
-        </p>
         <BackLink
           onClick={() => {
-            if (comboPix) {
-              setAmountIndex(Math.max(slots.length - 1, 0))
-              setStep('amount')
-              return
-            }
-            setStep('pixReview')
+            closePortalFlow()
+            setAmountIndex(Math.max(slots.length - 1, 0))
+            setStep('amount')
           }}
         >
-          {comboPix ? 'Voltar para a divisão do pagamento' : 'Voltar para formas de pagamento'}
+          Voltar para a divisão do pagamento
         </BackLink>
-        <section className="edu-card edu-pixpay">
-          <h2>Pagamento por Pix</h2>
-          <div className="edu-pixnote">
-            {comboPix ? <p className="edu-pixcharge">{chargeCopy}</p> : null}
-            <p>O pagamento por Pix deve ser efetuado por meio do QR Code ou pela chave Pix clicando no botão “Pix copia e cola”.</p>
-            <p>
-              Esta chave <strong>expira em 1 hora.</strong> Após este período, é necessário gerar uma nova chave para pagamento.
-            </p>
-            <p>A baixa do título será processada após a confirmação do banco. Por favor, aguarde a atualização do pagamento</p>
-          </div>
-          <div className="edu-pixpay__row">
-            <div className="edu-qrbox">
-              <img src={eduAsset('pix-qr.png')} alt="QR Code do Pix" width={194} height={200} />
-            </div>
-            <div className="edu-pixpay__side">
-              <p>Valor a ser pago por Pix</p>
-              <strong>{comboPix ? formatBRL(pixCents) : formatBRL(payCents)}</strong>
-              <button
-                type="button"
-                className="edu-btn"
-                onClick={() => {
-                  const payload = '00020126580014BR.GOV.BCB.PIX0136educacional-pensando-juntos5204000053039865406100.005802BR5913PENSANDO JUNTOS6009SAO PAULO62070503***6304ABCD'
-                  void navigator.clipboard?.writeText(payload)
-                  setStep('done')
-                }}
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="M8 8.5h8.5V17H8V8.5Zm1.6-3h8.9V15h-1.4V7.1H9.6V5.5Z" fill="#fff" />
-                </svg>
-                Pix copia e cola
-              </button>
-              <a className="edu-btn edu-btn--ghost" href={eduAsset('pix-qr.png')} download="pix-qr.png">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="M12 4.5v9.2l2.8-2.8 1.2 1.2L12 16.6 7.9 12.1l1.2-1.2 2.9 2.8V4.5H12ZM6 18.2h12V20H6v-1.8Z" fill="currentColor" />
-                </svg>
-                Salvar imagem
-              </a>
-            </div>
-          </div>
-        </section>
       </>
     )
   }
@@ -1091,11 +1061,56 @@ export function EducacionalApp() {
     )
   }
 
-  const offerTitle = offer === 'pix' ? 'Pix' : offer === 'mix' ? 'Combinar pagamentos' : 'Boleto'
+  const comboChargeBits = selectedCards.map((card) => {
+    const payment = payments[card.id]
+    const cents = payment?.amountCents || 0
+    const detail = payment?.installment ? installmentLabel(cents, payment.installment as Installment) : formatBRL(cents)
+    return `${cardLabel(card)} (${detail})`
+  })
+  const comboChargeCopy =
+    comboChargeBits.length <= 1
+      ? `Ao pagar este QR Code, o valor será descontado no cartão ${comboChargeBits[0] || 'selecionado'}.`
+      : `Ao pagar este QR Code, os valores serão descontados nos cartões ${comboChargeBits.slice(0, -1).join(', ')} e ${comboChargeBits[comboChargeBits.length - 1]}.`
 
   return (
     <PortalShell journey={journey} onJourney={chooseJourney}>
       {content}
+      {portalFlow ? (
+        <PortalPaymentModals
+          flow={portalFlow}
+          tuitions={selectedTuitions}
+          payCents={payCents}
+          pixCents={pixCents}
+          comboPix={comboPix && portalFlow.kind === 'pix'}
+          comboChargeCopy={comboChargeCopy}
+          toast={portalToast}
+          onToast={setPortalToast}
+          onClose={() => {
+            if (portalFlow.stage === 'pay' && portalFlow.kind === 'pix' && step === 'pixPay') {
+              closePortalFlow()
+              setAmountIndex(Math.max(slots.length - 1, 0))
+              setStep('amount')
+              return
+            }
+            closePortalFlow()
+          }}
+          onFlow={setPortalFlow}
+          onFinish={finishPortalFlow}
+          onPayBack={() => {
+            if (step === 'pixPay') {
+              closePortalFlow()
+              setAmountIndex(Math.max(slots.length - 1, 0))
+              setStep('amount')
+              return
+            }
+            if (portalFlow?.stage === 'pay') {
+              setPortalFlow({ kind: portalFlow.kind, stage: 'summary' })
+              return
+            }
+            closePortalFlow()
+          }}
+        />
+      ) : null}
       {offer ? (
         <div className="edu-modal-layer" onClick={() => setOffer(null)}>
           <section
@@ -1105,7 +1120,7 @@ export function EducacionalApp() {
             aria-labelledby="edu-offer-title"
             onClick={(event) => event.stopPropagation()}
           >
-            <h2 id="edu-offer-title">{offerTitle}</h2>
+            <h2 id="edu-offer-title">Combinar pagamentos</h2>
             <p>
               Esse é um método de pagamento oferecido pela Techfin e será futuramente oferecido pela TOTVS Pay. Você pode escolher isso na sua negociação.
             </p>
@@ -1115,10 +1130,8 @@ export function EducacionalApp() {
               </Primary>
               <Primary
                 onClick={() => {
-                  const next = offer
                   setOffer(null)
-                  if (next === 'pix') openPix()
-                  if (next === 'mix') openMix()
+                  openMix()
                 }}
               >
                 Continuar
