@@ -1,0 +1,19 @@
+PROTÓTIPO NAVEGÁVEL — ADIANTAMENTO
+
+Abra index.html com dois cliques. Funciona localmente, sem internet e sem instalação.
+Para apresentar, maximize o navegador e use F11 para tela cheia.
+
+Roteiro:
+1. Clique em Adiantamento na tela da proposta.
+2. Digite o valor (por exemplo, 8.000,00) e escolha a data de vencimento.
+3. Clique em Gerar link de pagamento.
+4. Confira o valor e a data informados. Role dentro do modal para ver os componentes e o cancelamento.
+5. Clique em Cancelar adiantamento e confirme. Também é possível gerar um novo link.
+6. Feche e reabra Adiantamento para recuperar os dados.
+
+Para recomeçar, clique no ícone circular no canto inferior esquerdo da página.
+
+Este é um protótipo para apresentação: nenhum pagamento é processado e nenhuma mensagem é enviada.
+O link e o QR Code são demonstrativos. A aplicação em componente é uma simulação visual.
+Os saldos dos componentes do modal seguem as imagens fornecidas, que apresentam valores diferentes da tabela da proposta.
+Os dados são mantidos apenas neste navegador, quando o armazenamento local está disponível.

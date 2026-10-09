@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:construcao": "VITE_ADVANCE_ONLY=true vite",
+    "dev:construcao": "npx --yes serve construcao-evento -l 5173",
     "build": "tsc --noEmit && vite build",
-    "build:construcao": "VITE_ADVANCE_ONLY=true vite build",
+    "build:construcao": "node scripts/sync-construcao-evento.cjs",
     "preview": "vite preview",
     "pack:docs": "node scripts/pack-docs.cjs"
   },
