@@ -59,7 +59,7 @@
     else if (id === 'educacional') location.assign(root + 'educacional/')
     else if (id === 'suri') location.assign(root + '#suri')
     else if (id === 'checkout') location.assign(root + 'construcao/checkout/')
-    else location.assign(root)
+    else location.assign(root + '#deal')
   }
 
   function host() {

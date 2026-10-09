@@ -17,9 +17,12 @@ export function experienceRoot() {
   return base.endsWith('/') ? base : `${base}/`
 }
 
+const TOTVS_GATE = 'e9e69fcd703e857da732ae1e8c0d839920a24cb3407cc98440c04a4c7b62545d'
+
 function markTotvsOnboarded(onboarded: boolean) {
   try {
     sessionStorage.setItem('totvs-onboarded', onboarded ? '1' : '0')
+    sessionStorage.setItem('pd-ai-auth', TOTVS_GATE)
   } catch {
     /* ignore */
   }
@@ -67,7 +70,8 @@ export function goExperience(target: ExperienceTarget) {
   const here = window.location.pathname.replace(/\/+$/, '')
   const home = urls.rd.replace(/\/+$/, '')
   if (here !== home && !here.endsWith(home)) {
-    window.location.assign(target === 'rd' ? urls.rd : target === 'suri' ? urls.suri : urls.checkout)
+    const next = target === 'rd' ? `${urls.rd}#deal` : target === 'suri' ? urls.suri : urls.checkout
+    window.location.assign(next)
     return
   }
   if (target === 'rd') {

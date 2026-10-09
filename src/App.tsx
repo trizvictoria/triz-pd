@@ -1,12 +1,10 @@
-import { lazy, Suspense, useEffect, useState, type ReactNode } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
 import { DemoBanner } from './components/DemoBanner'
 import { TotvsShell } from './layout/TotvsShell'
-import { readAuthSession, writeAuthSession } from './lib/auth'
 import { AdvanceApp } from './pages/advance/AdvanceApp'
-import { LoginPage, type LoginProduct } from './pages/LoginPage'
-import { SuriShopPage } from './pages/SuriShopPage'
+import { ExperienceHub } from './pages/ExperienceHub'
+import { TotemPage } from './pages/TotemPage'
 import { EducacionalApp } from './educacional/EducacionalApp'
-import { goExperience } from './lib/experience'
 import { TotvsPayLanding } from './pages/TotvsPayLanding'
 
 const AuthedApp = lazy(() => import('./pages/AuthedApp'))
@@ -31,53 +29,32 @@ function isLandingPath() {
   return /\/interesse(?:\/|$)/.test(window.location.pathname)
 }
 
+function isGateHash(hash: string) {
+  return hash === '' || hash === 'inicio' || hash === 'experiencias'
+}
+
 export default function App() {
+  const hash = useHash()
   if (isLandingPath()) return <TotvsPayLanding />
 
   return (
     <>
-      <DemoBanner />
-      {isEducacionalPath() ? <EducacionalApp /> : <MainApp />}
+      {isEducacionalPath() || !isGateHash(hash) ? <DemoBanner /> : null}
+      {isEducacionalPath() ? <EducacionalApp /> : <MainApp hash={hash} />}
     </>
   )
 }
 
-function MainApp() {
-  const [authed, setAuthed] = useState(() => readAuthSession())
-  const hash = useHash()
-
+function MainApp({ hash }: { hash: string }) {
   if (import.meta.env.VITE_ADVANCE_ONLY === 'true') {
     return <AdvanceApp />
   }
 
-  function handleLogin(product: LoginProduct, password: string) {
-    writeAuthSession(true, password)
-    if (
-      product === 'totvs' ||
-      product === 'totvs-credenciamento' ||
-      product === 'totvs-dashboard' ||
-      product === 'construcao' ||
-      product === 'educacional' ||
-      product === 'winthor'
-    ) {
-      goExperience(product)
-      return
-    }
-    if (product === 'suri' || product === 'checkout') {
-      window.location.hash = product
-    }
-    setAuthed(true)
+  if (hash === '' || hash === 'inicio') {
+    return <TotemPage onStart={() => { window.location.hash = 'experiencias' }} />
   }
 
-  const shell = (children: ReactNode, variant: 'login' | 'suri' = 'login') => (
-    <TotvsShell variant={variant}>{children}</TotvsShell>
-  )
-
-  if (hash === 'suri') return shell(<SuriShopPage />, 'suri')
-
-  if (!authed) {
-    return shell(<LoginPage onSuccess={handleLogin} />)
-  }
+  if (hash === 'experiencias') return <ExperienceHub />
 
   return (
     <Suspense

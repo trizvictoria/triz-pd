@@ -52,7 +52,7 @@
     else if (id === 'winthor') location.assign(root + 'winthor/')
     else if (id === 'suri') location.assign(root + '#suri')
     else if (id === 'checkout') location.assign(root + '#checkout')
-    else location.assign(root)
+    else location.assign(root + '#deal')
   }
 
   function host() {

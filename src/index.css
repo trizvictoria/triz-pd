@@ -3,6 +3,7 @@
 @import './styles/ui.css';
 @import './styles/login.css';
 @import './styles/experience.css';
+@import './styles/totem.css';
 
 *,
 *::before,
