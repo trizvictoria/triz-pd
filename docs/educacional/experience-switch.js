@@ -44,7 +44,7 @@
 
   function goProduct(id) {
     if (id === 'interesse') {
-      location.assign('https://materiais.rdstation.com/2026-totvspay-material-lp-hr-totvs-pay-universo')
+      location.assign(experienceRoot() + 'interesse/')
       return
     }
     var root = experienceRoot()

@@ -804,7 +804,7 @@ function act(a,id){
   if(a==='copy-link'){const l=state.links.find(x=>x.id===id); if(l) copyLink(l.url)}
 }
 window.__pdNavigate=function(id){
-  if(id==='interesse'){location.assign('https://materiais.rdstation.com/2026-totvspay-material-lp-hr-totvs-pay-universo');return}
+  if(id==='interesse'){const p=location.pathname;const i=p.search(new RegExp('/(totvs|construcao|educacional|winthor)(?:/|$)'));const root=i>=0?p.slice(0,i)+'/':(p.endsWith('/')?p:p.replace(/[^/]+$/,''));location.assign(root+'interesse/');return}
   if(id==='checkout'){
     openDemoCheckout();
     history.replaceState(null,'','#checkout');
