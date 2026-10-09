@@ -1,15 +1,18 @@
 (function () {
   var STYLE =
+    '#pd-product-switch-host{position:relative;z-index:12001;display:inline-flex;align-items:center;vertical-align:middle;flex-shrink:0}' +
     '#pd-product-switch-host .product-switch{position:relative;display:inline-flex;align-items:center}' +
     '#pd-product-switch-host .product-switch__toggle{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:0;border-radius:8px;padding:0;margin:0;background:transparent;color:#00558b;cursor:pointer}' +
     '#pd-product-switch-host .product-switch__toggle:hover,#pd-product-switch-host .product-switch__toggle[aria-expanded="true"]{background:rgba(0,85,139,.12)}' +
     '#pd-product-switch-host .product-switch__toggle svg{width:18px!important;height:18px!important;display:block!important;fill:none!important;stroke:currentColor!important;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important}' +
-    '#pd-product-switch-host .product-switch__menu{position:absolute;top:calc(100% + 8px);left:0;min-width:280px;padding:12px 0;background:#001927;border-radius:8px;box-shadow:0 12px 24px rgba(0,34,51,.28);z-index:12001}' +
+    '#pd-product-switch-host .product-switch__menu{position:absolute;top:calc(100% + 8px);left:0;min-width:280px;padding:12px 0;background:#001927;border-radius:8px;box-shadow:0 12px 24px rgba(0,34,51,.28);z-index:12002}' +
     '#pd-product-switch-host .product-switch__label{padding:4px 16px 8px;color:rgba(255,255,255,.55);font:700 11px/14px "DM Sans",system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase}' +
     '#pd-product-switch-host .product-switch__item{display:block;width:100%;padding:8px 16px;color:#fff;font:500 14px/20px "DM Sans",system-ui,sans-serif;text-align:left;background:transparent;border:0;cursor:pointer}' +
     '#pd-product-switch-host .product-switch__item:hover:not(:disabled){background:rgba(255,255,255,.08)}' +
     '#pd-product-switch-host .product-switch__item.is-disabled,#pd-product-switch-host .product-switch__item:disabled{color:rgba(255,255,255,.42);cursor:default}' +
-    '#pd-product-switch-host .product-switch__sep{display:block;height:1px;margin:8px 12px;background:rgba(255,255,255,.12)}'
+    '#pd-product-switch-host .product-switch__sep{display:block;height:1px;margin:8px 12px;background:rgba(255,255,255,.12)}' +
+    '.checkout-header #pd-product-switch-host{margin-left:2px}' +
+    '.brand-wrap #pd-product-switch-host{margin-left:0}'
 
   var MENU =
     '<div class="product-switch">' +
@@ -55,12 +58,35 @@
     else location.assign(root)
   }
 
-  function host() {
-    return document.getElementById('pd-product-switch-host')
+  function brandAnchor() {
+    return (
+      document.querySelector('.brand-wrap') ||
+      document.querySelector('.navbar-logo.evt-brand') ||
+      document.querySelector('.checkout-header .evt-brand') ||
+      document.querySelector('.evt-brand') ||
+      document.querySelector('.brand') ||
+      document.querySelector('.wa-logo')
+    )
+  }
+
+  function ensureHost() {
+    var host = document.getElementById('pd-product-switch-host')
+    if (host) return host
+    var brand = brandAnchor()
+    if (!brand || brand.id === 'pd-product-switch-host') return null
+    host = document.createElement('span')
+    host.id = 'pd-product-switch-host'
+    if (brand.id === 'pd-product-switch-host') return brand
+    if (brand.classList && brand.classList.contains('brand-wrap')) {
+      brand.appendChild(host)
+    } else {
+      brand.insertAdjacentElement('afterend', host)
+    }
+    return host
   }
 
   function mount() {
-    var el = host()
+    var el = ensureHost()
     if (!el) return
     if (el.getAttribute('data-ready') !== '1') {
       el.innerHTML = MENU
@@ -114,6 +140,9 @@
     if (event.key === 'Escape') closeAll()
   })
 
+  var observer = new MutationObserver(mount)
+  observer.observe(document.documentElement, { childList: true, subtree: true })
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount)
   else mount()
+  setInterval(mount, 400)
 })()
