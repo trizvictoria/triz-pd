@@ -57,35 +57,33 @@ export function ProductMenu({ tone = 'navy' }: { tone?: 'navy' | 'light' }) {
           />
         </svg>
       </button>
-      {open ? (
-        <div className="product-switch__menu" role="menu">
-          <p className="product-switch__label">Produtos</p>
-          {ITEMS.map((item) => {
-            if (item.type === 'sep') return <span className="product-switch__sep" key={item.id} />
-            if (item.type === 'soon') {
-              return (
-                <button key={item.id} type="button" className="product-switch__item is-disabled" disabled role="menuitem">
-                  {item.label}
-                </button>
-              )
-            }
+      <div className="product-switch__menu" role="menu" hidden={!open}>
+        <p className="product-switch__label">Produtos</p>
+        {ITEMS.map((item) => {
+          if (item.type === 'sep') return <span className="product-switch__sep" key={item.id} />
+          if (item.type === 'soon') {
             return (
-              <button
-                key={item.id}
-                type="button"
-                className="product-switch__item"
-                role="menuitem"
-                onClick={() => {
-                  setOpen(false)
-                  goExperience(item.id)
-                }}
-              >
+              <button key={item.id} type="button" className="product-switch__item is-disabled" disabled role="menuitem">
                 {item.label}
               </button>
             )
-          })}
-        </div>
-      ) : null}
+          }
+          return (
+            <button
+              key={item.id}
+              type="button"
+              className="product-switch__item"
+              role="menuitem"
+              onClick={() => {
+                setOpen(false)
+                goExperience(item.id)
+              }}
+            >
+              {item.label}
+            </button>
+          )
+        })}
+      </div>
     </div>
   )
 }
