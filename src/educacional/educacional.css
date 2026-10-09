@@ -827,6 +827,26 @@
   gap: 8px;
 }
 
+.edu-review-row__id > span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.edu-review-row__meta {
+  display: block;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #69697c;
+  font-weight: 400;
+}
+
+.edu-review-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
 .edu-review-row__tools {
   display: flex;
   align-items: center;

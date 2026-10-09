@@ -15,6 +15,7 @@ import {
   emptyPayment,
   formatBRL,
   installmentLabel,
+  installmentSplitLabel,
   installmentTotal,
   maskCard,
   maskCep,
@@ -150,10 +151,10 @@ function LaunchSummary({
           <hr className="edu-divider" />
           <h2>Divisão do pagamento</h2>
           {split.map((item) => (
-            <p className="edu-split" key={item.label + item.value}>
+            <p className="edu-split" key={`${item.kind}-${item.label}-${item.value}`}>
               <span>
                 <strong>{item.kind || 'Cartão'}</strong>
-                {item.label}
+                <span>{item.label}</span>
               </span>
               <span>{item.value}</span>
             </p>
@@ -214,6 +215,7 @@ export function EducacionalApp() {
   const [selected, setSelected] = useState<string[]>([])
   const [pixOn, setPixOn] = useState(false)
   const [pixCents, setPixCents] = useState(0)
+  const [pixCpf, setPixCpf] = useState(PROFILE.cpf)
   const [payments, setPayments] = useState<Record<string, CardPayment>>({})
   const [amountIndex, setAmountIndex] = useState(0)
   const [cardStep, setCardStep] = useState<0 | 1 | 2>(0)
@@ -261,8 +263,8 @@ export function EducacionalApp() {
   const methodLimitReached = selectedMethodCount >= MAX_CARDS
   const slots = useMemo(() => {
     const list: Array<{ key: string; kind: 'pix' } | { key: string; kind: 'card'; card: SavedCard }> = []
-    if (payMode === 'card' && pixOn) list.push({ key: 'pix', kind: 'pix' })
     selectedCards.forEach((card) => list.push({ key: card.id, kind: 'card', card }))
+    if (payMode === 'card' && pixOn) list.push({ key: 'pix', kind: 'pix' })
     return list
   }, [payMode, pixOn, selectedCards])
   const currentSlot = slots[amountIndex]
@@ -275,12 +277,31 @@ export function EducacionalApp() {
   const remainder = Math.max(payCents - enteredBefore, 0)
 
   const reviewTotal = useMemo(() => {
-    return selectedCards.reduce((sum, card) => {
+    let sum = combineMixMode && pixOn ? pixCents : 0
+    selectedCards.forEach((card) => {
       const payment = payments[card.id]
-      if (!payment || !payment.installment) return sum
-      return sum + installmentTotal(payment.amountCents, payment.installment)
-    }, 0)
-  }, [payments, selectedCards])
+      if (!payment?.installment) return
+      sum += installmentTotal(payment.amountCents, payment.installment)
+    })
+    return sum || payCents
+  }, [combineMixMode, payCents, payments, pixCents, pixOn, selectedCards])
+
+  const combineSplitSummary = useMemo(() => {
+    if (!combineMixMode) return null
+    const rows: Array<{ kind: string; label: string; value: string }> = []
+    if (pixOn) rows.push({ kind: 'Pix', label: '***.***.***-46', value: formatBRL(pixCents) })
+    selectedCards.forEach((card) => {
+      const payment = payments[card.id]
+      rows.push({
+        kind: 'Cartão',
+        label: cardLabel(card),
+        value: payment?.installment
+          ? installmentSplitLabel(payment.amountCents, payment.installment as Installment)
+          : formatBRL(payment?.amountCents || 0),
+      })
+    })
+    return rows
+  }, [combineMixMode, payments, pixCents, pixOn, selectedCards])
 
   function toggleTuition(id: string) {
     setTuitionIds((current) => (current.includes(id) ? current.filter((item) => item !== id) : [...current, id]))
@@ -334,6 +355,10 @@ export function EducacionalApp() {
 
   function finishPortalFlow() {
     closePortalFlow()
+    if (step === 'pixPay' && payMode === 'card' && pixOn) {
+      setStep('done')
+      return
+    }
     setStep('statement')
   }
 
@@ -379,6 +404,11 @@ export function EducacionalApp() {
 
   function continueMethods() {
     setError('')
+    const mixCount = payMode === 'card' ? selectedCards.length + (pixOn ? 1 : 0) : selected.length
+    if (payMode === 'card' && mixCount < 2) {
+      setError('Selecione pelo menos duas opções para combinar pagamentos.')
+      return
+    }
     if (payMode === 'card' && pixOn && selectedCards.length === 0) {
       setPortalFlow({ kind: 'pix', stage: 'summary' })
       return
@@ -409,6 +439,15 @@ export function EducacionalApp() {
     return `Cartão ${number}`
   }
 
+  function confirmReviewPayment() {
+    if (combineMixMode && pixOn) {
+      setPortalFlow({ kind: 'pix', stage: 'pay' })
+      setStep('pixPay')
+      return
+    }
+    setStep('done')
+  }
+
   function saveAmount(nextIndex: number) {
     const slot = slots[amountIndex]
     if (!slot) return
@@ -423,11 +462,6 @@ export function EducacionalApp() {
       }))
     }
     if (nextIndex >= slots.length) {
-      if (comboPix) {
-        setPortalFlow({ kind: 'pix', stage: 'pay' })
-        setStep('pixPay')
-        return
-      }
       setStep('review')
       return
     }
@@ -449,6 +483,7 @@ export function EducacionalApp() {
       id: `new-${last4}-${cards.length}`,
       brand: brandFromNumber(draft.number),
       last4,
+      expiry: draft.expiry || '01/30',
     }
     setCards((current) => [...current, card])
     setError('')
@@ -809,6 +844,7 @@ export function EducacionalApp() {
 
   if (step === 'amount' && currentSlot) {
     const payingCard = currentSlot.kind === 'card' ? currentSlot.card : null
+    const combinePixStep = combineMixMode && currentSlot.kind === 'pix'
     const payment = payingCard ? payments[payingCard.id] || emptyPayment() : emptyPayment()
     const typedCents = isLastAmount ? remainder : payingCard ? payment.amountCents : pixCents
     const forwardRemainder = Math.max(payCents - enteredBefore - typedCents, 0)
@@ -866,7 +902,7 @@ export function EducacionalApp() {
                 <span>{slotTitle(amountIndex)}</span>
               </p>
               <div className="edu-card__head">
-                <h2>{slotTitle(amountIndex)}</h2>
+                <h2>{combinePixStep ? 'PIX' : slotTitle(amountIndex)}</h2>
                 {payingCard ? (
                   <span className="edu-method" style={{ width: 'auto' }}>
                     <BrandIcon brand={payingCard.brand} large />
@@ -882,15 +918,23 @@ export function EducacionalApp() {
                 )}
               </div>
               <Field
-                label={payingCard ? 'Valor do pagamento no cartão' : 'Valor do pagamento no Pix'}
+                label={combinePixStep ? 'Valor do pagamento' : payingCard ? 'Valor do pagamento no cartão' : 'Valor do pagamento no Pix'}
                 value={isLastAmount ? maskMoney(remainder) : maskMoney(payingCard ? payment.amountCents : pixCents)}
-                placeholder={isLastAmount ? 'Preenchido automaticamente com o valor restante' : 'Insira o preço a ser pago'}
+                placeholder={
+                  combinePixStep && isLastAmount
+                    ? 'Preenchido automaticamente por ser o ultimo'
+                    : isLastAmount
+                      ? 'Preenchido automaticamente com o valor restante'
+                      : 'Insira o preço a ser pago'
+                }
                 help={
-                  isLastAmount
-                    ? 'Preenchido automaticamente com o valor restante'
-                    : following.length
-                      ? `Restante de ${formatBRL(forwardRemainder)} ${following.length === 1 ? `em ${followerName(following[0])}` : 'para os próximos pagamentos'}`
-                      : 'Valor mínimo de R$ 5,00'
+                  combinePixStep && isLastAmount
+                    ? 'Valor mínimo de R$ 5,00'
+                    : isLastAmount
+                      ? 'Preenchido automaticamente com o valor restante'
+                      : following.length
+                        ? `Restante de ${formatBRL(forwardRemainder)} ${following.length === 1 ? `em ${followerName(following[0])}` : 'para os próximos pagamentos'}`
+                        : 'Valor mínimo de R$ 5,00'
                 }
                 readOnly={isLastAmount}
                 onChange={(value) => {
@@ -953,13 +997,16 @@ export function EducacionalApp() {
                   />
                 </>
               ) : null}
+              {combinePixStep ? (
+                <Field label="CPF" value={pixCpf} placeholder="123.456.789-10" onChange={(value) => setPixCpf(maskCpf(value))} />
+              ) : null}
             </section>
             {error ? <p className="edu-hint">{error}</p> : null}
             <div className="edu-actions">
               <Primary ghost onClick={() => (amountIndex === 0 ? setStep('methods') : setAmountIndex((index) => index - 1))}>
                 Voltar
               </Primary>
-              <Primary onClick={() => saveAmount(amountIndex + 1)}>{comboPix && isLastAmount ? 'Gerar QR Code' : 'Próximo'}</Primary>
+              <Primary onClick={() => saveAmount(amountIndex + 1)}>Próximo</Primary>
             </div>
           </div>
           <LaunchSummary totalCents={payCents} tuitions={selectedTuitions} split={liveSplit} />
@@ -1002,8 +1049,12 @@ export function EducacionalApp() {
   if (step === 'pixPay') {
     content = (
       <>
-        <h1 className="edu-title">Pagamento com Pix</h1>
-        <p className="edu-lead">Use o modal para concluir o pagamento via QR Code ou Pix copia e cola.</p>
+        <h1 className="edu-title">{combineMixMode ? 'Confirme seu pagamento pix' : 'Pagamento com Pix'}</h1>
+        <p className="edu-lead">
+          {combineMixMode
+            ? 'Escaneie o QR Code ou copie o código Pix para concluir a parte do pagamento referente ao Pix.'
+            : 'Use o modal para concluir o pagamento via QR Code ou Pix copia e cola.'}
+        </p>
         <BackLink
           onClick={() => {
             closePortalFlow()
@@ -1027,38 +1078,24 @@ export function EducacionalApp() {
           <div className="edu-col">
             <section className="edu-card">
               <h2>Resumo de Pagamento</h2>
-              {selectedCards.map((card, index) => {
-                const payment = payments[card.id]
-                return (
-                  <div className="edu-review-row" key={card.id}>
+              <hr className="edu-divider" />
+              <div className="edu-review-list">
+                {combineMixMode && pixOn ? (
+                  <div className="edu-review-row">
                     <div className="edu-review-row__id">
-                      <BrandIcon brand={card.brand} large />
-                      {cardLabel(card)}
+                      <span className="edu-brand edu-brand--lg" aria-hidden>
+                        <span className="edu-pix">PIX</span>
+                      </span>
+                      <span>Pix</span>
                     </div>
                     <div className="edu-review-row__tools">
-                      <select
-                        className="edu-input edu-select edu-select--inline"
-                        value={payment?.installment || ''}
-                        onChange={(event) =>
-                          setPayments((current) => ({
-                            ...current,
-                            [card.id]: { ...(current[card.id] || emptyPayment()), installment: event.target.value as Installment },
-                          }))
-                        }
-                      >
-                        <option value="">Escolha o parcelamento</option>
-                        {INSTALLMENT_PLANS.map((plan) => (
-                          <option key={plan} value={plan}>
-                            {installmentLabel(payment?.amountCents || 0, plan)}
-                          </option>
-                        ))}
-                      </select>
+                      <span>{formatBRL(pixCents)}</span>
                       <button
                         type="button"
                         className="edu-icon-btn"
-                        aria-label={`Editar ${cardLabel(card)}`}
+                        aria-label="Editar Pix"
                         onClick={() => {
-                          setAmountIndex(index)
+                          setAmountIndex(slots.findIndex((slot) => slot.kind === 'pix'))
                           setStep('amount')
                         }}
                       >
@@ -1068,18 +1105,70 @@ export function EducacionalApp() {
                       </button>
                     </div>
                   </div>
-                )
-              })}
+                ) : null}
+                {selectedCards.map((card) => {
+                  const payment = payments[card.id]
+                  return (
+                    <div className="edu-review-row" key={card.id}>
+                      <div className="edu-review-row__id">
+                        <BrandIcon brand={card.brand} large />
+                        <span>
+                          {cardLabel(card)}
+                          {combineMixMode ? <small className="edu-review-row__meta">Expira em {card.expiry}</small> : null}
+                        </span>
+                      </div>
+                      <div className="edu-review-row__tools">
+                        <select
+                          className="edu-input edu-select edu-select--inline"
+                          value={payment?.installment || ''}
+                          onChange={(event) =>
+                            setPayments((current) => ({
+                              ...current,
+                              [card.id]: { ...(current[card.id] || emptyPayment()), installment: event.target.value as Installment },
+                            }))
+                          }
+                        >
+                          <option value="">Escolha o parcelamento</option>
+                          {INSTALLMENT_PLANS.map((plan) => (
+                            <option key={plan} value={plan}>
+                              {combineMixMode
+                                ? installmentSplitLabel(payment?.amountCents || 0, plan)
+                                : installmentLabel(payment?.amountCents || 0, plan)}
+                            </option>
+                          ))}
+                        </select>
+                        <button
+                          type="button"
+                          className="edu-icon-btn"
+                          aria-label={`Editar ${cardLabel(card)}`}
+                          onClick={() => {
+                            setAmountIndex(slots.findIndex((slot) => slot.kind === 'card' && slot.card.id === card.id))
+                            setStep('amount')
+                          }}
+                        >
+                          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+                            <path d="M4 16.8V20h3.2l9.4-9.4-3.2-3.2L4 16.8Zm14.7-8.5a.8.8 0 0 0 0-1.2l-1.8-1.8a.8.8 0 0 0-1.2 0l-1.2 1.2 3.2 3.2 1-1.4Z" fill="currentColor" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
             </section>
-            <Primary onClick={() => setStep('done')}>Efetuar pagamento</Primary>
+            <Primary onClick={confirmReviewPayment}>Efetuar pagamento</Primary>
           </div>
           <LaunchSummary
-            totalCents={reviewTotal || payCents}
+            totalCents={reviewTotal}
             tuitions={selectedTuitions}
-            split={selectedCards.map((card) => ({
-              label: cardLabel(card),
-              value: payments[card.id]?.installment ? installmentLabel(payments[card.id].amountCents, payments[card.id].installment as Installment) : '',
-            }))}
+            split={
+              combineSplitSummary ||
+              selectedCards.map((card) => ({
+                kind: 'Cartão',
+                label: cardLabel(card),
+                value: payments[card.id]?.installment ? installmentLabel(payments[card.id].amountCents, payments[card.id].installment as Installment) : '',
+              }))
+            }
           />
         </div>
       </>
@@ -1096,9 +1185,11 @@ export function EducacionalApp() {
             <h2>Seu pagamento foi realizado com sucesso!</h2>
             <SuccessArt />
             <p>
-              {payMode === 'combine'
+              {combineMixMode && pixOn
                 ? 'Recebemos a confirmação do Pix e dos cartões de crédito. Seus cartões foram salvos com segurança na sua carteira para pagamentos futuros.'
-                : 'Pagamento confirmado! Recebemos a sua transação e o valor já consta como quitado em nosso sistema. Você já pode retornar ao seu extrato para conferir o status atualizado da sua conta.'}
+                : payMode === 'combine'
+                  ? 'Recebemos a confirmação dos cartões de crédito. Seus cartões foram salvos com segurança na sua carteira para pagamentos futuros.'
+                  : 'Pagamento confirmado! Recebemos a sua transação e o valor já consta como quitado em nosso sistema. Você já pode retornar ao seu extrato para conferir o status atualizado da sua conta.'}
             </p>
             <div className="edu-meta">
               <p>

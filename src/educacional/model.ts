@@ -28,15 +28,16 @@ export type SavedCard = {
   id: string
   brand: Brand
   last4: string
+  expiry: string
 }
 
 export const INITIAL_CARDS: SavedCard[] = [
-  { id: 'mc-8756', brand: 'mastercard', last4: '8756' },
-  { id: 'visa-1234', brand: 'visa', last4: '1234' },
-  { id: 'visa-0964', brand: 'visa', last4: '0964' },
-  { id: 'mc-6497', brand: 'mastercard', last4: '6497' },
-  { id: 'mc-3574', brand: 'mastercard', last4: '3574' },
-  { id: 'visa-9984', brand: 'visa', last4: '9984' },
+  { id: 'mc-8756', brand: 'mastercard', last4: '8756', expiry: '02/34' },
+  { id: 'visa-1234', brand: 'visa', last4: '1234', expiry: '11/28' },
+  { id: 'visa-0964', brand: 'visa', last4: '0964', expiry: '07/31' },
+  { id: 'mc-6497', brand: 'mastercard', last4: '6497', expiry: '05/29' },
+  { id: 'mc-3574', brand: 'mastercard', last4: '3574', expiry: '09/30' },
+  { id: 'visa-9984', brand: 'visa', last4: '9984', expiry: '12/32' },
 ]
 
 export type Installment = '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12'
@@ -185,6 +186,14 @@ export function installmentLabel(amountCents: number, plan: Installment) {
   const each = Math.round(total / count)
   if (count <= 1) return `1x ${formatBRL(each)} (sem juros)`
   return `${count}x ${formatBRL(each)} (com juros de 1,5% por parcela)`
+}
+
+export function installmentSplitLabel(amountCents: number, plan: Installment) {
+  const count = Number(plan)
+  const total = installmentTotal(amountCents, plan)
+  const each = Math.round(total / count)
+  if (count <= 1) return `1x ${formatBRL(each)} (Sem juros)`
+  return `${count}x ${formatBRL(each)} (Com juros)`
 }
 
 export function emptyPayment(): CardPayment {
