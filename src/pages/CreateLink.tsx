@@ -218,7 +218,10 @@ export function CreateLinkPage() {
               </label>
               {credit ? (
                 <div className="nested">
-                  <Field label="Número de parcelas">
+                  <Field
+                    label="Número máximo de parcelas"
+                    hint={`O pagador poderá parcelar em até ${installments}.`}
+                  >
                     <Select value={installments} onChange={(e) => setInstallments(e.target.value)}>
                       {['1x', '2x', '3x', '6x', '12x'].map((option) => (
                         <option key={option}>{option}</option>
