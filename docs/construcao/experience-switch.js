@@ -1,13 +1,12 @@
 (function () {
   var STYLE =
-    '#pd-product-switch-host{position:fixed;z-index:2147483646;pointer-events:none}' +
-    '#pd-product-switch-host .product-switch{pointer-events:auto;position:relative;display:flex;align-items:center}' +
+    '#pd-product-switch-host .product-switch{position:relative;display:inline-flex;align-items:center}' +
     '#pd-product-switch-host .product-switch__toggle{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:0;border-radius:8px;padding:0;margin:0;background:transparent;color:#00558b;cursor:pointer}' +
     '#pd-product-switch-host .product-switch__toggle:hover,#pd-product-switch-host .product-switch__toggle[aria-expanded="true"]{background:rgba(0,85,139,.12)}' +
     '#pd-product-switch-host .product-switch__toggle svg{width:18px!important;height:18px!important;display:block!important;fill:none!important;stroke:currentColor!important;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important}' +
-    '#pd-product-switch-host .product-switch__menu{position:absolute;top:calc(100% + 8px);left:0;min-width:280px;padding:12px 0;background:#001927;border-radius:8px;box-shadow:0 12px 24px rgba(0,34,51,.28);z-index:2147483647}' +
-    '#pd-product-switch-host .product-switch__label{padding:4px 16px 8px;color:rgba(255,255,255,.55);font:700 11px/14px "DM Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase}' +
-    '#pd-product-switch-host .product-switch__item{display:block;width:100%;padding:8px 16px;color:#fff;font:500 14px/20px "DM Sans",sans-serif;text-align:left;background:transparent;border:0;cursor:pointer}' +
+    '#pd-product-switch-host .product-switch__menu{position:absolute;top:calc(100% + 8px);left:0;min-width:280px;padding:12px 0;background:#001927;border-radius:8px;box-shadow:0 12px 24px rgba(0,34,51,.28);z-index:12001}' +
+    '#pd-product-switch-host .product-switch__label{padding:4px 16px 8px;color:rgba(255,255,255,.55);font:700 11px/14px "DM Sans",system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase}' +
+    '#pd-product-switch-host .product-switch__item{display:block;width:100%;padding:8px 16px;color:#fff;font:500 14px/20px "DM Sans",system-ui,sans-serif;text-align:left;background:transparent;border:0;cursor:pointer}' +
     '#pd-product-switch-host .product-switch__item:hover:not(:disabled){background:rgba(255,255,255,.08)}' +
     '#pd-product-switch-host .product-switch__item.is-disabled,#pd-product-switch-host .product-switch__item:disabled{color:rgba(255,255,255,.42);cursor:default}' +
     '#pd-product-switch-host .product-switch__sep{display:block;height:1px;margin:8px 12px;background:rgba(255,255,255,.12)}'
@@ -19,18 +18,18 @@
     '</button>' +
     '<div class="product-switch__menu" hidden>' +
     '<p class="product-switch__label">Produtos</p>' +
-    '<button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>' +
     '<button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay - Credenciamento</button>' +
     '<button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay - Dashboard</button>' +
-    '<button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>' +
+    '<span class="product-switch__sep"></span>' +
+    '<button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="construcao">Construção</button>' +
     '<button type="button" class="product-switch__item" data-product="educacional">Educacional</button>' +
     '<button type="button" class="product-switch__item" data-product="winthor">Winthor</button>' +
     '<span class="product-switch__sep"></span>' +
-    '<button type="button" class="product-switch__item" data-product="checkout">Checkout</button>' +
+    '<button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>' +
     '<span class="product-switch__sep"></span>' +
-    '<button type="button" class="product-switch__item is-disabled" data-product="early" disabled>Early adopters</button>' +
+    '<button type="button" class="product-switch__item" data-product="checkout">Checkout</button>' +
     '</div></div>'
 
   function experienceRoot() {
@@ -57,35 +56,16 @@
   }
 
   function host() {
-    var el = document.getElementById('pd-product-switch-host')
-    if (!el) {
-      el = document.createElement('div')
-      el.id = 'pd-product-switch-host'
-      document.body.appendChild(el)
-    }
-    return el
-  }
-
-  function position() {
-    var brand = document.querySelector('.evt-brand, .brand')
-    var el = host()
-    if (!brand) {
-      el.style.visibility = 'hidden'
-      return
-    }
-    var rect = brand.getBoundingClientRect()
-    el.style.visibility = 'visible'
-    el.style.left = Math.round(rect.right + 2) + 'px'
-    el.style.top = Math.round(rect.top + rect.height / 2 - 14) + 'px'
+    return document.getElementById('pd-product-switch-host')
   }
 
   function mount() {
     var el = host()
+    if (!el) return
     if (el.getAttribute('data-ready') !== '1') {
       el.innerHTML = MENU
       el.setAttribute('data-ready', '1')
     }
-    position()
   }
 
   function closeAll() {
@@ -134,12 +114,6 @@
     if (event.key === 'Escape') closeAll()
   })
 
-  window.addEventListener('resize', position)
-  window.addEventListener('scroll', position, true)
-
-  var observer = new MutationObserver(mount)
-  observer.observe(document.documentElement, { childList: true, subtree: true })
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount)
   else mount()
-  setInterval(position, 250)
 })()

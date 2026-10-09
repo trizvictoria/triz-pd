@@ -28,8 +28,8 @@ function docsIndexHtml() {
     'href="/triz-pd/favicon.svg?v=1"',
   )
   html = html.replace(
-    'src="experience-switch.js?v=6"',
-    'src="/triz-pd/construcao/experience-switch.js?v=6"',
+    'src="experience-switch.js?v=7"',
+    'src="/triz-pd/construcao/experience-switch.js?v=7"',
   )
   return html
 }
