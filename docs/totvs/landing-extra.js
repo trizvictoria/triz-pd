@@ -2,7 +2,7 @@
   var ROOT = (location.pathname.split('/totvs')[0] || '') + '/totvs/'
   var ASSET = ROOT + 'assets/landing/'
   var HOST_ID = 'lp-extra-host'
-  var RATES_VERSION = '17'
+  var RATES_VERSION = '18'
 
   function icon(name, d) {
     return (
@@ -250,9 +250,11 @@
       '<p class="lp-rate__name">Cartão de crédito</p>' +
       '<p class="lp-rate__value lp-rate__value--promo">' +
       '<s class="lp-rate__value-old" aria-label="Taxa anterior 3,19 por cento">3,19%</s>' +
-      '<span class="lp-rate__value-new">2,99%</span></p>' +
+      '<span class="lp-rate__value-new">2,99%</span>' +
+      '<span class="lp-rate__promo-chip">Promo</span></p>' +
       '<div class="lp-rate__promo-note">' +
-      '<p>Condição especial exclusiva para o Universo TOTVS</p></div>' +
+      '<span class="lp-rate__promo-badge">Oferta exclusiva</span>' +
+      '<p>Condição especial só para quem faz parte do <strong>Universo TOTVS</strong></p></div>' +
       '<p class="lp-rate__hint">à vista ou</p>' +
       cardInstallmentsHTML() +
       '</article>' +
@@ -469,7 +471,7 @@
     var link = document.createElement('link')
     link.id = 'lp-extra-style'
     link.rel = 'stylesheet'
-    link.href = ROOT + 'landing-extra.css?v=17'
+    link.href = ROOT + 'landing-extra.css?v=18'
     document.head.appendChild(link)
   }
 
