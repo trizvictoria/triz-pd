@@ -58,7 +58,7 @@ function goProduct(id){
   if(id==='totvs'||id==='totvs-credenciamento'||id==='totvs-dashboard') rememberSession(FLOW_KEY);
   if(window.__pdNavigate && (id==='rd'||id==='suri'||id==='checkout')){setGate(false);window.__pdNavigate(id);return}
   const root=experienceRoot();
-  if(id==='totvs'||id==='totvs-credenciamento'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/');return}
+  if(id==='totvs'||id==='totvs-credenciamento'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/credenciamento');return}
   if(id==='totvs-dashboard'){try{sessionStorage.setItem('totvs-onboarded','1')}catch(e){}location.assign(root+'totvs/dashboard');return}
   if(id==='construcao'){location.assign(root+'construcao/');return}
   if(id==='educacional'){location.assign(root+'educacional/');return}

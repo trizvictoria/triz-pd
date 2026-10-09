@@ -32,8 +32,8 @@ export function experienceUrls() {
   const root = experienceRoot()
   return {
     rd: root,
-    totvs: `${root}totvs/`,
-    'totvs-credenciamento': `${root}totvs/`,
+    totvs: `${root}totvs/credenciamento`,
+    'totvs-credenciamento': `${root}totvs/credenciamento`,
     'totvs-dashboard': `${root}totvs/dashboard`,
     suri: `${root}#suri`,
     checkout: `${root}#checkout`,

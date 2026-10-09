@@ -52,12 +52,12 @@
     }
     var root = experienceRoot()
     if (id === 'totvs' || id === 'totvs-credenciamento') {
-      try { sessionStorage.setItem('totvs-onboarded', '0') } catch (e) {}
-      location.assign(root + 'totvs/')
+      try { sessionStorage.setItem('totvs-onboarded', '0'); sessionStorage.setItem('pd-ai-auth', 'e9e69fcd703e857da732ae1e8c0d839920a24cb3407cc98440c04a4c7b62545d') } catch (e) {}
+      location.assign(root + 'totvs/credenciamento')
       return
     }
     if (id === 'totvs-dashboard') {
-      try { sessionStorage.setItem('totvs-onboarded', '1') } catch (e) {}
+      try { sessionStorage.setItem('totvs-onboarded', '1'); sessionStorage.setItem('pd-ai-auth', 'e9e69fcd703e857da732ae1e8c0d839920a24cb3407cc98440c04a4c7b62545d') } catch (e) {}
       location.assign(root + 'totvs/dashboard')
       return
     }

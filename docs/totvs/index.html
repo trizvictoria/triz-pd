@@ -2,7 +2,7 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/triz-pd/favicon.svg?v=1" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg?v=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TOTVS Pay — Payments Universo TOTVS</title>
     <script>
@@ -10,6 +10,11 @@
         var KEY = 'pd-ai-auth'
         var PASS_KEY = 'pd-ai-pass'
         var PASS = 'e9e69fcd703e857da732ae1e8c0d839920a24cb3407cc98440c04a4c7b62545d'
+        function siteHome() {
+          var path = location.pathname
+          var at = path.indexOf('/totvs')
+          return (at >= 0 ? path.slice(0, at) : '') + '/'
+        }
         function isReload() {
           try {
             var nav = performance.getEntriesByType('navigation')[0]
@@ -23,11 +28,11 @@
             sessionStorage.removeItem(PASS_KEY)
           }
           if (sessionStorage.getItem(KEY) !== PASS) {
-            location.replace('/triz-pd/')
+            location.replace(siteHome())
             return
           }
         } catch (e) {
-          location.replace('/triz-pd/')
+          location.replace(siteHome())
           return
         }
         var path = sessionStorage.getItem('spa-path')
@@ -37,8 +42,9 @@
         }
       })()
     </script>
-    <script type="module" crossorigin src="/triz-pd/totvs/assets/index-ZQv7chTu.js?v=14"></script>
-    <link rel="stylesheet" crossorigin href="/triz-pd/totvs/assets/index-DOkimxOk.css?v=14">
+    <script>window.__totvsBase=(location.pathname.split('/totvs')[0]||'')+'/totvs'</script>
+    <script type="module" crossorigin src="assets/index-ZQv7chTu.js?v=14"></script>
+    <link rel="stylesheet" crossorigin href="assets/index-DOkimxOk.css?v=14">
   </head>
   <body>
     <style id="pd-demo-banner-style">
@@ -60,7 +66,7 @@
       }).observe(document.body, { childList: true, subtree: true })
     </script>
     <div id="root"></div>
-    <script src="/triz-pd/totvs/experience-switch.js?v=16"></script>
-    <script src="/triz-pd/totvs/landing-extra.js?v=17"></script>
+    <script src="experience-switch.js?v=16"></script>
+    <script src="landing-extra.js?v=17"></script>
   </body>
 </html>
