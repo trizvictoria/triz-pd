@@ -7,6 +7,7 @@ import { LoginPage, type LoginProduct } from './pages/LoginPage'
 import { SuriShopPage } from './pages/SuriShopPage'
 import { EducacionalApp } from './educacional/EducacionalApp'
 import { goExperience } from './lib/experience'
+import { TotvsPayLanding } from './pages/TotvsPayLanding'
 
 const AuthedApp = lazy(() => import('./pages/AuthedApp'))
 
@@ -26,7 +27,13 @@ function isEducacionalPath() {
   return /\/educacional(?:\/|$)/.test(window.location.pathname)
 }
 
+function isLandingPath() {
+  return /\/interesse(?:\/|$)/.test(window.location.pathname)
+}
+
 export default function App() {
+  if (isLandingPath()) return <TotvsPayLanding />
+
   return (
     <>
       <DemoBanner />
