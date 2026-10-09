@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
-import { PortalShell, type EduJourney } from './Shell'
+import { PortalShell } from './Shell'
 import {
   EMPTY_DRAFT,
   INITIAL_CARDS,
@@ -200,7 +200,6 @@ export function EducacionalApp() {
     document.title = 'Extrato financeiro · Pensando Juntos'
   }, [])
 
-  const [journey, setJourney] = useState<EduJourney>('all')
   const [step, setStep] = useState<Step>('statement')
   const [tuitionIds, setTuitionIds] = useState<string[]>([])
   const [payMode, setPayMode] = useState<'combine' | 'card'>('combine')
@@ -325,20 +324,6 @@ export function EducacionalApp() {
     setCardStep(0)
     setError('')
     setStep('card')
-  }
-
-  function chooseJourney(next: EduJourney) {
-    setJourney(next)
-    setStep('statement')
-    setSelected([])
-    setPixOn(false)
-    setPixCents(0)
-    setPayMode('combine')
-    setError('')
-    setOffer(null)
-    setPortalFlow(null)
-    setPortalToast(null)
-    setBoletoMenuOpen(false)
   }
 
   function closePortalFlow() {
@@ -558,22 +543,19 @@ export function EducacionalApp() {
               <span>Total selecionado</span>
               <b>{formatBRL(payCents)}</b>
             </p>
-            {journey === 'all' ? (
-              <button type="button" className="edu-btn" onClick={() => setOffer('pix')} disabled={!canPay}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="M7 7h3.2v3.2H7V7Zm6.8 0H17v3.2h-3.2V7ZM7 13.8h3.2V17H7v-3.2Zm6.8 0H17V17h-3.2v-3.2Z" fill="#fff" />
-                </svg>
-                Pix
-              </button>
-            ) : null}
+            <button type="button" className="edu-btn" onClick={() => setOffer('pix')} disabled={!canPay}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M7 7h3.2v3.2H7V7Zm6.8 0H17v3.2h-3.2V7ZM7 13.8h3.2V17H7v-3.2Zm6.8 0H17V17h-3.2v-3.2Z" fill="#fff" />
+              </svg>
+              Pix
+            </button>
             <button type="button" className="edu-btn" onClick={openCards} disabled={!canPay}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path d="M4 7.5h16v9H4v-9Zm0-1.5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Zm1.5 6.2h4v1.4h-4v-1.4Z" fill="#fff" />
               </svg>
               Cartão
             </button>
-            {journey === 'all' ? (
-              <div className="edu-boleto-split">
+            <div className="edu-boleto-split">
                 <button
                   type="button"
                   className="edu-btn edu-btn--ghost"
@@ -614,15 +596,12 @@ export function EducacionalApp() {
                   </div>
                 ) : null}
               </div>
-            ) : null}
-            {journey === 'all' ? (
-              <button type="button" className="edu-btn" onClick={() => setOffer('mix')} disabled={!canPay}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="M6 8h5V6H6v2Zm7 0h5V6h-5v2ZM6 18h5v-2H6v2Zm7-6H6v2h7v-2Zm2 1.2 3.2 3.2-1.2 1.2-3.2-3.2 1.2-1.2Z" fill="#fff" />
-                </svg>
-                Combinar pagamentos
-              </button>
-            ) : null}
+            <button type="button" className="edu-btn" onClick={() => setOffer('mix')} disabled={!canPay}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M6 8h5V6H6v2Zm7 0h5V6h-5v2ZM6 18h5v-2H6v2Zm7-6H6v2h7v-2Zm2 1.2 3.2 3.2-1.2 1.2-3.2-3.2 1.2-1.2Z" fill="#fff" />
+              </svg>
+              Combinar pagamentos
+            </button>
           </div>
         </div>
         <div className="edu-charges">
@@ -1215,7 +1194,7 @@ export function EducacionalApp() {
       : `Ao pagar este QR Code, os valores serão descontados nos cartões ${comboChargeBits.slice(0, -1).join(', ')} e ${comboChargeBits[comboChargeBits.length - 1]}.`
 
   return (
-    <PortalShell journey={journey} onJourney={chooseJourney}>
+    <PortalShell>
       {content}
       {portalFlow ? (
         <PortalPaymentModals

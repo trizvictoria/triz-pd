@@ -28,13 +28,6 @@ const ICONS = {
   caret: 'M8.2 10.2 12 14l3.8-3.8 1.1 1.1L12 16.2 7.1 11.3l1.1-1.1Z',
 }
 
-export type EduJourney = 'card' | 'all'
-
-const JOURNEYS: Array<{ id: EduJourney; label: string }> = [
-  { id: 'card', label: 'Só cartão' },
-  { id: 'all', label: 'Todos os meios de pagamento' },
-]
-
 const EXPERIENCES: Array<{ type: 'item'; id: ExperienceTarget; label: string } | { type: 'sep'; id: string } | { type: 'soon'; id: string; label: string }> = [
   { type: 'item', id: 'totvs-credenciamento', label: 'TOTVS Pay - Credenciamento' },
   { type: 'item', id: 'totvs-dashboard', label: 'TOTVS Pay - Dashboard' },
@@ -50,32 +43,18 @@ const EXPERIENCES: Array<{ type: 'item'; id: ExperienceTarget; label: string } |
   { type: 'item', id: 'checkout', label: 'Checkout' },
 ]
 
-export function PortalShell({
-  journey,
-  onJourney,
-  children,
-}: {
-  journey: EduJourney
-  onJourney: (journey: EduJourney) => void
-  children: ReactNode
-}) {
-  const [open, setOpen] = useState(false)
+export function PortalShell({ children }: { children: ReactNode }) {
   const [productsOpen, setProductsOpen] = useState(false)
-  const menu = useRef<HTMLDivElement>(null)
   const products = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    if (!open && !productsOpen) return
+    if (!productsOpen) return
     function onDoc(event: MouseEvent) {
       const target = event.target as Node
-      if (open && menu.current && !menu.current.contains(target)) setOpen(false)
       if (productsOpen && products.current && !products.current.contains(target)) setProductsOpen(false)
     }
     function onKey(event: KeyboardEvent) {
-      if (event.key === 'Escape') {
-        setOpen(false)
-        setProductsOpen(false)
-      }
+      if (event.key === 'Escape') setProductsOpen(false)
     }
     document.addEventListener('mousedown', onDoc)
     document.addEventListener('keydown', onKey)
@@ -83,7 +62,7 @@ export function PortalShell({
       document.removeEventListener('mousedown', onDoc)
       document.removeEventListener('keydown', onKey)
     }
-  }, [open, productsOpen])
+  }, [productsOpen])
 
   return (
     <div className="edu">
@@ -144,43 +123,11 @@ export function PortalShell({
           </span>
         </div>
         <div className="edu-brandbar">
-          <div className="edu-logo-switch" ref={menu}>
-            <div className="edu-logo">
-              <span className="edu-logo__mark" aria-hidden>
-                P
-              </span>
-              <span className="edu-logo__word">PENSANDOJUNTOS</span>
-            </div>
-            <button
-              type="button"
-              className="edu-logo-switch__toggle"
-              aria-haspopup="menu"
-              aria-expanded={open}
-              aria-label="Trocar jornada de pagamento"
-              onClick={() => setOpen((value) => !value)}
-            >
-              <Icon d={ICONS.caret} size={22} />
-            </button>
-            {open ? (
-              <div className="edu-logo-switch__menu" role="menu">
-                <p className="edu-logo-switch__label">Jornada</p>
-                {JOURNEYS.map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    className={`edu-logo-switch__item${journey === item.id ? ' is-on' : ''}`}
-                    role="menuitemradio"
-                    aria-checked={journey === item.id}
-                    onClick={() => {
-                      setOpen(false)
-                      onJourney(item.id)
-                    }}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-            ) : null}
+          <div className="edu-logo">
+            <span className="edu-logo__mark" aria-hidden>
+              P
+            </span>
+            <span className="edu-logo__word">PENSANDOJUNTOS</span>
           </div>
           <div className="edu-tools" aria-hidden>
             <Icon d={ICONS.search} />
