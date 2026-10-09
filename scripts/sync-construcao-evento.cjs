@@ -31,6 +31,10 @@ function docsIndexHtml() {
     'src="experience-switch.js?v=7"',
     'src="/triz-pd/construcao/experience-switch.js?v=7"',
   )
+  html = html.replace(
+    'src="app.js?v=2"',
+    'src="/triz-pd/construcao/app.js?v=2"',
+  )
   return html
 }
 
