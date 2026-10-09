@@ -248,7 +248,9 @@ export function EducacionalApp() {
   const payCents = selectedTuitions.reduce((sum, item) => sum + item.cents, 0)
   const canPay = payCents > 0
   const selectedCards = cards.filter((card) => selected.includes(card.id))
-  const cardLimitReached = selected.length >= MAX_CARDS
+  const combineMixMode = payMode === 'card'
+  const selectedMethodCount = combineMixMode ? selected.length + (pixOn ? 1 : 0) : selected.length
+  const methodLimitReached = selectedMethodCount >= MAX_CARDS
   const slots = useMemo(() => {
     const list: Array<{ key: string; kind: 'pix' } | { key: string; kind: 'card'; card: SavedCard }> = []
     if (payMode === 'card' && pixOn) list.push({ key: 'pix', kind: 'pix' })
@@ -280,13 +282,23 @@ export function EducacionalApp() {
     setError('')
     setSelected((current) => {
       if (current.includes(id)) return current.filter((item) => item !== id)
-      if (current.length >= MAX_CARDS) return current
+      const count = combineMixMode ? current.length + (pixOn ? 1 : 0) : current.length
+      if (count >= MAX_CARDS) return current
       return [...current, id]
     })
   }
 
+  function togglePix() {
+    setError('')
+    setPixOn((on) => {
+      if (on) return false
+      if (selected.length >= MAX_CARDS) return false
+      return true
+    })
+  }
+
   function openAddCard() {
-    if (selected.length >= MAX_CARDS) return
+    if (methodLimitReached) return
     setDraft(EMPTY_DRAFT)
     setCardStep(0)
     setError('')
@@ -508,14 +520,6 @@ export function EducacionalApp() {
                 Pix
               </button>
             ) : null}
-            {journey === 'all' ? (
-              <button type="button" className="edu-btn" onClick={() => setOffer('mix')} disabled={!canPay}>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                  <path d="M6 8h5V6H6v2Zm7 0h5V6h-5v2ZM6 18h5v-2H6v2Zm7-6H6v2h7v-2Zm2 1.2 3.2 3.2-1.2 1.2-3.2-3.2 1.2-1.2Z" fill="#fff" />
-                </svg>
-                Combinar pagamentos
-              </button>
-            ) : null}
             <button type="button" className="edu-btn" onClick={openCards} disabled={!canPay}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
                 <path d="M4 7.5h16v9H4v-9Zm0-1.5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Zm1.5 6.2h4v1.4h-4v-1.4Z" fill="#fff" />
@@ -550,6 +554,14 @@ export function EducacionalApp() {
                   </div>
                 ) : null}
               </div>
+            ) : null}
+            {journey === 'all' ? (
+              <button type="button" className="edu-btn" onClick={() => setOffer('mix')} disabled={!canPay}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="M6 8h5V6H6v2Zm7 0h5V6h-5v2ZM6 18h5v-2H6v2Zm7-6H6v2h7v-2Zm2 1.2 3.2 3.2-1.2 1.2-3.2-3.2 1.2-1.2Z" fill="#fff" />
+                </svg>
+                Combinar pagamentos
+              </button>
             ) : null}
           </div>
         </div>
@@ -634,7 +646,13 @@ export function EducacionalApp() {
               <h2>Selecione os métodos escolhidos</h2>
               <hr className="edu-divider" />
               {payMode === 'card' ? (
-                <button type="button" className="edu-method" onClick={() => setPixOn((on) => !on)} aria-pressed={pixOn}>
+                <button
+                  type="button"
+                  className="edu-method"
+                  onClick={togglePix}
+                  aria-pressed={pixOn}
+                  disabled={!pixOn && methodLimitReached}
+                >
                   <Check on={pixOn} />
                   <span className="edu-pix" aria-hidden>
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -647,18 +665,20 @@ export function EducacionalApp() {
               {cards.map((card) => {
                 const on = selected.includes(card.id)
                 return (
-                  <button type="button" className="edu-method" key={card.id} onClick={() => toggle(card.id)} aria-pressed={on} disabled={!on && cardLimitReached}>
+                  <button type="button" className="edu-method" key={card.id} onClick={() => toggle(card.id)} aria-pressed={on} disabled={!on && methodLimitReached}>
                     <Check on={on} />
                     <BrandIcon brand={card.brand} />
                     {cardLabel(card)}
                   </button>
                 )
               })}
-              <button type="button" className="edu-method" onClick={openAddCard} disabled={cardLimitReached}>
+              <button type="button" className="edu-method" onClick={openAddCard} disabled={methodLimitReached}>
                 <BrandIcon brand="add" />
                 Adicionar novo cartão de crédito
               </button>
-              {cardLimitReached ? <p className="edu-limit">Você pode usar até 3 cartões</p> : null}
+              {methodLimitReached ? (
+                <p className="edu-limit">{combineMixMode ? 'Você pode selecionar até 3 opções' : 'Você pode usar até 3 cartões'}</p>
+              ) : null}
             </section>
             {error ? <p className="edu-hint">{error}</p> : null}
             <Primary onClick={continueMethods}>Continuar</Primary>
