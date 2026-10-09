@@ -115,7 +115,7 @@ export function OnboardingPage() {
                 Esses dados são utilizados para confirmar e proteger a identidade do representante legal da empresa.
               </p>
               <div style={{ marginTop: 20, display: 'flex', flexDirection: 'column', gap: 16 }}>
-                <Field label="Nome jurídico" hint="Insira seu nome completo como aparece nos documentos oficiais do governo.">
+                <Field label="Nome do representante legal" hint="Insira seu nome completo como aparece nos documentos oficiais do governo.">
                   <Input value={onboarding.legalNamePerson} onChange={(e) => patchOnboarding({ legalNamePerson: e.target.value })} />
                 </Field>
                 {!isPj ? (
