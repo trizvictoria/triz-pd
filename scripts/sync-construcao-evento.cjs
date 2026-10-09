@@ -21,8 +21,8 @@ function docsIndexHtml() {
   let html = fs.readFileSync(path.join(sourceDir, 'index.html'), 'utf8')
   html = html.replace('href="../favicon.svg?v=1"', 'href="/triz-pd/favicon.svg?v=1"')
   html = html.replace(
-    'src="experience-switch.js?v=8"',
-    'src="/triz-pd/construcao/experience-switch.js?v=8"',
+    'src="experience-switch.js?v=9"',
+    'src="/triz-pd/construcao/experience-switch.js?v=9"',
   )
   html = html.replace('src="app.js?v=3"', 'src="/triz-pd/construcao/app.js?v=3"')
   return html
@@ -66,7 +66,7 @@ function flowShellHtml(jsSrc, cssHref) {
     </style>
     <div class="demo-banner" role="status">Conta demo - Experiência TOTVS Pay</div>
     <div id="root"></div>
-    <script src="/triz-pd/construcao/experience-switch.js?v=8" defer></script>
+    <script src="/triz-pd/construcao/experience-switch.js?v=9" defer></script>
   </body>
 </html>
 `

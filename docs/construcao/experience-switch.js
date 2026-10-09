@@ -33,17 +33,23 @@
     '<button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="checkout">Checkout</button>' +
+    '<span class="product-switch__sep"></span>' +
+    '<button type="button" class="product-switch__item" data-product="interesse">Lista de interesse</button>' +
     '</div></div>'
 
   function experienceRoot() {
     var path = location.pathname
-    var at = path.indexOf('/construcao')
-    if (at >= 0) return path.slice(0, at) + '/'
+    var match = path.match(/\/(totvs|construcao|educacional|winthor|interesse)(?:\/|$)/)
+    if (match && match.index >= 0) return path.slice(0, match.index) + '/'
     return path.endsWith('/') ? path : path.replace(/[^/]+$/, '')
   }
 
   function goProduct(id) {
     var root = experienceRoot()
+    if (id === 'interesse') {
+      location.assign(root + 'interesse/')
+      return
+    }
     if (id === 'construcao') return
     if (id === 'totvs' || id === 'totvs-credenciamento') {
       try { sessionStorage.setItem('totvs-onboarded', '0') } catch (e) {}
@@ -88,8 +94,9 @@
   function mount() {
     var el = ensureHost()
     if (!el) return
-    if (el.getAttribute('data-ready') !== '1') {
+    if (el.getAttribute('data-menu-version') !== '9') {
       el.innerHTML = MENU
+      el.setAttribute('data-menu-version', '9')
       el.setAttribute('data-ready', '1')
     }
   }
