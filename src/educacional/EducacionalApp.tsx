@@ -34,6 +34,14 @@ import { PortalPaymentModals, type PortalFlow } from './PortalPaymentModals'
 import './educacional.css'
 
 type Step = 'statement' | 'methods' | 'card' | 'amount' | 'review' | 'cardReview' | 'pixPay' | 'done'
+type TechfinOffer = 'mix' | 'pix' | 'boleto' | 'barcode'
+
+const TECHFIN_OFFER_TITLES: Record<TechfinOffer, string> = {
+  mix: 'Combinar pagamentos',
+  pix: 'Pix',
+  boleto: 'Gerar boleto',
+  barcode: 'Gerar código de barras',
+}
 
 function BrandIcon({ brand, large = false }: { brand: SavedCard['brand'] | 'add'; large?: boolean }) {
   const file = brand === 'visa' ? 'icon-visa.svg' : brand === 'mastercard' ? 'icon-mastercard.svg' : 'icon-add-card.svg'
@@ -211,7 +219,7 @@ export function EducacionalApp() {
   const [cardStep, setCardStep] = useState<0 | 1 | 2>(0)
   const [draft, setDraft] = useState<CardDraft>(EMPTY_DRAFT)
   const [error, setError] = useState('')
-  const [offer, setOffer] = useState<'mix' | null>(null)
+  const [offer, setOffer] = useState<TechfinOffer | null>(null)
   const [portalFlow, setPortalFlow] = useState<PortalFlow | null>(null)
   const [portalToast, setPortalToast] = useState<string | null>(null)
   const [boletoMenuOpen, setBoletoMenuOpen] = useState(false)
@@ -357,6 +365,16 @@ export function EducacionalApp() {
     setSelected([])
     setPixOn(true)
     setPortalFlow({ kind: 'pix', stage: 'summary' })
+  }
+
+  function confirmTechfinOffer() {
+    if (!offer) return
+    const kind = offer
+    setOffer(null)
+    if (kind === 'mix') openMix()
+    else if (kind === 'pix') openPix()
+    else if (kind === 'boleto') startBoleto('boleto')
+    else startBoleto('barcode')
   }
 
   function continueMethods() {
@@ -513,7 +531,7 @@ export function EducacionalApp() {
               <b>{formatBRL(payCents)}</b>
             </p>
             {journey === 'all' ? (
-              <button type="button" className="edu-btn" onClick={openPix} disabled={!canPay}>
+              <button type="button" className="edu-btn" onClick={() => setOffer('pix')} disabled={!canPay}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
                   <path d="M7 7h3.2v3.2H7V7Zm6.8 0H17v3.2h-3.2V7ZM7 13.8h3.2V17H7v-3.2Zm6.8 0H17V17h-3.2v-3.2Z" fill="#fff" />
                 </svg>
@@ -545,10 +563,24 @@ export function EducacionalApp() {
                 </button>
                 {boletoMenuOpen ? (
                   <div className="edu-boleto-menu" role="menu">
-                    <button type="button" role="menuitem" onClick={() => startBoleto('boleto')}>
+                    <button
+                      type="button"
+                      role="menuitem"
+                      onClick={() => {
+                        setBoletoMenuOpen(false)
+                        setOffer('boleto')
+                      }}
+                    >
                       Gerar boleto
                     </button>
-                    <button type="button" role="menuitem" onClick={() => startBoleto('barcode')}>
+                    <button
+                      type="button"
+                      role="menuitem"
+                      onClick={() => {
+                        setBoletoMenuOpen(false)
+                        setOffer('barcode')
+                      }}
+                    >
                       Gerar código de barras
                     </button>
                   </div>
@@ -1146,7 +1178,7 @@ export function EducacionalApp() {
             aria-labelledby="edu-offer-title"
             onClick={(event) => event.stopPropagation()}
           >
-            <h2 id="edu-offer-title">Combinar pagamentos</h2>
+            <h2 id="edu-offer-title">{TECHFIN_OFFER_TITLES[offer]}</h2>
             <p>
               Esse é um método de pagamento oferecido pela Techfin e será futuramente oferecido pela TOTVS Pay. Você pode escolher isso na sua negociação.
             </p>
@@ -1154,14 +1186,7 @@ export function EducacionalApp() {
               <Primary ghost onClick={() => setOffer(null)}>
                 Voltar
               </Primary>
-              <Primary
-                onClick={() => {
-                  setOffer(null)
-                  openMix()
-                }}
-              >
-                Continuar
-              </Primary>
+              <Primary onClick={confirmTechfinOffer}>Continuar</Primary>
             </div>
           </section>
         </div>
