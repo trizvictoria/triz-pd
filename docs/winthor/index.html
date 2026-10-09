@@ -6,6 +6,9 @@
     <title>1295 - Gestão de recebimentos antecipados</title>
     <style>
         /* Estilos Globais - Winthor Clássico */
+        :root {
+            --demo-banner-h: 28px;
+        }
         body {
             margin: 0;
             font-family: Tahoma, Arial, sans-serif;
@@ -13,9 +16,31 @@
             background-color: #f0f0f0;
             color: #000;
             overflow: hidden;
+            box-sizing: border-box;
+            padding-top: var(--demo-banner-h);
+            height: 100vh;
+        }
+        .demo-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 12000;
+            width: 100%;
+            height: var(--demo-banner-h);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #00dbff;
+            color: #002233;
+            font: 700 12px/16px "DM Sans", Tahoma, Arial, sans-serif;
+            letter-spacing: 0.01em;
+        }
+        .winthor-shell {
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            height: calc(100vh - var(--demo-banner-h));
+            min-height: 0;
         }
 
         /* Barra Superior */
@@ -30,9 +55,26 @@
             font-size: 14px;
             flex-shrink: 0;
         }
+        .header-title-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            min-width: 0;
+        }
+        .header-title {
+            white-space: nowrap;
+        }
+        #pd-product-switch-host {
+            position: relative;
+            z-index: 5;
+            display: inline-flex;
+            pointer-events: auto;
+            flex-shrink: 0;
+        }
         .header-info {
             font-size: 11px;
             font-weight: normal;
+            text-align: right;
         }
 
         /* Área principal */
@@ -407,10 +449,14 @@
     </style>
 </head>
 <body>
-
+    <div class="demo-banner" role="status">Conta demo - Experiência TOTVS Pay</div>
+    <div class="winthor-shell">
     <!-- Header -->
     <div class="header">
-        <span>1295 - Gestão de recebimentos antecipados</span>
+        <div class="header-title-wrap">
+            <span class="header-title">1295 - Gestão de recebimentos antecipados</span>
+            <span id="pd-product-switch-host"></span>
+        </div>
         <span class="header-info">666 - DANIELPRATA (LOCAL@LOCAL) PCSIS1295 v.38.0.03.034</span>
     </div>
 
@@ -556,6 +602,7 @@
     <div class="footer">
         <button onclick="openModal('modalInitial')">Configurações</button>
     </div>
+    </div><!-- .winthor-shell -->
 
     <!-- ==========================================
          MODAIS DA MOVIMENTAÇÃO DA GRID
@@ -1095,6 +1142,6 @@
             closeModal('modalTotvs');
         }
     </script>
-<script src="experience-switch.js?v=1" defer></script>
+<script src="/triz-pd/winthor/experience-switch.js?v=2" defer></script>
 </body>
 </html>
