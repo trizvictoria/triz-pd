@@ -177,7 +177,7 @@ export function OnboardingPage() {
               <h1 className="page-title">Adicionar uma conta para repasses</h1>
               <p className="page-subtitle">Insira as informações bancarias atreladas a empresa</p>
               <div style={{ marginTop: 20, display: 'flex', flexDirection: 'column', gap: 16 }}>
-                <Field label="Titular da conta">
+                <Field label="Nome titular da conta">
                   <Input value={onboarding.holderName} onChange={(e) => patchOnboarding({ holderName: e.target.value })} />
                 </Field>
                 <div className="grid-3">
