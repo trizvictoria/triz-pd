@@ -202,7 +202,7 @@ export function EducacionalApp() {
   }, [])
 
   const [step, setStep] = useState<Step>('statement')
-  const [tuitionIds, setTuitionIds] = useState<string[]>([])
+  const [tuitionIds, setTuitionIds] = useState<string[]>(['2026-09'])
   const [payMode, setPayMode] = useState<'combine' | 'card'>('combine')
   const [cards, setCards] = useState<SavedCard[]>(INITIAL_CARDS)
   const [selected, setSelected] = useState<string[]>([])
@@ -552,6 +552,57 @@ export function EducacionalApp() {
             Opções de pagamento indisponíveis, pois o boleto encontra-se inativo.
           </p>
         </div>
+        <div className="edu-statement__actions">
+          <button type="button" className="edu-btn" onClick={() => setOffer('mix')} disabled={!canPay}>
+            <img src={eduAsset('icon-split.svg')} alt="" />
+            Combinar pagamentos
+          </button>
+          <button type="button" className="edu-btn edu-btn--fixed" onClick={() => setOffer('pix')} disabled={!canPay}>
+            <img src={eduAsset('icon-pix.svg')} alt="" />
+            Pix
+          </button>
+          <button type="button" className="edu-btn edu-btn--fixed" onClick={openCards} disabled={!canPay}>
+            <img src={eduAsset('icon-credit-card.svg')} alt="" />
+            Cartão
+          </button>
+          <div className="edu-boleto-split">
+            <button
+              type="button"
+              className="edu-btn edu-btn--ghost edu-btn--boleto"
+              disabled={!canPay}
+              aria-expanded={boletoMenuOpen}
+              onClick={() => setBoletoMenuOpen((open) => !open)}
+            >
+              <img src={eduAsset('icon-boleto.svg')} alt="" />
+              Boleto
+              <img src={eduAsset('icon-chevron.svg')} alt="" />
+            </button>
+            {boletoMenuOpen ? (
+              <div className="edu-boleto-menu" role="menu">
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={() => {
+                    setBoletoMenuOpen(false)
+                    setOffer('boleto')
+                  }}
+                >
+                  Gerar boleto
+                </button>
+                <button
+                  type="button"
+                  role="menuitem"
+                  onClick={() => {
+                    setBoletoMenuOpen(false)
+                    setOffer('barcode')
+                  }}
+                >
+                  Gerar código de barras
+                </button>
+              </div>
+            ) : null}
+          </div>
+        </div>
         <div className="edu-paybar">
           <div className="edu-tabs" role="tablist">
             <span className="edu-tab is-on" role="tab" aria-selected="true">
@@ -567,76 +618,10 @@ export function EducacionalApp() {
               Nota Fiscal
             </span>
           </div>
-          <div className="edu-paybar__actions">
-            <p className="edu-selected-total">
-              <span>Total selecionado</span>
-              <b>{formatBRL(payCents)}</b>
-            </p>
-            <button type="button" className="edu-btn" onClick={() => setOffer('pix')} disabled={!canPay}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <path d="M7 7h3.2v3.2H7V7Zm6.8 0H17v3.2h-3.2V7ZM7 13.8h3.2V17H7v-3.2Zm6.8 0H17V17h-3.2v-3.2Z" fill="#fff" />
-              </svg>
-              Pix
-            </button>
-            <button type="button" className="edu-btn" onClick={openCards} disabled={!canPay}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <path d="M4 7.5h16v9H4v-9Zm0-1.5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1Zm1.5 6.2h4v1.4h-4v-1.4Z" fill="#fff" />
-              </svg>
-              Cartão
-            </button>
-            <div className="edu-boleto-split">
-                <button
-                  type="button"
-                  className="edu-btn edu-btn--ghost"
-                  disabled={!canPay}
-                  aria-expanded={boletoMenuOpen}
-                  onClick={() => setBoletoMenuOpen((open) => !open)}
-                >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                    <path d="M6 6h1.4v12H6V6Zm2.4 0H10v12H8.4V6Zm2.6 0h2.2v12h-2.2V6Zm3.2 0H16v12h-1.8V6Zm2.6 0H20v12h-1.8V6Z" fill="currentColor" />
-                  </svg>
-                  Boleto
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden>
-                    <path d="M7 10h10l-5 6-5-6Z" fill="currentColor" />
-                  </svg>
-                </button>
-                {boletoMenuOpen ? (
-                  <div className="edu-boleto-menu" role="menu">
-                    <button
-                      type="button"
-                      role="menuitem"
-                      onClick={() => {
-                        setBoletoMenuOpen(false)
-                        setOffer('boleto')
-                      }}
-                    >
-                      Gerar boleto
-                    </button>
-                    <button
-                      type="button"
-                      role="menuitem"
-                      onClick={() => {
-                        setBoletoMenuOpen(false)
-                        setOffer('barcode')
-                      }}
-                    >
-                      Gerar código de barras
-                    </button>
-                  </div>
-                ) : null}
-              </div>
-            <button type="button" className="edu-btn" onClick={() => setOffer('mix')} disabled={!canPay}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-                <path d="M6 8h5V6H6v2Zm7 0h5V6h-5v2ZM6 18h5v-2H6v2Zm7-6H6v2h7v-2Zm2 1.2 3.2 3.2-1.2 1.2-3.2-3.2 1.2-1.2Z" fill="#fff" />
-              </svg>
-              Combinar pagamentos
-            </button>
-          </div>
         </div>
         <div className="edu-charges">
-          {TUITIONS.map((item) => {
+          {TUITIONS.filter((item) => item.id === '2026-09').map((item) => {
             const on = tuitionIds.includes(item.id)
-            const overdue = item.status === 'overdue'
             return (
               <article className="edu-charge" key={item.id}>
                 <div className="edu-charge__who">
@@ -668,7 +653,9 @@ export function EducacionalApp() {
                     <b>Aluno:</b> ANA PAULA DA SILVA ENSINO SUPERIOR
                   </p>
                   <p>
-                    <b>Responsável:</b> ANA PAULA DA SILVA RESPONSAVEL FINANCEIRO ALUNO
+                    <b>Responsável:</b> ANA PAULA DA SILVA RESPONSAVEL
+                    <br />
+                    FINANCEIRO ALUNO
                   </p>
                   <p>Período letivo: 2025/1</p>
                   <button type="button" className="edu-detail">
@@ -678,14 +665,13 @@ export function EducacionalApp() {
                 <p className="edu-charge__due">
                   <span className="edu-charge__due-label">
                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
-                      <path d="M7 3.5h1.4V5h7.2V3.5H17V5h1.1A1.9 1.9 0 0 1 20 6.9v11.2A1.9 1.9 0 0 1 18.1 20H5.9A1.9 1.9 0 0 1 4 18.1V6.9A1.9 1.9 0 0 1 5.9 5H7V3.5ZM5.6 9v9h12.8V9H5.6Z" fill={overdue ? '#e10600' : '#2e9b4f'} />
+                      <path d="M7 3.5h1.4V5h7.2V3.5H17V5h1.1A1.9 1.9 0 0 1 20 6.9v11.2A1.9 1.9 0 0 1 18.1 20H5.9A1.9 1.9 0 0 1 4 18.1V6.9A1.9 1.9 0 0 1 5.9 5H7V3.5ZM5.6 9v9h12.8V9H5.6Z" fill="#2e9b4f" />
                     </svg>
                     <span>
                       Vencimento
                       <strong>{item.due}</strong>
                     </span>
                   </span>
-                  <em className={`edu-charge__status${overdue ? ' is-overdue' : ' is-open'}`}>{tuitionStatusLabel(item.status)}</em>
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
                     <path d="M7 8a5 5 0 0 1 8.2-1.6L17 8h-3.2V6.4H17V10h-3.6l1.4-1.2A6.6 6.6 0 0 0 7 8Zm10 8a5 5 0 0 1-8.2 1.6L7 16h3.2v1.6H7V14h3.6l-1.4 1.2A6.6 6.6 0 0 0 17 16Z" fill="#7b3fe4" />
                   </svg>

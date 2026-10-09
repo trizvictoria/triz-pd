@@ -925,7 +925,7 @@
 .edu-statement {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 28px;
   width: 100%;
   min-width: 0;
 }
@@ -933,12 +933,15 @@
 .edu-legend {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
+  border: 1px solid #d9d9d9;
+  padding: 16px 20px 18px;
 }
 
 .edu-legend h2 {
-  color: #06748f;
-  font-size: 18px;
+  margin-bottom: 4px;
+  color: #00a3c8;
+  font-size: 16px;
   font-weight: 700;
 }
 
@@ -954,8 +957,42 @@
 .edu-swatch {
   width: 14px;
   height: 14px;
-  margin-top: 3px;
+  margin-top: 2px;
   flex: none;
+}
+
+.edu-statement__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.edu-statement__actions .edu-btn {
+  min-width: 0;
+  height: 47px;
+  min-height: 47px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px;
+}
+
+.edu-statement__actions .edu-btn--fixed {
+  width: 155px;
+  padding: 0 12px;
+}
+
+.edu-statement__actions .edu-btn--boleto {
+  width: 154px;
+  gap: 4px;
+  padding: 0 8px;
+  font-family: Nunito, 'Nunito Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
 }
 
 .edu-paybar {
@@ -964,6 +1001,7 @@
   justify-content: space-between;
   gap: 16px 24px;
   flex-wrap: wrap;
+  margin-top: -12px;
   border-bottom: 1px solid #e6e6e6;
 }
 
@@ -982,8 +1020,8 @@
 }
 
 .edu-tab.is-on {
-  color: var(--edu-brand);
-  box-shadow: inset 0 -3px 0 var(--edu-brand);
+  color: #06748f;
+  box-shadow: inset 0 -3px 0 #00a3c8;
 }
 
 .edu-paybar__actions {
@@ -1141,7 +1179,7 @@
 .edu-charge__due {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   gap: 12px;
   color: #1a1a1a;
 }
