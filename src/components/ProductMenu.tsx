@@ -13,6 +13,7 @@ const ITEMS: Array<
   { type: 'sep', id: 'sep-2' },
   { type: 'item', id: 'construcao', label: 'Construção' },
   { type: 'item', id: 'educacional', label: 'Educacional' },
+  { type: 'item', id: 'winthor', label: 'Winthor' },
   { type: 'sep', id: 'sep-3' },
   { type: 'item', id: 'suri', label: 'Suri Shop' },
   { type: 'sep', id: 'sep-4' },

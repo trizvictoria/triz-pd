@@ -7,6 +7,8 @@
     '<button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="construcao">Construção</button>' +
+    '<button type="button" class="product-switch__item" data-product="educacional">Educacional</button>' +
+    '<button type="button" class="product-switch__item" data-product="winthor">Winthor</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="checkout">Checkout</button>' +
     '<span class="product-switch__sep"></span>' +
@@ -32,6 +34,8 @@
       return
     }
     if (id === 'construcao') location.assign(root + 'construcao/')
+    else if (id === 'educacional') location.assign(root + 'educacional/')
+    else if (id === 'winthor') location.assign(root + 'winthor/')
     else if (id === 'suri') location.assign(root + '#suri')
     else if (id === 'checkout') location.assign(root + '#checkout')
     else location.assign(root)

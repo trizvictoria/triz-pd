@@ -11,6 +11,7 @@ const PRODUCTS: { value: LoginProduct; label: string }[] = [
   { value: 'rd', label: 'RD Vendas' },
   { value: 'construcao', label: 'Construção' },
   { value: 'educacional', label: 'Educacional' },
+  { value: 'winthor', label: 'Winthor' },
   { value: 'suri', label: 'Suri Shop' },
   { value: 'checkout', label: 'Checkout' },
 ]

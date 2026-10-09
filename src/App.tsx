@@ -50,7 +50,8 @@ function MainApp() {
       product === 'totvs-credenciamento' ||
       product === 'totvs-dashboard' ||
       product === 'construcao' ||
-      product === 'educacional'
+      product === 'educacional' ||
+      product === 'winthor'
     ) {
       goExperience(product)
       return
