@@ -9,7 +9,8 @@
     '#pd-product-switch-host .product-switch__item{display:block;width:100%;padding:8px 16px;color:#fff;font:500 14px/20px "DM Sans",sans-serif;text-align:left;background:transparent;border:0;cursor:pointer}' +
     '#pd-product-switch-host .product-switch__item:hover:not(:disabled){background:rgba(255,255,255,.08)}' +
     '#pd-product-switch-host .product-switch__item.is-disabled,#pd-product-switch-host .product-switch__item:disabled{color:rgba(255,255,255,.42);cursor:default}' +
-    '#pd-product-switch-host .product-switch__sep{display:block;height:1px;margin:8px 12px;background:rgba(255,255,255,.12)}'
+    '#pd-product-switch-host .product-switch__sep{display:block;height:1px;margin:8px 12px;background:rgba(255,255,255,.12)}' +
+    '.brand .product-switch,.totvs-brand .product-switch,.navbar-logo .product-switch{visibility:hidden!important;pointer-events:none!important}'
 
   var MENU =
     '<div class="product-switch">' +
@@ -25,6 +26,7 @@
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="construcao">Construção</button>' +
     '<button type="button" class="product-switch__item" data-product="educacional">Educacional</button>' +
+    '<button type="button" class="product-switch__item" data-product="winthor">Winthor</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>' +
     '<span class="product-switch__sep"></span>' +
@@ -57,6 +59,7 @@
       return
     }
     if (id === 'educacional') location.assign(root + 'educacional/')
+    else if (id === 'winthor') location.assign(root + 'winthor/')
     else if (id === 'construcao') location.assign(root + 'construcao/')
     else if (id === 'suri') location.assign(root + '#suri')
     else if (id === 'checkout') location.assign(root + 'construcao/checkout/')
@@ -74,7 +77,7 @@
   }
 
   function position() {
-    var brand = document.querySelector('.brand')
+    var brand = document.querySelector('.brand, .totvs-brand')
     var el = host()
     if (!brand) {
       el.style.visibility = 'hidden'
@@ -148,4 +151,5 @@
   observer.observe(document.documentElement, { childList: true, subtree: true })
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount)
   else mount()
+  setInterval(position, 250)
 })()

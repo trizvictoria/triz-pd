@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1295 - Gestão de recebimentos antecipados</title>
+    <style>
+        /* Estilos Globais - Winthor Clássico */
+        body {
+            margin: 0;
+            font-family: Tahoma, Arial, sans-serif;
+            font-size: 11px;
+            background-color: #f0f0f0;
+            color: #000;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Barra Superior */
+        .header {
+            background: linear-gradient(to right, #008b8b, #00bfff);
+            color: white;
+            padding: 5px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .header-info {
+            font-size: 11px;
+            font-weight: normal;
+        }
+
+        /* Área principal */
+        .main-content {
+            padding: 5px 10px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Fieldsets (Group Boxes) */
+        fieldset {
+            border: 1px solid #a0a0a0;
+            padding: 8px;
+            margin-bottom: 5px;
+            border-radius: 2px;
+            background-color: #f0f0f0;
+        }
+        legend {
+            font-weight: bold;
+            color: #000;
+            padding: 0 5px;
+        }
+
+        /* Form Controls */
+        .filter-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 5px;
+            align-items: flex-end;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .input-group label {
+            margin-bottom: 2px;
+        }
+        .input-group.horizontal {
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
+        }
+        input[type="text"], input[type="password"], select, input[type="date"] {
+            border: 1px solid #7f9db9;
+            padding: 3px;
+            font-family: Tahoma;
+            font-size: 11px;
+        }
+        .input-btn-group {
+            display: flex;
+        }
+        .input-btn-group input { width: 50px; }
+        .input-btn-group button { 
+            padding: 2px 5px; 
+            margin-left: 2px;
+            margin-right: 2px;
+        }
+        .input-btn-group input.desc { width: 150px; background-color: #e0e0e0; }
+
+        button {
+            background-color: #e1e1e1;
+            border: 1px solid #8e8f8f;
+            padding: 4px 12px;
+            font-family: Tahoma, Arial, sans-serif;
+            font-size: 11px;
+            cursor: pointer;
+            border-radius: 2px;
+            box-shadow: inset 1px 1px 0px #fff;
+        }
+        button:hover { background-color: #e5f1fb; border-color: #0078d7; }
+        button:active { background-color: #cce4f7; }
+        button:disabled { color: #aaa; cursor: not-allowed; }
+        
+        .filter-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        /* Info Panel */
+        .info-panel {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px 0;
+            border-bottom: 1px solid #a0a0a0;
+            margin-bottom: 5px;
+        }
+        .counters {
+            display: flex;
+            gap: 20px;
+        }
+        .counter-box {
+            text-align: center;
+            padding: 5px 20px;
+            border: 1px solid #a0a0a0;
+            background-color: #fff;
+            font-weight: bold;
+        }
+        .counter-box span {
+            display: block;
+            font-size: 16px;
+        }
+        .update-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Grid */
+        .grid-container {
+            flex: 1;
+            overflow: auto;
+            border: 1px solid #a0a0a0;
+            background-color: #fff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #d0d0d0;
+            padding: 4px 6px;
+            text-align: left;
+            white-space: nowrap;
+        }
+        th {
+            background: linear-gradient(to bottom, #f9f9f9, #e0e0e0);
+            font-weight: normal;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 1px 0 #a0a0a0;
+            z-index: 10;
+        }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        tr:hover { background-color: #e5f1fb; }
+        
+        .btn-action {
+            padding: 2px 6px;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            height: 40px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            border-top: 1px solid #ccc;
+            flex-shrink: 0;
+        }
+
+        /* Modais */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-window {
+            background-color: #f0f0f0;
+            border: 1px solid #0054e3;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+        .modal-window.large { width: 750px; }
+        .modal-window.medium { width: 550px; }
+        .modal-header {
+            background: linear-gradient(to bottom, #99b4d1, #0054e3);
+            color: white;
+            padding: 5px 8px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-close {
+            background-color: transparent;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: none;
+        }
+        .modal-close:hover { background-color: red; }
+        .modal-body {
+            padding: 15px;
+            flex: 1;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        .modal-footer {
+            padding: 10px 15px;
+            border-top: 1px solid #ccc;
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            background-color: #f0f0f0;
+        }
+        
+        .action-menu-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 8px;
+            margin-bottom: 5px;
+            background: #fff;
+            border: 1px solid #ccc;
+            font-size: 12px;
+        }
+        .action-menu-btn:hover { background: #e5f1fb; }
+
+        /* Estilos Extras para Configuração */
+        .form-group {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .form-group label {
+            width: 150px;
+            display: inline-block;
+        }
+        .form-group input[type="text"], 
+        .form-group input[type="password"], 
+        .form-group select {
+            flex: 1;
+            padding: 3px;
+            border: 1px solid #7f9db9;
+        }
+        .form-group input[disabled] { background-color: #e0e0e0; }
+        .hint-text {
+            color: #4a4a4a;
+            font-style: italic;
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 6px;
+            margin-bottom: 15px;
+            border-radius: 3px;
+        }
+        .selection-panel {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-top: 15px;
+            display: none;
+            background: #fff;
+        }
+        .service-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .status-badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            color: white;
+        }
+        .status-badge.config { background-color: #28a745; }
+        .status-badge.noconfig { background-color: #dc3545; }
+
+        .switch-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .switch-container.no-border {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 10px;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 20px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 14px;
+            width: 14px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider { background-color: #0054e3; }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #7f9db9;
+            margin-bottom: 15px;
+        }
+        .tab-btn {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-bottom: none;
+            padding: 6px 12px;
+            cursor: pointer;
+            margin-right: 2px;
+            border-radius: 3px 3px 0 0;
+        }
+        .tab-btn.active {
+            background-color: #fff;
+            border: 1px solid #7f9db9;
+            border-bottom: 1px solid #fff;
+            margin-bottom: -1px;
+            font-weight: bold;
+        }
+        .tab-content {
+            display: none;
+            background: #fff;
+            padding: 15px;
+            border: 1px solid #7f9db9;
+            border-top: none;
+        }
+        .tab-content.active { display: block; }
+        
+        .alert-msg {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #d4edda;
+            background-color: #d4edda;
+            color: #155724;
+            border-radius: 3px;
+            display: none;
+        }
+        
+        .hidden { display: none !important; }
+        
+        /* Box QR Code Fake */
+        .qr-code-fake {
+            width: 150px;
+            height: 150px;
+            background: repeating-conic-gradient(#000 0% 25%, #fff 0% 50%) 50% / 20px 20px;
+            border: 2px solid #000;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .qr-code-fake span {
+            background-color: #fff;
+            padding: 5px 10px;
+            font-weight: bold;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <span>1295 - Gestão de recebimentos antecipados</span>
+        <span class="header-info">666 - DANIELPRATA (LOCAL@LOCAL) PCSIS1295 v.38.0.03.034</span>
+    </div>
+
+    <!-- Corpo da Rotina (Filtros e Grid) -->
+    <div class="main-content">
+        <!-- Filtros -->
+        <fieldset>
+            <legend>1 - Filtros</legend>
+            <div class="filter-row">
+                <div class="input-group">
+                    <label>Filial</label>
+                    <select style="width: 80px;">
+                        <option>1</option>
+                        <option>2</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Período de emissão do pedido / orçamento</label>
+                    <div class="input-group horizontal">
+                        <input type="date" value="2026-07-01"> até <input type="date" value="2026-09-30">
+                    </div>
+                </div>
+                <fieldset style="margin: 0; padding: 2px 8px;">
+                    <legend style="font-weight: normal; font-size: 10px;">Tipo de Pesquisa</legend>
+                    <div class="input-group horizontal" style="height: 100%;">
+                        <label><input type="checkbox" checked> Pedidos</label>
+                        <label><input type="checkbox"> Orçamentos</label>
+                    </div>
+                </fieldset>
+            </div>
+            
+            <div class="filter-row">
+                <div class="input-group">
+                    <label>Cliente</label>
+                    <div class="input-btn-group">
+                        <input type="text" placeholder="Código">
+                        <button>...</button>
+                        <input type="text" class="desc" disabled>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Núm. do Pedido ou Orç.</label>
+                    <input type="text" style="width: 120px;">
+                </div>
+                <div class="input-group">
+                    <label>Intervalo de Valor</label>
+                    <div class="input-group horizontal">
+                        <input type="text" style="width: 60px;"> <input type="text" style="width: 60px;">
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-row">
+                <div class="input-group">
+                    <label>RCA</label>
+                    <div class="input-btn-group">
+                        <input type="text" placeholder="Código">
+                        <button>...</button>
+                        <input type="text" class="desc" disabled>
+                    </div>
+                </div>
+            </div>
+
+            <fieldset style="margin-top: 5px;">
+                <legend style="font-weight: normal; font-size: 10px;">Situação do Pagamento</legend>
+                <div class="input-group horizontal" style="gap: 20px;">
+                    <label><input type="checkbox"> Não gerado</label>
+                    <label><input type="checkbox"> Aguardando Pagamento</label>
+                    <label><input type="checkbox"> Pagos</label>
+                    <label><input type="checkbox"> Estornado</label>
+                    <label><input type="checkbox"> Cancelados</label>
+                </div>
+            </fieldset>
+
+            <div class="filter-actions">
+                <button>Limpar Campos</button>
+                <button style="font-weight: bold; width: 100px;">Pesquisar</button>
+            </div>
+        </fieldset>
+
+        <!-- Painel de Info -->
+        <div class="info-panel">
+            <div class="counters">
+                <div class="counter-box">Pedidos<br><span>4</span></div>
+                <div class="counter-box">Orçamentos<br><span>1</span></div>
+                <div class="update-info">
+                    <strong>5 Itens encontrados</strong>
+                    <span>Última atualização em: 08/09/2026 14:46:43</span>
+                </div>
+            </div>
+            <div>
+                <button>🔄 Atualizar Agora (F5)</button>
+            </div>
+        </div>
+
+        <!-- Grid -->
+        <div class="grid-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Núm. Ped.</th>
+                        <th>Núm. Orç.</th>
+                        <th>Cód. Cli</th>
+                        <th>Cliente</th>
+                        <th>Cpf/Cnpj</th>
+                        <th>Emissão</th>
+                        <th>Geração Link</th>
+                        <th>Status Pagto</th>
+                        <th>Posição Pedido</th>
+                        <th>Fil.</th>
+                        <th>Vlr. Pedido</th>
+                        <th>Vlr. Créditos</th>
+                        <th>Total</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pedido</td><td>2000608</td><td>0</td><td>4</td><td>CLIENTE TESTE - DESC FIN A VISTA</td>
+                        <td>64.654.847/0001-72</td><td>29/07/2026</td><td>04/08/2026</td>
+                        <td>PAGO</td><td>Bloqueado</td><td>1</td><td>3.567,00</td><td>0,00</td><td>3.567,00</td>
+                        <td><button class="btn-action" onclick="openActionMenu('pago')">...</button></td>
+                    </tr>
+                    <tr>
+                        <td>Pedido</td><td>2000606</td><td>0</td><td>3</td><td>CLIENTE TESTE - DESC FIN 308 - 3</td>
+                        <td>75.333.118/0001-30</td><td>28/07/2026</td><td>17/08/2026</td>
+                        <td>LINK DE PAGAMENTO GERADO</td><td>Bloqueado</td><td>1</td><td>1.053,00</td><td>0,00</td><td>1.053,00</td>
+                        <td><button class="btn-action" onclick="openActionMenu('gerado')">...</button></td>
+                    </tr>
+                    <tr>
+                        <td>Orçamento</td><td>2000627</td><td>2000627</td><td>6</td><td>CLIENTE TESTE - DESC FIN ATE VENC</td>
+                        <td>12.240.114/0001-98</td><td>19/08/2026</td><td></td>
+                        <td>NÃO GERADO</td><td>Liberado</td><td>1</td><td>5.855,00</td><td>0,00</td><td>5.855,00</td>
+                        <td><button class="btn-action" onclick="openActionMenu('nao_gerado')">...</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Rodapé com o botão de Configuração -->
+    <div class="footer">
+        <button onclick="openModal('modalInitial')">Configurações</button>
+    </div>
+
+    <!-- ==========================================
+         MODAIS DA MOVIMENTAÇÃO DA GRID
+         ========================================== -->
+    <div id="modalAcoes" class="modal-overlay">
+        <div class="modal-window">
+            <div class="modal-header">
+                <span>Ações do Pedido / Orçamento</span>
+                <button class="modal-close" onclick="closeModal('modalAcoes')">X</button>
+            </div>
+            <div class="modal-body">
+                <button class="action-menu-btn" onclick="openCreditos()">Associar / Desassociar créditos</button>
+                <div id="btnAcoes_Estornar" class="hidden">
+                    <button class="action-menu-btn" onclick="execAction('Estorno realizado com sucesso!')">Estornar pagamento</button>
+                </div>
+                <div id="btnAcoes_Cancelar" class="hidden">
+                    <button class="action-menu-btn" onclick="execAction('Link cancelado com sucesso!')">Cancelar link</button>
+                </div>
+                <div id="btnAcoes_Gerar" class="hidden">
+                    <button class="action-menu-btn" onclick="openProvedorLink()">Gerar link</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalCreditos" class="modal-overlay">
+        <div class="modal-window medium">
+            <div class="modal-header">
+                <span>Gestão de Créditos do Cliente</span>
+                <button class="modal-close" onclick="closeModal('modalCreditos')">X</button>
+            </div>
+            <div class="modal-body">
+                <table style="margin-bottom: 15px;">
+                    <thead>
+                        <tr>
+                            <th style="width: 30px;"><input type="checkbox" id="chkAllCreditos"></th>
+                            <th>Valor do Crédito</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><input type="checkbox" class="chk-credito" data-status="livre"></td><td>R$ 150,00</td><td>Livre</td></tr>
+                        <tr><td><input type="checkbox" class="chk-credito" data-status="associado"></td><td>R$ 250,00</td><td>Associado</td></tr>
+                    </tbody>
+                </table>
+                <p style="font-style: italic; color: #555; margin: 0;">OBS: Créditos vinculados devem abater na geração do link.</p>
+            </div>
+            <div class="modal-footer">
+                <button onclick="backToAcoes()">Voltar</button>
+                <button id="btnDesassociarCred" onclick="confirmCreditos('desassociar')">Desassociar</button>
+                <button onclick="confirmCreditos('associar')">Associar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalProvedor" class="modal-overlay">
+        <div class="modal-window">
+            <div class="modal-header">
+                <span>Gerar Link - Selecionar Provedor</span>
+                <button class="modal-close" onclick="closeModal('modalProvedor')">X</button>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <p>Selecione o provedor para a geração do link de pagamento:</p>
+                <button class="action-menu-btn" style="text-align: center; font-weight: bold;" onclick="gerarLink('Totvs Pay')">TOTVS Pay</button>
+                <button class="action-menu-btn" style="text-align: center; font-weight: bold;" onclick="gerarLink('Pix Techfin')">Pix Techfin</button>
+            </div>
+            <div class="modal-footer">
+                <button onclick="closeModal('modalProvedor'); openModal('modalAcoes');">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOVO MODAL: Link Gerado -->
+    <div id="modalLinkGerado" class="modal-overlay">
+        <div class="modal-window medium">
+            <div class="modal-header">
+                <span>Link gerado</span>
+                <button class="modal-close" onclick="closeModal('modalLinkGerado')">X</button>
+            </div>
+            <div class="modal-body">
+                <div style="font-size: 13px; text-align: center; margin-bottom: 15px;">
+                    <p><strong>Tipo:</strong> <span id="lblTipoLink"></span></p>
+                    <p><strong>Valor do link gerado:</strong> R$ 5.855,00</p>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <!-- QrCode Fake -->
+                    <div class="qr-code-fake">
+                        <span>QR CODE</span>
+                    </div>
+                </div>
+
+                <div class="form-group" style="flex-direction: column; align-items: stretch;">
+                    <label style="text-align: left; margin-bottom: 5px; width: auto;">Link de pagamento:</label>
+                    <input type="text" id="fakePaymentLink" value="https://pagamento.provedor.com.br/mock-123456789" readonly style="width: 100%; text-align: center; background-color: #e9ecef; font-size: 12px; padding: 6px;">
+                </div>
+            </div>
+            <div class="modal-footer" style="justify-content: center;">
+                <button onclick="alert('Link copiado para a área de transferência!')">Copiar link</button>
+                <button onclick="alert('QR Code copiado para a área de transferência!')">Copiar QrCode</button>
+                <button onclick="alert('Link enviado por e-mail com sucesso!')">Enviar por e-mail</button>
+                <button onclick="closeModal('modalLinkGerado')">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         MODAL 1: Seleção de Filial e Serviço 
+         ========================================== -->
+    <div id="modalInitial" class="modal-overlay">
+        <div class="modal-window">
+            <div class="modal-header">
+                <span>Configurações de Recebimento</span>
+                <button class="modal-close" onclick="closeModal('modalInitial')">X</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Selecione a Filial:</label>
+                    <select id="selectFilial" onchange="checkFilial()">
+                        <option value="">-- Selecione --</option>
+                        <option value="1">1 - Filial Matriz</option>
+                        <option value="2">2 - Filial Sul</option>
+                    </select>
+                </div>
+
+                <div id="servicesPanel" class="selection-panel">
+                    <div class="service-row">
+                        <div>
+                            <strong>Pix Techfin</strong> 
+                            <span class="status-badge noconfig">Não configurado</span>
+                        </div>
+                        <button onclick="openPixModal()">Configurar Pix</button>
+                    </div>
+                    <div class="service-row">
+                        <div>
+                            <strong>TOTVS Pay</strong> 
+                            <span class="status-badge noconfig">Não configurado</span>
+                        </div>
+                        <button onclick="openTotvsModal()">Configurar TOTVS Pay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         MODAL 2: Pix Techfin 
+         ========================================== -->
+    <div id="modalPix" class="modal-overlay">
+        <div class="modal-window">
+            <div class="modal-header">
+                <span>Configuração - Pix Techfin</span>
+                <button class="modal-close" onclick="closeModal('modalPix')">X</button>
+            </div>
+            <div class="modal-body">
+                <div id="pixAlert" class="alert-msg"></div>
+
+                <div class="switch-container">
+                    <label class="switch">
+                        <input type="checkbox" id="pixAtivo">
+                        <span class="slider"></span>
+                    </label>
+                    <strong>Ativo / Inativo</strong>
+                </div>
+
+                <div class="form-group"><label>URL Token</label><input type="text"></div>
+                <div class="form-group"><label>URL base dos métodos</label><input type="text"></div>
+                <div class="form-group"><label>Client id</label><input type="text"></div>
+                <div class="form-group"><label>Client Secret</label><input type="password"></div>
+                <div class="form-group"><label>Usuário RAC</label><input type="text"></div>
+                <div class="form-group"><label>Senha RAC</label><input type="password"></div>
+                <div class="form-group"><label>Num. caixa padrão</label><input type="text"></div>
+                <div class="form-group">
+                    <label>Carteira</label>
+                    <select><option>pix</option><option>shipaypagador</option></select>
+                </div>
+                <div class="form-group">
+                    <label>Cobrança PIX padrão</label>
+                    <select><option>PIXD - Pix Digital (Flag marcada)</option><option>PIXP - Pix Padrão (Flag marcada)</option></select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="testPixConnection()">Testar conexão</button>
+                <button onclick="closeModal('modalPix')">Cancelar</button>
+                <button onclick="savePix()">Gravar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         MODAL 3: TOTVS Pay (Fluxo de Credenciamento)
+         ========================================== -->
+    <div id="modalTotvs" class="modal-overlay">
+        <div class="modal-window large">
+            <div class="modal-header">
+                <span>Configuração - TOTVS Pay</span>
+                <button class="modal-close" onclick="closeModal('modalTotvs')">X</button>
+            </div>
+            <div class="modal-body">
+                <!-- Step 1: Interruptor Inicial -->
+                <div id="totvsStepToggle" class="switch-container">
+                    <label class="switch">
+                        <input type="checkbox" id="totvsAtivo" onchange="checkTotvsActive()">
+                        <span class="slider"></span>
+                    </label>
+                    <strong>Ativo / Inativo</strong>
+                </div>
+
+                <!-- Step 2: Boas vindas -->
+                <div id="totvsWelcome" class="hidden" style="text-align: center; padding: 20px;">
+                    <h3>Bem-vindo ao TOTVS Pay!</h3>
+                    <p>Você deverá fazer o auto credenciamento junto à Techfin. Reforçamos que os dados devem ser reais e que serão utilizados para análise do cadastro junto à integradora.</p>
+                    <button onclick="startTotvsWizard()">Confirmar e Iniciar</button>
+                </div>
+
+                <!-- Step 3: Wizard (Abas) -->
+                <div id="totvsWizard" class="hidden">
+                    <div class="tabs">
+                        <!-- Nova aba inserida -->
+                        <button class="tab-btn active" onclick="openTab(event, 'tab0')">Informações gerais</button>
+                        <button class="tab-btn" onclick="openTab(event, 'tab1')">Dados Cadastrais</button>
+                        <button class="tab-btn" onclick="openTab(event, 'tabEndereco')">Endereço</button>
+                        <button class="tab-btn" onclick="openTab(event, 'tab2')">Dados para Repasse</button>
+                        <button class="tab-btn" onclick="openTab(event, 'tab3')">Representante Legal</button>
+                        <button class="tab-btn" onclick="openTab(event, 'tab4')">Pagamentos habilitados</button>
+                    </div>
+
+                    <!-- Aba: Informações gerais -->
+                    <div id="tab0" class="tab-content active">
+                        <div class="hint-text">Os dados desta aba são gerais e refletem nas informações de todas as filiais.</div>
+                        <div class="form-group"><label>Tenant Id</label><input type="text" value="tenant-exemplo-001" disabled></div>
+                        <div class="form-group"><label>Id da conta</label><input type="text" value="acc_987654321" disabled></div>
+                        <div class="form-group"><label>Status da conta</label><input type="text" value="Ativo" disabled></div>
+                        <div class="form-group"><label>Usuário RAC</label><input type="text"></div>
+                        <div class="form-group"><label>Senha RAC</label><input type="password"></div>
+                        <div class="form-group"><label>URL RAC</label><input type="text"></div>
+                        <div class="form-group"><label>Client ID</label><input type="text"></div>
+                        <div class="form-group"><label>Secret ID</label><input type="password"></div>
+                    </div>
+
+                    <!-- Aba: Dados Cadastrais -->
+                    <div id="tab1" class="tab-content">
+                        <div class="form-group"><label>Razão Social</label><input type="text" value="EMPRESA DEMO LTDA"></div>
+                        <div class="form-group"><label>Nome Fantasia</label><input type="text" value="DEMO FANTASIA"></div>
+                        <div class="form-group"><label>CNPJ</label><input type="text" value="00.000.000/0001-00"></div>
+                        <div class="form-group"><label>E-mail</label><input type="text" value="contato@demo.com.br"></div>
+                        <div class="form-group"><label>Telefone</label><input type="text" value="(11) 9999-9999"></div>
+                        <div class="form-group"><label>Receita Anual</label><input type="text" placeholder="Digitação livre"></div>
+                        <div class="form-group"><label>Código de Categoria</label><input type="text" placeholder="Digitação livre"></div>
+                        <div class="form-group"><label>Data de fundação</label><input type="text" placeholder="dd/mm/aaaa"></div>
+                    </div>
+
+                    <!-- Aba: Endereço -->
+                    <div id="tabEndereco" class="tab-content">
+                        <div class="form-group"><label>Rua</label><input type="text"></div>
+                        <div class="form-group"><label>Número</label><input type="text"></div>
+                        <div class="form-group"><label>Complemento</label><input type="text"></div>
+                        <div class="form-group"><label>CEP</label><input type="text"></div>
+                        <div class="form-group"><label>UF</label><input type="text"></div>
+                        <div class="form-group"><label>Município</label><input type="text"></div>
+                        <div class="form-group"><label>Bairro</label><input type="text"></div>
+                    </div>
+
+                    <!-- Aba: Dados para Repasse -->
+                    <div id="tab2" class="tab-content">
+                        <div class="form-group">
+                            <label>Codbanco no Winthor</label>
+                            <select onchange="fillBankData()">
+                                <option value="">-- Selecione --</option>
+                                <option value="341">341 - Itaú</option>
+                                <option value="001">001 - Banco do Brasil</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Banco</label><input type="text" id="repBanco"></div>
+                        <div class="form-group"><label>Agência</label><input type="text" id="repAge"></div>
+                        <div class="form-group"><label>Dígito agência</label><input type="text" id="repDigAge"></div>
+                        <div class="form-group"><label>Conta Corrente</label><input type="text" id="repCc"></div>
+                        <div class="form-group"><label>Dígito CC</label><input type="text" id="repDigCc"></div>
+                        <div class="form-group">
+                            <label>Tipo de Conta</label>
+                            <select>
+                                <option>Corrente</option>
+                                <option>Poupança</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Aba: Representante Legal -->
+                    <div id="tab3" class="tab-content">
+                        <div class="form-group"><label>Nome Completo</label><input type="text"></div>
+                        <div class="form-group"><label>CPF</label><input type="text"></div>
+                        <div class="form-group"><label>E-mail</label><input type="text"></div>
+                        <div class="form-group"><label>Telefone</label><input type="text"></div>
+                        <div class="form-group"><label>Data de Nascimento</label><input type="text" placeholder="dd/mm/aaaa"></div>
+                        <div class="form-group"><label>Endereço Completo</label><input type="text"></div>
+                    </div>
+
+                    <!-- Aba: Pagamentos habilitados -->
+                    <div id="tab4" class="tab-content">
+                        <div class="switch-container no-border">
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                            <strong>Pix</strong>
+                        </div>
+                        <div class="switch-container no-border">
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                            <strong>Cartão de crédito</strong>
+                        </div>
+                        <div class="switch-container no-border">
+                            <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                            <strong>Boleto</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Envio de Documentos -->
+                <div id="totvsDocs" class="hidden">
+                    <h4>Envio de documentos do representante legal</h4>
+                    <p>Favor adicionar os documentos para finalização da abertura da conta. Serão aceitos (arquivos de imagem ou PDF de no máximo 3MB):</p>
+                    
+                    <div class="form-group">
+                        <label>Opção de Envio:</label>
+                        <select id="docOption" onchange="changeDocFields()">
+                            <option value="">-- Selecione --</option>
+                            <option value="1">Opção 1: Selfie + CNH Completa</option>
+                            <option value="2">Opção 2: Selfie + CNH Frente + CNH Verso</option>
+                            <option value="3">Opção 3: Selfie + RG Frente + RG Verso</option>
+                        </select>
+                    </div>
+                    <div id="docFieldsArea" style="background: #fff; padding: 10px; border: 1px solid #ccc; margin-top: 10px;">
+                        <span style="color:#888; font-style:italic;">Selecione uma opção acima para exibir os campos de arquivo.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnTotvsCancel" onclick="closeModal('modalTotvs')">Cancelar</button>
+                <button id="btnTotvsSendDocsCancel" class="hidden" onclick="backToDocs()">Cancelar</button>
+                <button id="btnTotvsSend" class="hidden" onclick="sendTotvsData()">Enviar</button>
+                <button id="btnTotvsSendFinal" class="hidden" onclick="sendFinalDocs()">Enviar Documentos</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         JAVASCRIPT
+         ========================================== -->
+    <script>
+        function openModal(id) {
+            document.getElementById(id).style.display = 'flex';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+            var alertPix = document.getElementById('pixAlert');
+            if (alertPix) alertPix.style.display = 'none';
+        }
+
+
+        /* Lógica do Menu de Ações da Grid (Movimentação) */
+        function openActionMenu(statusLink) {
+            document.getElementById('btnAcoes_Estornar').classList.add('hidden');
+            document.getElementById('btnAcoes_Cancelar').classList.add('hidden');
+            document.getElementById('btnAcoes_Gerar').classList.add('hidden');
+
+            if (statusLink === 'pago') document.getElementById('btnAcoes_Estornar').classList.remove('hidden');
+            else if (statusLink === 'gerado') document.getElementById('btnAcoes_Cancelar').classList.remove('hidden');
+            else if (statusLink === 'nao_gerado') document.getElementById('btnAcoes_Gerar').classList.remove('hidden');
+
+            openModal('modalAcoes');
+        }
+
+        function execAction(msg) {
+            if(confirm('Tem certeza que deseja prosseguir com esta ação?')) {
+                alert(msg);
+                document.querySelectorAll('.modal-overlay').forEach(el => el.style.display = 'none');
+            }
+        }
+
+        /* Lógica de Créditos */
+        function openCreditos() { closeModal('modalAcoes'); openModal('modalCreditos'); }
+        function backToAcoes() { closeModal('modalCreditos'); openModal('modalAcoes'); }
+        function confirmCreditos(tipo) {
+            var acaoStr = tipo === 'associar' ? 'associação' : 'desassociação';
+            if(confirm(`Confirma a ${acaoStr} dos créditos selecionados a este pedido?`)) {
+                alert(`Créditos processados com sucesso!`);
+                closeModal('modalCreditos');
+            }
+        }
+
+        /* Lógica de Gerar Link Nova Tela */
+        function openProvedorLink() {
+            closeModal('modalAcoes');
+            openModal('modalProvedor');
+        }
+
+        function gerarLink(tipoProvedor) {
+            closeModal('modalProvedor');
+            document.getElementById('lblTipoLink').innerText = tipoProvedor;
+            openModal('modalLinkGerado');
+        }
+
+        function checkFilial() {
+            var val = document.getElementById('selectFilial').value;
+            document.getElementById('servicesPanel').style.display = val ? 'block' : 'none';
+        }
+
+        function openPixModal() {
+            closeModal('modalInitial');
+            openModal('modalPix');
+        }
+
+        function testPixConnection() {
+            var alertBox = document.getElementById('pixAlert');
+            alertBox.style.display = 'block';
+            alertBox.innerText = 'Conexão com a integradora testada com sucesso!';
+            setTimeout(() => { alertBox.style.display = 'none'; }, 3000);
+        }
+
+        function savePix() {
+            alert('Configuração completada com sucesso');
+            closeModal('modalPix');
+        }
+
+        function openTotvsModal() {
+            closeModal('modalInitial');
+            openModal('modalTotvs');
+            
+            // Reseta fluxo
+            document.getElementById('totvsAtivo').checked = false;
+            document.getElementById('totvsWelcome').classList.add('hidden');
+            document.getElementById('totvsWizard').classList.add('hidden');
+            document.getElementById('totvsDocs').classList.add('hidden');
+            document.getElementById('totvsStepToggle').classList.remove('hidden');
+            
+            // Reseta botoes
+            document.getElementById('btnTotvsSend').classList.add('hidden');
+            document.getElementById('btnTotvsSendFinal').classList.add('hidden');
+            document.getElementById('btnTotvsCancel').classList.remove('hidden');
+            document.getElementById('btnTotvsSendDocsCancel').classList.add('hidden');
+
+            // Reseta Abas
+            openTab(null, 'tab0', true);
+        }
+
+        function checkTotvsActive() {
+            var chk = document.getElementById('totvsAtivo');
+            if(chk.checked) {
+                document.getElementById('totvsWelcome').classList.remove('hidden');
+            } else {
+                document.getElementById('totvsWelcome').classList.add('hidden');
+            }
+        }
+
+        function startTotvsWizard() {
+            document.getElementById('totvsWelcome').classList.add('hidden');
+            document.getElementById('totvsWizard').classList.remove('hidden');
+            document.getElementById('btnTotvsSend').classList.remove('hidden');
+        }
+
+        function openTab(evt, tabName, isReset = false) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            
+            if(!isReset && evt) {
+                evt.currentTarget.classList.add("active");
+            } else {
+                // Força o primeiro tab-btn a ficar ativo no reset
+                document.querySelector(".tab-btn").classList.add("active");
+            }
+        }
+
+        function fillBankData() {
+            document.getElementById('repBanco').value = "Itaú Unibanco";
+            document.getElementById('repAge').value = "1234";
+            document.getElementById('repDigAge').value = "5";
+            document.getElementById('repCc').value = "98765";
+            document.getElementById('repDigCc').value = "4";
+        }
+
+        function sendTotvsData() {
+            // Mockup: Simulação de gravação no banco de dados referenciando a tabela pcconfigintegfin (jsonintegracao)
+            console.log("[Backend Mock] Salvando em pcconfigintegfin...");
+            console.log("Payload JSON Integracao: { tenant_id, Id_conta, account_status, Usuário_RAC, Senha_RAC, URL_RAC, Client_ID, Secret_ID }");
+
+            document.getElementById('totvsStepToggle').classList.add('hidden');
+            document.getElementById('totvsWizard').classList.add('hidden');
+            document.getElementById('totvsDocs').classList.remove('hidden');
+            
+            document.getElementById('btnTotvsSend').classList.add('hidden');
+            document.getElementById('btnTotvsCancel').classList.add('hidden');
+            
+            document.getElementById('btnTotvsSendDocsCancel').classList.remove('hidden');
+            document.getElementById('btnTotvsSendFinal').classList.remove('hidden');
+        }
+
+        function backToDocs() {
+            document.getElementById('docOption').value = "";
+            changeDocFields();
+        }
+
+        function changeDocFields() {
+            var opt = document.getElementById('docOption').value;
+            var area = document.getElementById('docFieldsArea');
+            area.innerHTML = '';
+            
+            if(opt == "1") {
+                area.innerHTML = `
+                    <div class="form-group"><label>Selfie</label><input type="file"></div>
+                    <div class="form-group"><label>CNH Frente e Verso</label><input type="file"></div>
+                `;
+            } else if (opt == "2") {
+                area.innerHTML = `
+                    <div class="form-group"><label>Selfie</label><input type="file"></div>
+                    <div class="form-group"><label>CNH Frente</label><input type="file"></div>
+                    <div class="form-group"><label>CNH Verso</label><input type="file"></div>
+                `;
+            } else if (opt == "3") {
+                area.innerHTML = `
+                    <div class="form-group"><label>Selfie</label><input type="file"></div>
+                    <div class="form-group"><label>RG Frente</label><input type="file"></div>
+                    <div class="form-group"><label>RG Verso</label><input type="file"></div>
+                `;
+            } else {
+                area.innerHTML = '<span style="color:#888; font-style:italic;">Selecione uma opção acima para exibir os campos de arquivo.</span>';
+            }
+        }
+
+        function sendFinalDocs() {
+            alert('Configuração completada com sucesso! \n\n(Os dados gerais foram salvos na pcconfigintegfin com status e payload correspondentes).');
+            closeModal('modalTotvs');
+        }
+    </script>
+<script src="experience-switch.js?v=1" defer></script>
+</body>
+</html>

@@ -338,6 +338,7 @@
           <span class="product-switch__sep"></span>
           <button type="button" class="product-switch__item" data-product="construcao">Construção</button>
           <button type="button" class="product-switch__item" data-product="educacional">Educacional</button>
+          <button type="button" class="product-switch__item" data-product="winthor">Winthor</button>
           <span class="product-switch__sep"></span>
           <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
           <span class="product-switch__sep"></span>
@@ -380,6 +381,7 @@
             <span class="product-switch__sep"></span>
             <button type="button" class="product-switch__item" data-product="construcao">Construção</button>
             <button type="button" class="product-switch__item" data-product="educacional">Educacional</button>
+            <button type="button" class="product-switch__item" data-product="winthor">Winthor</button>
             <span class="product-switch__sep"></span>
             <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
             <span class="product-switch__sep"></span>
@@ -464,6 +466,7 @@ function productMenuHTML(tone){
       <span class="product-switch__sep"></span>
       <button type="button" class="product-switch__item" data-product="construcao">Construção</button>
       <button type="button" class="product-switch__item" data-product="educacional">Educacional</button>
+      <button type="button" class="product-switch__item" data-product="winthor">Winthor</button>
       <span class="product-switch__sep"></span>
       <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
       <span class="product-switch__sep"></span>
@@ -808,11 +811,12 @@ window.__pdNavigate=function(id){
     render();
     return;
   }
-  if(id==='totvs'||id==='totvs-credenciamento'||id==='totvs-dashboard'||id==='construcao'||id==='educacional'){
+  if(id==='totvs'||id==='totvs-credenciamento'||id==='totvs-dashboard'||id==='construcao'||id==='educacional'||id==='winthor'){
     const p=location.pathname;
-    const i=p.search(new RegExp('/(totvs|construcao|educacional)(?:/|$)'));
+    const i=p.search(new RegExp('/(totvs|construcao|educacional|winthor)(?:/|$)'));
     const root=i>=0?p.slice(0,i)+'/': (p.endsWith('/')?p:p.replace(/[^/]+$/,''));
     if(id==='educacional'){location.assign(root+'educacional/');return}
+    if(id==='winthor'){location.assign(root+'winthor/');return}
     if(id==='construcao'){location.assign(root+'construcao/');return}
     try{sessionStorage.setItem('totvs-onboarded',id==='totvs-dashboard'?'1':'0')}catch(e){}
     location.assign(root+(id==='totvs-dashboard'?'totvs/dashboard':'totvs/'));
