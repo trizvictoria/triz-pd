@@ -57,11 +57,11 @@ export function PaymentLinksPage() {
           <thead>
             <tr>
               <th>Nome do link</th>
-              <th>Status</th>
+              <th>Status do Link</th>
               <th>Criação</th>
               <th>Vencimento</th>
               <th>Valor do link</th>
-              <th>Pagamentos</th>
+              <th>Status do Pagamento</th>
               <th />
             </tr>
           </thead>
