@@ -198,7 +198,7 @@ export function EducacionalApp() {
     document.title = 'Extrato financeiro · Pensando Juntos'
   }, [])
 
-  const [journey, setJourney] = useState<EduJourney>('card')
+  const [journey, setJourney] = useState<EduJourney>('all')
   const [step, setStep] = useState<Step>('statement')
   const [tuitionIds, setTuitionIds] = useState<string[]>([])
   const [payMode, setPayMode] = useState<'combine' | 'card'>('combine')
@@ -238,6 +238,11 @@ export function EducacionalApp() {
     document.addEventListener('click', onPointer)
     return () => document.removeEventListener('click', onPointer)
   }, [boletoMenuOpen])
+
+  useEffect(() => {
+    if (step !== 'pixPay' || portalFlow?.kind === 'pix') return
+    setPortalFlow({ kind: 'pix', stage: 'pay' })
+  }, [step, portalFlow])
 
   const selectedTuitions = TUITIONS.filter((item) => tuitionIds.includes(item.id))
   const payCents = selectedTuitions.reduce((sum, item) => sum + item.cents, 0)
@@ -291,7 +296,6 @@ export function EducacionalApp() {
   function chooseJourney(next: EduJourney) {
     setJourney(next)
     setStep('statement')
-    setTuitionIds([])
     setSelected([])
     setPixOn(false)
     setPixCents(0)
@@ -946,6 +950,8 @@ export function EducacionalApp() {
   if (step === 'pixPay') {
     content = (
       <>
+        <h1 className="edu-title">Pagamento com Pix</h1>
+        <p className="edu-lead">Use o modal para concluir o pagamento via QR Code ou Pix copia e cola.</p>
         <BackLink
           onClick={() => {
             closePortalFlow()
