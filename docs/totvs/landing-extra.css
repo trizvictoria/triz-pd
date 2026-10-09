@@ -89,6 +89,41 @@
   color: #212429;
 }
 
+.lp-rate__value--promo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.lp-rate__value-old {
+  font: inherit;
+  letter-spacing: inherit;
+  color: #405466;
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+}
+
+.lp-rate__value-new {
+  color: #002233;
+}
+
+.lp-rate__promo-note {
+  margin: 10px 0 0;
+  background: #fff;
+  border-radius: 16px;
+  padding: 12px 16px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.lp-rate__promo-note p {
+  margin: 0;
+  font: 700 14px/1.4 "DM Sans", sans-serif;
+  letter-spacing: -0.14px;
+  color: #002233;
+}
+
 .lp-rate__hint {
   margin: 8px 0 0;
   font: 700 14px/1.4 "DM Sans", sans-serif;

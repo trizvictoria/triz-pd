@@ -1,7 +1,7 @@
 (function () {
   var ASSET = '/triz-pd/totvs/assets/landing/'
   var HOST_ID = 'lp-extra-host'
-  var RATES_VERSION = '16'
+  var RATES_VERSION = '17'
 
   function icon(name, d) {
     return (
@@ -247,7 +247,11 @@
       ASSET +
       'icon-card.svg" alt="" width="32" height="32"></div>' +
       '<p class="lp-rate__name">Cartão de crédito</p>' +
-      '<p class="lp-rate__value">3,19%</p>' +
+      '<p class="lp-rate__value lp-rate__value--promo">' +
+      '<s class="lp-rate__value-old" aria-label="Taxa anterior 3,19 por cento">3,19%</s>' +
+      '<span class="lp-rate__value-new">2,99%</span></p>' +
+      '<div class="lp-rate__promo-note">' +
+      '<p>Condição especial exclusiva para o Universo TOTVS</p></div>' +
       '<p class="lp-rate__hint">à vista ou</p>' +
       cardInstallmentsHTML() +
       '</article>' +
@@ -464,7 +468,7 @@
     var link = document.createElement('link')
     link.id = 'lp-extra-style'
     link.rel = 'stylesheet'
-    link.href = '/triz-pd/totvs/landing-extra.css?v=16'
+    link.href = '/triz-pd/totvs/landing-extra.css?v=17'
     document.head.appendChild(link)
   }
 
