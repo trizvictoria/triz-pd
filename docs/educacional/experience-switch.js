@@ -1,6 +1,6 @@
 (function () {
   var STYLE =
-    '#pd-edu-switch{position:fixed;z-index:2147483646;pointer-events:none}' +
+    '#pd-edu-switch{position:fixed;top:0;left:0;z-index:2147483646;pointer-events:none}' +
     '#pd-edu-switch .product-switch{pointer-events:auto;position:relative;display:flex;align-items:center}' +
     '#pd-edu-switch .product-switch__toggle{width:22px;height:22px;display:flex;align-items:center;justify-content:center;border:0;border-radius:4px;padding:0;margin:0;background:transparent;color:#5d6b73;cursor:pointer}' +
     '#pd-edu-switch .product-switch__toggle:hover,#pd-edu-switch .product-switch__toggle[aria-expanded="true"]{background:rgba(93,107,115,.12)}' +
@@ -18,9 +18,10 @@
     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8.2 10.2 12 14l3.8-3.8 1.1 1.1L12 16.2 7.1 11.3l1.1-1.1Z" fill="currentColor"/></svg>' +
     '</button>' +
     '<div class="product-switch__menu" hidden>' +
-    '<p class="product-switch__label">Produtos</p>' +
-    '<button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay - Credenciamento</button>' +
-    '<button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay - Dashboard</button>' +
+    '<button type="button" class="product-switch__item" data-product="inicio">Página inicial</button>' +
+    '<span class="product-switch__sep"></span>' +
+    '<button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay – Credenciamento</button>' +
+    '<button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay – Dashboard</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>' +
     '<span class="product-switch__sep"></span>' +
@@ -30,7 +31,7 @@
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>' +
     '<span class="product-switch__sep"></span>' +
-    '<button type="button" class="product-switch__item" data-product="checkout">Checkout</button>' +
+    '<button type="button" class="product-switch__item" data-product="checkout">Link de pagamento</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="interesse">Lista de interesse</button>' +
     '</div></div>'
@@ -43,6 +44,10 @@
   }
 
   function goProduct(id) {
+    if (id === 'inicio') {
+      location.assign(experienceRoot() + '#inicio')
+      return
+    }
     if (id === 'interesse') {
       location.assign(experienceRoot() + 'interesse/')
       return
@@ -50,12 +55,12 @@
     var root = experienceRoot()
     if (id === 'educacional') return
     if (id === 'totvs' || id === 'totvs-credenciamento') {
-      try { sessionStorage.setItem('totvs-onboarded', '0') } catch (e) {}
+      try { sessionStorage.setItem('totvs-onboarded', '0'); sessionStorage.setItem('pd-ai-auth', 'e9e69fcd703e857da732ae1e8c0d839920a24cb3407cc98440c04a4c7b62545d') } catch (e) {}
       location.assign(root + 'totvs/')
       return
     }
     if (id === 'totvs-dashboard') {
-      try { sessionStorage.setItem('totvs-onboarded', '1') } catch (e) {}
+      try { sessionStorage.setItem('totvs-onboarded', '1'); sessionStorage.setItem('pd-ai-auth', 'e9e69fcd703e857da732ae1e8c0d839920a24cb3407cc98440c04a4c7b62545d') } catch (e) {}
       location.assign(root + 'totvs/dashboard')
       return
     }
@@ -90,6 +95,8 @@
     var target = copy()
     if (!target) {
       el.style.visibility = 'hidden'
+      el.style.top = '0px'
+      el.style.left = '0px'
       return
     }
     var rect = target.getBoundingClientRect()

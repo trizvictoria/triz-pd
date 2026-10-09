@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,500;9..40,700;9..40,800;9..40,900&family=Inter:wght@400;500;600&family=Nunito+Sans:wght@400;700&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,1,0&display=swap" rel="stylesheet" />
   <style>
-    :root{--color-nav-bg:#001927;--font:'DM Sans',sans-serif;--font-crm:'Nunito Sans','DM Sans',sans-serif;--primary-border:#00dbff;--primary-icon:#0077b2;--primary-icon-hover:#005580;--primary-icon-on-color:#00dbff;--primary-icon-on-color-hover:#66e9ff;--primary-surface-high-emphasis:#00dbff;--primary-surface-low-emphasis:#b2f4ff;--primary-surface-hover:#66ebff;--primary-text:#0077b2;--primary-text-hover:#005580;--primary-text-on-color:#00dbff;--primary-text-on-color-hover:#66e9ff;--neutral-border:#d6dbde;--neutral-border-interactive:#b2bcc1;--neutral-icon-high-emphasis:#002233;--neutral-icon-low-emphasis:#596b7a;--neutral-icon-disabled:#8c98a3;--neutral-icon-inverse:#fff;--neutral-surface:#fff;--neutral-surface-high-emphasis:#e5e8ea;--neutral-surface-low-emphasis:#eceeef;--neutral-surface-hover:#dadee0;--neutral-surface-disabled:#edeff1;--neutral-surface-inverse:#002233;--neutral-surface-inverse-interactive:#002233;--neutral-surface-inverse-interactive-hover:#003347;--neutral-text-high-emphasis:#002233;--neutral-text-low-emphasis:#405466;--neutral-text-disabled:#7f8d99;--neutral-text-inverse:#fff;--neutral-focus-outline:#00dbff;--danger-text:#c20046;--success-icon:#087a3a;--success-text:#087a3a;--success-border:#0ed869;--success-surface-low-emphasis:#d6fae8;--highlight-text:#6e00c5;--highlight-surface-low-emphasis:#edd6ff;--support-mint:#00f2c9;--size-spacing-01:4px;--size-spacing-02:8px;--size-spacing-03:12px;--size-spacing-04:16px;--size-spacing-05:24px;--size-spacing-06:32px;--border-radius-xs:4px;--border-radius-sm:8px;--border-radius-md:12px;--border-radius-lg:16px;--border-radius-pill:999px;--shadow-xs:0 2px 6px rgba(0,34,51,.1);--shadow-md:0 8px 18px rgba(0,34,51,.16);--shadow-lg:0 12px 24px rgba(0,34,51,.2);--zindex-3:1020;--zindex-4:1030;--zindex-6:1050;--motion-duration-extra-fast:100ms;--motion-duration-normal:300ms;--motion-timing-function-ease-out:cubic-bezier(.215,.61,.355,1);--motion-timing-function-ease-in-out:cubic-bezier(.645,.045,.355,1);--text-xl:800 28px/36px var(--font);--text-lg:500 20px/30px var(--font);--text-lg-bold:700 20px/30px var(--font);--text-md:500 16px/24px var(--font);--text-md-bold:700 16px/24px var(--font);--text-sm:500 14px/20px var(--font);--text-sm-bold:700 14px/20px var(--font);--text-xs:500 12px/16px var(--font)}
+    :root{--color-nav-bg:#001927;--font:'DM Sans',sans-serif;--font-crm:'Nunito Sans','DM Sans',sans-serif;--primary-border:#00dbff;--primary-icon:#0077b2;--primary-icon-hover:#005580;--primary-icon-on-color:#00dbff;--primary-icon-on-color-hover:#66e9ff;--primary-surface-high-emphasis:#00dbff;--primary-surface-low-emphasis:#b2f4ff;--primary-surface-hover:#66ebff;--primary-text:#0077b2;--primary-text-hover:#005580;--primary-text-on-color:#00dbff;--primary-text-on-color-hover:#66e9ff;--neutral-border:#d6dbde;--neutral-border-interactive:#b2bcc1;--neutral-icon-high-emphasis:#002233;--neutral-icon-low-emphasis:#596b7a;--neutral-icon-disabled:#8c98a3;--neutral-icon-inverse:#fff;--neutral-surface:#fff;--neutral-surface-high-emphasis:#e5e8ea;--neutral-surface-low-emphasis:#eceeef;--neutral-surface-hover:#dadee0;--neutral-surface-disabled:#edeff1;--neutral-surface-inverse:#002233;--neutral-surface-inverse-interactive:#002233;--neutral-surface-inverse-interactive-hover:#003347;--neutral-text-high-emphasis:#002233;--neutral-text-low-emphasis:#405466;--neutral-text-disabled:#7f8d99;--neutral-text-inverse:#fff;--neutral-focus-outline:#00dbff;--danger-text:#c20046;--success-icon:#087a3a;--success-text:#087a3a;--success-border:#0ed869;--success-surface-low-emphasis:#d6fae8;--highlight-text:#6e00c5;--highlight-surface-low-emphasis:#edd6ff;--support-mint:#00f2c9;--size-spacing-01:4px;--size-spacing-02:8px;--size-spacing-03:12px;--size-spacing-04:16px;--size-spacing-05:24px;--size-spacing-06:32px;--size-spacing-07:40px;--border-radius-xs:4px;--border-radius-sm:8px;--border-radius-md:12px;--border-radius-lg:16px;--border-radius-pill:999px;--shadow-xs:0 2px 6px rgba(0,34,51,.1);--shadow-md:0 8px 18px rgba(0,34,51,.16);--shadow-lg:0 12px 24px rgba(0,34,51,.2);--zindex-3:1020;--zindex-4:1030;--zindex-6:1050;--motion-duration-extra-fast:100ms;--motion-duration-normal:300ms;--motion-timing-function-ease-out:cubic-bezier(.215,.61,.355,1);--motion-timing-function-ease-in-out:cubic-bezier(.645,.045,.355,1);--text-xl:800 28px/36px var(--font);--text-lg:500 20px/30px var(--font);--text-lg-bold:700 20px/30px var(--font);--text-md:500 16px/24px var(--font);--text-md-bold:700 16px/24px var(--font);--text-sm:500 14px/20px var(--font);--text-sm-bold:700 14px/20px var(--font);--text-xs:500 12px/16px var(--font)}
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     [hidden]{display:none!important}
     html,body{height:100%}
@@ -128,6 +128,492 @@
     .login-card__fields{display:flex;flex-direction:column;gap:16px}
     .login-error{font:var(--text-sm);color:#c20046}
     .login-card .tg-button{width:100%}
+@keyframes tp-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 34, 51, 0.55); }
+  70% { box-shadow: 0 0 0 28px rgba(0, 34, 51, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 34, 51, 0); }
+}
+
+@keyframes tp-nudge {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(8px); }
+}
+
+@keyframes tp-spin {
+  to { transform: rotate(360deg); }
+}
+
+.tp-cta {
+  animation: tp-pulse 2.2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.tp-cta:hover { background: #003347 !important; transform: scale(1.02); }
+.tp-cta:active { transform: scale(0.98); }
+.tp-cta:focus-visible { outline: 4px solid #ffffff; outline-offset: 4px; }
+.tp-arrow { animation: tp-nudge 1.4s ease-in-out infinite; }
+.tp-ring { animation: tp-spin 40s linear infinite; transform-origin: 50% 50%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tp-cta, .tp-arrow, .tp-ring { animation: none; }
+}
+
+html.is-totem-gate,
+html.is-totem-gate body,
+html.is-totem-gate #root {
+  height: 100%;
+  overflow: hidden;
+}
+
+html.is-totem-gate #root { padding-top: 0; }
+
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 13000;
+  overflow: hidden;
+  background: #001927;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.totem-stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #001927;
+}
+
+.totem-canvas-wrap {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1920px;
+  height: 1080px;
+  transform-origin: center center;
+}
+
+.totem-canvas-wrap[hidden],
+.totem-compact[hidden] { display: none !important; }
+
+.totem-compact {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 18px 18px;
+  background: #001927;
+  color: #fff;
+  transform-origin: top left;
+}
+
+.tc-top,
+.tc-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 0;
+}
+
+.tc-brand { justify-content: flex-start; gap: 8px; }
+.tc-brand img { height: clamp(22px, 4.2dvh, 36px); width: auto; }
+.tc-brand strong { font-size: clamp(18px, 3.2dvh, 28px); font-weight: 700; }
+
+.tc-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: clamp(28px, 4.4dvh, 40px);
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid #2e556b;
+  font-weight: 700;
+  font-size: clamp(11px, 1.6dvh, 14px);
+  white-space: nowrap;
+}
+
+.tc-live i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00f2c9;
+}
+
+.tc-badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  height: clamp(26px, 4dvh, 36px);
+  padding: 0 12px;
+  border-radius: 999px;
+  background: #00dbff;
+  color: #002233;
+  font-weight: 800;
+  font-size: clamp(12px, 1.8dvh, 16px);
+}
+
+.tc-title {
+  margin: 0;
+  font-weight: 900;
+  font-size: clamp(32px, 6.4dvh, 64px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+
+.tc-title span { color: #00dbff; }
+
+.tc-lead {
+  margin: 0;
+  font-weight: 600;
+  font-size: clamp(13px, 2dvh, 18px);
+  line-height: 1.25;
+  color: #ffffffd9;
+}
+
+.tc-lead em { color: #00f2c9; font-style: normal; font-weight: 800; }
+
+.tc-main {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
+  gap: 1.4dvh 2vw;
+}
+
+.tc-steps {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 0.8dvh;
+}
+
+.tc-step {
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.6dvh 10px;
+  border-radius: 14px;
+  background: #002233;
+  border: 1px solid #0e3a52;
+  overflow: hidden;
+}
+
+.tc-step b {
+  flex: none;
+  width: clamp(28px, 4.6dvh, 40px);
+  height: clamp(28px, 4.6dvh, 40px);
+  border-radius: 10px;
+  background: #00dbff;
+  color: #002233;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(14px, 2.2dvh, 20px);
+}
+
+.tc-step strong { display: block; font-size: clamp(13px, 2dvh, 16px); }
+.tc-step p {
+  margin: 0;
+  color: #ffffffcc;
+  font-size: clamp(11px, 1.6dvh, 13px);
+  line-height: 1.25;
+}
+
+.tc-panel {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.8dvh;
+  padding: 1.4dvh 12px;
+  border-radius: 22px;
+  background: #00dbff;
+  color: #002233;
+  overflow: hidden;
+}
+
+.tc-21 {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  font-weight: 900;
+  font-size: clamp(56px, 10dvh, 96px);
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+}
+
+.tc-21 small {
+  padding-bottom: 4px;
+  font-weight: 800;
+  font-size: clamp(13px, 2dvh, 18px);
+  line-height: 1.15;
+}
+
+.tc-panel p { margin: 0; font-weight: 700; font-size: clamp(12px, 1.7dvh, 15px); line-height: 1.25; }
+
+.tc-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.tc-meta div {
+  min-width: 0;
+  padding: 8px;
+  border-radius: 12px;
+  background: #002233;
+  color: #fff;
+}
+
+.tc-meta div:last-child { background: #fff; color: #002233; }
+.tc-meta span { display: block; font-size: 11px; font-weight: 700; color: #00dbff; }
+.tc-meta div:last-child span { color: #0077b2; }
+.tc-meta strong { display: block; font-size: clamp(12px, 1.8dvh, 16px); line-height: 1.2; }
+
+.tc-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  height: clamp(48px, 7.2dvh, 64px);
+  padding: 0 8px 0 16px;
+  border: 0;
+  border-radius: 16px;
+  background: #002233;
+  color: #00dbff;
+  font-weight: 900;
+  font-size: clamp(16px, 2.4dvh, 22px);
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.tc-cta i {
+  flex: none;
+  width: clamp(36px, 5.4dvh, 48px);
+  height: clamp(36px, 5.4dvh, 48px);
+  border-radius: 12px;
+  background: #00dbff;
+  color: #002233;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: normal;
+  font-size: 22px;
+}
+
+@media (max-width: 720px) {
+  .tc-main { grid-template-columns: 1fr; }
+  .tc-steps { grid-template-columns: 1fr; grid-template-rows: none; }
+  .tc-step { align-items: flex-start; }
+}
+
+.xp{transition:transform .2s cubic-bezier(.215,.61,.355,1),border-color .2s,background .2s}
+.xp:hover{transform:translateY(-6px);border-color:#00dbff !important}
+.xp:active{transform:scale(.98)}
+.xp:focus-visible{outline:4px solid #ffffff;outline-offset:4px}
+.xp .go{transition:transform .2s}
+.xp:hover .go{transform:translateX(6px)}
+.xp-dark:hover{background:#003347 !important}
+.xp-cyan:hover{background:#66ebff !important}
+.back:hover{background:#002233 !important}
+
+.hc { gap: 10px; min-height: 100%; box-sizing: border-box; }
+.hc-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.hc-top strong { font-size: 22px; letter-spacing: -0.03em; }
+.hc-back {
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid #2e556b;
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+.hc-title { margin: 0; font-size: clamp(22px, 4.2vh, 34px); line-height: 1; letter-spacing: -0.04em; font-weight: 900; }
+.hc-title span { color: #00dbff; }
+.hc-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+.hc-card {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid #0e3a52;
+  background: #002233;
+  color: #fff;
+  text-decoration: none;
+}
+.hc-card.is-cyan { background: #00dbff; color: #002233; border-color: transparent; }
+.hc-card span { font-size: 11px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; opacity: 0.8; }
+.hc-card strong { font-size: clamp(15px, 2.2vh, 18px); letter-spacing: -0.02em; line-height: 1.1; }
+.hc-card p { margin: 0; font-size: clamp(11px, 1.6vh, 13px); line-height: 1.25; }
+.hc-card.is-cyan p { color: #003347; }
+.hc-interest {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 10px 14px;
+  border-radius: 16px;
+  background: #fff;
+  color: #002233;
+  font-weight: 800;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.hub {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 2vh, 24px);
+  padding: clamp(14px, 3vh, 40px) clamp(14px, 4vw, 72px);
+  overflow: hidden;
+  background: #001927;
+  color: #fff;
+}
+
+.hub-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.hub-kicker {
+  margin: 0 0 4px;
+  color: #00dbff;
+  font-weight: 800;
+  font-size: clamp(12px, 1.6vh, 14px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hub-head h1 {
+  margin: 0;
+  font-weight: 900;
+  font-size: clamp(26px, 4.6vh, 52px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.hub-back {
+  flex: none;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid #2e556b;
+  background: transparent;
+  color: #00dbff;
+  font: 700 14px/1 'DM Sans', sans-serif;
+  cursor: pointer;
+}
+
+.hub-error { margin: 0; color: #ffb4c2; font-weight: 700; }
+
+.hub-grid {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: clamp(8px, 1.6vh, 16px);
+}
+
+.hub-card {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+  padding: clamp(12px, 2vh, 22px);
+  border-radius: 20px;
+  border: 1px solid #0e3a52;
+  background: #002233;
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.hub-card:hover,
+.hub-card:focus-visible { border-color: #00dbff; outline: none; }
+
+.hub-card span {
+  color: #00dbff;
+  font-weight: 800;
+  font-size: clamp(11px, 1.5vh, 13px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hub-card strong {
+  font-weight: 800;
+  font-size: clamp(16px, 2.4vh, 24px);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.hub-card p {
+  margin: 0;
+  color: #ffffffcc;
+  font-size: clamp(12px, 1.7vh, 15px);
+  line-height: 1.3;
+}
+
+.gate-loading {
+  margin: 0;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 24px;
+}
+
+@media (max-width: 900px) {
+  .hub-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+  }
+}
+
+body.is-gate {
+  padding-top: 0;
+  overflow: hidden;
+  height: 100dvh;
+  background: #001927;
+}
+
+body.is-gate .demo-banner { display: none; }
+
+#gate {
+  position: fixed;
+  inset: 0;
+  z-index: 13000;
+  overflow: hidden;
+  background: #001927;
+  color: #fff;
+  font-family: 'DM Sans', sans-serif;
+}
+
   </style>
 </head>
 <body>
@@ -144,9 +630,10 @@
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M9.611 13.408 5.161 8.957a.5.5 0 0 1 0-.777l.519-.519a.5.5 0 0 1 .776 0L10 11.187l3.544-3.527a.5.5 0 0 1 .776 0l.519.519a.5.5 0 0 1 0 .777l-4.45 4.45a.5.5 0 0 1-.778 0Z" fill="currentColor"/></svg>
         </button>
         <div class="product-switch__menu" hidden>
-          <p class="product-switch__label">Produtos</p>
-          <button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay - Credenciamento</button>
-          <button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay - Dashboard</button>
+          <button type="button" class="product-switch__item" data-product="inicio">Página inicial</button>
+          <span class="product-switch__sep"></span>
+          <button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay – Credenciamento</button>
+          <button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay – Dashboard</button>
           <span class="product-switch__sep"></span>
           <button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>
           <span class="product-switch__sep"></span>
@@ -156,7 +643,7 @@
           <span class="product-switch__sep"></span>
           <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
           <span class="product-switch__sep"></span>
-          <button type="button" class="product-switch__item" data-product="checkout">Checkout</button>
+          <button type="button" class="product-switch__item" data-product="checkout">Link de pagamento</button>
           <span class="product-switch__sep"></span>
           <button type="button" class="product-switch__item" data-product="interesse">Lista de interesse</button>
         </div>
@@ -187,19 +674,20 @@
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M9.611 13.408 5.161 8.957a.5.5 0 0 1 0-.777l.519-.519a.5.5 0 0 1 .776 0L10 11.187l3.544-3.527a.5.5 0 0 1 .776 0l.519.519a.5.5 0 0 1 0 .777l-4.45 4.45a.5.5 0 0 1-.778 0Z" fill="currentColor"/></svg>
           </button>
           <div class="product-switch__menu" hidden>
-            <p class="product-switch__label">Produtos</p>
-            <button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay - Credenciamento</button>
-            <button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay - Dashboard</button>
-            <span class="product-switch__sep"></span>
-            <button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>
-            <span class="product-switch__sep"></span>
-            <button type="button" class="product-switch__item" data-product="construcao">Construção</button>
-            <button type="button" class="product-switch__item" data-product="educacional">Educacional</button>
-            <button type="button" class="product-switch__item" data-product="winthor">Winthor</button>
-            <span class="product-switch__sep"></span>
-            <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
-            <span class="product-switch__sep"></span>
-            <button type="button" class="product-switch__item" data-product="checkout">Checkout</button>
+          <button type="button" class="product-switch__item" data-product="inicio">Página inicial</button>
+          <span class="product-switch__sep"></span>
+          <button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay – Credenciamento</button>
+          <button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay – Dashboard</button>
+          <span class="product-switch__sep"></span>
+          <button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>
+          <span class="product-switch__sep"></span>
+          <button type="button" class="product-switch__item" data-product="construcao">Construção</button>
+          <button type="button" class="product-switch__item" data-product="educacional">Educacional</button>
+          <button type="button" class="product-switch__item" data-product="winthor">Winthor</button>
+          <span class="product-switch__sep"></span>
+          <button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>
+          <span class="product-switch__sep"></span>
+          <button type="button" class="product-switch__item" data-product="checkout">Link de pagamento</button>
           <span class="product-switch__sep"></span>
           <button type="button" class="product-switch__item" data-product="interesse">Lista de interesse</button>
           </div>
@@ -230,6 +718,287 @@
 </div>
 <div id="checkout-root" hidden></div>
 <div id="overlay-root"></div>
+<template id="totem-canvas-tpl">
+<div style="position: relative; overflow: hidden; width: 1920px; height: 1080px; box-sizing: border-box; padding: 48px 72px 56px; background: #001927; color: #ffffff; font-family: 'DM Sans', sans-serif; display: flex; flex-direction: column; gap: 40px" data-canvas-width="1920" data-canvas-height="1080" data-document-role="page" data-label="Totem — Tela inicial (1920×1080)">
+
+  <!-- Decoração: símbolo TOTVS grande e anel tracejado -->
+  <svg aria-hidden="true" width="760" height="906" viewBox="0 0 33.238 39.624" fill="#00dbff" style="position: absolute; left: -260px; bottom: -330px; opacity: 0.06"><path d="M32.4098 8.29325C32.1997 7.52455 31.6978 6.83114 30.9885 6.29886C27.2741 3.50934 22.857 1.42117 18.0515 0.179628C17.5852 0.0594356 17.1031 0 16.6197 0C16.1362 0 15.6541 0.0594356 15.1891 0.179628C10.381 1.42117 5.96389 3.50934 2.25083 6.29886C1.5415 6.83114 1.03823 7.52587 0.82953 8.29325C0.27607 10.3193 0 12.3837 0 14.4468V25.1769C0 27.2413 0.27607 29.3057 0.82953 31.3305C1.03823 32.0992 1.5415 32.7926 2.25083 33.3262C5.96389 36.1144 10.381 38.2039 15.1878 39.4441C15.6541 39.5643 16.1362 39.6238 16.6183 39.6238C17.1005 39.6238 17.5852 39.5643 18.0502 39.4441C22.8557 38.2039 27.2741 36.1144 30.9872 33.3262C31.6965 32.7926 32.1984 32.0992 32.4085 31.3305C32.9619 29.3057 33.238 27.2413 33.238 25.1769V14.4468C33.238 12.3837 32.9619 10.3193 32.4085 8.29325M31.9488 20.5159C31.7612 21.2014 31.3187 21.8221 30.6688 22.3108C28.846 23.6792 26.8355 24.889 24.693 25.9007C22.5518 26.9151 20.2693 27.7366 17.9102 28.3442C17.4901 28.4512 17.0582 28.5067 16.6197 28.5067C16.1811 28.5067 15.7479 28.4525 15.3291 28.3442C12.97 27.7366 10.6875 26.9138 8.54627 25.9007C6.40376 24.8877 4.39334 23.6792 2.57048 22.3108C1.91928 21.8234 1.47677 21.2014 1.29053 20.5159C1.16504 20.0549 1.16504 19.5702 1.29053 19.1092C1.47677 18.4237 1.91928 17.803 2.57048 17.3143C4.39334 15.9459 6.40376 14.7361 8.54627 13.7244C10.6875 12.71 12.97 11.8884 15.3291 11.2796C15.7479 11.1726 16.1811 11.1184 16.6197 11.1184C17.0582 11.1184 17.4914 11.1726 17.9102 11.2796C20.2693 11.8884 22.5518 12.7113 24.693 13.7244C26.8355 14.7374 28.846 15.9459 30.6688 17.3143C31.3187 17.8016 31.7612 18.4224 31.9488 19.1092C32.0743 19.5702 32.0743 20.0549 31.9488 20.5159Z"></path></svg>
+
+  <!-- Topo -->
+  <header style="position: relative; display: flex; align-items: center; justify-content: space-between; height: 56px">
+    <div style="display: flex; align-items: center; gap: 12px">
+      <svg width="140" height="40" viewBox="0 0 139.365 39.6238" fill="#ffffff" role="img" aria-label="TOTVS"><path d="M32.4098 8.29325C32.1997 7.52455 31.6978 6.83114 30.9885 6.29886C27.2741 3.50934 22.857 1.42117 18.0515 0.179628C17.5852 0.0594356 17.1031 0 16.6197 0C16.1362 0 15.6541 0.0594356 15.1891 0.179628C10.381 1.42117 5.96389 3.50934 2.25083 6.29886C1.5415 6.83114 1.03823 7.52587 0.82953 8.29325C0.27607 10.3193 0 12.3837 0 14.4468V25.1769C0 27.2413 0.27607 29.3057 0.82953 31.3305C1.03823 32.0992 1.5415 32.7926 2.25083 33.3262C5.96389 36.1144 10.381 38.2039 15.1878 39.4441C15.6541 39.5643 16.1362 39.6238 16.6183 39.6238C17.1005 39.6238 17.5852 39.5643 18.0502 39.4441C22.8557 38.2039 27.2741 36.1144 30.9872 33.3262C31.6965 32.7926 32.1984 32.0992 32.4085 31.3305C32.9619 29.3057 33.238 27.2413 33.238 25.1769V14.4468C33.238 12.3837 32.9619 10.3193 32.4085 8.29325M31.9488 20.5159C31.7612 21.2014 31.3187 21.8221 30.6688 22.3108C28.846 23.6792 26.8355 24.889 24.693 25.9007C22.5518 26.9151 20.2693 27.7366 17.9102 28.3442C17.4901 28.4512 17.0582 28.5067 16.6197 28.5067C16.1811 28.5067 15.7479 28.4525 15.3291 28.3442C12.97 27.7366 10.6875 26.9138 8.54627 25.9007C6.40376 24.8877 4.39334 23.6792 2.57048 22.3108C1.91928 21.8234 1.47677 21.2014 1.29053 20.5159C1.16504 20.0549 1.16504 19.5702 1.29053 19.1092C1.47677 18.4237 1.91928 17.803 2.57048 17.3143C4.39334 15.9459 6.40376 14.7361 8.54627 13.7244C10.6875 12.71 12.97 11.8884 15.3291 11.2796C15.7479 11.1726 16.1811 11.1184 16.6197 11.1184C17.0582 11.1184 17.4914 11.1726 17.9102 11.2796C20.2693 11.8884 22.5518 12.7113 24.693 13.7244C26.8355 14.7374 28.846 15.9459 30.6688 17.3143C31.3187 17.8016 31.7612 18.4224 31.9488 19.1092C32.0743 19.5702 32.0743 20.0549 31.9488 20.5159Z"></path><path d="M47.6467 14.0624H42.8095C41.9985 14.0624 41.5493 13.6213 41.5493 12.842V9.87553H58.5534V12.842C58.5534 13.6213 58.1043 14.0624 57.2932 14.0624H52.4561V29.7455H47.6467V14.0624Z"></path><path d="M70.9629 25.4424C72.1398 24.9233 72.9825 24.3316 73.9798 23.5603C74.7222 22.9871 75.096 22.2118 75.1871 21.3229C75.3166 20.0628 75.3205 19.5596 75.1871 18.2996C75.0999 17.4556 74.7023 16.6552 73.9798 16.0925C72.9931 15.2776 72.1543 14.6991 70.9629 14.1813C70.5943 14.0189 70.1518 13.9291 69.6816 13.9291C69.2113 13.9291 68.7688 14.0189 68.4016 14.1813C67.2102 14.7004 66.3701 15.2789 65.3847 16.0925C64.6621 16.6552 64.2659 17.4556 64.1774 18.2996C64.0439 19.5596 64.0492 20.0628 64.1774 21.3229C64.2685 22.2118 64.6384 22.9765 65.3847 23.5603C66.3767 24.3382 67.2247 24.9233 68.4016 25.4424C68.7847 25.6062 69.2113 25.6643 69.6816 25.6643C70.1518 25.6643 70.5798 25.6049 70.9629 25.4424ZM66.5457 29.7099C65.1456 29.1657 63.4984 28.331 62.3056 27.4421C60.5686 26.153 59.4855 24.1665 59.2438 22.0189C59.0707 20.4921 59.0707 19.129 59.2438 17.6022C59.4855 15.4546 60.5686 13.4681 62.3056 12.2094C63.4984 11.2901 65.1416 10.4475 66.5457 9.89669C67.514 9.51763 68.5628 9.23102 69.6816 9.23102C70.8004 9.23102 71.8479 9.52027 72.8174 9.89669C74.2347 10.4501 75.8647 11.2901 77.0575 12.2094C78.7945 13.4681 79.8763 15.4546 80.1194 17.6022C80.2911 19.129 80.2911 20.4921 80.1194 22.0189C79.8763 24.1665 78.7945 26.153 77.0575 27.4421C75.8647 28.331 74.2308 29.1618 72.8174 29.7099C71.8162 30.0956 70.8004 30.3914 69.6816 30.3914C68.5628 30.3914 67.547 30.0982 66.5457 29.7099Z"></path><path d="M86.9079 14.0624H82.0707C81.2597 14.0624 80.8106 13.6213 80.8106 12.842V9.87553H97.8146V12.842C97.8146 13.6213 97.3655 14.0624 96.5544 14.0624H91.7173V29.7455H86.9079V14.0624Z"></path><path d="M107.112 29.0217L101.833 22.2091C101.45 21.727 101.321 21.3004 101.321 20.7047V9.87553H104.813C105.593 9.87553 106.033 10.3008 106.033 11.0973V19.7405C106.033 20.3375 106.161 20.7906 106.544 21.2594L110.064 25.6299L113.429 21.2594C113.784 20.7773 113.94 20.3375 113.94 19.7405V11.0973C113.94 10.3167 114.365 9.87553 115.161 9.87553H118.652V20.7047C118.652 21.3004 118.497 21.7402 118.142 22.2236L112.919 29.0217C112.536 29.5329 112.067 29.7455 111.428 29.7455H108.604C107.951 29.7455 107.497 29.5329 107.114 29.0217"></path><path d="M121.751 23.3423H125.449C126.31 23.3423 126.456 23.6369 126.696 24.4558C127.04 25.6233 128.049 26.2375 130.112 26.2375H131.211C133.335 26.2375 134.434 25.5837 134.434 24.2774V23.8469C134.434 23.0451 133.737 22.5248 132.355 22.2738L127.678 21.4272C124.336 20.8328 122.093 19.2452 122.093 16.3197V15.1759C122.093 11.508 125.375 9.41325 129.296 9.41325H131.539C136.232 9.41325 138.876 11.9082 138.876 15.8283H135.133C134.39 15.8283 134.175 15.6514 134.019 15.0411C133.738 13.9449 132.949 13.3928 131.272 13.3928H129.994C128.495 13.3928 127.025 13.8075 127.025 15.16V15.6197C127.025 16.3329 127.663 16.8374 128.971 17.0606L133.857 17.9376C137.108 18.5161 139.365 20.0166 139.365 23.0901V24.2788C139.365 28.2583 135.846 30.2342 131.627 30.2342H129.607C125.019 30.2342 121.752 28.154 121.752 23.3436"></path></svg>
+      <span style="font-weight: 700; font-size: 34px; line-height: 34px; color: #ffffff">Pay</span>
+    </div>
+    <div style="display: flex; align-items: center; gap: 12px">
+      <span style="display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 20px; border-radius: 999px; border: 1px solid #2e556b; font-weight: 700; font-size: 18px; color: #ffffff"><span style="width: 10px; height: 10px; border-radius: 50%; background: #00f2c9"></span>Ao vivo no Stand TOTVS Pay</span>
+    </div>
+  </header>
+
+  <!-- Corpo -->
+  <div style="position: relative; flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 620px; gap: 56px">
+
+    <!-- Coluna esquerda -->
+    <div style="display: flex; flex-direction: column; gap: 28px; min-width: 0">
+      <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; height: 48px; padding: 0 22px; border-radius: 999px; background: #00dbff; color: #002233; font-weight: 800; font-size: 20px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#002233" aria-hidden="true"><path d="M12 0C12 6.63 17.37 12 24 12C17.37 12 12 17.37 12 24C12 17.37 6.63 12 0 12C6.63 12 12 6.63 12 0Z"></path></svg>Desafio Cultural TOTVS Pay</span>
+
+      <h1 style="margin: 0; font-weight: 900; font-size: 132px; line-height: 124px; letter-spacing: -0.045em; color: #ffffff">Sua visão<br>vale <span style="position: relative; color: #00dbff">prêmios!</span></h1>
+
+      <div style="display: flex; gap: 20px; align-items: flex-start; max-width: 1000px">
+        <svg width="48" height="40" viewBox="0 0 44 36" fill="#00f2c9" aria-hidden="true" style="flex: none; margin-top: 6px"><path d="M0 36V22C0 10 6 2.5 18 0l2 5c-6 2-9 6-9.5 11H18v20H0zm26 0V22c0-12 6-19.5 18-22l2 5c-6 2-9 6-9.5 11H44v20H26z"></path></svg>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <p style="margin: 0; font-weight: 700; font-size: 36px; line-height: 46px; letter-spacing: -0.01em; color: #ffffff">TOTVS Pay pela perspectiva de quem mais importa: <span style="color: #00f2c9">o cliente.</span></p>
+          <p style="margin: 0; font-weight: 500; font-size: 24px; line-height: 34px; color: #ffffffcc">Compartilhe como você enxerga essa inovação e concorra a <strong style="font-weight: 800; color: #ffffff">brindes exclusivos</strong>.</p>
+        </div>
+      </div>
+
+      <!-- 3 passos -->
+      <div style="margin-top: auto; display: flex; flex-direction: column; gap: 14px">
+        <div style="display: flex; align-items: center; gap: 14px">
+          <span style="font-weight: 800; font-size: 26px; line-height: 32px">Como participar</span>
+          <span style="height: 2px; flex: 1; background: #0e3a52"></span>
+          <span style="font-weight: 700; font-size: 20px; color: #00dbff">3 passos simples</span>
+        </div>
+        <ol style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+          <li style="display: flex; flex-direction: column; gap: 12px; padding: 24px; border-radius: 24px; background: #002233; border: 1px solid #0e3a52">
+            <div style="display: flex; align-items: center; gap: 14px">
+              <span style="flex: none; width: 52px; height: 52px; border-radius: 14px; background: #00dbff; color: #002233; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 26px">1</span>
+              <h2 style="margin: 0; font-weight: 800; font-size: 26px; line-height: 32px">Poste no LinkedIn</h2>
+            </div>
+            <p style="margin: 0; font-weight: 500; font-size: 18px; line-height: 26px; color: #ffffffcc">Foto ou vídeo no evento + responda:</p>
+            <p style="margin: 0; padding: 12px 14px; border-radius: 12px; background: #001927; font-weight: 700; font-size: 18px; line-height: 26px; color: #00dbff">“O que é o TOTVS Pay e o que achou dessa inovação?”</p>
+          </li>
+          <li style="display: flex; flex-direction: column; gap: 12px; padding: 24px; border-radius: 24px; background: #002233; border: 1px solid #0e3a52">
+            <div style="display: flex; align-items: center; gap: 14px">
+              <span style="flex: none; width: 52px; height: 52px; border-radius: 14px; background: #00dbff; color: #002233; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 26px">2</span>
+              <h2 style="margin: 0; font-weight: 800; font-size: 26px; line-height: 32px">Marque &amp; engaje</h2>
+            </div>
+            <p style="margin: 0; font-weight: 500; font-size: 18px; line-height: 26px; color: #ffffffcc">Marque a @TOTVS e use as hashtags:</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px">
+              <span style="display: inline-flex; align-items: center; height: 38px; padding: 0 12px; border-radius: 10px; background: #00dbff; color: #002233; font-weight: 800; font-size: 17px">@TOTVS</span>
+              <span style="display: inline-flex; align-items: center; height: 38px; padding: 0 12px; border-radius: 10px; border: 2px solid #00dbff; color: #ffffff; font-weight: 800; font-size: 17px">#TOTVSPay</span>
+              <span style="display: inline-flex; align-items: center; height: 38px; padding: 0 12px; border-radius: 10px; border: 2px solid #00dbff; color: #ffffff; font-weight: 800; font-size: 17px">#LançamentoTOTVSPay</span>
+            </div>
+          </li>
+          <li style="display: flex; flex-direction: column; gap: 12px; padding: 24px; border-radius: 24px; background: #002233; border: 1px solid #0e3a52">
+            <div style="display: flex; align-items: center; gap: 14px">
+              <span style="flex: none; width: 52px; height: 52px; border-radius: 14px; background: #00dbff; color: #002233; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 26px">3</span>
+              <h2 style="margin: 0; font-weight: 800; font-size: 26px; line-height: 32px">Ganhe</h2>
+            </div>
+            <p style="margin: 0; font-weight: 500; font-size: 18px; line-height: 26px; color: #ffffffcc">As <strong style="font-weight: 800; color: #00f2c9">21 frases</strong> mais criativas e inspiradoras serão premiadas pelo nosso time!</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Coluna direita: painel ciano -->
+    <aside style="position: relative; overflow: hidden; border-radius: 40px; background: #00dbff; color: #002233; padding: 44px; display: flex; flex-direction: column; gap: 24px">
+      <svg class="tp-ring" aria-hidden="true" width="520" height="520" viewBox="0 0 520 520" style="position: absolute; right: -170px; top: -170px"><circle cx="260" cy="260" r="240" fill="none" stroke="#002233" stroke-opacity="0.14" stroke-width="3" stroke-dasharray="6 14"></circle><circle cx="260" cy="260" r="180" fill="none" stroke="#002233" stroke-opacity="0.1" stroke-width="2"></circle></svg>
+
+      <div style="position: relative; display: flex; align-items: flex-end; gap: 20px">
+        <span style="font-weight: 900; font-size: 220px; line-height: 170px; letter-spacing: -0.06em">21</span>
+        <span style="padding-bottom: 6px; font-weight: 800; font-size: 30px; line-height: 36px">frases<br>premiadas</span>
+      </div>
+      <p style="position: relative; margin: 0; font-weight: 700; font-size: 22px; line-height: 30px; color: #003347">As mais criativas e inspiradoras levam brindes exclusivos.</p>
+
+      <div style="position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+        <div style="display: flex; flex-direction: column; gap: 6px; padding: 20px; border-radius: 20px; background: #002233; color: #ffffff">
+          <span style="font-weight: 700; font-size: 16px; line-height: 22px; color: #00dbff">Resultado</span>
+          <span style="font-weight: 900; font-size: 40px; line-height: 44px; letter-spacing: -0.03em">14/10 · 16h</span>
+          <span style="font-weight: 500; font-size: 17px; line-height: 24px; color: #ffffffcc">no Stand TOTVS Pay</span>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px; padding: 20px; border-radius: 20px; background: #ffffff; color: #002233">
+          <span style="font-weight: 700; font-size: 16px; line-height: 22px; color: #0077b2">Retirada dos brindes</span>
+          <span style="font-weight: 800; font-size: 26px; line-height: 32px; letter-spacing: -0.01em">Sala de Apoio do Marketing</span>
+        </div>
+      </div>
+
+      <div style="position: relative; margin-top: auto; display: flex; flex-direction: column; gap: 12px">
+        <span style="font-weight: 700; font-size: 18px; line-height: 24px; color: #003347">Conheça o TOTVS Pay na prática</span>
+        <button type="button" class="tp-cta" data-act="start-experience" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; height: 112px; padding: 0 20px 0 36px; border: 0; border-radius: 28px; background: #002233; color: #00dbff; font-weight: 900; font-size: 38px; letter-spacing: -0.02em; text-align: left; cursor: pointer; font-family: inherit">Iniciar experiência
+          <span style="flex: none; width: 72px; height: 72px; border-radius: 20px; background: #00dbff; display: flex; align-items: center; justify-content: center">
+            <svg class="tp-arrow" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#002233" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </span>
+        </button>
+      </div>
+    </aside>
+  </div>
+</div>
+</template>
+<template id="hub-canvas-tpl">
+<div style="position: relative; overflow: hidden; width: 1920px; height: 1080px; box-sizing: border-box; padding: 48px 72px 56px; background: #001927; color: #ffffff; font-family: 'DM Sans', sans-serif; display: flex; flex-direction: column; gap: 36px">
+
+  <!-- Decoração -->
+  <svg aria-hidden="true" width="620" height="740" viewBox="0 0 33.238 39.624" fill="#00dbff" style="position: absolute; right: -200px; top: -260px; opacity: 0.06"><path d="M32.4098 8.29325C32.1997 7.52455 31.6978 6.83114 30.9885 6.29886C27.2741 3.50934 22.857 1.42117 18.0515 0.179628C17.5852 0.0594356 17.1031 0 16.6197 0C16.1362 0 15.6541 0.0594356 15.1891 0.179628C10.381 1.42117 5.96389 3.50934 2.25083 6.29886C1.5415 6.83114 1.03823 7.52587 0.82953 8.29325C0.27607 10.3193 0 12.3837 0 14.4468V25.1769C0 27.2413 0.27607 29.3057 0.82953 31.3305C1.03823 32.0992 1.5415 32.7926 2.25083 33.3262C5.96389 36.1144 10.381 38.2039 15.1878 39.4441C15.6541 39.5643 16.1362 39.6238 16.6183 39.6238C17.1005 39.6238 17.5852 39.5643 18.0502 39.4441C22.8557 38.2039 27.2741 36.1144 30.9872 33.3262C31.6965 32.7926 32.1984 32.0992 32.4085 31.3305C32.9619 29.3057 33.238 27.2413 33.238 25.1769V14.4468C33.238 12.3837 32.9619 10.3193 32.4085 8.29325M31.9488 20.5159C31.7612 21.2014 31.3187 21.8221 30.6688 22.3108C28.846 23.6792 26.8355 24.889 24.693 25.9007C22.5518 26.9151 20.2693 27.7366 17.9102 28.3442C17.4901 28.4512 17.0582 28.5067 16.6197 28.5067C16.1811 28.5067 15.7479 28.4525 15.3291 28.3442C12.97 27.7366 10.6875 26.9138 8.54627 25.9007C6.40376 24.8877 4.39334 23.6792 2.57048 22.3108C1.91928 21.8234 1.47677 21.2014 1.29053 20.5159C1.16504 20.0549 1.16504 19.5702 1.29053 19.1092C1.47677 18.4237 1.91928 17.803 2.57048 17.3143C4.39334 15.9459 6.40376 14.7361 8.54627 13.7244C10.6875 12.71 12.97 11.8884 15.3291 11.2796C15.7479 11.1726 16.1811 11.1184 16.6197 11.1184C17.0582 11.1184 17.4914 11.1726 17.9102 11.2796C20.2693 11.8884 22.5518 12.7113 24.693 13.7244C26.8355 14.7374 28.846 15.9459 30.6688 17.3143C31.3187 17.8016 31.7612 18.4224 31.9488 19.1092C32.0743 19.5702 32.0743 20.0549 31.9488 20.5159Z"></path></svg>
+
+  <!-- Topo -->
+  <header style="position: relative; display: flex; align-items: center; justify-content: space-between; height: 56px">
+    <div style="display: flex; align-items: center; gap: 12px">
+      <svg width="140" height="40" viewBox="0 0 139.365 39.6238" fill="#ffffff" role="img" aria-label="TOTVS"><path d="M32.4098 8.29325C32.1997 7.52455 31.6978 6.83114 30.9885 6.29886C27.2741 3.50934 22.857 1.42117 18.0515 0.179628C17.5852 0.0594356 17.1031 0 16.6197 0C16.1362 0 15.6541 0.0594356 15.1891 0.179628C10.381 1.42117 5.96389 3.50934 2.25083 6.29886C1.5415 6.83114 1.03823 7.52587 0.82953 8.29325C0.27607 10.3193 0 12.3837 0 14.4468V25.1769C0 27.2413 0.27607 29.3057 0.82953 31.3305C1.03823 32.0992 1.5415 32.7926 2.25083 33.3262C5.96389 36.1144 10.381 38.2039 15.1878 39.4441C15.6541 39.5643 16.1362 39.6238 16.6183 39.6238C17.1005 39.6238 17.5852 39.5643 18.0502 39.4441C22.8557 38.2039 27.2741 36.1144 30.9872 33.3262C31.6965 32.7926 32.1984 32.0992 32.4085 31.3305C32.9619 29.3057 33.238 27.2413 33.238 25.1769V14.4468C33.238 12.3837 32.9619 10.3193 32.4085 8.29325M31.9488 20.5159C31.7612 21.2014 31.3187 21.8221 30.6688 22.3108C28.846 23.6792 26.8355 24.889 24.693 25.9007C22.5518 26.9151 20.2693 27.7366 17.9102 28.3442C17.4901 28.4512 17.0582 28.5067 16.6197 28.5067C16.1811 28.5067 15.7479 28.4525 15.3291 28.3442C12.97 27.7366 10.6875 26.9138 8.54627 25.9007C6.40376 24.8877 4.39334 23.6792 2.57048 22.3108C1.91928 21.8234 1.47677 21.2014 1.29053 20.5159C1.16504 20.0549 1.16504 19.5702 1.29053 19.1092C1.47677 18.4237 1.91928 17.803 2.57048 17.3143C4.39334 15.9459 6.40376 14.7361 8.54627 13.7244C10.6875 12.71 12.97 11.8884 15.3291 11.2796C15.7479 11.1726 16.1811 11.1184 16.6197 11.1184C17.0582 11.1184 17.4914 11.1726 17.9102 11.2796C20.2693 11.8884 22.5518 12.7113 24.693 13.7244C26.8355 14.7374 28.846 15.9459 30.6688 17.3143C31.3187 17.8016 31.7612 18.4224 31.9488 19.1092C32.0743 19.5702 32.0743 20.0549 31.9488 20.5159Z"></path><path d="M47.6467 14.0624H42.8095C41.9985 14.0624 41.5493 13.6213 41.5493 12.842V9.87553H58.5534V12.842C58.5534 13.6213 58.1043 14.0624 57.2932 14.0624H52.4561V29.7455H47.6467V14.0624Z"></path><path d="M70.9629 25.4424C72.1398 24.9233 72.9825 24.3316 73.9798 23.5603C74.7222 22.9871 75.096 22.2118 75.1871 21.3229C75.3166 20.0628 75.3205 19.5596 75.1871 18.2996C75.0999 17.4556 74.7023 16.6552 73.9798 16.0925C72.9931 15.2776 72.1543 14.6991 70.9629 14.1813C70.5943 14.0189 70.1518 13.9291 69.6816 13.9291C69.2113 13.9291 68.7688 14.0189 68.4016 14.1813C67.2102 14.7004 66.3701 15.2789 65.3847 16.0925C64.6621 16.6552 64.2659 17.4556 64.1774 18.2996C64.0439 19.5596 64.0492 20.0628 64.1774 21.3229C64.2685 22.2118 64.6384 22.9765 65.3847 23.5603C66.3767 24.3382 67.2247 24.9233 68.4016 25.4424C68.7847 25.6062 69.2113 25.6643 69.6816 25.6643C70.1518 25.6643 70.5798 25.6049 70.9629 25.4424ZM66.5457 29.7099C65.1456 29.1657 63.4984 28.331 62.3056 27.4421C60.5686 26.153 59.4855 24.1665 59.2438 22.0189C59.0707 20.4921 59.0707 19.129 59.2438 17.6022C59.4855 15.4546 60.5686 13.4681 62.3056 12.2094C63.4984 11.2901 65.1416 10.4475 66.5457 9.89669C67.514 9.51763 68.5628 9.23102 69.6816 9.23102C70.8004 9.23102 71.8479 9.52027 72.8174 9.89669C74.2347 10.4501 75.8647 11.2901 77.0575 12.2094C78.7945 13.4681 79.8763 15.4546 80.1194 17.6022C80.2911 19.129 80.2911 20.4921 80.1194 22.0189C79.8763 24.1665 78.7945 26.153 77.0575 27.4421C75.8647 28.331 74.2308 29.1618 72.8174 29.7099C71.8162 30.0956 70.8004 30.3914 69.6816 30.3914C68.5628 30.3914 67.547 30.0982 66.5457 29.7099Z"></path><path d="M86.9079 14.0624H82.0707C81.2597 14.0624 80.8106 13.6213 80.8106 12.842V9.87553H97.8146V12.842C97.8146 13.6213 97.3655 14.0624 96.5544 14.0624H91.7173V29.7455H86.9079V14.0624Z"></path><path d="M107.112 29.0217L101.833 22.2091C101.45 21.727 101.321 21.3004 101.321 20.7047V9.87553H104.813C105.593 9.87553 106.033 10.3008 106.033 11.0973V19.7405C106.033 20.3375 106.161 20.7906 106.544 21.2594L110.064 25.6299L113.429 21.2594C113.784 20.7773 113.94 20.3375 113.94 19.7405V11.0973C113.94 10.3167 114.365 9.87553 115.161 9.87553H118.652V20.7047C118.652 21.3004 118.497 21.7402 118.142 22.2236L112.919 29.0217C112.536 29.5329 112.067 29.7455 111.428 29.7455H108.604C107.951 29.7455 107.497 29.5329 107.114 29.0217"></path><path d="M121.751 23.3423H125.449C126.31 23.3423 126.456 23.6369 126.696 24.4558C127.04 25.6233 128.049 26.2375 130.112 26.2375H131.211C133.335 26.2375 134.434 25.5837 134.434 24.2774V23.8469C134.434 23.0451 133.737 22.5248 132.355 22.2738L127.678 21.4272C124.336 20.8328 122.093 19.2452 122.093 16.3197V15.1759C122.093 11.508 125.375 9.41325 129.296 9.41325H131.539C136.232 9.41325 138.876 11.9082 138.876 15.8283H135.133C134.39 15.8283 134.175 15.6514 134.019 15.0411C133.738 13.9449 132.949 13.3928 131.272 13.3928H129.994C128.495 13.3928 127.025 13.8075 127.025 15.16V15.6197C127.025 16.3329 127.663 16.8374 128.971 17.0606L133.857 17.9376C137.108 18.5161 139.365 20.0166 139.365 23.0901V24.2788C139.365 28.2583 135.846 30.2342 131.627 30.2342H129.607C125.019 30.2342 121.752 28.154 121.752 23.3436"></path></svg>
+      <span style="font-weight: 700; font-size: 34px; line-height: 34px; color: #ffffff">Pay</span>
+    </div>
+    <a href="#inicio" class="back" data-act="back-totem" style="display: inline-flex; align-items: center; gap: 10px; height: 56px; padding: 0 24px 0 18px; border-radius: 999px; border: 1px solid #2e556b; color: #ffffff; font-weight: 700; font-size: 20px; text-decoration: none">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00dbff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>Voltar ao Desafio Cultural</a>
+  </header>
+
+  <!-- Título -->
+  <div style="position: relative; display: flex; align-items: flex-end; justify-content: space-between; gap: 40px">
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <span style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; height: 44px; padding: 0 20px; border-radius: 999px; background: #00dbff; color: #002233; font-weight: 800; font-size: 18px">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="#002233" aria-hidden="true"><path d="M12 0C12 6.63 17.37 12 24 12C17.37 12 12 17.37 12 24C12 17.37 6.63 12 0 12C6.63 12 12 6.63 12 0Z"></path></svg>Experiências TOTVS Pay</span>
+      <h1 style="margin: 0; font-weight: 900; font-size: 88px; line-height: 88px; letter-spacing: -0.045em">Escolha sua <span style="color: #00dbff">experiência</span></h1>
+    </div>
+    <p style="margin: 0 0 8px; max-width: 520px; font-weight: 500; font-size: 24px; line-height: 34px; color: #ffffffcc">Veja o TOTVS Pay funcionando dentro dos produtos que você já usa. <strong style="font-weight: 800; color: #ffffff">Toque em um quadrado</strong> para começar.</p>
+  </div>
+
+  <!-- Quadrados -->
+  <nav aria-label="Experiências" style="position: relative; flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 20px">
+
+    <!-- TOTVS Pay: destaque ciano -->
+    <a href="#experiencia" data-product="totvs-credenciamento" class="xp xp-cyan" style="display: flex; flex-direction: column; justify-content: space-between; padding: 28px; border-radius: 28px; background: #00dbff; color: #002233; text-decoration: none; min-height: 0">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between">
+        <span style="width: 68px; height: 68px; border-radius: 18px; background: #002233; display: flex; align-items: center; justify-content: center">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3" stroke="#ffffff"></rect><circle cx="9" cy="11" r="2.5" stroke="#00dbff"></circle><path d="M5.5 17c.8-1.8 2-2.5 3.5-2.5s2.7.7 3.5 2.5M15 10h3M15 14h3" stroke="#ffffff"></path></svg>
+        </span>
+        <span style="display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 999px; background: #002233; color: #00dbff; font-weight: 800; font-size: 15px">TOTVS Pay</span>
+      </div>
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+          <span style="font-weight: 900; font-size: 36px; line-height: 40px; letter-spacing: -0.02em">Credenciamento</span>
+          <span style="font-weight: 500; font-size: 18px; line-height: 26px; color: #003347">Abra a conta de pagamentos em poucos passos.</span>
+        </div>
+        <span class="go" style="flex: none; width: 56px; height: 56px; border-radius: 16px; background: #002233; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00dbff" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+      </div>
+    </a>
+
+    <a href="#experiencia" data-product="totvs-dashboard" class="xp xp-cyan" style="display: flex; flex-direction: column; justify-content: space-between; padding: 28px; border-radius: 28px; background: #00dbff; color: #002233; text-decoration: none; min-height: 0">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between">
+        <span style="width: 68px; height: 68px; border-radius: 18px; background: #002233; display: flex; align-items: center; justify-content: center">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16" stroke="#ffffff"></path><path d="M7 16v-5M12 16V7M17 16v-8" stroke="#00dbff"></path></svg>
+        </span>
+        <span style="display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 999px; background: #002233; color: #00dbff; font-weight: 800; font-size: 15px">TOTVS Pay</span>
+      </div>
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+          <span style="font-weight: 900; font-size: 36px; line-height: 40px; letter-spacing: -0.02em">Dashboard</span>
+          <span style="font-weight: 500; font-size: 18px; line-height: 26px; color: #003347">Acompanhe vendas e recebimentos num só lugar.</span>
+        </div>
+        <span class="go" style="flex: none; width: 56px; height: 56px; border-radius: 16px; background: #002233; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#00dbff" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+      </div>
+    </a>
+
+    <a href="#experiencia" data-product="checkout" class="xp xp-dark" style="display: flex; flex-direction: column; justify-content: space-between; padding: 28px; border-radius: 28px; background: #002233; border: 1px solid #0e3a52; color: #ffffff; text-decoration: none; min-height: 0">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between">
+        <span style="width: 68px; height: 68px; border-radius: 18px; background: #001927; display: flex; align-items: center; justify-content: center">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2.5l2.2 10.5a1.5 1.5 0 0 0 1.5 1.2h8.3a1.5 1.5 0 0 0 1.5-1.1L21 8H6.3" stroke="#ffffff"></path><circle cx="9.5" cy="19.5" r="1.5" stroke="#00dbff"></circle><circle cx="17" cy="19.5" r="1.5" stroke="#00dbff"></circle></svg>
+        </span>
+        <span style="display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid #2e556b; color: #ffffff; font-weight: 700; font-size: 15px">TOTVS Pay</span>
+      </div>
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+          <span style="font-weight: 900; font-size: 36px; line-height: 40px; letter-spacing: -0.02em">Checkout</span>
+          <span style="font-weight: 500; font-size: 18px; line-height: 26px; color: #ffffffcc">Pague com Pix, cartão ou boleto.</span>
+        </div>
+        <span class="go" style="flex: none; width: 56px; height: 56px; border-radius: 16px; background: #00dbff; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#002233" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+      </div>
+    </a>
+
+    <a href="#experiencia" data-product="rd" class="xp xp-dark" style="display: flex; flex-direction: column; justify-content: space-between; padding: 28px; border-radius: 28px; background: #002233; border: 1px solid #0e3a52; color: #ffffff; text-decoration: none; min-height: 0">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between">
+        <span style="width: 68px; height: 68px; border-radius: 18px; background: #001927; display: flex; align-items: center; justify-content: center">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 18l5-5 4 3 7-8" stroke="#ffffff"></path><path d="M15 8h5v5" stroke="#00dbff"></path></svg>
+        </span>
+        <span style="display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid #2e556b; color: #ffffff; font-weight: 700; font-size: 15px">RD Station</span>
+      </div>
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+          <span style="font-weight: 900; font-size: 36px; line-height: 40px; letter-spacing: -0.02em">RD Vendas</span>
+          <span style="font-weight: 500; font-size: 18px; line-height: 26px; color: #ffffffcc">Cobre direto da negociação no CRM.</span>
+        </div>
+        <span class="go" style="flex: none; width: 56px; height: 56px; border-radius: 16px; background: #00dbff; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#002233" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+      </div>
+    </a>
+
+    <a href="#experiencia" data-product="educacional" class="xp xp-dark" style="display: flex; flex-direction: column; justify-content: space-between; padding: 28px; border-radius: 28px; background: #002233; border: 1px solid #0e3a52; color: #ffffff; text-decoration: none; min-height: 0">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between">
+        <span style="width: 68px; height: 68px; border-radius: 18px; background: #001927; display: flex; align-items: center; justify-content: center">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z" stroke="#ffffff"></path><path d="M6 11v5c2 2 10 2 12 0v-5" stroke="#00dbff"></path></svg>
+        </span>
+        <span style="display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid #2e556b; color: #ffffff; font-weight: 700; font-size: 15px">TOTVS</span>
+      </div>
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+          <span style="font-weight: 900; font-size: 36px; line-height: 40px; letter-spacing: -0.02em">Educacional</span>
+          <span style="font-weight: 500; font-size: 18px; line-height: 26px; color: #ffffffcc">Mensalidades por Pix, cartão e boleto.</span>
+        </div>
+        <span class="go" style="flex: none; width: 56px; height: 56px; border-radius: 16px; background: #00dbff; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#002233" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+      </div>
+    </a>
+
+    <a href="#experiencia" data-product="construcao" class="xp xp-dark" style="display: flex; flex-direction: column; justify-content: space-between; padding: 28px; border-radius: 28px; background: #002233; border: 1px solid #0e3a52; color: #ffffff; text-decoration: none; min-height: 0">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between">
+        <span style="width: 68px; height: 68px; border-radius: 18px; background: #001927; display: flex; align-items: center; justify-content: center">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V10l7-5 7 5v11" stroke="#ffffff"></path><path d="M10 21v-6h4v6" stroke="#00dbff"></path></svg>
+        </span>
+        <span style="display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid #2e556b; color: #ffffff; font-weight: 700; font-size: 15px">TOTVS</span>
+      </div>
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+          <span style="font-weight: 900; font-size: 36px; line-height: 40px; letter-spacing: -0.02em">Construção</span>
+          <span style="font-weight: 500; font-size: 18px; line-height: 26px; color: #ffffffcc">Pagamentos no dia a dia da obra.</span>
+        </div>
+        <span class="go" style="flex: none; width: 56px; height: 56px; border-radius: 16px; background: #00dbff; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#002233" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+      </div>
+    </a>
+
+    <a href="#experiencia" data-product="winthor" class="xp xp-dark" style="display: flex; flex-direction: column; justify-content: space-between; padding: 28px; border-radius: 28px; background: #002233; border: 1px solid #0e3a52; color: #ffffff; text-decoration: none; min-height: 0">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between">
+        <span style="width: 68px; height: 68px; border-radius: 18px; background: #001927; display: flex; align-items: center; justify-content: center">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7.5L12 3l9 4.5v9L12 21l-9-4.5z" stroke="#ffffff"></path><path d="M3 7.5L12 12l9-4.5M12 12v9" stroke="#00dbff"></path></svg>
+        </span>
+        <span style="display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid #2e556b; color: #ffffff; font-weight: 700; font-size: 15px">TOTVS</span>
+      </div>
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+          <span style="font-weight: 900; font-size: 36px; line-height: 40px; letter-spacing: -0.02em">Winthor</span>
+          <span style="font-weight: 500; font-size: 18px; line-height: 26px; color: #ffffffcc">Recebimentos integrados ao ERP.</span>
+        </div>
+        <span class="go" style="flex: none; width: 56px; height: 56px; border-radius: 16px; background: #00dbff; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#002233" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+      </div>
+    </a>
+
+    <a href="#experiencia" data-product="suri" class="xp xp-dark" style="display: flex; flex-direction: column; justify-content: space-between; padding: 28px; border-radius: 28px; background: #002233; border: 1px solid #0e3a52; color: #ffffff; text-decoration: none; min-height: 0">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between">
+        <span style="width: 68px; height: 68px; border-radius: 18px; background: #001927; display: flex; align-items: center; justify-content: center">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z" stroke="#ffffff"></path><path d="M8 10h8M8 13h5" stroke="#00dbff"></path></svg>
+        </span>
+        <span style="display: inline-flex; align-items: center; height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid #2e556b; color: #ffffff; font-weight: 700; font-size: 15px">Suri</span>
+      </div>
+      <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 16px">
+        <div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+          <span style="font-weight: 900; font-size: 36px; line-height: 40px; letter-spacing: -0.02em">Suri Shop</span>
+          <span style="font-weight: 500; font-size: 18px; line-height: 26px; color: #ffffffcc">Compra e pagamento pela loja da Suri.</span>
+        </div>
+        <span class="go" style="flex: none; width: 56px; height: 56px; border-radius: 16px; background: #00dbff; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#002233" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+      </div>
+    </a>
+  </nav>
+
+  <!-- Lista de interesse -->
+  <a href="interesse/" class="xp" style="position: relative; display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 96px; padding: 0 20px 0 32px; border-radius: 24px; background: #ffffff; color: #002233; text-decoration: none">
+    <div style="display: flex; align-items: center; gap: 20px">
+      <span style="width: 56px; height: 56px; border-radius: 16px; background: #b2f4ff; display: flex; align-items: center; justify-content: center">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#002233" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+      </span>
+      <span style="font-weight: 900; font-size: 30px; line-height: 36px; letter-spacing: -0.02em">Gostou? Entre na lista de interesse</span>
+      <span style="font-weight: 500; font-size: 20px; line-height: 28px; color: #405466">e saiba quando o TOTVS Pay chega no seu produto.</span>
+    </div>
+    <span class="go" style="flex: none; display: inline-flex; align-items: center; gap: 10px; height: 64px; padding: 0 24px; border-radius: 16px; background: #002233; color: #00dbff; font-weight: 800; font-size: 22px">Quero entrar<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00dbff" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></span>
+  </a>
+</div>
+</template>
+<div id="gate" hidden></div>
 <script>
 const USERS=new Set(['0e1733efb669979a709f05ba0a8d2725095193cf81fd05b75b7cefe5c48e03f9','d919a100ce6b45524d415d52d088d5817587c6dd8c3691b03b8063c44d043523','a3418631ddce958c2fe2206cb362d390c2cc59c86b6ef2083b3d7cbe38e9140d','047007876c105127d9e0299df5dcea30b9fa5fae71be6f9d10ddb6357981cb9c','ccc68482d9e0eee0789e64c7674421076738f8836857ea89bcd0afb832bf3fc3','80c0fcbbfa9d03d861b22230e67c380afb545c12de43094f3985128625858361','3db6c5da02e8275b4cd5d64d91d628b51e0028c3c8a915570492c34ab9e1fdd1','33129567e0bd787efb15a26307e5311e06ba66e3b8dbc2206ad59f99780a4d78','24d4b96f58da6d4a8512313bbd02a28ebf0ca95dec6e4c86ef78ce7f01e788ac']);
 const PASS='e9e69fcd703e857da732ae1e8c0d839920a24cb3407cc98440c04a4c7b62545d';
@@ -262,45 +1031,6 @@ async function decrypt(buf,password){
     throw last||new Error('decrypt');
   }
   return decryptSlice(bytes,password);
-}
-const state={user:'',pass:'',product:'',error:'',busy:false};
-function loginView(){
-  const can=state.user.trim()&&state.pass&&state.product&&!state.busy;
-  return `<div class="login"><form class="login-card" id="login-form" novalidate>
-    <header class="login-card__header">
-      <div class="login-steps" aria-hidden="true"><span class="login-step"></span><span class="login-step is-current"></span></div>
-      <h1>Entrar</h1>
-    </header>
-    <div class="login-card__fields">
-      <label class="tg-field"><span class="tg-field__label">Usuário</span><span class="tg-input"><input id="login-user" placeholder="Insira o usuário" autocomplete="username"></span></label>
-      <label class="tg-field"><span class="tg-field__label">Senha</span><span class="tg-input"><input id="login-password" type="password" placeholder="Insira a senha" autocomplete="current-password"></span></label>
-      <label class="tg-field"><span class="tg-field__label">Produto</span><span class="tg-input"><select id="login-product"><option value="" disabled ${!state.product?'selected':''}>Selecione</option><option value="totvs-credenciamento" ${state.product==='totvs-credenciamento'?'selected':''}>TOTVS Pay - Credenciamento</option><option value="totvs-dashboard" ${state.product==='totvs-dashboard'?'selected':''}>TOTVS Pay - Dashboard</option><option value="rd" ${state.product==='rd'?'selected':''}>RD Vendas</option><option value="construcao" ${state.product==='construcao'?'selected':''}>Construção</option><option value="educacional" ${state.product==='educacional'?'selected':''}>Educacional</option><option value="winthor" ${state.product==='winthor'?'selected':''}>Winthor</option><option value="suri" ${state.product==='suri'?'selected':''}>Suri Shop</option><option value="checkout" ${state.product==='checkout'?'selected':''}>Checkout</option></select></span></label>
-    </div>
-    ${state.error?`<p class="login-error" role="alert">${state.error}</p>`:''}
-    <button class="tg-button tg-button--primary" data-act="login" ${can?'':'disabled'}>${state.busy?'Entrando…':'Entrar'}</button>
-  </form></div>`;
-}
-function bindLogin(){
-  const user=document.getElementById('login-user');
-  const pass=document.getElementById('login-password');
-  const product=document.getElementById('login-product');
-  const submit=document.querySelector('[data-act="login"]');
-  const sync=()=>{submit.disabled=!(user.value.trim()&&pass.value&&product.value)||state.busy};
-  user.value=state.user;
-  pass.value=state.pass;
-  product.value=state.product;
-  sync();
-  user.oninput=()=>{state.user=user.value;if(state.error){state.error='';const err=document.querySelector('.login-error');if(err)err.remove()}sync()};
-  pass.oninput=()=>{state.pass=pass.value;if(state.error){state.error='';const err=document.querySelector('.login-error');if(err)err.remove()}sync()};
-  product.onchange=()=>{state.product=product.value;if(state.error){state.error='';const err=document.querySelector('.login-error');if(err)err.remove()}sync()};
-  document.getElementById('login-form').onsubmit=ev=>{ev.preventDefault();unlock()};
-}
-function renderLogin(){
-  if(location.hash==='#suri' && !state.busy){showPublicSuri();return}
-  const root=document.getElementById('crm-root');
-  if(root){root.classList.add('is-login');root.classList.remove('is-suri')}
-  document.getElementById('app').innerHTML=loginView();
-  bindLogin();
 }
 function experienceRoot(){
   const p=location.pathname;
@@ -347,6 +1077,7 @@ function bindSuri(){
   window.addEventListener('resize',sync);
 }
 function showPublicSuri(){
+  setGate(false);
   const app=document.getElementById('app');
   const root=document.getElementById('crm-root');
   const ck=document.getElementById('checkout-root');
@@ -362,20 +1093,33 @@ function showPublicSuri(){
   bindSuri();
 }
 function goProduct(id){
-  if(id==='interesse'){location.assign(experienceRoot()+'interesse/');return}
-  if(window.__pdNavigate && (id==='rd'||id==='suri'||id==='checkout')){window.__pdNavigate(id);return}
+  if(id==='totvs'||id==='totvs-credenciamento'||id==='totvs-dashboard') rememberSession(FLOW_KEY);
   const root=experienceRoot();
-  if(id==='totvs-credenciamento'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/credenciamento');return}
-  if(id==='totvs'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/');return}
+  if(id==='interesse'){location.assign(root+'interesse/');return}
+  if(id==='inicio'){location.assign(root+'#inicio');return}
+  if(window.__pdNavigate && (id==='rd'||id==='suri'||id==='checkout')){setGate(false);window.__pdNavigate(id);return}
+  if(id==='totvs'||id==='totvs-credenciamento'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/');return}
   if(id==='totvs-dashboard'){try{sessionStorage.setItem('totvs-onboarded','1')}catch(e){}location.assign(root+'totvs/dashboard');return}
+  if(id==='construcao'){location.assign(root+'construcao/');return}
   if(id==='educacional'){location.assign(root+'educacional/');return}
   if(id==='winthor'){location.assign(root+'winthor/');return}
-  if(id==='construcao'){location.assign(root+'construcao/');return}
   if(id==='suri'){location.hash='suri';showPublicSuri();return}
-  if(id==='rd'){location.hash='deal';if(sessionPass()){loadFlow(sessionPass());return}renderLogin();return}
-  if(id==='checkout'){location.hash='checkout';if(sessionPass()){loadFlow(sessionPass());return}renderLogin();return}
+  if(id==='rd'){if(location.hash!=='#deal') location.hash='deal'; else enterFlow(); return}
+  if(id==='checkout'){if(location.hash!=='#checkout') location.hash='checkout'; else enterFlow(); return}
 }
 document.addEventListener('click',ev=>{
+  if(ev.target.closest('[data-act="start-experience"]')){
+    ev.preventDefault();
+    if(location.hash!=='#experiencias') location.hash='experiencias';
+    else showHub();
+    return;
+  }
+  if(ev.target.closest('[data-act="back-totem"]')){
+    ev.preventDefault();
+    if(location.hash!=='#inicio') location.hash='inicio';
+    else showTotem();
+    return;
+  }
   const toggle=ev.target.closest('[data-act="toggle-products"]');
   if(toggle){
     ev.preventDefault();
@@ -389,6 +1133,7 @@ document.addEventListener('click',ev=>{
   }
   const item=ev.target.closest('[data-product]');
   if(item && !item.disabled){
+    ev.preventDefault();
     document.querySelectorAll('.product-switch__menu').forEach(m=>m.hidden=true);
     goProduct(item.dataset.product);
     return;
@@ -398,27 +1143,6 @@ document.addEventListener('click',ev=>{
     document.querySelectorAll('[data-act="toggle-products"]').forEach(b=>b.setAttribute('aria-expanded','false'));
   }
 });
-async function unlock(){
-  if(!(state.user.trim()&&state.pass&&state.product)||state.busy) return;
-  const uh=await sha256(normUser(state.user));
-  const ph=await sha256('pd-ai|'+state.pass);
-  const ok=uh===PILOTO?ph===PILOTO_PASS:(USERS.has(uh)&&ph===PASS);
-  if(!ok){state.error='Usuário ou senha inválidos';renderLogin();return}
-  rememberSession(state.pass);
-  const root=experienceRoot();
-  if(state.product==='totvs-credenciamento'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/credenciamento');return}
-  if(state.product==='totvs'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/');return}
-  if(state.product==='totvs-dashboard'){try{sessionStorage.setItem('totvs-onboarded','1')}catch(e){}location.assign(root+'totvs/dashboard');return}
-  if(state.product==='educacional'){location.assign(root+'educacional/');return}
-  if(state.product==='winthor'){location.assign(root+'winthor/');return}
-  if(state.product==='construcao'){location.assign(root+'construcao/');return}
-  if(state.product==='suri'){location.hash='suri';showPublicSuri();return}
-  if(state.product==='checkout'){location.hash='checkout';state.busy=true;state.error='';renderLogin();const loaded=await loadFlow(state.pass);if(!loaded){state.busy=false;state.error='Não foi possível carregar o fluxo';renderLogin()}return}
-  else location.hash='deal';
-  state.busy=true;state.error='';renderLogin();
-  const loaded=await loadFlow(state.pass);
-  if(!loaded){state.busy=false;state.error='Não foi possível carregar o fluxo';renderLogin()}
-}
 function isReload(){
   try{const nav=performance.getEntriesByType('navigation')[0];if(nav) return nav.type==='reload'}catch(e){}
   return performance.navigation&&performance.navigation.type===1;
@@ -454,17 +1178,121 @@ async function loadFlow(password){
     return false;
   }
 }
-if(isReload()) clearSession();
-(async function boot(){
-  if(location.hash==='#suri'){showPublicSuri();return}
-  const pass=sessionPass();
-  if(pass){
-    const loaded=await loadFlow(pass);
-    if(loaded) return;
-    clearSession();
+const EXPERIENCES=[
+  ['totvs-credenciamento','TOTVS Pay','Credenciamento','Abra a conta e comece a receber.'],
+  ['totvs-dashboard','TOTVS Pay','Dashboard','Acompanhe os recebimentos do dia a dia.'],
+  ['rd','CRM','RD Vendas','Crie links de pagamento na negociação.'],
+  ['construcao','Obras','Construção','Adiantamento e proposta da obra.'],
+  ['educacional','Portal','Educacional','Pagamentos no portal do aluno.'],
+  ['winthor','ERP','Winthor','Recebimentos no fluxo do Winthor.'],
+  ['suri','WhatsApp','Suri Shop','Venda automatizada e assistida.'],
+  ['checkout','Pagamento','Checkout','A experiência de quem paga.']
+];
+const FLOW_KEY='123';
+let opening=false;
+function setGate(on){
+  document.body.classList.toggle('is-gate', !!on);
+  const gate=document.getElementById('gate');
+  const root=document.getElementById('crm-root');
+  const checkout=document.getElementById('checkout-root');
+  const banner=document.querySelector('.demo-banner');
+  if(gate) gate.hidden=!on;
+  if(root) root.hidden=!!on;
+  if(on && checkout) checkout.hidden=true;
+  if(banner) banner.hidden=!!on;
+}
+function compactHTML(){
+  return `<section class="totem-compact" hidden>
+    <header class="tc-top"><div class="tc-brand"><img src="totvs-logo-navy.svg" alt="TOTVS"><strong>Pay</strong></div><span class="tc-live"><i></i><span>Ao vivo no Stand TOTVS Pay</span></span></header>
+    <span class="tc-badge">Desafio Cultural TOTVS Pay</span>
+    <h1 class="tc-title">Sua visão<br>vale <span>prêmios!</span></h1>
+    <p class="tc-lead">TOTVS Pay pela perspectiva de quem mais importa: <em>o cliente.</em></p>
+    <div class="tc-main">
+      <ol class="tc-steps">
+        <li class="tc-step"><b>1</b><div><strong>Poste no LinkedIn</strong><p>Foto ou vídeo e conte o que é o TOTVS Pay.</p></div></li>
+        <li class="tc-step"><b>2</b><div><strong>Marque e engaje</strong><p>@TOTVS #TOTVSPay #LançamentoTOTVSPay</p></div></li>
+        <li class="tc-step"><b>3</b><div><strong>Ganhe</strong><p>21 frases criativas levam brindes.</p></div></li>
+      </ol>
+      <aside class="tc-panel">
+        <div><div class="tc-21">21<small>frases<br>premiadas</small></div><p>Resultado 14/10 · 16h, no Stand TOTVS Pay.</p></div>
+        <div class="tc-meta"><div><span>Resultado</span><strong>14/10 · 16h</strong></div><div><span>Retirada</span><strong>Sala de Apoio do Marketing</strong></div></div>
+        <button type="button" class="tc-cta tp-cta" data-act="start-experience">Iniciar experiência<i aria-hidden="true">→</i></button>
+      </aside>
+    </div>
+  </section>`;
+}
+function fitTotem(){
+  const stage=document.querySelector('.totem-stage');
+  if(!stage) return;
+  const wrap=stage.querySelector('.totem-canvas-wrap');
+  const compact=stage.querySelector('.totem-compact');
+  if(!wrap||!compact) return;
+  const scale=Math.min(stage.clientWidth/1920, stage.clientHeight/1080);
+  const useCompact=scale<0.58;
+  wrap.hidden=useCompact;
+  compact.hidden=!useCompact;
+  if(!useCompact){wrap.style.transform=`translate(-50%, -50%) scale(${scale})`;return}
+  compact.style.transform='none';
+  compact.style.width=stage.clientWidth+'px';
+  const fit=Math.min(1, stage.clientHeight/compact.scrollHeight, stage.clientWidth/compact.scrollWidth);
+  compact.style.transform=`scale(${fit})`;
+}
+function showTotem(){
+  setGate(true);
+  const tpl=document.getElementById('totem-canvas-tpl');
+  document.getElementById('gate').innerHTML=`<div class="totem-stage"><div class="totem-canvas-wrap">${tpl?tpl.innerHTML:''}</div>${compactHTML()}</div>`;
+  requestAnimationFrame(fitTotem);
+}
+function hubCompactHTML(){
+  const cards=[
+    ['totvs-credenciamento','TOTVS Pay','Credenciamento','Abra a conta de pagamentos em poucos passos.',1],
+    ['totvs-dashboard','TOTVS Pay','Dashboard','Acompanhe vendas e recebimentos num só lugar.',1],
+    ['checkout','TOTVS Pay','Checkout','Pague com Pix, cartão ou boleto.',0],
+    ['rd','RD Station','RD Vendas','Cobre direto da negociação no CRM.',0],
+    ['educacional','TOTVS','Educacional','Mensalidades por Pix, cartão e boleto.',0],
+    ['construcao','TOTVS','Construção','Pagamentos no dia a dia da obra.',0],
+    ['winthor','TOTVS','Winthor','Recebimentos integrados ao ERP.',0],
+    ['suri','Suri','Suri Shop','Compra e pagamento pela loja da Suri.',0]
+  ].map(([id,kicker,title,text,cyan])=>`<a href="#experiencia" data-product="${id}" class="hc-card${cyan?' is-cyan':''}"><span>${kicker}</span><strong>${title}</strong><p>${text}</p></a>`).join('');
+  return `<section class="totem-compact hc" hidden><header class="hc-top"><strong>TOTVS Pay</strong><a href="#inicio" class="hc-back" data-act="back-totem">Voltar</a></header><h1 class="hc-title">Escolha sua <span>experiência</span></h1><nav class="hc-grid" aria-label="Experiências">${cards}</nav><a class="hc-interest" href="interesse/">Gostou? Entre na lista de interesse</a></section>`;
+}
+function showHub(error){
+  setGate(true);
+  const tpl=document.getElementById('hub-canvas-tpl');
+  const gate=document.getElementById('gate');
+  gate.innerHTML=`<div class="totem-stage"><div class="totem-canvas-wrap">${tpl?tpl.innerHTML:''}</div>${hubCompactHTML()}</div>`;
+  if(error){
+    const note=document.createElement('p');
+    note.className='hub-error';
+    note.textContent=error;
+    gate.appendChild(note);
   }
-  renderLogin();
-})();
+  requestAnimationFrame(fitTotem);
+}
+async function enterFlow(){
+  if(window.__pdNavigate||opening) return;
+  opening=true;
+  setGate(true);
+  const gate=document.getElementById('gate');
+  if(gate) gate.innerHTML='<p class="gate-loading">Abrindo experiência…</p>';
+  const ok=await loadFlow(FLOW_KEY);
+  opening=false;
+  if(ok){setGate(false);return}
+  showHub('Não foi possível abrir esta experiência.');
+}
+function route(){
+  const h=location.hash.replace('#','');
+  if(h===''||h==='inicio'){showTotem();return}
+  if(h==='experiencias'){showHub();return}
+  if(window.__pdNavigate){setGate(false);return}
+  if(h==='suri'){showPublicSuri();return}
+  if(h==='deal'||h==='checkout'){enterFlow();return}
+  showTotem();
+}
+window.addEventListener('resize',()=>{ if(document.querySelector('.totem-stage')) fitTotem(); });
+window.addEventListener('hashchange',route);
+if(isReload()) clearSession();
+route();
 </script>
 </body>
 </html>

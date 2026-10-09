@@ -20,9 +20,10 @@
     '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>' +
     '</button>' +
     '<div class="product-switch__menu" hidden>' +
-    '<p class="product-switch__label">Produtos</p>' +
-    '<button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay - Credenciamento</button>' +
-    '<button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay - Dashboard</button>' +
+    '<button type="button" class="product-switch__item" data-product="inicio">Página inicial</button>' +
+    '<span class="product-switch__sep"></span>' +
+    '<button type="button" class="product-switch__item" data-product="totvs-credenciamento">TOTVS Pay – Credenciamento</button>' +
+    '<button type="button" class="product-switch__item" data-product="totvs-dashboard">TOTVS Pay – Dashboard</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="rd">RD Vendas</button>' +
     '<span class="product-switch__sep"></span>' +
@@ -32,7 +33,7 @@
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="suri">Suri Shop</button>' +
     '<span class="product-switch__sep"></span>' +
-    '<button type="button" class="product-switch__item" data-product="checkout">Checkout</button>' +
+    '<button type="button" class="product-switch__item" data-product="checkout">Link de pagamento</button>' +
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="interesse">Lista de interesse</button>' +
     '</div></div>'
@@ -46,6 +47,10 @@
 
   function goProduct(id) {
     var root = experienceRoot()
+    if (id === 'inicio') {
+      location.assign(experienceRoot() + '#inicio')
+      return
+    }
     if (id === 'interesse') {
       location.assign(root + 'interesse/')
       return

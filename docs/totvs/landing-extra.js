@@ -1,5 +1,6 @@
 (function () {
-  var ASSET = '/triz-pd/totvs/assets/landing/'
+  var ROOT = (location.pathname.split('/totvs')[0] || '') + '/totvs/'
+  var ASSET = ROOT + 'assets/landing/'
   var HOST_ID = 'lp-extra-host'
   var RATES_VERSION = '18'
 
@@ -470,7 +471,7 @@
     var link = document.createElement('link')
     link.id = 'lp-extra-style'
     link.rel = 'stylesheet'
-    link.href = '/triz-pd/totvs/landing-extra.css?v=18'
+    link.href = ROOT + 'landing-extra.css?v=18'
     document.head.appendChild(link)
   }
 
