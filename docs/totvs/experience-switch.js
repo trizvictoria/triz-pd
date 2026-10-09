@@ -1,5 +1,5 @@
 (function () {
-  var MENU_VERSION = '14'
+  var MENU_VERSION = '15'
 
   var STYLE =
     '#pd-product-switch-host{position:fixed;z-index:2147483646;pointer-events:none}' +
