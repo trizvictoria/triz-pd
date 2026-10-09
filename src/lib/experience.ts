@@ -11,7 +11,7 @@ export type ExperienceTarget =
 
 export function experienceRoot() {
   const path = window.location.pathname
-  const nested = path.search(/\/(totvs|construcao|educacional|winthor)(?:\/|$)/)
+  const nested = path.search(/\/(totvs|construcao|educacional|winthor|interesse)(?:\/|$)/)
   if (nested >= 0) return `${path.slice(0, nested)}/`
   const base = import.meta.env.BASE_URL || '/'
   return base.endsWith('/') ? base : `${base}/`
@@ -32,8 +32,8 @@ export function experienceUrls() {
   const root = experienceRoot()
   return {
     rd: root,
-    totvs: `${root}totvs/credenciamento`,
-    'totvs-credenciamento': `${root}totvs/credenciamento`,
+    totvs: `${root}totvs/`,
+    'totvs-credenciamento': `${root}totvs/`,
     'totvs-dashboard': `${root}totvs/dashboard`,
     suri: `${root}#suri`,
     checkout: `${root}#checkout`,

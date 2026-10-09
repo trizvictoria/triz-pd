@@ -45,10 +45,18 @@ body:has(.lp) {
   height: 64px;
   display: flex;
   align-items: center;
+  z-index: 5;
+}
+
+.lp-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
 }
 
 .lp-header .totvs-brand {
   height: 28px;
+  width: max-content;
   padding-left: 0;
   gap: 8px;
 }
@@ -504,6 +512,112 @@ body:has(.lp) {
 
 .lp-card [id="2026-totvspay-material-form-hr-totvs-pay-universo-09918525bb444b6e379e"] {
   min-height: 280px;
+}
+
+.lp-card.is-thanks {
+  padding: 36px 32px 32px;
+}
+
+.lp-thanks {
+  animation: lp-thanks-in 0.35s ease;
+}
+
+.lp-thanks-mark {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  background: #00dbff;
+  color: #002233;
+}
+
+.lp-thanks-kicker {
+  margin: 0 0 8px;
+  color: #0b6e86;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.lp-card.is-thanks h2 {
+  margin: 0 0 12px;
+  font-size: 40px;
+  line-height: 1.1;
+}
+
+.lp-thanks-lead {
+  margin: 0 0 24px;
+  max-width: 42ch;
+  color: #405466;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.lp-thanks-next {
+  display: grid;
+  gap: 10px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lp-thanks-next li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f3f5f7;
+}
+
+.lp-thanks-next li > span {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: #002233;
+  color: #00dbff;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.lp-thanks-next strong {
+  display: block;
+  margin-bottom: 2px;
+  color: #002233;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.lp-thanks-next p {
+  margin: 0;
+  color: #405466;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+@keyframes lp-thanks-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lp-thanks {
+    animation: none;
+  }
 }
 
 .lp-card .bricks-form,

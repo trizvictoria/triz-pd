@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { ProductMenu } from '../components/ProductMenu'
 import { TotvsPayLogo } from '../components/TotvsPayLogo'
 import dashboardShot from '../assets/lp/dashboard.gif'
 import iconSpark from '../assets/lp/icon-spark.svg'
@@ -55,6 +56,127 @@ const steps = [
 ]
 
 let formStarted = false
+let notifyConversion: () => void = () => {}
+
+type GuardXhr = XMLHttpRequest & { __lpUrl?: string }
+
+function clearRedirect(form: HTMLFormElement) {
+  form.removeAttribute('data-asset-action')
+  const jq = (window as Window & { jQuery?: (el: Element) => { removeData: (key: string) => void } }).jQuery
+  jq?.(form).removeData('assetAction')
+  form.querySelectorAll('input[name="redirect_to"]').forEach((input) => input.remove())
+}
+
+function withoutRedirect(xhr: XMLHttpRequest) {
+  document.querySelectorAll('input[name="redirect_to"]').forEach((input) => input.remove())
+  document.querySelectorAll('.lp-card form').forEach((form) => {
+    if (form instanceof HTMLFormElement) clearRedirect(form)
+  })
+  try {
+    const data = JSON.parse(xhr.responseText) as { redirect_to?: string }
+    if (!data || typeof data !== 'object' || !('redirect_to' in data)) return xhr
+    delete data.redirect_to
+    const text = JSON.stringify(data)
+    return new Proxy(xhr, {
+      get(target, prop, receiver) {
+        if (prop === 'responseText' || prop === 'response') return text
+        const value = Reflect.get(target, prop, receiver)
+        return typeof value === 'function' ? value.bind(target) : value
+      },
+    })
+  } catch {
+    return xhr
+  }
+}
+
+function isOffsite(url: string | URL) {
+  try {
+    return new URL(String(url), window.location.href).origin !== window.location.origin
+  } catch {
+    return false
+  }
+}
+
+function ensureStayOnPage() {
+  const flagged = window as Window & { __lpNavPatch?: boolean }
+  if (flagged.__lpNavPatch) return
+  flagged.__lpNavPatch = true
+
+  const hold = (url: string | URL) => {
+    if (!isOffsite(url)) return false
+    notifyConversion()
+    return true
+  }
+
+  const href = Object.getOwnPropertyDescriptor(Location.prototype, 'href')
+  if (href?.set && href.get) {
+    Object.defineProperty(Location.prototype, 'href', {
+      configurable: true,
+      enumerable: href.enumerable ?? true,
+      get() {
+        return href.get!.call(this)
+      },
+      set(value: string) {
+        if (hold(value)) return
+        href.set!.call(this, value)
+      },
+    })
+  }
+
+  const assign = Location.prototype.assign
+  Location.prototype.assign = function (url: string | URL) {
+    if (hold(url)) return
+    return assign.call(this, url)
+  }
+
+  const replace = Location.prototype.replace
+  Location.prototype.replace = function (url: string | URL) {
+    if (hold(url)) return
+    return replace.call(this, url)
+  }
+}
+
+function ensureConversionPatch() {
+  const flagged = window as Window & { __lpConversionPatch?: boolean }
+  if (flagged.__lpConversionPatch) return
+  flagged.__lpConversionPatch = true
+  ensureStayOnPage()
+
+  const proto = XMLHttpRequest.prototype
+  const originalOpen = proto.open
+  proto.open = function (this: GuardXhr, method: string, url: string | URL, async?: boolean, username?: string | null, password?: string | null) {
+    this.__lpUrl = String(url)
+    return originalOpen.call(this, method, url, async ?? true, username, password)
+  } as typeof proto.open
+
+  const descriptor = Object.getOwnPropertyDescriptor(proto, 'onreadystatechange')
+  if (!descriptor?.set || !descriptor.get) return
+
+  Object.defineProperty(proto, 'onreadystatechange', {
+    configurable: true,
+    enumerable: descriptor.enumerable ?? true,
+    get() {
+      return descriptor.get!.call(this)
+    },
+    set(handler: ((this: XMLHttpRequest, ev: Event) => void) | null) {
+      const xhr = this as GuardXhr
+      if (!xhr.__lpUrl?.includes('conversion') || typeof handler !== 'function') {
+        descriptor.set!.call(this, handler)
+        return
+      }
+      descriptor.set!.call(this, function (this: GuardXhr, ev: Event) {
+        const finished = this.readyState === XMLHttpRequest.DONE && this.status >= 200 && this.status < 300
+        if (!finished) {
+          handler.call(this, ev)
+          return
+        }
+        const body = withoutRedirect(this)
+        handler.call(this, { target: body } as Event)
+        notifyConversion()
+      })
+    },
+  })
+}
 
 function mountRdForm() {
   const host = document.getElementById(FORM_ID)
@@ -68,6 +190,9 @@ export function TotvsPayLanding() {
   const stageRef = useRef<HTMLElement>(null)
   const copyRef = useRef<HTMLDivElement>(null)
   const featuresRef = useRef<HTMLElement>(null)
+  const [thanks, setThanks] = useState(false)
+  const thanksRef = useRef(setThanks)
+  thanksRef.current = setThanks
 
   useEffect(() => {
     const previous = document.title
@@ -136,9 +261,51 @@ export function TotvsPayLanding() {
       observer.disconnect()
       window.removeEventListener('resize', sync)
     }
+  }, [thanks])
+
+  useEffect(() => {
+    if (!thanks) return
+    document.getElementById('lista')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }, [thanks])
+
+  useEffect(() => {
+    notifyConversion = () => thanksRef.current(true)
+    ensureConversionPatch()
+    const nativeAlert = window.alert.bind(window)
+    window.alert = (message?: unknown) => {
+      const text = String(message ?? '')
+      if (/obrigad/i.test(text)) {
+        thanksRef.current(true)
+        return
+      }
+      nativeAlert(text)
+    }
+
+    const onSubmit = (event: Event) => {
+      const form = event.target
+      if (form instanceof HTMLFormElement && form.closest('.lp-card')) clearRedirect(form)
+    }
+    document.addEventListener('submit', onSubmit, true)
+
+    const host = document.getElementById(FORM_ID)
+    const scrub = () => {
+      host?.querySelectorAll('form').forEach((form) => {
+        if (form instanceof HTMLFormElement) clearRedirect(form)
+      })
+    }
+    scrub()
+    const observer = host ? new MutationObserver(scrub) : null
+    if (host && observer) observer.observe(host, { childList: true, subtree: true })
+
+    return () => {
+      window.alert = nativeAlert
+      document.removeEventListener('submit', onSubmit, true)
+      observer?.disconnect()
+    }
   }, [])
 
   useEffect(() => {
+    if (thanks) return
     const host = document.getElementById(FORM_ID)
     if (!host || formStarted) return
 
@@ -155,7 +322,7 @@ export function TotvsPayLanding() {
     script.dataset.rdstationForms = 'true'
     script.addEventListener('load', mountRdForm, { once: true })
     document.body.appendChild(script)
-  }, [])
+  }, [thanks])
 
   return (
     <div className="lp">
@@ -163,7 +330,10 @@ export function TotvsPayLanding() {
         <div className="lp-hero-bg" aria-hidden />
         <header className="lp-header">
           <div className="lp-wrap">
-            <TotvsPayLogo variant="navy" size="nav" />
+            <div className="lp-brand">
+              <TotvsPayLogo variant="navy" size="nav" />
+              <ProductMenu />
+            </div>
           </div>
         </header>
 
@@ -208,13 +378,53 @@ export function TotvsPayLanding() {
             </div>
           </div>
 
-          <aside className="lp-card" id="lista" aria-label="Cadastro na lista de interesse">
-            <div className="lp-card-marks" aria-hidden>
-              <span />
-              <span />
-            </div>
-            <h2>Entre na lista</h2>
-            <div role="main" id={FORM_ID} />
+          <aside className={thanks ? 'lp-card is-thanks' : 'lp-card'} id="lista" aria-label="Cadastro na lista de interesse">
+            {thanks ? (
+              <div className="lp-thanks" role="status">
+                <span className="lp-thanks-mark" aria-hidden>
+                  <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                    <path d="M6 14.5 11.2 20 22 8" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
+                <p className="lp-thanks-kicker">Lista de interesse</p>
+                <h2>Obrigado</h2>
+                <p className="lp-thanks-lead">
+                  Recebemos seu cadastro. Avisamos assim que o TOTVS Pay estiver disponível para o seu segmento.
+                </p>
+                <ol className="lp-thanks-next">
+                  <li>
+                    <span>1</span>
+                    <div>
+                      <strong>Cadastro recebido</strong>
+                      <p>Seus dados já estão na lista.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <span>2</span>
+                    <div>
+                      <strong>Liberamos por segmento</strong>
+                      <p>A oferta chega aos poucos nos produtos TOTVS / RD Station.</p>
+                    </div>
+                  </li>
+                  <li>
+                    <span>3</span>
+                    <div>
+                      <strong>Entramos em contato</strong>
+                      <p>Nosso time te chama para ativar quando estiver disponível.</p>
+                    </div>
+                  </li>
+                </ol>
+              </div>
+            ) : (
+              <>
+                <div className="lp-card-marks" aria-hidden>
+                  <span />
+                  <span />
+                </div>
+                <h2>Entre na lista</h2>
+                <div role="main" id={FORM_ID} />
+              </>
+            )}
           </aside>
         </div>
       </section>
