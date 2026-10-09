@@ -37,13 +37,6 @@ import './educacional.css'
 type Step = 'statement' | 'methods' | 'card' | 'amount' | 'review' | 'cardReview' | 'pixPay' | 'done'
 type TechfinOffer = 'mix' | 'pix' | 'boleto' | 'barcode'
 
-const TECHFIN_OFFER_TITLES: Record<TechfinOffer, string> = {
-  mix: 'Combinar pagamentos',
-  pix: 'Pix',
-  boleto: 'Gerar boleto',
-  barcode: 'Gerar código de barras',
-}
-
 function BrandIcon({ brand, large = false }: { brand: SavedCard['brand'] | 'add'; large?: boolean }) {
   const file = brand === 'visa' ? 'icon-visa.svg' : brand === 'mastercard' ? 'icon-mastercard.svg' : 'icon-add-card.svg'
   return (
@@ -1269,7 +1262,7 @@ export function EducacionalApp() {
             aria-labelledby="edu-offer-title"
             onClick={(event) => event.stopPropagation()}
           >
-            <h2 id="edu-offer-title">{TECHFIN_OFFER_TITLES[offer]}</h2>
+            <h2 id="edu-offer-title">Combinar pagamentos</h2>
             <p>
               Esse é um método de pagamento oferecido pela Techfin e será futuramente oferecido pela TOTVS Pay. Você pode escolher isso na sua negociação.
             </p>
