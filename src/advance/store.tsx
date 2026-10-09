@@ -28,6 +28,27 @@ type AdvanceContextValue = {
 
 const AdvanceContext = createContext<AdvanceContextValue | null>(null)
 
+const CONSTRUCAO_BRIDGE_KEY = 'pd-construcao-advance'
+
+function readConstrucaoBridge(): AdvanceLink | null {
+  try {
+    const raw = sessionStorage.getItem(CONSTRUCAO_BRIDGE_KEY)
+    if (!raw) return null
+    const data = JSON.parse(raw) as Partial<AdvanceLink> & { amount?: number }
+    if (typeof data.amount !== 'number') return null
+    return {
+      status: data.status === 'cancelled' || data.status === 'paid' ? data.status : 'waiting',
+      amount: data.amount,
+      dueLabel: data.dueLabel ?? DEFAULT_DUE,
+      createdLabel: data.createdLabel ?? CREATED_LABEL,
+      url: data.url ?? PAYMENT_URL,
+      components: data.components ?? [],
+    }
+  } catch {
+    return null
+  }
+}
+
 function waitingLink(amount = DEFAULT_AMOUNT, dueLabel = DEFAULT_DUE, components: AdvanceComponent[] = []): AdvanceLink {
   return {
     status: 'waiting',
@@ -40,7 +61,7 @@ function waitingLink(amount = DEFAULT_AMOUNT, dueLabel = DEFAULT_DUE, components
 }
 
 export function AdvanceProvider({ children }: { children: ReactNode }) {
-  const [link, setLink] = useState<AdvanceLink | null>(null)
+  const [link, setLink] = useState<AdvanceLink | null>(() => readConstrucaoBridge())
 
   const generate = useCallback((amount: number, dueLabel: string, components: AdvanceComponent[] = []) => {
     setLink(waitingLink(amount, dueLabel, components))
