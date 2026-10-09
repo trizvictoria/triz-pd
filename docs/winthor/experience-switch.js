@@ -1,13 +1,13 @@
 (function () {
   var STYLE =
-    '#pd-product-switch-host{position:fixed;z-index:2147483646;pointer-events:none}' +
-    '#pd-product-switch-host .product-switch{pointer-events:auto;position:relative;display:flex;align-items:center}' +
-    '#pd-product-switch-host .product-switch__toggle{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:0;border-radius:8px;padding:0;margin:0;background:rgba(255,255,255,.25);color:#fff;cursor:pointer}' +
-    '#pd-product-switch-host .product-switch__toggle:hover,#pd-product-switch-host .product-switch__toggle[aria-expanded="true"]{background:rgba(255,255,255,.4)}' +
-    '#pd-product-switch-host .product-switch__toggle svg{width:18px!important;height:18px!important;display:block!important;fill:none!important;stroke:currentColor!important;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important}' +
-    '#pd-product-switch-host .product-switch__menu{position:absolute;top:calc(100% + 8px);left:0;min-width:280px;padding:12px 0;background:#001927;border-radius:8px;box-shadow:0 12px 24px rgba(0,34,51,.28);z-index:2147483647}' +
-    '#pd-product-switch-host .product-switch__label{padding:4px 16px 8px;color:rgba(255,255,255,.55);font:700 11px/14px "DM Sans",sans-serif;letter-spacing:.08em;text-transform:uppercase}' +
-    '#pd-product-switch-host .product-switch__item{display:block;width:100%;padding:8px 16px;color:#fff;font:500 14px/20px "DM Sans",sans-serif;text-align:left;background:transparent;border:0;cursor:pointer}' +
+    '#pd-product-switch-host{position:relative!important;left:auto!important;top:auto!important;right:auto!important;visibility:visible!important;pointer-events:auto!important;display:inline-flex;align-items:center;flex-shrink:0}' +
+    '#pd-product-switch-host .product-switch{position:relative;display:inline-flex;align-items:center}' +
+    '#pd-product-switch-host .product-switch__toggle{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:0;border-radius:8px;padding:0;margin:0;background:rgba(255,255,255,.2);color:#fff;cursor:pointer}' +
+    '#pd-product-switch-host .product-switch__toggle:hover,#pd-product-switch-host .product-switch__toggle[aria-expanded="true"]{background:rgba(255,255,255,.35)}' +
+    '#pd-product-switch-host .product-switch__toggle svg{width:18px!important;height:18px!important;display:block!important;fill:currentColor!important;stroke:none!important}' +
+    '#pd-product-switch-host .product-switch__menu{position:absolute;top:calc(100% + 8px);left:0;min-width:280px;max-height:min(70vh,520px);overflow-y:auto;padding:12px 0;background:#001927;border-radius:8px;box-shadow:0 12px 24px rgba(0,34,51,.28);z-index:12001}' +
+    '#pd-product-switch-host .product-switch__label{padding:4px 16px 8px;color:rgba(255,255,255,.55);font:700 11px/14px "DM Sans",Tahoma,Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}' +
+    '#pd-product-switch-host .product-switch__item{display:block;width:100%;padding:8px 16px;color:#fff;font:500 14px/20px "DM Sans",Tahoma,Arial,sans-serif;text-align:left;background:transparent;border:0;cursor:pointer}' +
     '#pd-product-switch-host .product-switch__item:hover:not(:disabled){background:rgba(255,255,255,.08)}' +
     '#pd-product-switch-host .product-switch__item.is-disabled,#pd-product-switch-host .product-switch__item:disabled{color:rgba(255,255,255,.42);cursor:default}' +
     '#pd-product-switch-host .product-switch__sep{display:block;height:1px;margin:8px 12px;background:rgba(255,255,255,.12)}'
@@ -15,7 +15,7 @@
   var MENU =
     '<div class="product-switch">' +
     '<button type="button" class="product-switch__toggle" data-act="toggle-products" aria-haspopup="true" aria-expanded="false" aria-label="Trocar produto">' +
-    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>' +
+    '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M9.611 13.408 5.161 8.957a.5.5 0 0 1 0-.777l.519-.519a.5.5 0 0 1 .776 0L10 11.187l3.544-3.527a.5.5 0 0 1 .776 0l.519.519a.5.5 0 0 1 0 .777l-4.45 4.45a.5.5 0 0 1-.778 0Z" fill="currentColor"/></svg>' +
     '</button>' +
     '<div class="product-switch__menu" hidden>' +
     '<p class="product-switch__label">Produtos</p>' +
@@ -32,7 +32,7 @@
     '<span class="product-switch__sep"></span>' +
     '<button type="button" class="product-switch__item" data-product="checkout">Checkout</button>' +
     '<span class="product-switch__sep"></span>' +
-    '<button type="button" class="product-switch__item is-disabled" data-product="early" disabled>Early adopters</button>' +
+    '<button type="button" class="product-switch__item" data-product="interesse">Lista de interesse</button>' +
     '</div></div>'
 
   function experienceRoot() {
@@ -43,6 +43,10 @@
   }
 
   function goProduct(id) {
+    if (id === 'interesse') {
+      location.assign('https://materiais.rdstation.com/2026-totvspay-material-lp-hr-totvs-pay-universo')
+      return
+    }
     var root = experienceRoot()
     if (id === 'winthor') return
     if (id === 'totvs' || id === 'totvs-credenciamento') {
@@ -54,40 +58,21 @@
     } else if (id === 'construcao') location.assign(root + 'construcao/')
     else if (id === 'educacional') location.assign(root + 'educacional/')
     else if (id === 'suri') location.assign(root + '#suri')
-    else if (id === 'checkout') location.assign(root + '#checkout')
+    else if (id === 'checkout') location.assign(root + 'construcao/checkout/')
     else location.assign(root)
   }
 
   function host() {
-    var el = document.getElementById('pd-product-switch-host')
-    if (!el) {
-      el = document.createElement('div')
-      el.id = 'pd-product-switch-host'
-      document.body.appendChild(el)
-    }
-    return el
-  }
-
-  function position() {
-    var brand = document.querySelector('.header')
-    var el = host()
-    if (!brand) {
-      el.style.visibility = 'hidden'
-      return
-    }
-    var rect = brand.getBoundingClientRect()
-    el.style.visibility = 'visible'
-    el.style.left = Math.round(rect.right - 36) + 'px'
-    el.style.top = Math.round(rect.top + rect.height / 2 - 14) + 'px'
+    return document.getElementById('pd-product-switch-host')
   }
 
   function mount() {
     var el = host()
+    if (!el) return
     if (el.getAttribute('data-ready') !== '1') {
       el.innerHTML = MENU
       el.setAttribute('data-ready', '1')
     }
-    position()
   }
 
   function closeAll() {
@@ -136,12 +121,6 @@
     if (event.key === 'Escape') closeAll()
   })
 
-  window.addEventListener('resize', position)
-  window.addEventListener('scroll', position, true)
-
-  var observer = new MutationObserver(mount)
-  observer.observe(document.documentElement, { childList: true, subtree: true })
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount)
   else mount()
-  setInterval(position, 250)
 })()
