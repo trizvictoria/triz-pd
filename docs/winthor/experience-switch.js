@@ -1,5 +1,6 @@
 (function () {
   var STYLE =
+    '#pd-product-switch-host{position:relative!important;left:auto!important;top:auto!important;right:auto!important;visibility:visible!important;pointer-events:auto!important;display:inline-flex;align-items:center;flex-shrink:0}' +
     '#pd-product-switch-host .product-switch{position:relative;display:inline-flex;align-items:center}' +
     '#pd-product-switch-host .product-switch__toggle{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border:0;border-radius:8px;padding:0;margin:0;background:rgba(255,255,255,.2);color:#fff;cursor:pointer}' +
     '#pd-product-switch-host .product-switch__toggle:hover,#pd-product-switch-host .product-switch__toggle[aria-expanded="true"]{background:rgba(255,255,255,.35)}' +

@@ -3,23 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/triz-pd/favicon.svg?v=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,700&display=swap" rel="stylesheet">
     <title>1295 - Gestão de recebimentos antecipados</title>
-    <style>
-        /* Estilos Globais - Winthor Clássico */
-        :root {
-            --demo-banner-h: 28px;
-        }
-        body {
-            margin: 0;
-            font-family: Tahoma, Arial, sans-serif;
-            font-size: 11px;
-            background-color: #f0f0f0;
-            color: #000;
-            overflow: hidden;
-            box-sizing: border-box;
-            padding-top: var(--demo-banner-h);
-            height: 100vh;
-        }
+    <style id="pd-demo-banner-style">
+        :root { --demo-banner-h: 28px; }
         .demo-banner {
             position: fixed;
             top: 0;
@@ -33,14 +23,47 @@
             justify-content: center;
             background: #00dbff;
             color: #002233;
-            font: 700 12px/16px "DM Sans", Tahoma, Arial, sans-serif;
+            font: 700 12px/16px "DM Sans", system-ui, sans-serif;
             letter-spacing: 0.01em;
+        }
+        .brand-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            flex-shrink: 0;
+            min-width: 0;
+        }
+        #pd-product-switch-host {
+            position: relative !important;
+            left: auto !important;
+            top: auto !important;
+            right: auto !important;
+            visibility: visible !important;
+            z-index: 5;
+            display: inline-flex;
+            pointer-events: auto;
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+    </style>
+    <style>
+        /* Estilos Globais - Winthor Clássico */
+        body {
+            margin: 0;
+            font-family: Tahoma, Arial, sans-serif;
+            font-size: 11px;
+            background-color: #f0f0f0;
+            color: #000;
+            overflow: hidden;
+            box-sizing: border-box;
+            height: 100vh;
         }
         .winthor-shell {
             display: flex;
             flex-direction: column;
             height: calc(100vh - var(--demo-banner-h));
             min-height: 0;
+            margin-top: var(--demo-banner-h);
         }
 
         /* Barra Superior */
@@ -54,22 +77,14 @@
             font-weight: bold;
             font-size: 14px;
             flex-shrink: 0;
-        }
-        .header-title-wrap {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            min-width: 0;
+            overflow: visible;
+            position: relative;
+            z-index: 100;
         }
         .header-title {
             white-space: nowrap;
-        }
-        #pd-product-switch-host {
-            position: relative;
-            z-index: 5;
-            display: inline-flex;
-            pointer-events: auto;
-            flex-shrink: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .header-info {
             font-size: 11px;
@@ -453,10 +468,10 @@
     <div class="winthor-shell">
     <!-- Header -->
     <div class="header">
-        <div class="header-title-wrap">
-            <span class="header-title">1295 - Gestão de recebimentos antecipados</span>
+        <span class="brand-wrap">
             <span id="pd-product-switch-host"></span>
-        </div>
+            <span class="header-title">1295 - Gestão de recebimentos antecipados</span>
+        </span>
         <span class="header-info">666 - DANIELPRATA (LOCAL@LOCAL) PCSIS1295 v.38.0.03.034</span>
     </div>
 
@@ -1142,6 +1157,6 @@
             closeModal('modalTotvs');
         }
     </script>
-<script src="/triz-pd/winthor/experience-switch.js?v=2" defer></script>
+<script src="/triz-pd/winthor/experience-switch.js?v=3" defer></script>
 </body>
 </html>
