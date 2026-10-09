@@ -29,8 +29,10 @@ const ICONS = {
 }
 
 const EXPERIENCES: Array<{ type: 'item'; id: ExperienceTarget; label: string } | { type: 'sep'; id: string } | { type: 'soon'; id: string; label: string }> = [
-  { type: 'item', id: 'totvs-credenciamento', label: 'TOTVS Pay - Credenciamento' },
-  { type: 'item', id: 'totvs-dashboard', label: 'TOTVS Pay - Dashboard' },
+  { type: 'item', id: 'inicio', label: 'Página inicial' },
+  { type: 'sep', id: 'sep-0' },
+  { type: 'item', id: 'totvs-credenciamento', label: 'TOTVS Pay – Credenciamento' },
+  { type: 'item', id: 'totvs-dashboard', label: 'TOTVS Pay – Dashboard' },
   { type: 'sep', id: 'sep-1' },
   { type: 'item', id: 'rd', label: 'RD Vendas' },
   { type: 'sep', id: 'sep-2' },
@@ -40,7 +42,9 @@ const EXPERIENCES: Array<{ type: 'item'; id: ExperienceTarget; label: string } |
   { type: 'sep', id: 'sep-3' },
   { type: 'item', id: 'suri', label: 'Suri Shop' },
   { type: 'sep', id: 'sep-4' },
-  { type: 'item', id: 'checkout', label: 'Checkout' },
+  { type: 'item', id: 'checkout', label: 'Link de pagamento' },
+  { type: 'sep', id: 'sep-5' },
+  { type: 'item', id: 'interesse', label: 'Lista de interesse' },
 ]
 
 export function PortalShell({ children }: { children: ReactNode }) {
@@ -83,7 +87,6 @@ export function PortalShell({ children }: { children: ReactNode }) {
             </button>
             {productsOpen ? (
               <div className="edu-experiences__menu" role="menu">
-                <p className="edu-experiences__label">Produtos</p>
                 {EXPERIENCES.map((item) => {
                   if (item.type === 'sep') return <span className="edu-experiences__sep" key={item.id} />
                   if (item.type === 'soon') {

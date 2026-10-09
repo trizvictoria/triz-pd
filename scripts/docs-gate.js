@@ -37,7 +37,42 @@ function experienceRoot(){
   return p.endsWith('/')?p:p.replace(/[^/]+$/,'');
 }
 function suriHTML(){
-  return '<div class="suri"><div class="suri-layout"><div class="suri-stories"><article class="suri-story"><div class="suri-copy"><p class="suri-kicker">Venda automatizada</p><h1>Suri + TOTVS Pay: a jornada de venda completa, automatizada com IA</h1></div><div class="device-phone"><div class="device-phone__screen"><video src="suri/venda-automatizada.mp4" poster="suri/poster-automatizada.jpg" playsinline muted autoplay loop controls aria-label="Demonstração da venda automatizada no WhatsApp da Loja Instituto Percorre"></video></div></div></article><article class="suri-story suri-story--desk"><div class="suri-copy"><p class="suri-kicker">Venda assistida</p><h2>Suri + TOTVS Pay: seu time atende, vende e recebe</h2></div><div class="device-laptop"><div class="device-laptop__bezel"><video src="suri/venda-assistida.mp4" poster="suri/poster-assistida.jpg" playsinline muted autoplay loop controls aria-label="Demonstração da venda assistida no painel da Suri"></video></div><div class="device-laptop__base" aria-hidden="true"></div></div></article></div><aside class="suri-card"><img class="suri-brand" src="instituto-percorre-mark.png" alt="Instituto Percorre"><a class="suri-qr" href="https://wa.me/5511975019280" target="_blank" rel="noreferrer"><img src="suri-qr.png" alt="QR Code da Suri Shop no WhatsApp"></a><p>Acesse o QR Code, apoie o Instituto Percorre e retire a sua compra diretamente na loja durante o <strong>Universo TOTVS</strong>!</p></aside></div></div>';
+  return '<div class="suri"><div class="suri-main"><div class="suri-stories"><div class="suri-rail" aria-hidden="true"><span class="suri-rail__dot is-on"></span><span class="suri-rail__line"><span class="suri-rail__fill"></span></span><span class="suri-rail__dot suri-rail__dot--next"></span></div><article class="suri-story"><div class="suri-copy"><p class="suri-kicker" data-suri-mark="automatizada">Venda automatizada</p><h1>Suri + TOTVS Pay: a jornada de venda completa, automatizada com IA</h1></div><div class="device-phone"><div class="suri-screen"><video src="suri/venda-automatizada.mp4" poster="suri/poster-automatizada.jpg" playsinline preload="metadata" aria-label="Demonstração da venda automatizada no WhatsApp da Loja Instituto Percorre"></video><button type="button" class="suri-play" data-suri-play aria-label="Reproduzir vídeo"><svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M10 7.5v13l11-6.5-11-6.5Z" fill="currentColor"/></svg></button></div></div></article><article class="suri-story suri-story--desk"><div class="suri-copy"><p class="suri-kicker" data-suri-mark="assistida">Venda assistida</p><h2>Suri + TOTVS Pay: seu time atende, vende e recebe</h2></div><div class="device-laptop"><div class="device-laptop__bezel"><div class="suri-screen"><video src="suri/venda-assistida.mp4" poster="suri/poster-assistida.jpg" playsinline preload="metadata" aria-label="Demonstração da venda assistida no painel da Suri"></video><button type="button" class="suri-play" data-suri-play aria-label="Reproduzir a venda assistida"><svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M10 7.5v13l11-6.5-11-6.5Z" fill="currentColor"/></svg></button></div></div><div class="device-laptop__base" aria-hidden="true"></div></div></article></div></div></div>';
+}
+function bindSuri(){
+  const root=document.querySelector('.suri');
+  if(!root) return;
+  root.querySelectorAll('[data-suri-play]').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const video=btn.parentElement&&btn.parentElement.querySelector('video');
+      if(!video) return;
+      video.controls=true;
+      const played=video.play();
+      btn.hidden=true;
+      video.onended=()=>{btn.hidden=false;video.controls=false;video.currentTime=0};
+      if(played&&played.catch) played.catch(()=>{btn.hidden=false});
+    });
+  });
+  const scroller=document.querySelector('.content');
+  const fill=root.querySelector('.suri-rail__fill');
+  const stories=root.querySelector('.suri-stories');
+  const nextDot=root.querySelector('.suri-rail__dot--next');
+  const nextMark=root.querySelector('[data-suri-mark="assistida"]');
+  if(!scroller||!fill||!stories) return;
+  const sync=()=>{
+    const max=scroller.scrollHeight-scroller.clientHeight;
+    const progress=max<=8?1:Math.min(1,Math.max(0,scroller.scrollTop/max));
+    fill.style.height=(progress*100)+'%';
+    if(nextDot&&nextMark&&nextDot.parentElement){
+      const rail=nextDot.parentElement;
+      const top=nextMark.getBoundingClientRect().top-rail.getBoundingClientRect().top;
+      nextDot.style.top=Math.max(0,top)+'px';
+      nextDot.classList.toggle('is-on', rail.clientHeight>0 && progress>=top/rail.clientHeight);
+    }
+  };
+  sync();
+  scroller.addEventListener('scroll',sync,{passive:true});
+  window.addEventListener('resize',sync);
 }
 function showPublicSuri(){
   setGate(false);
@@ -53,12 +88,15 @@ function showPublicSuri(){
   if(loginNav) loginNav.hidden=false;
   if(crmNav) crmNav.hidden=true;
   app.innerHTML=suriHTML();
+  bindSuri();
 }
 function goProduct(id){
   if(id==='totvs'||id==='totvs-credenciamento'||id==='totvs-dashboard') rememberSession(FLOW_KEY);
-  if(window.__pdNavigate && (id==='rd'||id==='suri'||id==='checkout')){setGate(false);window.__pdNavigate(id);return}
   const root=experienceRoot();
-  if(id==='totvs'||id==='totvs-credenciamento'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/credenciamento');return}
+  if(id==='interesse'){location.assign(root+'interesse/');return}
+  if(id==='inicio'){location.assign(root+'#inicio');return}
+  if(window.__pdNavigate && (id==='rd'||id==='suri'||id==='checkout')){setGate(false);window.__pdNavigate(id);return}
+  if(id==='totvs'||id==='totvs-credenciamento'){try{sessionStorage.setItem('totvs-onboarded','0')}catch(e){}location.assign(root+'totvs/');return}
   if(id==='totvs-dashboard'){try{sessionStorage.setItem('totvs-onboarded','1')}catch(e){}location.assign(root+'totvs/dashboard');return}
   if(id==='construcao'){location.assign(root+'construcao/');return}
   if(id==='educacional'){location.assign(root+'educacional/');return}
@@ -214,7 +252,7 @@ function hubCompactHTML(){
     ['winthor','TOTVS','Winthor','Recebimentos integrados ao ERP.',0],
     ['suri','Suri','Suri Shop','Compra e pagamento pela loja da Suri.',0]
   ].map(([id,kicker,title,text,cyan])=>`<a href="#experiencia" data-product="${id}" class="hc-card${cyan?' is-cyan':''}"><span>${kicker}</span><strong>${title}</strong><p>${text}</p></a>`).join('');
-  return `<section class="totem-compact hc" hidden><header class="hc-top"><strong>TOTVS Pay</strong><a href="#inicio" class="hc-back" data-act="back-totem">Voltar</a></header><h1 class="hc-title">Escolha sua <span>experiência</span></h1><nav class="hc-grid" aria-label="Experiências">${cards}</nav><a class="hc-interest" href="https://materiais.rdstation.com/2026-totvspay-material-lp-hr-totvs-pay-universo">Gostou? Entre na lista de interesse</a></section>`;
+  return `<section class="totem-compact hc" hidden><header class="hc-top"><strong>TOTVS Pay</strong><a href="#inicio" class="hc-back" data-act="back-totem">Voltar</a></header><h1 class="hc-title">Escolha sua <span>experiência</span></h1><nav class="hc-grid" aria-label="Experiências">${cards}</nav><a class="hc-interest" href="interesse/">Gostou? Entre na lista de interesse</a></section>`;
 }
 function showHub(error){
   setGate(true);

@@ -81,7 +81,7 @@ export function ExperienceHub() {
               </a>
             ))}
           </nav>
-          <a className="hc-interest" href="https://materiais.rdstation.com/2026-totvspay-material-lp-hr-totvs-pay-universo">
+          <a className="hc-interest" href="interesse/">
             Gostou? Entre na lista de interesse
           </a>
         </section>

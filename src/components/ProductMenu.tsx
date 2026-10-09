@@ -6,8 +6,10 @@ const ITEMS: Array<
   | { type: 'soon'; id: string; label: string }
   | { type: 'sep'; id: string }
 > = [
-  { type: 'item', id: 'totvs-credenciamento', label: 'TOTVS Pay - Credenciamento' },
-  { type: 'item', id: 'totvs-dashboard', label: 'TOTVS Pay - Dashboard' },
+  { type: 'item', id: 'inicio', label: 'Página inicial' },
+  { type: 'sep', id: 'sep-0' },
+  { type: 'item', id: 'totvs-credenciamento', label: 'TOTVS Pay – Credenciamento' },
+  { type: 'item', id: 'totvs-dashboard', label: 'TOTVS Pay – Dashboard' },
   { type: 'sep', id: 'sep-1' },
   { type: 'item', id: 'rd', label: 'RD Vendas' },
   { type: 'sep', id: 'sep-2' },
@@ -17,7 +19,9 @@ const ITEMS: Array<
   { type: 'sep', id: 'sep-3' },
   { type: 'item', id: 'suri', label: 'Suri Shop' },
   { type: 'sep', id: 'sep-4' },
-  { type: 'item', id: 'checkout', label: 'Checkout' },
+  { type: 'item', id: 'checkout', label: 'Link de pagamento' },
+  { type: 'sep', id: 'sep-5' },
+  { type: 'item', id: 'interesse', label: 'Lista de interesse' },
 ]
 
 export function ProductMenu({ tone = 'navy' }: { tone?: 'navy' | 'light' }) {
@@ -58,7 +62,6 @@ export function ProductMenu({ tone = 'navy' }: { tone?: 'navy' | 'light' }) {
         </svg>
       </button>
       <div className="product-switch__menu" role="menu" hidden={!open}>
-        <p className="product-switch__label">Produtos</p>
         {ITEMS.map((item) => {
           if (item.type === 'sep') return <span className="product-switch__sep" key={item.id} />
           if (item.type === 'soon') {

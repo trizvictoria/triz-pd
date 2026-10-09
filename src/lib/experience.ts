@@ -8,6 +8,8 @@ export type ExperienceTarget =
   | 'construcao'
   | 'educacional'
   | 'winthor'
+  | 'interesse'
+  | 'inicio'
 
 export function experienceRoot() {
   const path = window.location.pathname
@@ -40,6 +42,8 @@ export function experienceUrls() {
     construcao: `${root}construcao/`,
     educacional: `${root}educacional/`,
     winthor: `${root}winthor/`,
+    interesse: `${root}interesse/`,
+    inicio: `${root}#inicio`,
   }
 }
 
@@ -65,6 +69,14 @@ export function goExperience(target: ExperienceTarget) {
   }
   if (target === 'winthor') {
     window.location.assign(urls.winthor)
+    return
+  }
+  if (target === 'interesse') {
+    window.location.assign(urls.interesse)
+    return
+  }
+  if (target === 'inicio') {
+    window.location.assign(urls.inicio)
     return
   }
   const here = window.location.pathname.replace(/\/+$/, '')
