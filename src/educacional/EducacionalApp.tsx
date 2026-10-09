@@ -36,7 +36,7 @@ import { PortalPaymentModals, type PortalFlow } from './PortalPaymentModals'
 import './educacional.css'
 
 type Step = 'statement' | 'methods' | 'card' | 'amount' | 'review' | 'cardReview' | 'pixPay' | 'done'
-type TechfinOffer = 'mix' | 'pix' | 'boleto' | 'barcode'
+type TechfinOffer = 'pix' | 'boleto' | 'barcode'
 
 function BrandIcon({ brand, large = false }: { brand: SavedCard['brand'] | 'add'; large?: boolean }) {
   const file = brand === 'visa' ? 'icon-visa.svg' : brand === 'mastercard' ? 'icon-mastercard.svg' : 'icon-add-card.svg'
@@ -375,8 +375,7 @@ export function EducacionalApp() {
     if (!offer) return
     const kind = offer
     setOffer(null)
-    if (kind === 'mix') openMix()
-    else if (kind === 'pix') openPix()
+    if (kind === 'pix') openPix()
     else if (kind === 'boleto') startBoleto('boleto')
     else startBoleto('barcode')
   }
@@ -553,7 +552,7 @@ export function EducacionalApp() {
           </p>
         </div>
         <div className="edu-statement__actions">
-          <button type="button" className="edu-btn" onClick={() => setOffer('mix')} disabled={!canPay}>
+          <button type="button" className="edu-btn" onClick={openMix} disabled={!canPay}>
             <img src={eduAsset('icon-split.svg')} alt="" />
             Combinar pagamentos
           </button>
