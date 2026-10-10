@@ -2,6 +2,18 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function () {
+        var hash = location.hash
+        if (hash !== '#deal' && hash !== '#suri' && hash !== '#checkout') return
+        var path = location.pathname
+        var at = path.indexOf('/interesse')
+        if (at < 0) return
+        var root = path.slice(0, at)
+        if (root.slice(-1) !== '/') root += '/'
+        location.replace(root + hash)
+      })()
+    </script>
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TOTVS Pay · Entre na lista</title>
@@ -15,8 +27,8 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,600,1,0"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="./assets/index-D_c9I70q.js?v=2"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-C64NmnS1.css">
+    <script type="module" crossorigin src="./assets/index-BL7Avfne.js?v=3"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CNwlYbPs.css?v=3">
   </head>
   <body>
     <div id="root"></div>
