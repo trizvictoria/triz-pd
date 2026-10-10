@@ -546,10 +546,6 @@ export function EducacionalApp() {
           </p>
         </div>
         <div className="edu-statement__actions">
-          <button type="button" className="edu-btn" onClick={openMix} disabled={!canPay}>
-            <img src={eduAsset('icon-split.svg')} alt="" />
-            Combinar pagamentos
-          </button>
           <button type="button" className="edu-btn edu-btn--fixed" onClick={() => setOffer('pix')} disabled={!canPay}>
             <img src={eduAsset('icon-pix.svg')} alt="" />
             Pix
@@ -595,6 +591,10 @@ export function EducacionalApp() {
               </div>
             ) : null}
           </div>
+          <button type="button" className="edu-btn" onClick={openMix} disabled={!canPay}>
+            <img src={eduAsset('icon-split.svg')} alt="" />
+            Combinar pagamentos
+          </button>
         </div>
         <div className="edu-paybar">
           <div className="edu-tabs" role="tablist">
@@ -613,7 +613,7 @@ export function EducacionalApp() {
           </div>
         </div>
         <div className="edu-charges">
-          {TUITIONS.filter((item) => item.id === '2026-09').map((item) => {
+          {TUITIONS.filter((item) => item.month === 'Setembro/2026').map((item) => {
             const on = tuitionIds.includes(item.id)
             return (
               <article className="edu-charge" key={item.id}>
@@ -643,10 +643,10 @@ export function EducacionalApp() {
                 </div>
                 <div className="edu-charge__info">
                   <p>
-                    <b>Aluno:</b> ANA PAULA DA SILVA ENSINO SUPERIOR
+                    <b>Aluno:</b> {item.student} ENSINO SUPERIOR
                   </p>
                   <p>
-                    <b>Responsável:</b> ANA PAULA DA SILVA RESPONSAVEL
+                    <b>Responsável:</b> {item.guardian} RESPONSAVEL
                     <br />
                     FINANCEIRO ALUNO
                   </p>

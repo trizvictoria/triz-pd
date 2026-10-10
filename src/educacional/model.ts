@@ -10,12 +10,18 @@ export type Tuition = {
   due: string
   status: TuitionStatus
   cents: number
+  student: string
+  guardian: string
 }
 
+const ANA = { student: 'ANA PAULA DA SILVA', guardian: 'ANA PAULA DA SILVA' }
+
 export const TUITIONS: Tuition[] = [
-  { id: '2026-07', month: 'Julho/2026', due: '31/07/2026', status: 'overdue', cents: TUITION_CENTS },
-  { id: '2026-08', month: 'Agosto/2026', due: '31/08/2026', status: 'overdue', cents: TUITION_CENTS },
-  { id: '2026-09', month: 'Setembro/2026', due: '30/09/2026', status: 'open', cents: TUITION_CENTS },
+  { id: '2026-07', month: 'Julho/2026', due: '31/07/2026', status: 'overdue', cents: TUITION_CENTS, ...ANA },
+  { id: '2026-08', month: 'Agosto/2026', due: '31/08/2026', status: 'overdue', cents: TUITION_CENTS, ...ANA },
+  { id: '2026-09', month: 'Setembro/2026', due: '30/09/2026', status: 'open', cents: TUITION_CENTS, ...ANA },
+  { id: '2026-09-bruno', month: 'Setembro/2026', due: '30/09/2026', status: 'open', cents: TUITION_CENTS, student: 'BRUNO MATOS', guardian: 'BRUNO MATOS' },
+  { id: '2026-09-nicolas', month: 'Setembro/2026', due: '30/09/2026', status: 'open', cents: TUITION_CENTS, student: 'NICOLAS BESCHOREN', guardian: 'NICOLAS BESCHOREN' },
 ]
 
 export function tuitionStatusLabel(status: TuitionStatus) {
