@@ -57,7 +57,7 @@ export function ProposalPage() {
   const [modal, setModal] = useState<Modal>(() => {
     if (routeState?.view === 'closed') return null
     if (routeState?.view === 'form') return 'form'
-    if (routeState?.view === 'share' || (link && link.status !== 'cancelled')) return 'share'
+    if (routeState?.view === 'share') return 'share'
     return null
   })
   const [dialog, setDialog] = useState<Dialog>(routeState?.view === 'share' ? (routeState.dialog ?? null) : null)
@@ -251,7 +251,7 @@ export function ProposalPage() {
             <div><i>✓</i><span>Resumo da proposta</span></div>
           </div>
           <div className="evt-tabs">
-            <button type="button" onClick={() => (link && link.status !== 'cancelled' ? setModal('share') : openForm())}>Adiantamento</button>
+            <button type="button" onClick={() => openForm(link && link.status !== 'cancelled' ? link.amount : undefined)}>Adiantamento</button>
             <button type="button" onClick={demo}>Comissão</button>
             <button type="button" onClick={demo}>Restaurar tabela</button>
             <button type="button" onClick={demo}>Desconto</button>
