@@ -252,8 +252,7 @@ export function EducacionalApp() {
   const canPay = payCents > 0
   const selectedCards = cards.filter((card) => selected.includes(card.id))
   const combineMixMode = payMode === 'card'
-  const selectedMethodCount = combineMixMode ? selected.length + (pixOn ? 1 : 0) : selected.length
-  const methodLimitReached = selectedMethodCount >= MAX_CARDS
+  const cardLimitReached = selected.length >= MAX_CARDS
   const slots = useMemo(() => {
     const list: Array<{ key: string; kind: 'pix' } | { key: string; kind: 'card'; card: SavedCard }> = []
     selectedCards.forEach((card) => list.push({ key: card.id, kind: 'card', card }))
@@ -304,23 +303,18 @@ export function EducacionalApp() {
     setError('')
     setSelected((current) => {
       if (current.includes(id)) return current.filter((item) => item !== id)
-      const count = combineMixMode ? current.length + (pixOn ? 1 : 0) : current.length
-      if (count >= MAX_CARDS) return current
+      if (current.length >= MAX_CARDS) return current
       return [...current, id]
     })
   }
 
   function togglePix() {
     setError('')
-    setPixOn((on) => {
-      if (on) return false
-      if (selected.length >= MAX_CARDS) return false
-      return true
-    })
+    setPixOn((on) => !on)
   }
 
   function openAddCard() {
-    if (methodLimitReached) return
+    if (cardLimitReached) return
     setDraft(EMPTY_DRAFT)
     setCardStep(0)
     setError('')
@@ -690,7 +684,7 @@ export function EducacionalApp() {
         <p className="edu-lead">
           {payMode === 'combine'
             ? 'Selecione um ou mais cartões para dividir o valor. Na próxima etapa, você definirá o valor que pagará em cada um.'
-            : 'Selecione duas ou mais opções para dividir o valor. Você pode combinar Pix e diferentes cartões de crédito. Na próxima etapa, você definirá o valor que pagará em cada uma.'}
+            : 'Selecione duas ou mais opções para dividir o valor. Você pode combinar o Pix com até 3 cartões de crédito. Na próxima etapa, você definirá o valor que pagará em cada uma.'}
         </p>
         <BackLink onClick={() => setStep('statement')}>Voltar para extrato</BackLink>
         <div className="edu-layout">
@@ -704,7 +698,6 @@ export function EducacionalApp() {
                   className="edu-method"
                   onClick={togglePix}
                   aria-pressed={pixOn}
-                  disabled={!pixOn && methodLimitReached}
                 >
                   <Check on={pixOn} />
                   <span className="edu-pix" aria-hidden>
@@ -718,19 +711,19 @@ export function EducacionalApp() {
               {cards.map((card) => {
                 const on = selected.includes(card.id)
                 return (
-                  <button type="button" className="edu-method" key={card.id} onClick={() => toggle(card.id)} aria-pressed={on} disabled={!on && methodLimitReached}>
+                  <button type="button" className="edu-method" key={card.id} onClick={() => toggle(card.id)} aria-pressed={on} disabled={!on && cardLimitReached}>
                     <Check on={on} />
                     <BrandIcon brand={card.brand} />
                     {cardLabel(card)}
                   </button>
                 )
               })}
-              <button type="button" className="edu-method" onClick={openAddCard} disabled={methodLimitReached}>
+              <button type="button" className="edu-method" onClick={openAddCard} disabled={cardLimitReached}>
                 <BrandIcon brand="add" />
                 Adicionar novo cartão de crédito
               </button>
-              {methodLimitReached ? (
-                <p className="edu-limit">{combineMixMode ? 'Você pode selecionar até 3 opções' : 'Você pode usar até 3 cartões'}</p>
+              {cardLimitReached ? (
+                <p className="edu-limit">{combineMixMode ? 'Você pode combinar o Pix com até 3 cartões' : 'Você pode usar até 3 cartões'}</p>
               ) : null}
             </section>
             {error ? <p className="edu-hint">{error}</p> : null}
