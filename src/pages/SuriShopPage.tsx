@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
 const asset = (name: string) => `${import.meta.env.BASE_URL}${name}`
-const SURI_WHATSAPP = 'https://wa.me/5511975019280'
 
 function DemoVideo({ src, poster, label }: { src: string; poster: string; label: string }) {
   const videoRef = useRef<HTMLVideoElement>(null)
@@ -123,17 +122,6 @@ export function SuriShopPage() {
           </article>
         </div>
       </div>
-
-      <aside className="suri-panel">
-        <img className="suri-brand" src={asset('instituto-percorre-mark.png')} alt="Instituto Percorre" />
-        <a className="suri-qr" href={SURI_WHATSAPP} target="_blank" rel="noreferrer">
-          <img src={asset('suri-qr.png')} alt="QR Code da Suri Shop no WhatsApp" />
-        </a>
-        <p>
-          Acesse o QR Code, apoie o Instituto Percorre e retire a sua compra diretamente na loja durante o{' '}
-          <strong>Universo TOTVS</strong>!
-        </p>
-      </aside>
     </div>
   )
 }
