@@ -79,9 +79,9 @@ export function goExperience(target: ExperienceTarget) {
     window.location.assign(urls.inicio)
     return
   }
-  const here = window.location.pathname.replace(/\/+$/, '')
-  const home = urls.rd.replace(/\/+$/, '')
-  if (here !== home && !here.endsWith(home)) {
+  const here = window.location.pathname.replace(/\/+$/, '') || '/'
+  const home = urls.rd.replace(/\/+$/, '') || '/'
+  if (here !== home) {
     const next = target === 'rd' ? `${urls.rd}#deal` : target === 'suri' ? urls.suri : urls.checkout
     window.location.assign(next)
     return

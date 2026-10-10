@@ -2,6 +2,18 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function () {
+        var hash = location.hash
+        if (hash !== '#suri' && hash !== '#deal' && hash !== '#checkout') return
+        var path = location.pathname
+        var at = path.indexOf('/educacional')
+        if (at < 0) return
+        var root = path.slice(0, at)
+        if (root.slice(-1) !== '/') root += '/'
+        location.replace(root + hash)
+      })()
+    </script>
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Negociação · RD Station CRM</title>
@@ -16,8 +28,8 @@
       rel="stylesheet"
     />
     <script>window.__siteBase=location.pathname.indexOf("/triz-pd/")===0?"/triz-pd/":"/"</script>
-    <script type="module" crossorigin src="./assets/index-BIv4mYcd.js?v=19"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-D7nF4GDC.css?v=19">
+    <script type="module" crossorigin src="./assets/index-DpEYmnjc.js?v=20"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CNwlYbPs.css?v=20">
   </head>
   <body>
     <style id="pd-demo-banner-style">
@@ -39,6 +51,6 @@
       }).observe(document.body, { childList: true, subtree: true })
     </script>
     <div id="root"></div>
-    <script src="./experience-switch.js?v=19"></script>
+    <script src="./experience-switch.js?v=20"></script>
   </body>
 </html>

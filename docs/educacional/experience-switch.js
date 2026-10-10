@@ -67,8 +67,17 @@
     if (id === 'construcao') location.assign(root + 'construcao/')
     else if (id === 'winthor') location.assign(root + 'winthor/')
     else if (id === 'suri') location.assign(root + '#suri')
+    else if (id === 'rd') location.assign(root + '#deal')
     else if (id === 'checkout') location.assign(root + 'construcao/checkout/')
     else location.assign(root)
+  }
+
+  function redirectHomeExperience() {
+    var hash = location.hash
+    if (hash !== '#suri' && hash !== '#deal' && hash !== '#checkout') return
+    var root = experienceRoot()
+    if (location.pathname.replace(/\/+$/, '') === root.replace(/\/+$/, '')) return
+    location.replace(root + hash)
   }
 
   function copy() {
@@ -159,6 +168,9 @@
   document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') closeAll()
   })
+
+  redirectHomeExperience()
+  window.addEventListener('hashchange', redirectHomeExperience)
 
   window.addEventListener('resize', position)
   window.addEventListener('scroll', position, true)
