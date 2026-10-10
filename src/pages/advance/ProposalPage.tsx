@@ -7,7 +7,7 @@ import {
   formatDue,
   PROPOSAL,
 } from '../../advance/model'
-import { useAdvance, type AdvanceComponent, type AdvanceLink } from '../../advance/store'
+import { useAdvance, type AdvanceLink } from '../../advance/store'
 import { formatBRL } from '../../data/mock'
 import { FlowNav } from './FlowNav'
 
@@ -38,14 +38,6 @@ const ROWS: PaymentRow[] = [
   { name: 'Anual', qty: '1', due: '05/06/2025', amountCents: 20000, percent: '1,00', commission: '0,00', checked: false, grayQty: false },
 ]
 
-function selectionCents(items: PaymentRow[]) {
-  return items.reduce((sum, row) => sum + (row.checked ? row.amountCents : 0), 0)
-}
-
-function selectionComponents(items: PaymentRow[]): AdvanceComponent[] {
-  return items.filter((row) => row.checked).map((row) => ({ name: row.name, amount: row.amountCents / 100 }))
-}
-
 function formatAmount(cents: number) {
   return (cents / 100).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }
@@ -57,8 +49,7 @@ export function ProposalPage() {
   const { link, generate, cancel, reset } = useAdvance()
   const [toast, setToast] = useState('')
   const [tableOpen, setTableOpen] = useState(true)
-  const [rows, setRows] = useState(ROWS)
-  const [cents, setCents] = useState(() => selectionCents(ROWS))
+  const [cents, setCents] = useState(0)
   const [due, setDue] = useState('2026-10-07')
   const [expiryMode, setExpiryMode] = useState('vencimento')
   const [componentId, setComponentId] = useState('')
@@ -70,12 +61,11 @@ export function ProposalPage() {
     return null
   })
   const [dialog, setDialog] = useState<Dialog>(routeState?.view === 'share' ? (routeState.dialog ?? null) : null)
-  const rowsRef = useRef(rows)
-  rowsRef.current = rows
-  const selected = selectionComponents(rows)
+  const linkRef = useRef(link)
+  linkRef.current = link
 
-  function openForm() {
-    setCents(selectionCents(rowsRef.current))
+  function openForm(prefill?: number) {
+    setCents(typeof prefill === 'number' ? Math.round(prefill * 100) : 0)
     setDialog(null)
     setModal('form')
   }
@@ -89,7 +79,8 @@ export function ProposalPage() {
   useEffect(() => {
     if (!routeState) return
     if (routeState.view === 'form') {
-      setCents(selectionCents(rowsRef.current))
+      const current = linkRef.current
+      setCents(current ? Math.round(current.amount * 100) : 0)
       setModal('form')
       setDialog(null)
     } else if (routeState.view === 'share') {
@@ -114,11 +105,6 @@ export function ProposalPage() {
   const amount = cents / 100
 
   function publish() {
-    const components = selectionComponents(rowsRef.current)
-    if (components.length === 0) {
-      setToast('Marque ao menos um componente na tabela')
-      return
-    }
     if (amount <= 0) {
       setToast('Informe o valor da cobrança')
       return
@@ -127,7 +113,7 @@ export function ProposalPage() {
       setToast('Informe a data de vencimento')
       return
     }
-    generate(amount, expiryMode === 'vencimento' ? formatDue(due) : 'Sem expiração', components)
+    generate(amount, expiryMode === 'vencimento' ? formatDue(due) : 'Sem expiração', [])
     navigate('/proposta', { replace: true, state: { view: 'share' } })
     setToast('Link de pagamento gerado')
   }
@@ -162,8 +148,7 @@ export function ProposalPage() {
     reset()
     setModal(null)
     setDialog(null)
-    setRows(ROWS)
-    setCents(selectionCents(ROWS))
+    setCents(0)
     setDue('2026-10-07')
     setComponentId('')
     setTableOpen(true)
@@ -312,7 +297,7 @@ export function ProposalPage() {
                       </tr>
                     </thead>
                     <tbody>
-                      {rows.map((row) => (
+                      {ROWS.map((row) => (
                         <tr key={row.name}>
                           <td>⠿</td>
                           <td className="evt-ok">✓</td>
@@ -323,17 +308,7 @@ export function ProposalPage() {
                           <td><span className="evt-cell evt-money">{formatAmount(row.amountCents)}</span></td>
                           <td><span className="evt-cell is-gray">{row.percent}</span></td>
                           <td><span className="evt-cell evt-money">{formatAmount(row.amountCents)}</span></td>
-                          <td>
-                            <button
-                              className={`evt-check${row.checked ? ' is-on' : ''}`}
-                              type="button"
-                              aria-pressed={row.checked}
-                              aria-label={`${row.checked ? 'Remover' : 'Incluir'} ${row.name} no adiantamento`}
-                              onClick={() => setRows((current) => current.map((item) => (item.name === row.name ? { ...item, checked: !item.checked } : item)))}
-                            >
-                              {row.checked ? '✓' : ''}
-                            </button>
-                          </td>
+                          <td><span className={`evt-check${row.checked ? ' is-on' : ''}`}>{row.checked ? '✓' : ''}</span></td>
                           <td><span className="evt-cell is-gray evt-money">{row.commission}</span></td>
                           <td><span className="evt-check" /></td>
                           <td className="evt-dots">···</td>
@@ -378,10 +353,6 @@ export function ProposalPage() {
               <div className="adv-alert">
                 <strong>ATENÇÃO</strong>
               </div>
-              <section className="adv-included">
-                <h3>Componentes incluídos</h3>
-                <IncludedList items={selected} empty="Nenhum componente marcado. Selecione na tabela para habilitar a geração do link." />
-              </section>
               <label className="adv-field">
                 <span>
                   Valor R$ da Cobrança <em>*</em>
@@ -392,7 +363,6 @@ export function ProposalPage() {
                   value={formatBRL(amount)}
                   onChange={(event) => setCents(Number(event.target.value.replace(/\D/g, '').slice(0, 9) || '0'))}
                 />
-                <small className="adv-help">Preenchido com a soma dos componentes marcados. O valor continua editável.</small>
               </label>
               <div className="adv-grid-2">
                 <label className="adv-field">
@@ -416,7 +386,7 @@ export function ProposalPage() {
               <button className="adv-btn adv-btn-secondary" type="button" onClick={() => setModal(null)}>
                 Fechar
               </button>
-              <button className="adv-btn adv-btn-primary" type="button" onClick={publish} disabled={selected.length === 0 || amount <= 0 || (expiryMode === 'vencimento' && !due)}>
+              <button className="adv-btn adv-btn-primary" type="button" onClick={publish} disabled={amount <= 0 || (expiryMode === 'vencimento' && !due)}>
                 Gerar link de pagamento
               </button>
             </footer>
@@ -437,7 +407,7 @@ export function ProposalPage() {
             onSms={() => setToast('Mensagem de SMS pronta com o link de pagamento')}
             onApply={applyComponent}
             onCancel={() => setDialog('cancel')}
-            onNew={openForm}
+            onNew={() => openForm(link.amount)}
           />
         </div>
       ) : null}
@@ -614,13 +584,6 @@ function ShareModal({
           </p>
         </section>
 
-        {link.components.length ? (
-          <section className="adv-panel">
-            <h3>Componentes incluídos</h3>
-            <IncludedList items={link.components} />
-          </section>
-        ) : null}
-
         <section className="adv-panel">
           <h3>Onde deseja abater o adiantamento?</h3>
           <p className="adv-help">Selecione um componente de entrada com saldo suficiente.</p>
@@ -665,20 +628,6 @@ function ShareModal({
         </button>
       </footer>
     </section>
-  )
-}
-
-function IncludedList({ items, empty }: { items: AdvanceComponent[]; empty?: string }) {
-  if (!items.length) return <p className="adv-help">{empty}</p>
-  return (
-    <ul className="adv-included-list">
-      {items.map((item) => (
-        <li key={item.name}>
-          <span>{item.name}</span>
-          <b>{formatBRL(item.amount)}</b>
-        </li>
-      ))}
-    </ul>
   )
 }
 

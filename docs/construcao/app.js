@@ -44,3 +44,34 @@ const sideIcons=['<path d="M3 18v-4a9 9 0 0 1 15-7M6 17v-3a6 6 0 0 1 9-5M3 18h18
 document.querySelectorAll('aside>span').forEach((el,i)=>el.innerHTML=icon(sideIcons[i]));
 $('.header-icons').innerHTML=icon('<path d="m15 2 7 7-5 2-4 5-3-3-7 8 6-9-3-3 5-2z"/>')+icon('<path d="M5 5h.1M12 5h.1M19 5h.1M5 12h.1M12 12h.1M19 12h.1M5 19h.1M12 19h.1M19 19h.1" stroke-width="2.5"/>')+icon('<path d="M19 14a8 8 0 1 0-14 2l-2 5 6-2a8 8 0 0 0 10-5zM8 8h7m-7 4h4"/>')+'<span class="avatar">M</span>';
 $('.steps .active i').innerHTML=icon('<path d="m4 15 11-11 5 5L9 20H4zM13 6l5 5"/>');
+(function mountFlow(){
+  const steps=[
+    ['form','1. Gerar link'],
+    ['share','2. Link gerado'],
+    ['whatsapp','3. WhatsApp'],
+    ['email','4. E-mail'],
+    ['checkout','5. Checkout'],
+    ['payment','6. Pagamento'],
+    ['cancel','7. Cancelar']
+  ];
+  const nav=document.createElement('div');
+  nav.className='flow-nav';
+  nav.innerHTML='<div class="flow-nav-menu" hidden>'+steps.map(([id,label])=>'<button type="button" data-flow="'+id+'">'+label+'</button>').join('')+'</div><button type="button" class="flow-nav-toggle">Fluxo do protótipo</button>';
+  document.body.appendChild(nav);
+  const menu=nav.querySelector('.flow-nav-menu');
+  nav.querySelector('.flow-nav-toggle').onclick=()=>{menu.hidden=!menu.hidden};
+  function ready(){return charge&&charge.status!=='cancelled'}
+  nav.querySelectorAll('[data-flow]').forEach(button=>button.onclick=()=>{
+    menu.hidden=true;
+    const id=button.dataset.flow;
+    if(id==='form'||!ready()){form();return}
+    if(id==='share'){result();return}
+    if(id==='cancel'){confirmCancel();return}
+    syncAdvanceCheckout();
+    const base=flowBase();
+    if(id==='whatsapp') location.assign(base+'whatsapp/');
+    else if(id==='email') location.assign(base+'email/');
+    else if(id==='payment') location.assign(base+'checkout/?etapa=pagamento');
+    else location.assign(base+'checkout/');
+  });
+})();

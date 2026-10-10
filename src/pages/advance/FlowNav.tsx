@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useAdvance } from '../../advance/store'
 
 const STEPS = [
-  { id: 'form', label: '1. Cobrança' },
+  { id: 'form', label: '1. Gerar link' },
   { id: 'share', label: '2. Link gerado' },
   { id: 'whatsapp', label: '3. WhatsApp' },
   { id: 'email', label: '4. E-mail' },
@@ -16,13 +16,13 @@ export function FlowNav() {
   const [open, setOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
-  const { ensureGenerated } = useAdvance()
+  const { link, ensureGenerated } = useAdvance()
   const state = location.state as { view?: string; dialog?: string } | null
   const step = currentStep(location.pathname, location.search, state)
 
   function go(id: string) {
     setOpen(false)
-    if (id === 'form') {
+    if (id === 'form' || !link || link.status === 'cancelled') {
       navigate('/proposta', { state: { view: 'form' } })
       return
     }
